@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.PurchaseOrderReport,EzPos" table="[TPurchaseOrdersReport]">
+    <id name="RowID" column="RowID" unsaved-value="0" type="Int32" >
+      <generator class="identity" />
+    </id>
+    <property name="PurchaseOrderID" column="PurchaseOrderID" type="Int32" />
+    <property name="PurchaseOrderNumber" column="PurchaseOrderNumber" />
+    <property name="PurchaseOrderDate" column="PurchaseOrderDate" />
+    <property name="PaymentDate" column="PaymentDate" />
+    <property name="AmountStandard" column="AmountStandard" type="float" />
+    <property name="SupplierID" column="SupplierID" type="Int32" />
+    <property name="SupplierName" column="SupplierName" />
+    <property name="AmountPaid" column="AmountPaid" type="float" />    
+    <property name="ProductID" column="ProductID" type="Int32" />
+    <property name="ProductName" column="ProductName" />    
+    <property name="BarCodeValue" column="BarCodeValue" />
+		<property name="DateIn" column="DateIn" />
+		<property name="DateExpire" column="DateExpire" />
+		<property name="Quantity" column="Quantity" type="float" />
+		<property name="UnitPrice" column="UnitPrice" type="float" />
+		<property name="ProductUnitID" column="ProductUnitID" type="Int32" />
+    <property name="ProductUnitName" column="ProductUnitName" />    
+    <property name="CellID" column="CellID" type="Int32" />
+    <property name="CellName" column="CellName" />
+    <property name="PaidStatus" column="PaidStatus" />
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

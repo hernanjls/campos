@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos.DataAccess">
+	<class name="EzPos.Model.CustomerContact,EzPos" table="[TCustomerContacts]">
+		<id name="ContactID" column="ContactID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>		
+		<property name="CourtesyID" column="CourtesyID" type="Int32"/>
+		<property name="ContactName" column="ContactName" />
+		<property name="Address" column="Address" />
+		<property name="Telephone" column="Telephone" />
+		<property name="Email" column="Email" />
+		<property name="CustomerID" column="CustomerID" type="Int32" />
+	</class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

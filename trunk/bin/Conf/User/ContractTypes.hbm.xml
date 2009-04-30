@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.ContractType,EzPos" table="[TContractTypes]">
+		<id name="ContractTypeID" column="ContractTypeID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>
+		<property name="ContractTypeLabel" column="ContractTypeLabel" />
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

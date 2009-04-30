@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.PaymentTerm,EzPos" table="[TPaymentTerms]">
+    <id name="PaymentTermID" column="PaymentTermID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>
+    <property name="PaymentTermName" column="PaymentTermName" />
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

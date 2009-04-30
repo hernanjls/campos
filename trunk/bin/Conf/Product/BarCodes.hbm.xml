@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos.DataAccess">
+	<class name="EzPos.Model.BarCode,EzPos" table="[TBarCodes]">
+		<id name="BarCodeID" column="BarCodeID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>
+		<property name="BarCodeValue" column="BarCodeValue" />
+		<property name="BarCodeDate" column="BarCodeDate" />
+	</class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

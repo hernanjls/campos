@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="ResMimeType">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="Version">
+		<value>1.0.0.0</value>
+	</resheader>
+	<resheader name="Reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="Writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="Application.Title">
+		<value>AGORA .Net</value>
+	</data>
+	<data name="Mean.Status.Anticipate.Code">
+		<value>E</value>
+	</data>
+	<data name="Mean.Status.PreOpen.Code">
+		<value>P</value>
+	</data>
+	<data name="Mean.Status.Open.Code">
+		<value>O</value>
+	</data>
+	<data name="Mean.Status.Close.Code">
+		<value>C</value>
+	</data>
+	<data name="Mean.Status.Wait.Code">
+		<value>W</value>
+	</data>
+	<data name="Mean.Status.OutService.Code">
+		<value>H</value>
+	</data>
+	<data name="Mean.Status.Anticipate">
+		<value>Anticipate</value>
+	</data>
+	<data name="Mean.Status.PreOpen">
+		<value>Pre-open</value>
+	</data>
+	<data name="Mean.Status.Open">
+		<value>Open</value>
+	</data>
+	<data name="Mean.Status.Close">
+		<value>Close</value>
+	</data>
+	<data name="Mean.Status.Wait">
+		<value>Wait</value>
+	</data>
+	<data name="Mean.Status.OutService">
+		<value>Out of service</value>
+	</data>
+	<data name="Flight.Type.Commercial">
+		<value>C</value>
+	</data>
+	<data name="Flight.Type.NonCommercial">
+		<value>N</value>
+	</data>
+	<data name="Flight.Direction.AllDirections">
+		<value>T</value>
+	</data>
+	<data name="Flight.Direction.Arrival">
+		<value>A</value>
+	</data>
+	<data name="Flight.Direction.Departure">
+		<value>D</value>
+	</data>
+	<data name="Flight.Operation.Approaching">
+		<value>1</value>
+	</data>
+	<data name="Flight.Operation.NonApproaching">
+		<value>0</value>
+	</data>
+	<data name="Flight.Operation.Observe">
+		<value>1</value>
+	</data>
+	<data name="Flight.Operation.UnObserve">
+		<value>0</value>
+	</data>
+	<data name="Operation.Request.Sort.Flight">
+		<value>F</value>
+	</data>
+	<data name="Operation.Request.Sort.Company">
+		<value>C</value>
+	</data>
+	<data name="Operation.Request.Insert">
+		<value>INS</value>
+	</data>
+	<data name="Operation.Request.Duplicate">
+		<value>DPC</value>
+	</data>
+	<data name="Operation.Request.Update">
+		<value>UPD</value>
+	</data>
+	<data name="Operation.Request.Delete">
+		<value>DEL</value>
+	</data>
+	<data name="Operation.Request.Refresh.Timer">
+		<value>60</value>
+	</data>
+	<data name="Operation.Request.System.Language.English.Code">
+		<value>GB</value>
+	</data>
+	<data name="Operation.Request.System.Language.French.Code">
+		<value>FR</value>
+	</data>
+	<data name="Operation.Request.DataBase.Date.Format.English">
+		<value>110</value>
+	</data>
+	<data name="Operation.Request.DataBase.Date.Format.French">
+		<value>103</value>
+	</data>
+	<data name="Operation.Request.DataBase.Time.Format">
+		<value>108</value>
+	</data>
+	<data name="Remark.Code.Arrival">
+		<value>2</value>
+	</data>
+	<data name="Remark.Code.Departure">
+		<value>5</value>
+	</data>
+	<data name="Remark.Code.EstimatedTime">
+		<value>6</value>
+	</data>
+	<data name="Remark.Code.Approaching">
+		<value>1</value>
+	</data>
+	<data name="Param.Delay.Allow.Code">
+		<value>RTDFONCT</value>
+	</data>
+	<data name="Param.Delay.Allow.Value">
+		<value>OUI</value>
+	</data>
+	<data name="Param.Delay.Delta.Code">
+		<value>RTDDELTA</value>
+	</data>
+	<data name="Param.Delay.Delta.Value.ToBeDeleted">
+		<value>10</value>
+	</data>
+	<data name="Param.Delay.Direction.Code">
+		<value>RTDSNS</value>
+	</data>
+	<data name="Param.Delay.Direction.Value.Arrival">
+		<value>A</value>
+	</data>
+	<data name="Param.Delay.Direction.Value.Departure">
+		<value>D</value>
+	</data>
+	<data name="Param.Delay.Direction.Value.Both">
+		<value>B</value>
+	</data>
+	<data name="Param.Means.Parking.Code">
+		<value>MNSPKG</value>
+	</data>
+	<data name="Param.Means.BoardingGate.Code">
+		<value>MNSBDG</value>
+	</data>
+	<data name="Param.Means.CheckInCounter.Code">
+		<value>MNSCHK</value>
+	</data>
+	<data name="Param.Means.ConveyerBelt.Code">
+		<value>MNSCVB</value>
+	</data>
+	<data name="Param.Means.BoardingHall.Code">
+		<value>MNSBDH</value>
+	</data>
+</root>

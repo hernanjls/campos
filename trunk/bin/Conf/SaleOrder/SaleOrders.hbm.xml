@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.SaleOrder,EzPos" table="[TSaleOrders]">
+    <id name="SaleOrderID" column="SaleOrderID" unsaved-value="0" type="Int32" >
+      <generator class="identity" />
+    </id>
+    <property name="SaleOrderNumber" column="SaleOrderNumber" />
+    <property name="CustomerID" column="CustomerID" type="Int32" />
+    <property name="RecorderID" column="RecorderID" type="Int32" />
+    <property name="DateOut" column="DateOut" type="DateTime" />
+    <property name="DelivererID" column="DelivererID" type="Int32" />
+    <property name="AmountSold" column="AmountSold" type="float" />
+    <property name="AmountPaid" column="AmountPaid" type="float" />
+    <property name="AmountReturn" column="AmountReturn" type="float" />
+    <property name="Discount" column="Discount" type="float" />
+    <property name="WholeRetail" column="WholeRetail" type="Int32" />
+	  <property name="CounterID" column="CounterID" type="Int32" />
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

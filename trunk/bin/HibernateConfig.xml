@@ -1,0 +1,57 @@
+<configuration>
+	<facilities>
+		<facility id="nhibernate">
+			<factory id="nhibernate.factory">
+				<settings>
+					<item key="hibernate.connection.provider">NHibernate.Connection.DriverConnectionProvider</item>
+					<item key="hibernate.connection.driver_class">NHibernate.Driver.SqlClientDriver</item>
+					<item key="hibernate.connection.connection_string">Database=PharmaStock;Data Source=MB02\SQL2000;User ID=sa;Password=</item>
+					<item key="hibernate.dialect">NHibernate.Dialect.MsSql2000Dialect</item>
+				</settings>
+				<resources>
+					<!--================= Common ===================-->
+					<resource name="../Conf/Common/Counters.hbm.xml" />
+					<resource name="../Conf/Common/Courtesies.hbm.xml" />
+					<resource name="../Conf/Common/Currencies.hbm.xml" />
+					<resource name="../Conf/Common/ExchangeRates.hbm.xml" />
+					<resource name="../Conf/Common/PaymentTerms.hbm.xml" />
+					<!--================= Products ===================-->
+					<resource name="../Conf/Product/Products.hbm.xml" />
+					<resource name="../Conf/Product/ProductUnits.hbm.xml" />
+					<resource name="../Conf/Product/ProductCategories.hbm.xml" />
+					<resource name="../Conf/Product/BarCodes.hbm.xml" />
+					<resource name="../Conf/Product/Cabinets.hbm.xml" />
+					<resource name="../Conf/Product/ProductLocations.hbm.xml" />
+					<resource name="../Conf/Laboratory/Laboratories.hbm.xml" />
+					<resource name="../Conf/Country/Countries.hbm.xml" />
+					<!--================= Suppliers ==================-->
+					<resource name="../Conf/Supplier/Suppliers.hbm.xml" />
+					<!--================= Customers ==================-->
+					<resource name="../Conf/Customer/Customers.hbm.xml" />
+					<resource name="../Conf/Customer/CustomerContacts.hbm.xml" />
+					<!--================= PurchaseOrder ==================-->
+					<resource name="../Conf/PurchaseOrder/PurchaseOrders.hbm.xml" />
+					<resource name="../Conf/PurchaseOrder/PurchaseItems.hbm.xml" />
+					<resource name="../Conf/PurchaseOrder/PurchaseOrderStatus.hbm.xml" />
+					<resource name="../Conf/PurchaseOrder/PurchaseOrdersReport.hbm.xml" />
+					<!--================= SaleOrder ==================-->
+					<resource name="../Conf/SaleOrder/SaleOrders.hbm.xml" />
+					<resource name="../Conf/SaleOrder/SaleItems.hbm.xml" />
+					<!--================= User ==================-->          
+					<!--resource name="../Conf/User/Groups.hbm.xml" /-->
+					<!--resource name="../Conf/User/GroupPermissions.hbm.xml" /-->
+					<!--resource name="../Conf/User/UserGroups.hbm.xml" /-->
+					<resource name="../Conf/User/Permissions.hbm.xml" />
+					<resource name="../Conf/User/Users.hbm.xml" />
+					<resource name="../Conf/User/UserPermissions.hbm.xml" />
+					<resource name="../Conf/User/Sex.hbm.xml" />
+					<resource name="../Conf/User/MaritalStatus.hbm.xml" />
+					<resource name="../Conf/User/Positions.hbm.xml" />
+					<resource name="../Conf/User/ContractTypes.hbm.xml" />
+					<!--================= Report ==================-->
+					<resource name="../Conf/Report/Assessments.hbm.xml" />
+				</resources>
+			</factory>
+		</facility>
+	</facilities>
+</configuration>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.Courtesy,EzPos" table="[TCourtesies]">
+    <id name="CourtesyID" column="CourtesyID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>
+		<property name="CourtesyName" column="CourtesyName" />
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

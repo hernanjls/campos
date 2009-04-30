@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.Currency,EzPos" table="[TCurrencies]">
+    <id name="CurrencyID" column="CurrencyID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>
+		<property name="CurrencyCode" column="CurrencyCode" />
+    <property name="CurrencyName" column="CurrencyName" />
+    <property name="CurrencySymbol" column="CurrencySymbol" />
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

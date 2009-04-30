@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.PurchaseItem,EzPos" table="[TPurchaseItems]">
+    <id name="PurchaseItemID" column="PurchaseItemID" unsaved-value="0" type="Int32" >
+      <generator class="identity" />
+    </id>
+    <property name="PurchaseOrderID" column="PurchaseOrderID" type="Int32" />
+    <property name="ProductID" column="ProductID" type="Int32" />
+    <property name="BarCodeValue" column="BarCodeValue" />
+		<property name="DateIn" column="DateIn" type="DateTime" />
+		<property name="DateExpire" column="DateExpire" type="DateTime" />
+		<property name="Quantity" column="Quantity" type="float" />
+		<property name="UnitPrice" column="UnitPrice" type="float" />
+		<property name="ProductUnitID" column="ProductUnitID" type="Int32" />
+		<property name="CellID" column="CellID" type="Int32" />
+    <property name="QtyOut" column="QtyOut" type="float" />
+    <many-to-one name="FKPurchaseOrder" column="PurchaseOrderID" class="EzPos.Model.PurchaseOrder, EzPos" insert="false" update="false"	/>
+    <!--
+    <many-to-one name="FKProduct" column="ProductID" class="EzPos.Model.Product, EzPos" insert="false" update="false"	/>
+    -->
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		
