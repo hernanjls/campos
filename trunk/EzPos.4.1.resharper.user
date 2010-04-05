@@ -1,0 +1,231 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer>
+      <setting name="UsedSolutionBuilderID">0</setting>
+    </integer>
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Qualified:@System.DateTime">
+      <Item value="Now" priority="0" />
+      <Item value="Parse" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.DateTime">
+      <Item value="Equals" priority="0" />
+      <Item value="CompareTo" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Default">
+      <Item value="DateTime" priority="2" />
+      <Item value="new" priority="1" />
+      <Item value="_Product" priority="6" />
+      <Item value="product" priority="2" />
+      <Item value="if" priority="10" />
+      <Item value="txtProductCode" priority="5" />
+      <Item value="string" priority="11" />
+      <Item value="CsrEmpty" priority="0" />
+      <Item value="CrystalReportViewer" priority="0" />
+      <Item value="csrCatalog" priority="0" />
+      <Item value="DataSet" priority="0" />
+      <Item value="return" priority="6" />
+      <Item value="void" priority="0" />
+      <Item value="true" priority="3" />
+      <Item value="bool" priority="2" />
+      <Item value="_CommonService" priority="0" />
+      <Item value="var" priority="5" />
+      <Item value="List" priority="0" />
+      <Item value="searchCriteria" priority="0" />
+      <Item value="IList" priority="0" />
+      <Item value="productCodeLengthList" priority="0" />
+      <Item value="as" priority="0" />
+      <Item value="AppParameter" priority="0" />
+      <Item value="productCodeLength" priority="0" />
+      <Item value="isValidated" priority="4" />
+      <Item value="Int32" priority="0" />
+      <Item value="out" priority="2" />
+      <Item value="codeLength" priority="1" />
+      <Item value="productCode" priority="1" />
+      <Item value="public" priority="2" />
+      <Item value="ServiceFactory" priority="0" />
+      <Item value="_ProductService" priority="0" />
+      <Item value="MessageBox" priority="1" />
+      <Item value="ExtendedMessageBox" priority="0" />
+      <Item value="errorMsg" priority="0" />
+      <Item value="static" priority="0" />
+      <Item value="returnResult" priority="0" />
+      <Item value="String" priority="0" />
+      <Item value="FrmSplash" priority="0" />
+      <Item value="frmMessageBox" priority="0" />
+      <Item value="DialogResult" priority="0" />
+      <Item value="customer" priority="0" />
+      <Item value="saleOrder" priority="0" />
+      <Item value="CustomerID" priority="0" />
+      <Item value="private" priority="0" />
+      <Item value="RetrieveDataHandler" priority="0" />
+      <Item value="dgvSearchResult" priority="0" />
+      <Item value="dgvInvoiceOutstanding" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.TextBox">
+      <Item value="Text" priority="6" />
+      <Item value="Enabled" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.Model.Product">
+      <Item value="ProductID" priority="1" />
+      <Item value="ProductCode" priority="1" />
+      <Item value="ForeignCode" priority="4" />
+      <Item value="DisplayName" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@EzPos.Properties.Resources">
+      <Item value="MsgConfirmEditExistingProduct" priority="0" />
+      <Item value="AppParamProductCodeLength" priority="0" />
+      <Item value="MsgExceedProductCodeLength" priority="0" />
+      <Item value="ModCustomerDebt" priority="0" />
+      <Item value="MsgConfirmCreditPayment" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.String">
+      <Item value="Empty" priority="6" />
+      <Item value="IsNullOrEmpty" priority="3" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.GUI.Reports.CsrEmpty">
+      <Item value="SetDataSource" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.Service.CommonService">
+      <Item value="GetAppParameters" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
+      <Item value="Add" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.IList">
+      <Item value="Count" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.Model.AppParameter">
+      <Item value="ParameterValue" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Int32">
+      <Item value="TryParse" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.String">
+      <Item value="ToCharArray" priority="0" />
+      <Item value="ToString" priority="1" />
+      <Item value="Length" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@EzPos.Service.ServiceFactory">
+      <Item value="GenerateServiceInstance" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.Service.ServiceFactory">
+      <Item value="GenerateCommonService" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataGridViewColumnCollection">
+      <Item value="Count" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.GUIs.Forms.ExtendedMessageBox">
+      <Item value="IsCanceledOnly" priority="0" />
+      <Item value="DialogResult" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@EzPos.Utility.StringHelper">
+      <Item value="Right" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DialogResult">
+      <Item value="OK" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.Model.Customer">
+      <Item value="DebtAmount" priority="0" />
+      <Item value="CustomerID" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.Model.SaleOrder">
+      <Item value="AmountReturnInt" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:EzPos.GUIs.Forms.FrmOutstandingInvoice">
+      <Item value="CustomerId" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Windows.Forms.MessageBox">
+      <Item value="Show" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.DataGridView">
+      <Item value="CurrentRow" priority="0" />
+      <Item value="ContextMenu" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Windows.Forms.ContextMenuStrip">
+      <Item value="ContextMenu" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/f:ApplicationContainer.cs" caret="0" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmMain.cs" caret="0" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Controls/f:CtrlReport.cs" caret="0" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:bin/d:Conf/d:Common/f:AppParameters.hbm.xml" caret="544" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Model/d:Common/f:Counter.cs" caret="505" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Model/d:Common/f:AppContext.cs" caret="2336" scrollPosition="0|56" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Utility/f:ClientInfoHelper.cs" caret="625" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:DataAccess/d:Common/f:CommonDataAccess.cs" caret="1654" scrollPosition="0|33" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Utility/f:StringHelper.cs" caret="1872" scrollPosition="0|42" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmSplash.cs" caret="0" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:bin/d:Conf/d:Supplier/f:Suppliers.hbm.xml" caret="0" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmSupplier.cs" caret="6931" scrollPosition="0|162" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:bin/f:HibernateConfig.xml" caret="311" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/f:App.config" caret="122" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Model/d:Common/f:IntegratedModule.cs" caret="59" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:Common/f:CommonService.cs" caret="13418" scrollPosition="0|332" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:ExtendedMessageBox.cs" caret="0" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Controls/f:CtrlSale.cs" caret="30180" scrollPosition="0|728" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmPayment.cs" caret="4172" scrollPosition="0|108" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Controls/f:CtrlCustomer.cs" caret="15074" scrollPosition="0|387" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/f:ServiceFactory.cs" caret="1218" scrollPosition="0|23" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:DataAccess/d:SaleOrder/f:SaleOrderDataAccess.cs" caret="1621" scrollPosition="0|27" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:SaleOrder/f:SaleOrderService.cs" caret="942" scrollPosition="0|16" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.Designer.cs" caret="420" scrollPosition="0|60" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.cs" caret="6131" scrollPosition="0|149" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:bin/d:Conf/d:Product/f:Products.hbm.xml" caret="1649" scrollPosition="0|18" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Model/d:Product/f:Product.cs" caret="27" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Controls/f:CtrlCatalog.cs" caret="2733" scrollPosition="0|64" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="14104" scrollPosition="0|352" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:Product/f:ProductService.cs" caret="4769" scrollPosition="0|0" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.Designer.cs" caret="29007" scrollPosition="0|445" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.cs" caret="2764" scrollPosition="0|72" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.cs" caret="5427" scrollPosition="0|141" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.cs" caret="5570" scrollPosition="0|146" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.cs" caret="2333" scrollPosition="0|76" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.cs" caret="6186" scrollPosition="0|151" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmOutstandingInvoice.cs" caret="6131" scrollPosition="0|151" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:bin/d:Conf/d:Product/f:Products.hbm.xml" caret="1672" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Model/d:Product/f:Product.cs" caret="1701" scrollPosition="0|45" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="11765" scrollPosition="0|320" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="12854" scrollPosition="0|329" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:Product/f:ProductService.cs" caret="1399" scrollPosition="0|46" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:Product/f:ProductService.cs" caret="2867" scrollPosition="0|70" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:Product/f:ProductService.cs" caret="2378" scrollPosition="0|70" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:Product/f:ProductService.cs" caret="980" scrollPosition="0|27" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="30051" scrollPosition="0|753" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="31516" scrollPosition="0|802" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Model/d:Product/f:Product.cs" caret="612" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Model/d:Product/f:Product.cs" caret="263" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="8330" scrollPosition="0|232" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="31987" scrollPosition="0|808" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Controls/f:CtrlCatalog.cs" caret="0" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="10476" scrollPosition="0|285" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="15" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="273" scrollPosition="0|0" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="32360" scrollPosition="0|805" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="8886" scrollPosition="0|252" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Forms/f:FrmCatalog.cs" caret="14104" scrollPosition="0|352" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:GUIs/d:Controls/f:CtrlCatalog.cs" caret="14616" scrollPosition="0|356" />
+      <File id="B8EFF784-4821-428E-AFC6-E5E0F42E989A/d:Service/d:Product/f:ProductService.cs" caret="4769" scrollPosition="0|115" />
+    </RecentEdits>
+  </RecentFiles>
+  <UnitTestRunner>
+    <CustomStartDirectory>
+    </CustomStartDirectory>
+    <UseShadowCopy>True</UseShadowCopy>
+    <UseCustomFolder>False</UseCustomFolder>
+    <EnableUnitTesting>True</EnableUnitTesting>
+    <Providers />
+  </UnitTestRunner>
+</Configuration>
