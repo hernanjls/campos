@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos.DataAccess">
+	<class name="EzPos.Model.Product,EzPos" table="[TProducts]">
+		<id name="ProductID" column="ProductID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>
+
+    <property name="ProductCode" column="ProductCode" />
+    <property name="ProductName" column="ProductName" />
+    <property name="Description" column="Description" />
+    <property name="CategoryID" column="CategoryID" type="Int32" />
+    <property name="CategoryStr" column="CategoryStr" />
+    <property name="MarkID" column="MarkID" type="Int32"/>
+    <property name="MarkStr" column="MarkStr" />
+    <property name="SizeID" column="SizeID" type="Int32"/>
+    <property name="SizeStr" column="SizeStr" />
+    <property name="ColorID" column="ColorID" type="Int32"/>
+    <property name="ColorStr" column="ColorStr" />
+    <property name="SkinID" column="SkinID" type="Int32"/>
+    <property name="SkinStr" column="SkinStr" />
+    <property name="PhotoPath" column="PhotoPath" />
+    <property name="UnitPriceIn" column="UnitPriceIn" type="float"/>
+    <property name="ExtraPercentage" column="ExtraPercentage" type="float"/>
+    <property name="UnitPriceOut" column="UnitPriceOut" type="float"/>
+    <property name="DiscountPercentage" column="DiscountPercentage" type="float"/>
+    <property name="QtyInStock" column="QtyInStock" type="float" />
+    <property name="QtySold" column="QtySold" type="float" />
+    <property name="LastUpdate" column="LastUpdate" type="DateTime" />
+    <property name="ForeignCode" column="ForeignCode" />
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		

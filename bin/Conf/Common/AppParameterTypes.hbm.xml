@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+  <class name="EzPos.Model.AppParameterType,EzPos" table="[TAppParameterTypes]">
+    <id name="ParameterTypeID" column="ParameterTypeID" unsaved-value="0" type="Int32" >
+      <generator class="identity" />
+    </id>
+    <property name="ParameterType" column="ParameterType" />
+    <property name="IsActive" column="IsActive" type="Int32" />
+  </class>
+</hibernate-mapping>
