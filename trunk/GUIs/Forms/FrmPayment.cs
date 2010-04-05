@@ -1,0 +1,801 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
+using System.Windows.Forms;
+using EzPos.Model;
+using EzPos.Properties;
+using EzPos.Service;
+using EzPos.Service.Common;
+using EzPos.Utility;
+
+namespace EzPos.GUIs.Forms
+{
+    public partial class FrmPayment : Form
+    {
+        private float _AmountPaidInt;
+        private float _AmountPaidRiel;
+        private CommonService _CommonService;
+        private Customer _Customer;
+        private BindingList<Customer> _CustomerList;
+        private CustomerService _CustomerService;
+        private BindingList<DiscountCard> _DiscountCardList;
+        private IList _DiscountTypeList;
+        private float _ExchangeRate;
+        private float _TotalAmountInt;
+
+        public FrmPayment()
+        {
+            InitializeComponent();
+        }
+
+        public CommonService CommonService
+        {
+            set { _CommonService = value; }
+        }
+
+        public CustomerService CustomerService
+        {
+            set { _CustomerService = value; }
+        }
+
+        public float TotalAmountInt
+        {
+            get { return _TotalAmountInt; }
+            set { _TotalAmountInt = value; }
+        }
+
+        public float AmountPaidInt
+        {
+            get { return _AmountPaidInt; }
+        }
+
+        public float AmountPaidRiel
+        {
+            get { return _AmountPaidRiel; }
+        }
+
+        public Customer Customer
+        {
+            get { return _Customer; }
+        }
+
+        private void FrmPayment_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                if (DialogResult != DialogResult.OK)
+                    return;
+
+                if (_Customer == null)
+                {
+                    const string briefMsg = "អំពីអតិថិជន";
+                    var detailMsg = "ការ​គិត​លុយ​ពុំ​អាច​ប្រព្រឹត្ត​ទៅ​ដោយ​គ្មាន​អតិថិជន​ឡើយ ។";
+                    using (var frmMessageBox = new ExtendedMessageBox())
+                    {
+                        frmMessageBox.BriefMsgStr = briefMsg;
+                        frmMessageBox.DetailMsgStr = detailMsg;
+                        frmMessageBox.IsCanceledOnly = true;
+                        frmMessageBox.ShowDialog(this);
+                    }
+
+                    e.Cancel = true;
+                    return;
+                }
+
+                PaymentManagement();
+                var amountReturnRiel = float.Parse(txtAmountReturnRiel.Text);
+                if (amountReturnRiel < 0)
+                {
+                    if (!CommonService.IsIntegratedModule(Resources.ModCustomerDebt))
+                    {
+                        if (((-1)*amountReturnRiel) >= 0)
+                        {
+                            const string briefMsg = "អំពីការប្រគល់ប្រាក់";
+                            const string detailMsg = "ទឹក​ប្រាក់​ដែល​អ្នក​បាន​បញ្ចូល​ពុំ​ទាន់​គ្រប់​គ្រាន់​ទេ ។";
+                            using (var frmMessageBox = new ExtendedMessageBox())
+                            {
+                                frmMessageBox.BriefMsgStr = briefMsg;
+                                frmMessageBox.DetailMsgStr = detailMsg;
+                                frmMessageBox.IsCanceledOnly = true;
+                                frmMessageBox.ShowDialog(this);
+                            }
+
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        const string briefMsg = "អំពីការប្រគល់ប្រាក់";
+                        var detailMsg = Resources.MsgConfirmCreditPayment;
+                        using (var frmMessageBox = new ExtendedMessageBox())
+                        {
+                            frmMessageBox.BriefMsgStr = briefMsg;
+                            frmMessageBox.DetailMsgStr = detailMsg;
+                            frmMessageBox.IsCanceledOnly = false;
+                            if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                        }                        
+                    }
+                }
+
+                if (CommonService.IsIntegratedModule(Resources.ModDiscountCard))
+                    DiscountCardManagement();
+            }
+            catch (Exception exception)
+            {
+                ExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+            }
+        }
+
+        private void FrmPayment_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    DialogResult = DialogResult.Cancel;
+                    break;
+                case Keys.Enter:
+                    if (txtAmountPaidUsd.Text.Length == 0)
+                        txtAmountPaidUsd.Focus();
+
+                    if (txtAmountPaidRiel.Text.Length == 0)
+                        txtAmountPaidRiel.Focus();
+
+                    DialogResult = DialogResult.OK;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void FrmPayment_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_CustomerService == null)
+                    _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
+                if (_CommonService == null)
+                    _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+
+                ThreadStart threadStart = UpdateControlContent;
+                var thread = new Thread(threadStart) {IsBackground = true};
+                thread.Start();
+
+                if (AppContext.ExchangeRate != null)
+                    _ExchangeRate = AppContext.ExchangeRate.ExchangeValue;
+
+                _DiscountCardList = new BindingList<DiscountCard>();
+                cmbDiscountCard.DataSource = _DiscountCardList;
+                cmbDiscountCard.DisplayMember = DiscountCard.CONST_DISCOUNT_CARD_NUMBER;
+                cmbDiscountCard.ValueMember = DiscountCard.CONST_DISCOUNT_CARD_ID;
+
+                _CustomerList = new BindingList<Customer>();
+                lsbCustomer.DataSource = _CustomerList;
+                lsbCustomer.DisplayMember = Customer.CONST_CUSTOMER_NAME;
+                lsbCustomer.ValueMember = Customer.CONST_CUSTOMER_ID;
+
+                txtExchangeRate.Text = _ExchangeRate.ToString("N", AppContext.CultureInfo);
+                txtCurrentSaleAmount.Text = _TotalAmountInt.ToString("N", AppContext.CultureInfo);
+                CalculateDiscount();
+
+                if (UserService.AllowToPerform(Resources.PermissionSpecialDiscount))
+                    cmbDCountType.Enabled = true;
+
+                if (!CommonService.IsIntegratedModule(Resources.ModCustomer))
+                {
+                    IList searchCriteria = new List<string> {"CustomerName|Retail Customer"};
+                    IList customerList = _CustomerService.GetCustomers(searchCriteria);
+                    foreach (Customer customer in customerList)
+                        _CustomerList.Add(customer);
+                    txtSearch.Enabled = false;
+                    lsbCustomer.Enabled = false;
+                    btnNew.Enabled = false;
+                }
+            }
+            catch (Exception exception)
+            {
+                ExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+            }
+        }
+
+        private void txtAmountPaidUsd_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtAmountPaidUsd.Text))
+                txtAmountPaidUsd.Text = "0.00";
+
+            PaymentManagement();
+        }
+
+        private void TxtAmountPaidRiel_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtAmountPaidRiel.Text))
+                txtAmountPaidRiel.Text = "0.00";
+
+            PaymentManagement();
+        }
+
+        private void PaymentManagement()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtAmountPaidUsd.Text))
+                    txtAmountPaidUsd.Text = "0.00";
+                if (string.IsNullOrEmpty(txtAmountPaidRiel.Text))
+                    txtAmountPaidRiel.Text = "0.00";
+                if (string.IsNullOrEmpty(txtTotalAmountUsd.Text))
+                    txtTotalAmountUsd.Text = "0.00";
+
+                var amountToPay = float.Parse(txtTotalAmountUsd.Text);
+                _AmountPaidInt = float.Parse(txtAmountPaidUsd.Text);
+                _AmountPaidRiel = float.Parse(txtAmountPaidRiel.Text);
+
+                _AmountPaidInt += float.Parse(txtAmountPaidRiel.Text)/_ExchangeRate;
+                txtAmountReturnUsd.Text = (_AmountPaidInt - amountToPay).ToString("N", AppContext.CultureInfo);
+                txtAmountReturnRiel.Text = ((_AmountPaidInt - amountToPay)*_ExchangeRate).ToString("N",
+                                                                                                   AppContext.
+                                                                                                       CultureInfo);
+            }
+            catch (Exception exception)
+            {
+                ExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+            }
+        }
+
+        private void lsbCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((lsbCustomer.SelectedIndex == -1) || (lsbCustomer.DisplayMember == "") ||
+                (lsbCustomer.ValueMember == ""))
+                ResetCustomerInfo();
+            else
+            {
+                _Customer = lsbCustomer.SelectedItem as Customer;
+                SetCustomerInfo();
+            }
+            CalculateDiscount();
+        }
+
+        private void SetCustomerInfo()
+        {
+            if (_Customer == null)
+                return;
+
+            cmbDiscountCard.SelectedIndex = -1;
+            var strCustomerInfo =
+                "អតិថិជន: " + _Customer.CustomerName + "\n" +
+                "លេខទូរស័ព្ទ: " + _Customer.PhoneNumber + "\n" +
+                "ទឹកប្រាក់បានទិញ: $" + _Customer.PurchasedAmount.ToString("N", AppContext.CultureInfo) + "\n";
+            lblCustomerInfo.Text = strCustomerInfo;
+
+            if (_DiscountCardList == null)
+                return;
+            for (var counter = 0; counter < _DiscountCardList.Count; counter++)
+            {
+                if (_Customer.CustomerID != (_DiscountCardList[counter]).CustomerID) 
+                    continue;
+
+                cmbDiscountCard.SelectedIndex = counter;
+                break;
+            }
+
+            if (cmbDiscountCard.SelectedItem != null)
+            {
+                _Customer.FKDiscountCard = (DiscountCard) cmbDiscountCard.SelectedItem;
+
+                txtSearch.Text = _Customer.FKDiscountCard.CardNumber;
+                txtDiscount.Text = _Customer.FKDiscountCard.DiscountPercentage + " %";
+                strCustomerInfo =
+                    _Customer.FKDiscountCard.CardNumber + " :ប័ណ្ណបញ្ចុះតំលៃ" + "\n " +
+                    _Customer.FKDiscountCard.DiscountCardTypeStr + " :ប្រភេទប័ណ្ណ" + "\n" +
+                    _Customer.FKDiscountCard.DiscountPercentage + "% :%បញ្ចុះតំលៃ";
+
+                _Customer.DiscountCardNumber = _Customer.FKDiscountCard.CardNumber;
+                _Customer.DiscountCardType = _Customer.FKDiscountCard.DiscountCardTypeStr;
+                _Customer.DiscountPercentage = _Customer.FKDiscountCard.DiscountPercentage;
+
+                cmbDiscountCard.SelectedIndex = -1;
+            }
+            else
+            {
+                txtSearch.Text = string.Empty;
+                txtDiscount.Text = "0 %";
+                strCustomerInfo =
+                    "N/A :ប័ណ្ណបញ្ចុះតំលៃ" + "\n " +
+                    "N/A :ប្រភេទប័ណ្ណ" + "\n" +
+                    "N/A :%បញ្ចុះតំលៃ";
+            }
+            lblDCardInfo.Text = strCustomerInfo;
+        }
+
+        private void ResetCustomerInfo()
+        {
+            lblCustomerInfo.Text = string.Empty;
+        }
+
+        private void CalculateDiscount()
+        {
+            float totalAmountPurchase;
+            if (_Customer == null)
+                totalAmountPurchase = _TotalAmountInt;
+            else
+                totalAmountPurchase = _Customer.PurchasedAmount + _TotalAmountInt;
+
+            if (_DiscountTypeList == null)
+            {
+                CalculateSale("0 %", 0);
+                return;
+            }
+
+            if (_DiscountTypeList.Count == 0)
+            {
+                CalculateSale("0 %", 0);
+                return;
+            }
+
+            float discountPercentage = 0;
+            foreach (AppParameter appParameter in _DiscountTypeList)
+            {
+                if (appParameter == null) 
+                    continue;
+
+                if (String.IsNullOrEmpty(appParameter.ParameterCode))
+                    appParameter.ParameterCode = "0";
+
+                var purchasedAmount = float.Parse(appParameter.ParameterCode, AppContext.CultureInfo);
+                if (totalAmountPurchase < purchasedAmount) 
+                    continue;
+
+                if (String.IsNullOrEmpty(appParameter.ParameterValue))
+                    appParameter.ParameterValue = "0";
+
+                discountPercentage = float.Parse(appParameter.ParameterValue, AppContext.CultureInfo);
+            }
+
+            CalculateSale(discountPercentage.ToString("N0") + " %", discountPercentage);
+            PaymentManagement();
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            if (!UserService.AllowToPerform(Resources.PermissionAddCustomer))
+            {
+                const string briefMsg = "អំពីសិទ្ឋប្រើប្រាស់";
+                const string detailMsg = "អ្នក​ពុំ​មាន​សិទ្ឋ​គ្រប់​គ្រាន់​សំរាប់​ការ​ស្នើរ​សុំ​នេះ​ឡើយ ។";
+                using (var frmMessageBox = new ExtendedMessageBox())
+                {
+                    frmMessageBox.BriefMsgStr = briefMsg;
+                    frmMessageBox.DetailMsgStr = detailMsg;
+                    frmMessageBox.IsCanceledOnly = true;
+                    frmMessageBox.ShowDialog(this);
+                }
+                return;
+            }
+
+            Visible = false;
+            using (var frmCustomer = new FrmCustomer())
+            {
+                if (frmCustomer.ShowDialog(this) == DialogResult.OK)
+                {
+                    try
+                    {
+                        _CustomerList.Add(frmCustomer.Customer);
+                        if (frmCustomer.Customer.FKDiscountCard != null)
+                            _DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
+
+                        lsbCustomer.SelectedIndex = -1;
+                        lsbCustomer.SelectedIndex = lsbCustomer.FindStringExact(frmCustomer.Customer.CustomerName);
+                    }
+                    catch (Exception exception)
+                    {
+                        ExtendedMessageBox.UnknownErrorMessage(
+                            Resources.MsgCaptionUnknownError,
+                            exception.Message);
+                    }
+                }
+                Visible = true;
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Return:
+                        if (StringHelper.Length(txtSearch.Text) == 0)
+                            return;
+
+                        DoCustomerFetching(txtSearch.Text, true);
+                        break;
+                }
+            }
+            catch (Exception exception)
+            {
+                ExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+            }
+        }
+
+        private void txtAmountPaidUsd_TextChanged(object sender, EventArgs e)
+        {
+            PaymentManagement();
+        }
+
+        private void txtAmountPaidRiel_TextChanged(object sender, EventArgs e)
+        {
+            PaymentManagement();
+        }
+
+        private void txtDCardNum_Enter(object sender, EventArgs e)
+        {
+            txtSearch.Text = "";
+            KeyDown -= FrmPayment_KeyDown;
+        }
+
+        private void txtDCardNum_Leave(object sender, EventArgs e)
+        {
+            KeyDown += FrmPayment_KeyDown;
+        }
+
+        private void btnSave_MouseEnter(object sender, EventArgs e)
+        {
+            btnSave.BackgroundImage = Resources.background_9;
+        }
+
+        private void btnSave_MouseLeave(object sender, EventArgs e)
+        {
+            btnSave.BackgroundImage = Resources.background_2;
+        }
+
+        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancel.BackgroundImage = Resources.background_9;
+        }
+
+        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancel.BackgroundImage = Resources.background_2;
+        }
+
+        private void btnNew_MouseEnter(object sender, EventArgs e)
+        {
+            btnNew.BackgroundImage = Resources.background_9;
+        }
+
+        private void btnNew_MouseLeave(object sender, EventArgs e)
+        {
+            btnNew.BackgroundImage = Resources.background_2;
+        }
+
+        private void DoCustomerFetching(string givenParam, bool isAllowed)
+        {
+            if (String.IsNullOrEmpty(givenParam))
+                return;
+
+            cmbDiscountCard.SelectedIndex = -1;
+            lsbCustomer.SelectedIndex = -1;
+
+            int selectedIndex = cmbDiscountCard.FindStringExact(
+                StringHelper.Right("000000000" + givenParam, 9));
+            if (selectedIndex == -1)
+            {
+                selectedIndex = lsbCustomer.FindString(givenParam);
+                if (selectedIndex == -1)
+                {
+                    foreach (var customer in _CustomerList)
+                    {
+                        if ((customer.CustomerName.ToUpper() != givenParam.ToUpper()) &&
+                            (customer.PhoneNumber != givenParam)) 
+                            continue;
+
+                        lsbCustomer.SelectedIndex = _CustomerList.IndexOf(customer);
+                        break;
+                    }
+                }
+                else
+                    lsbCustomer.SelectedIndex = selectedIndex;
+            }
+            else
+            {
+                cmbDiscountCard.SelectedIndex = selectedIndex;
+                lsbCustomer.SelectedValue = ((DiscountCard) cmbDiscountCard.SelectedItem).CustomerID;
+            }
+
+            if ((lsbCustomer.SelectedIndex == -1) && (isAllowed))
+            {
+                var searchCriteria = new List<string>
+                                         {
+                                             "(CustomerName LIKE '%" + givenParam + "%')" +
+                                             " OR (PhoneNumber LIKE '%" + givenParam + "%')" +
+                                             " OR (CustomerID IN (SELECT CustomerID FROM TDiscountCards WHERE CustomerID <> 0 AND CardNumber LIKE '%" +
+                                             givenParam + "%'))"
+                                         };
+                var customerList = _CustomerService.GetCustomers(searchCriteria);
+                if (customerList.Count != 0)
+                {
+                    foreach (Customer customer in customerList)
+                    {
+                        _CustomerList.Add(customer);
+
+                        var discountCardList =
+                            _CustomerService.GetDiscountCardsByCustomer(customer.CustomerID);
+                        foreach (DiscountCard discountCard in discountCardList)
+                            _DiscountCardList.Add(discountCard);
+                    }
+
+                    DoCustomerFetching(givenParam, false);
+                }
+                else
+                {
+                    if (txtSearch.CanFocus)
+                        txtSearch.Focus();
+
+                    const string briefMsg = "អំពីអតិថិជន";
+                    var detailMsg = Resources.MsgOperationRequestCustomerNotFound;
+                    using (var frmMessageBox = new ExtendedMessageBox())
+                    {
+                        frmMessageBox.BriefMsgStr = briefMsg;
+                        frmMessageBox.DetailMsgStr = detailMsg;
+                        frmMessageBox.IsCanceledOnly = true;
+                        frmMessageBox.ShowDialog(this);
+                        return;
+                    }
+                }
+            }
+
+            if (lsbCustomer.CanFocus)
+                lsbCustomer.Focus();
+        }
+
+        private void DiscountCardManagement()
+        {
+            if (_Customer == null)
+                return;
+
+            var dCardTypeList =
+                _CommonService.GetAppParametersByType(
+                    Int32.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo));
+
+            _Customer.PurchasedAmount += _TotalAmountInt;
+            if (_Customer.FKDiscountCard != null)
+                _Customer.PurchasedAmount -= ((_TotalAmountInt*_Customer.FKDiscountCard.DiscountPercentage)/100);
+
+            var counter = -1;
+            foreach (AppParameter appParameter in dCardTypeList)
+            {
+                if (_Customer.PurchasedAmount < float.Parse(appParameter.ParameterCode, AppContext.CultureInfo))
+                    continue;
+
+                if (counter == -1)
+                    counter = dCardTypeList.IndexOf(appParameter);
+                else if (
+                    float.Parse(((AppParameter) dCardTypeList[counter]).ParameterCode, AppContext.CultureInfo) <=
+                    float.Parse(appParameter.ParameterCode, AppContext.CultureInfo))
+                    counter = dCardTypeList.IndexOf(appParameter);
+            }
+
+            if (counter == -1)
+                return;
+
+            if (_Customer.FKDiscountCard == null)
+            {
+                DiscountCardDistribution(
+                    _Customer,
+                    "",
+                    ((AppParameter) dCardTypeList[counter]).ParameterLabel);
+            }
+            else
+            {
+                if (_Customer.FKDiscountCard.DiscountCardTypeID !=
+                    ((AppParameter) dCardTypeList[counter]).ParameterID)
+                {
+                    DiscountCardDistribution(
+                        _Customer,
+                        _Customer.FKDiscountCard.DiscountCardTypeStr,
+                        ((AppParameter) dCardTypeList[counter]).ParameterLabel);
+                }
+            }
+        }
+
+        private void DiscountCardDistribution(
+            Customer customer,
+            string currentCardType,
+            string nextCardType)
+        {
+            if (customer == null)
+                return;
+
+            if (customer.DiscountRejected == 1)
+                return;
+
+            string briefMsgStr, detailMsgStr;
+            if (String.IsNullOrEmpty(currentCardType))
+            {
+                briefMsgStr = "ការប្រគល់ប័ណ្ណបញ្ចុះតំលៃ";
+                detailMsgStr = String.Format(
+                    "សូម​មេត្តា​ផ្ដល់​ប័ណ្ណ​កាត​បញ្ចុះ​តំលៃ​ប្រភេទ​​ {0} ជូន​ទៅ​អតិថិជន {1}",
+                    nextCardType,
+                    customer.CustomerName);
+            }
+            else
+            {
+                briefMsgStr = "កាផ្លាស់ប្ដូរប័ណ្ណបញ្ចុះតំលៃ";
+                detailMsgStr = string.Format(
+                    "សូមមេត្តាប្ដូរប័ណ្ណបញ្ចុះតំលៃពីប្រភេទ {0} ទៅប្រភេទ {1} ជូនអតិថិជន {2}",
+                    currentCardType,
+                    nextCardType,
+                    customer.CustomerName);
+            }
+
+            using (var frmMessageBox = new ExtendedMessageBox())
+            {
+                frmMessageBox.BriefMsgStr = briefMsgStr;
+                frmMessageBox.DetailMsgStr = detailMsgStr;
+
+                if (frmMessageBox.ShowDialog(this) != DialogResult.OK) 
+                    return;
+
+                Visible = false;
+                using (var frmCustomer = new FrmCustomer())
+                {
+                    frmCustomer.Customer = customer;
+                    if (frmCustomer.ShowDialog(this) == DialogResult.OK)
+                        _Customer = frmCustomer.Customer;
+                    Visible = true;
+                }
+            }
+        }
+
+        private void CalculateSale(string dPercentageStr, float dPercentage)
+        {
+            var customer = lsbCustomer.SelectedItem as Customer;
+            if (customer == null)
+                return;
+
+            if (customer.DiscountRejected == 1)
+            {
+                dPercentage = 0;
+                dPercentageStr = "0 %";
+            }
+
+            txtDiscount.Text = dPercentageStr;
+
+            var currentAmount = _TotalAmountInt - ((_TotalAmountInt*dPercentage)/100);
+
+            txtTotalAmountUsd.Text = currentAmount.ToString("N", AppContext.CultureInfo);
+            txtTotalAmountRiel.Text =
+                (_ExchangeRate*currentAmount).ToString("N", AppContext.CultureInfo);
+            if (_Customer == null) 
+                return;
+
+            if (_Customer.FKDiscountCard == null)
+                _Customer.FKDiscountCard = new DiscountCard();
+            _Customer.FKDiscountCard.DiscountPercentage = dPercentage;
+            _Customer.DiscountPercentage = dPercentage;
+        }
+
+        private void UpdateControlContent()
+        {
+            SafeCrossCallBackDelegate safeCrossCallBackDelegate = null;
+
+            if (cmbDCountType.InvokeRequired)
+                safeCrossCallBackDelegate = UpdateControlContent;
+
+            if (cmbDCountType.InvokeRequired)
+                Invoke(safeCrossCallBackDelegate);
+            else
+            {
+                _DiscountTypeList = _CommonService.GetAppParametersByTypeSortByValue(
+                    Int32.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo));
+
+                if (_DiscountTypeList.Count != 0)
+                {
+                    cmbDCountType.DataSource = _DiscountTypeList;
+                    cmbDCountType.DisplayMember = AppParameter.CONST_PARAMETER_VALUE;
+                    cmbDCountType.ValueMember = AppParameter.CONST_PARAMETER_VALUE;
+
+                    if (lsbCustomer.Items.Count != 0)
+                    {
+                        int selectedIndex = lsbCustomer.SelectedIndex;
+                        lsbCustomer.SelectedIndex = -1;
+                        lsbCustomer.SelectedIndex = selectedIndex;
+                    }
+                }
+            }
+        }
+
+        private void cmbDCountType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((cmbDCountType.DataSource == null) ||
+                String.IsNullOrEmpty(cmbDCountType.ValueMember) ||
+                String.IsNullOrEmpty(cmbDCountType.DisplayMember))
+                return;
+
+            if (cmbDCountType.SelectedIndex == -1)
+                return;
+
+            CalculateSale(cmbDCountType.SelectedValue + " %",
+                          Int32.Parse(cmbDCountType.SelectedValue.ToString(), AppContext.CultureInfo));
+
+            cmbDCountType.SelectedIndex = -1;
+        }
+
+        private void lsbCustomer_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if ((String.IsNullOrEmpty(lsbCustomer.DisplayMember)) ||
+                (String.IsNullOrEmpty(lsbCustomer.ValueMember)) ||
+                (lsbCustomer.SelectedIndex == -1))
+                return;
+
+            ManageCustomer(
+                lsbCustomer.SelectedItem as Customer,
+                Resources.OperationRequestUpdate);
+        }
+
+        private void ManageCustomer(Customer customer, string operationStr)
+        {
+            if (String.IsNullOrEmpty(operationStr))
+                return;
+
+            Visible = false;
+            using (var frmCustomer = new FrmCustomer())
+            {
+                DiscountCard discountCard = null;
+                if (customer != null)
+                {
+                    frmCustomer.Customer = customer;
+                    discountCard = customer.FKDiscountCard;
+                }
+
+                if (frmCustomer.ShowDialog(this) == DialogResult.OK)
+                {
+                    try
+                    {
+                        //Remove existing discount card of selected customer
+                        if (discountCard != null)
+                            _DiscountCardList.Remove(discountCard);
+                        //Add new discount card of selected customer
+                        if (frmCustomer.Customer.FKDiscountCard != null)
+                            _DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
+
+                        //Customer
+                        if (operationStr.Equals(Resources.OperationRequestInsert))
+                            _CustomerList.Add(frmCustomer.Customer);
+                        else
+                            _CustomerList[_CustomerList.IndexOf(lsbCustomer.SelectedItem as Customer)] =
+                                frmCustomer.Customer;
+
+                        lsbCustomer.SelectedIndex = -1;
+                        lsbCustomer.SelectedIndex = lsbCustomer.FindStringExact(frmCustomer.Customer.CustomerName);
+                    }
+                    catch (Exception exception)
+                    {
+                        ExtendedMessageBox.UnknownErrorMessage(
+                            Resources.MsgCaptionUnknownError,
+                            exception.Message);
+                    }
+                }
+                Visible = true;
+            }
+        }
+
+        #region Nested type: SafeCrossCallBackDelegate
+
+        private delegate void SafeCrossCallBackDelegate();
+
+        #endregion
+    }
+}
