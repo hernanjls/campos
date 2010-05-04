@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Reflection;
 using System.Windows.Forms;
 using EzPos.GUIs.DataSets;
 using EzPos.GUIs.Forms;
@@ -18,6 +16,7 @@ namespace EzPos.GUIs.Controls
         private ExpenseService _ExpenseService;
         private ProductService _ProductService;
         private SaleOrderService _SaleOrderService;
+        private DepositService _DepositService;
 
         public CtrlReport()
         {
@@ -46,7 +45,7 @@ namespace EzPos.GUIs.Controls
                 if (!UserService.AllowToPerform(Resources.PermissionViewSaleDetailReport))
                 {
                     const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                    string detailMsg = Resources.MsgUserPermissionDeny;
+                    var detailMsg = Resources.MsgUserPermissionDeny;
                     using (var frmMessageBox = new ExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
@@ -62,7 +61,7 @@ namespace EzPos.GUIs.Controls
                 if (!UserService.AllowToPerform(Resources.PermissionViewSaleReport))
                 {
                     const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                    string detailMsg = Resources.MsgUserPermissionDeny;
+                    var detailMsg = Resources.MsgUserPermissionDeny;
                     using (var frmMessageBox = new ExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
@@ -74,23 +73,24 @@ namespace EzPos.GUIs.Controls
                 }
             }
 
-            var searchCriteria = new List<string>
-                                     {
-                                         "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 0)",
-                                         "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
-                                         dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         "', 103) AND CONVERT(DATETIME, '" +
-                                         dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         " 23:59', 103)"
-                                     };
-            IList saleList = _SaleOrderService.GetSaleHistories(searchCriteria);
+            var searchCriteria = 
+                new List<string>
+                {
+                    "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 0)",
+                    "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
+                    dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    "', 103) AND CONVERT(DATETIME, '" +
+                    dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    " 23:59', 103)"
+                };
+            var saleList = _SaleOrderService.GetSaleHistories(searchCriteria);
 
             DataSet dtsModel = new DtsModels();
-            PropertyInfo[] PropertyInfos = typeof (SaleOrderReport).GetProperties();
-            foreach (object objInstance in saleList)
+            var PropertyInfos = typeof (SaleOrderReport).GetProperties();
+            foreach (var objInstance in saleList)
             {
-                DataRow dataRow = dtsModel.Tables[1].NewRow();
-                foreach (PropertyInfo propertyInfo in PropertyInfos)
+                var dataRow = dtsModel.Tables[1].NewRow();
+                foreach (var propertyInfo in PropertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dtsModel.Tables[1].Rows.Add(dataRow);
             }
@@ -114,7 +114,7 @@ namespace EzPos.GUIs.Controls
             if (!UserService.AllowToPerform(Resources.PermissionViewReturnProductReport))
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                string detailMsg = Resources.MsgUserPermissionDeny;
+                var detailMsg = Resources.MsgUserPermissionDeny;
                 using (var frmMessageBox = new ExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
@@ -125,24 +125,25 @@ namespace EzPos.GUIs.Controls
                 }
             }
 
-            var searchCriteria = new List<string>
-                                     {
-                                         "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 1)",
-                                         "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
-                                         dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         "', 103) AND CONVERT(DATETIME, '" +
-                                         dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         " 23:59', 103)"
-                                     };
+            var searchCriteria = 
+                new List<string>
+                {
+                    "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 1)",
+                    "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
+                    dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    "', 103) AND CONVERT(DATETIME, '" +
+                    dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    " 23:59', 103)"
+                };
 
-            IList assessmentList = _SaleOrderService.GetSaleHistories(searchCriteria);
+            var assessmentList = _SaleOrderService.GetSaleHistories(searchCriteria);
 
             DataSet dtsModel = new DtsModels();
-            PropertyInfo[] PropertyInfos = typeof (SaleOrderReport).GetProperties();
-            foreach (object objInstance in assessmentList)
+            var PropertyInfos = typeof (SaleOrderReport).GetProperties();
+            foreach (var objInstance in assessmentList)
             {
-                DataRow dataRow = dtsModel.Tables[1].NewRow();
-                foreach (PropertyInfo propertyInfo in PropertyInfos)
+                var dataRow = dtsModel.Tables[1].NewRow();
+                foreach (var propertyInfo in PropertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dtsModel.Tables[1].Rows.Add(dataRow);
             }
@@ -193,7 +194,7 @@ namespace EzPos.GUIs.Controls
                     if (!UserService.AllowToPerform(Resources.PermissionViewExpiredProductReport))
                     {
                         const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                        string detailMsg = Resources.MsgUserPermissionDeny;
+                        var detailMsg = Resources.MsgUserPermissionDeny;
                         using (var frmMessageBox = new ExtendedMessageBox())
                         {
                             frmMessageBox.BriefMsgStr = briefMsg;
@@ -252,10 +253,24 @@ namespace EzPos.GUIs.Controls
 
         private void btnSearchSale_Click(object sender, EventArgs e)
         {
-            if (rdbSale.Checked)
-                RefreshReportSale(chbShowBenefit.Checked);
-            else
-                RefreshReportReturn();
+            try
+            {
+                if (rdbSale.Checked)
+                    RefreshReportSale(chbShowBenefit.Checked);
+                else if (rdbDeposit.Checked)
+                {
+                    RefreshReportDeposit();
+                }
+                else
+                    RefreshReportReturn();
+            }
+            catch (Exception exception)
+            {
+                ExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+                throw;
+            }
         }
 
         private void btnSearchStock_MouseEnter(object sender, EventArgs e)
@@ -288,7 +303,7 @@ namespace EzPos.GUIs.Controls
             if (!UserService.AllowToPerform(Resources.PermissionViewExpenseReport))
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                string detailMsg = Resources.MsgUserPermissionDeny;
+                var detailMsg = Resources.MsgUserPermissionDeny;
                 using (var frmMessageBox = new ExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
@@ -299,22 +314,23 @@ namespace EzPos.GUIs.Controls
                 }
             }
 
-            var searchCriteria = new List<string>
-                                     {
-                                         "CONVERT(DATETIME, ExpenseDate, 103) BETWEEN CONVERT(DATETIME, '" +
-                                         dtpExpenseStart.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         "', 103) AND CONVERT(DATETIME, '" +
-                                         dtpExpenseStop.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         " 23:59', 103)"
-                                     };
-            IList expenseList = _ExpenseService.GetExpenses(searchCriteria);
+            var searchCriteria = 
+                new List<string>
+                {
+                    "CONVERT(DATETIME, ExpenseDate, 103) BETWEEN CONVERT(DATETIME, '" +
+                    dtpExpenseStart.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    "', 103) AND CONVERT(DATETIME, '" +
+                    dtpExpenseStop.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    " 23:59', 103)"
+                };
+            var expenseList = _ExpenseService.GetExpenses(searchCriteria);
 
             DataSet dtsProduct = new DtsModels();
-            PropertyInfo[] PropertyInfos = typeof (Expense).GetProperties();
-            foreach (object objInstance in expenseList)
+            var PropertyInfos = typeof (Expense).GetProperties();
+            foreach (var objInstance in expenseList)
             {
-                DataRow dataRow = dtsProduct.Tables["DtbExpenses"].NewRow();
-                foreach (PropertyInfo propertyInfo in PropertyInfos)
+                var dataRow = dtsProduct.Tables["DtbExpenses"].NewRow();
+                foreach (var propertyInfo in PropertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dtsProduct.Tables["DtbExpenses"].Rows.Add(dataRow);
             }
@@ -338,10 +354,56 @@ namespace EzPos.GUIs.Controls
         {
             if (_SaleOrderService == null)
                 _SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
+            if (_DepositService == null)
+                _DepositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
             if (_ProductService == null)
                 _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
             if (_ExpenseService == null)
                 _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+        }               
+
+        private void RefreshReportDeposit()
+        {
+            if (!UserService.AllowToPerform(Resources.PermissionViewDepositReport))
+            {
+                const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
+                var detailMsg = Resources.MsgUserPermissionDeny;
+                using (var frmMessageBox = new ExtendedMessageBox())
+                {
+                    frmMessageBox.BriefMsgStr = briefMsg;
+                    frmMessageBox.DetailMsgStr = detailMsg;
+                    frmMessageBox.IsCanceledOnly = true;
+                    frmMessageBox.ShowDialog(this);
+                    return;
+                }
+            }
+
+            var searchCriteria =
+                new List<string>
+                {
+                    "and (DepositDate BETWEEN CONVERT(DATETIME, '" +
+                    dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    "', 103) AND CONVERT(DATETIME, '" +
+                    dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    " 23:59', 103)) ",
+                    "and (AmountPaidInt < AmountSoldInt) "
+                };
+
+            var assessmentList = _DepositService.GetDepositHistories(searchCriteria);
+
+            DataSet dtsModel = new DtsModels();
+            var PropertyInfos = typeof(DepositReport).GetProperties();
+            foreach (var objInstance in assessmentList)
+            {
+                var dataRow = dtsModel.Tables[3].NewRow();
+                foreach (var propertyInfo in PropertyInfos)
+                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
+                dtsModel.Tables[3].Rows.Add(dataRow);
+            }
+
+            var rptDeposit = new CsrDeposit();
+            rptDeposit.SetDataSource(dtsModel);
+            crvReport.ReportSource = rptDeposit;           
         }
     }
 }

@@ -5,6 +5,7 @@ namespace EzPos.Model
     public class User
     {
         public const string CONST_USER_LOG_IN_NAME = "LogInName";
+        public const string CONST_USER_ID = "UserID";
 
         public int UserID { get; set; }
 

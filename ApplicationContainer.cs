@@ -6,6 +6,8 @@ using Castle.Windsor;
 using EzPos.DataAccess;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Payment;
+using EzPos.DataAccess.Payments;
 
 // Copyright 2004-2005 Castle Project - http://www.castleproject.org/
 // 
@@ -67,6 +69,14 @@ namespace EzPos
             // SaleOrder
             AddComponent("SaleOrder.Service", typeof (SaleOrderService));
             AddComponent("SaleOrder.DataAccess", typeof (SaleOrderDataAccess));
+
+            // Deposit
+            AddComponent("Deposit.Service", typeof(DepositService));
+            AddComponent("Deposit.DataAccess", typeof(DepositDataAccess));
+
+            // Payment
+            AddComponent("Payment.Service", typeof(PaymentService));
+            AddComponent("Payment.DataAccess", typeof(PaymentDataAccess));
 
             // User
             AddComponent("User.Service", typeof (UserService));

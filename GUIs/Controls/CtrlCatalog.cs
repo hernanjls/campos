@@ -14,7 +14,7 @@ using EzPos.Service;
 using EzPos.Service.Common;
 using EzPos.Utility;
 
-namespace EzPos.Control
+namespace EzPos.GUIs.Controls
 {
     public partial class CtrlCatalog : UserControl
     {
@@ -195,7 +195,7 @@ namespace EzPos.Control
 
                                     if (frmCatalog.Product.QtyInStock == 0)
                                     {
-                                        for (int counter = 0; counter < _ProductList.Count; counter++)
+                                        for (var counter = 0; counter < _ProductList.Count; counter++)
                                         {
                                             if (_ProductList[counter].ProductID == frmCatalog.Product.ProductID)
                                                 _ProductList.RemoveAt(counter);
@@ -284,7 +284,7 @@ namespace EzPos.Control
             try
             {
                 _ProductService.ManageProduct(_ProductList[dgvProduct.CurrentRow.Index],
-                                             Resources.OperationRequestDelete);
+                                              Resources.OperationRequestDelete);
 
                 _ProductList.RemoveAt(dgvProduct.CurrentRow.Index);
                 DisplayPartialPicture(
@@ -326,7 +326,11 @@ namespace EzPos.Control
                     searchCriteria.Add("ColorID|" + cmbColor.SelectedValue);
 
                 if (txtProductCode.Text.Length != 0)
-                    searchCriteria.Add("ProductCode|" + StringHelper.Right("000000000" + txtProductCode.Text, 9));
+                {
+                    searchCriteria.Add(
+                        "(ProductCode LIKE '%" + txtProductCode.Text + "%') OR " +
+                        "(ForeignCode LIKE '%" + txtProductCode.Text + "%')");
+                }
 
                 _ProductList.Clear();
                 IListToBindingList(
@@ -425,20 +429,25 @@ namespace EzPos.Control
                 if (rdbPrintAll.Checked)
                 {
                     _BarCodeList.Clear();
-                    for (int counter = 0; counter < _ProductList.Count; counter++)
+                    for (var counter = 0; counter < _ProductList.Count; counter++)
                     {
-                        for (int qtyCounter = 0; qtyCounter < (_ProductList[counter]).QtyInStock; qtyCounter++)
+                        for (var qtyCounter = 0; qtyCounter < (_ProductList[counter]).QtyInStock; qtyCounter++)
                         {
-                            var barCode = new BarCode
-                                              {
-                                                  BarCodeValue = (_ProductList[counter]).ProductCode,
-                                                  DisplayStr =
-                                                      (_ProductList[counter]).UnitPriceOut.ToString("N",
-                                                                                                    AppContext.
-                                                                                                        CultureInfo)
-                                              };
+                            var barCode = 
+                                new BarCode
+                                {
+                                    BarCodeValue = (_ProductList[counter]).ProductCode,
+                                    DisplayStr = (_ProductList[counter]).CategoryStr,
+                                    AdditionalStr =
+                                        "$ " + (_ProductList[counter]).UnitPriceOut.ToString("N", AppContext.CultureInfo)
+                                };
+
+                            var foreignCode = (_ProductList[counter]).ForeignCode;
+                            if (!string.IsNullOrEmpty(foreignCode))
+                                barCode.DisplayStr += " (" + foreignCode + ")";
                             _BarCodeList.Add(barCode);
                         }
+
                         (_ProductList[counter]).PrintCheck = true;
                         (_ProductList[counter]).PublicQty =
                             (_ProductList[counter]).QtyInStock +
@@ -497,7 +506,7 @@ namespace EzPos.Control
                 return;
             }
 
-            Product product = _ProductList[dgvProduct.CurrentRow.Index];
+            var product = _ProductList[dgvProduct.CurrentRow.Index];
             if (product == null)
                 return;
 
@@ -521,7 +530,7 @@ namespace EzPos.Control
             if (_BarCodeList == null)
                 return;
 
-            foreach (BarCode barCode in _BarCodeList)
+            foreach (var barCode in _BarCodeList)
             {
                 if (barCode.BarCodeValue == product.ProductCode)
                     barCode.DisplayStr = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
@@ -530,22 +539,29 @@ namespace EzPos.Control
 
         private void UpdateResultInfo()
         {
-            int resultNum = 0;
-            float totalProdNum = 0;
+            var resultNum = 0;
+            var totalProdNum = 0f;
+            var totalPriceOut = 0f;
             if (_ProductList != null)
             {
-                foreach (Product product in _ProductList)
+                foreach (var product in _ProductList)
+                {
                     totalProdNum += product.QtyInStock;
+                    totalPriceOut += (product.QtyInStock * product.UnitPriceOut);
+                }
                 resultNum = _ProductList.Count;
             }
 
-            string strResultInfo = string.Format(
-                "ការសែ្វងរករបស់អ្នកផ្តល់លទ្ឋផលចំនួន {0} រូបត្រូវជា {1} ផលិតផល",
+            var strResultInfo = string.Format(
+                "ការសែ្វងរករបស់អ្នកផ្តល់លទ្ឋផលចំនួន {0} រូបត្រូវជា {1} ផលិតផលនិង {2} ដុល្លារ",
                 resultNum.ToString("N0", AppContext.CultureInfo),
-                totalProdNum.ToString("N0", AppContext.CultureInfo));
+                totalProdNum.ToString("N0", AppContext.CultureInfo),
+                totalPriceOut.ToString("N", AppContext.CultureInfo));
             lblResultInfo.Text = strResultInfo;
-            rdbPrintAll.Text = "កូដទាំងអស់ (" +
-                               totalProdNum.ToString("N0", AppContext.CultureInfo) + ")";
+            rdbPrintAll.Text = 
+                "កូដទាំងអស់ (" +
+                totalProdNum.ToString("N0", AppContext.CultureInfo) + 
+                ")";
         }
 
         private void btnPrint_MouseEnter(object sender, EventArgs e)
@@ -598,29 +614,29 @@ namespace EzPos.Control
                 if ((scrollEventType == ScrollEventType.SmallDecrement) ||
                     (scrollEventType == ScrollEventType.LargeDecrement))
                 {
-                    int tmpIndex = startIndex;
+                    var tmpIndex = startIndex;
                     startIndex = stopIndex;
                     stopIndex = tmpIndex;
 
-                    for (int counter = startIndex + numPicture; counter < stopIndex + numPicture; counter++)
+                    for (var counter = startIndex + numPicture; counter < stopIndex + numPicture; counter++)
                     {
                         if (counter < _ProductList.Count)
                             _ProductList[counter].ProductPic = null;
                     }
 
-                    for (int counter = startIndex; counter < startIndex + numPicture; counter++)
+                    for (var counter = startIndex; counter < startIndex + numPicture; counter++)
                         SetProductPicture(_ProductList[counter]);
                 }
                 else
                 {
-                    for (int counter = startIndex; counter < stopIndex; counter++)
+                    for (var counter = startIndex; counter < stopIndex; counter++)
                     {
                         _ProductList[counter].ProductPic = null;
                         if (counter >= numPicture)
                             break;
                     }
 
-                    for (int counter = stopIndex; counter < stopIndex + numPicture; counter++)
+                    for (var counter = stopIndex; counter < stopIndex + numPicture; counter++)
                         SetProductPicture(_ProductList[counter]);
                 }
                 dgvProduct.Refresh();
@@ -652,7 +668,6 @@ namespace EzPos.Control
             if (curProduct == null)
                 throw new ArgumentNullException("curProduct", "Current Product");
 
-            float tmpCounter = 0;
             try
             {
                 bool isIncremented;
@@ -666,8 +681,6 @@ namespace EzPos.Control
 
                         if (_BarCodeList.Count >= preQtyInStock)
                             _BarCodeList.RemoveAt(counter);
-                        else
-                            tmpCounter += 1;
 
                         counter -= 1;
                         preQtyInStock -= 1;
@@ -731,7 +744,7 @@ namespace EzPos.Control
             if (dgvProduct.CurrentRow == null)
                 return;
 
-            int qtyInStock = Int32.Parse(dgvProduct.CurrentRow.Cells["QtyInStock"].Value.ToString());
+            var qtyInStock = Int32.Parse(dgvProduct.CurrentRow.Cells["QtyInStock"].Value.ToString());
             if (!_ProductList[dgvProduct.CurrentRow.Index].PrintCheck)
                 DoPreBarCodePrinting(
                     0,
@@ -741,12 +754,12 @@ namespace EzPos.Control
                     true);
             else
             {
-                string tmpQty =
+                var tmpQty =
                     dgvProduct.CurrentRow.Cells["PublicQty"].Value.ToString();
                 if (String.IsNullOrEmpty(tmpQty))
                     return;
 
-                float printedQty = float.Parse(tmpQty.Split('/')[0]);
+                var printedQty = float.Parse(tmpQty.Split('/')[0]);
                 DoPreBarCodePrinting(
                     printedQty,
                     printedQty,
@@ -841,21 +854,28 @@ namespace EzPos.Control
             bool requestPrinting,
             bool setPrintingStatus)
         {
+            if (dgvProduct.CurrentRow == null)
+                return;
+
             if (requestPrinting)
             {
                 currentPrintedQty += requestedQty;
                 for (var qtyCounter = 0; qtyCounter < requestedQty; qtyCounter++)
                 {
-                    var barCode = new BarCode
-                                      {
-                                          BarCodeValue = _ProductList[dgvProduct.CurrentRow.Index].ProductCode,
-                                          DisplayStr = _ProductList[dgvProduct.CurrentRow.Index].UnitPriceOut.ToString(
-                                              "N",
-                                              AppContext.CultureInfo),
-                                          AdditionalStr = (currentPrintedQty.ToString("N0") +
-                                                           " / " +
-                                                           totalQty.ToString("N0"))
-                                      };
+                    var barCode = 
+                        new BarCode
+                        {
+                            BarCodeValue = _ProductList[dgvProduct.CurrentRow.Index].ProductCode,
+                            DisplayStr = 
+                                _ProductList[dgvProduct.CurrentRow.Index].CategoryStr,
+                            //AdditionalStr = (currentPrintedQty.ToString("N0") + " / " + totalQty.ToString("N0"))
+                            AdditionalStr = 
+                                "$ " + _ProductList[dgvProduct.CurrentRow.Index].UnitPriceOut.ToString("N", AppContext.CultureInfo)
+                        };
+
+                    var foreignCode = _ProductList[dgvProduct.CurrentRow.Index].ForeignCode;
+                    if (!string.IsNullOrEmpty(foreignCode))
+                        barCode.DisplayStr += " (" + foreignCode + ")";
 
                     if (_BarCodeList.IndexOf(barCode) == -1)
                         _BarCodeList.Add(barCode);
@@ -864,26 +884,25 @@ namespace EzPos.Control
             else
             {
                 currentPrintedQty -= requestedQty;
-                float tmpQty = requestedQty;
-                for (int counter = 0; counter < _BarCodeList.Count; counter++)
+                var tmpQty = requestedQty;
+                for (var counter = 0; counter < _BarCodeList.Count; counter++)
                 {
-                    if (dgvProduct.CurrentRow.Cells["ProductCode"].Value.ToString() ==
-                        _BarCodeList[counter].BarCodeValue)
+                    if (dgvProduct.CurrentRow.Cells["ProductCode"].Value.ToString() !=
+                        _BarCodeList[counter].BarCodeValue) 
+                        continue;
+                    if (tmpQty != 0)
                     {
-                        if (tmpQty != 0)
-                        {
-                            _BarCodeList.RemoveAt(counter);
-                            tmpQty -= 1;
-                            counter -= 1;
-                        }
-                        else if (currentPrintedQty != 0)
-                            _BarCodeList[counter].AdditionalStr =
-                                currentPrintedQty.ToString("N0") +
-                                " / " +
-                                totalQty.ToString("N0");
-                        else
-                            _BarCodeList[counter].AdditionalStr = string.Empty;
+                        _BarCodeList.RemoveAt(counter);
+                        tmpQty -= 1;
+                        counter -= 1;
                     }
+                    else if (currentPrintedQty != 0)
+                        _BarCodeList[counter].AdditionalStr =
+                            currentPrintedQty.ToString("N0") +
+                            " / " +
+                            totalQty.ToString("N0");
+                    else
+                        _BarCodeList[counter].AdditionalStr = string.Empty;
                 }
             }
 

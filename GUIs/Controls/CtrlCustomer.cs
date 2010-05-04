@@ -274,19 +274,19 @@ namespace EzPos.GUIs.Controls
         private void UpdateControlContent()
         {
             SafeCrossCallBackDelegate safeCrossCallBackDelegate = null;
-            if ((cmbGender.InvokeRequired) || (cmbDCardType.InvokeRequired))
+            if ((cmbDCardType.InvokeRequired))
                 safeCrossCallBackDelegate = UpdateControlContent;
 
-            if (cmbGender.InvokeRequired)
+            if (cmbDCardType.InvokeRequired)
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                var searchCriteria = new List<string> {"ParameterTypeID IN (10, 20)"};
+                var searchCriteria = new List<string> {"ParameterTypeID IN (20)"};
 
                 var objList = _CommonService.GetAppParameters(searchCriteria);
 
-                _CommonService.PopAppParamExtendedCombobox(
-                    ref cmbGender, objList, int.Parse(Resources.AppParamGender, AppContext.CultureInfo), false);
+                //_CommonService.PopAppParamExtendedCombobox(
+                //    ref cmbGender, objList, int.Parse(Resources.AppParamGender, AppContext.CultureInfo), false);
 
                 _CommonService.PopAppParamExtendedCombobox(
                     ref cmbDCardType, objList, int.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo), false);
@@ -309,7 +309,7 @@ namespace EzPos.GUIs.Controls
         {
             txtCustomerName.Text = string.Empty;
             txtPhoneNumber.Text = string.Empty;
-            cmbGender.SelectedIndex = -1;
+            chbDeposit.Checked = false;
             txtCardNum.Text = string.Empty;
             cmbDCardType.SelectedIndex = -1;
 
@@ -327,8 +327,9 @@ namespace EzPos.GUIs.Controls
                 if (StringHelper.Length(txtPhoneNumber.Text) != 0)
                     searchCriteria.Add("PhoneNumber LIKE '%" + txtPhoneNumber.Text + "%'");
 
-                if (cmbGender.SelectedIndex != -1)
-                    searchCriteria.Add("GenderID|" + cmbGender.SelectedValue);
+                if (chbDeposit.Checked)
+                    searchCriteria.Add(
+                        "CustomerID IN (SELECT CustomerId FROM TDeposits WHERE AmountPaidInt < AmountSoldInt)");
 
                 if (StringHelper.Length(txtCardNum.Text) != 0)
                     searchCriteria.Add(
@@ -393,7 +394,7 @@ namespace EzPos.GUIs.Controls
         private void btnOutstandingInvoice_Click(object sender, EventArgs e)
         {
             Visible = false;
-            using (var frmOutstandingInvoice = new FrmOutstandingInvoice())
+            using (var frmOutstandingInvoice = new FrmDeposit())
             {
                 if(dgvCustomer.CurrentRow == null)
                     return;
@@ -403,22 +404,6 @@ namespace EzPos.GUIs.Controls
                 {
                     try
                     {
-                        //IList saleOrderList = _SaleOrderService.GetSaleOrders(frmSaleSearch.SONumber);
-                        //if (saleOrderList.Count == 0)
-                        //    return;
-
-                        //_SaleOrder = (SaleOrder)saleOrderList[0];
-                        //if (_SaleOrder == null)
-                        //    return;
-
-                        //dgvSaleItem.SelectionChanged += dgvSaleItem_SelectionChanged;
-                        //IListToBindingList(
-                        //    _SaleOrderService.GetSaleItems(_SaleOrder.SaleOrderID));
-                        //_SaleOrder.FKCustomer.DiscountPercentage = _SaleOrder.Discount;
-                        //SetCustomerInfo(_SaleOrder.FKCustomer);
-                        //CalculateSale();
-                        //SetInvoiceInfo(_SaleOrder);
-                        //DoActivateControls(false);
                     }
                     catch (Exception exception)
                     {
@@ -429,6 +414,16 @@ namespace EzPos.GUIs.Controls
                 }
                 Visible = true;
             }
+        }
+
+        private void btnOutstandingInvoice_MouseEnter(object sender, EventArgs e)
+        {
+            btnOutstandingInvoice.BackgroundImage = Resources.background_9;
+        }
+
+        private void btnOutstandingInvoice_MouseLeave(object sender, EventArgs e)
+        {
+            btnOutstandingInvoice.BackgroundImage = null;
         }
     }
 }

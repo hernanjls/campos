@@ -40,9 +40,9 @@ namespace EzPos.GUIs.Controls
             this.lblResultInfo = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
-            this.cmbPosition = new ExtendedComboBox(this.components);
+            this.cmbPosition = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblPosition = new System.Windows.Forms.Label();
-            this.cmbGender = new ExtendedComboBox(this.components);
+            this.cmbGender = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblGender = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -324,28 +324,28 @@ namespace EzPos.GUIs.Controls
             this.dgvUser.ColumnHeadersHeight = 40;
             this.dgvUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvUser.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                                                                                            this.UserName,
-                                                                                            this.PhoneNumber,
-                                                                                            this.GenderStr,
-                                                                                            this.PositionStr,
-                                                                                            this.LogInName,
-                                                                                            this.Salary,
-                                                                                            this.BirthDate,
-                                                                                            this.CivilityStr,
-                                                                                            this.MaritalStatusStr,
-                                                                                            this.ContractStr,
-                                                                                            this.StartingDate,
-                                                                                            this.Address,
-                                                                                            this.Password,
-                                                                                            this.GenderID,
-                                                                                            this.CivilityID,
-                                                                                            this.MaritalStatusID,
-                                                                                            this.PositionID,
-                                                                                            this.ContractID,
-                                                                                            this.UserID,
-                                                                                            this.UserNumber,
-                                                                                            this.PhotoPath,
-                                                                                            this.DefaultModule});
+            this.UserName,
+            this.PhoneNumber,
+            this.GenderStr,
+            this.PositionStr,
+            this.LogInName,
+            this.Salary,
+            this.BirthDate,
+            this.CivilityStr,
+            this.MaritalStatusStr,
+            this.ContractStr,
+            this.StartingDate,
+            this.Address,
+            this.Password,
+            this.GenderID,
+            this.CivilityID,
+            this.MaritalStatusID,
+            this.PositionID,
+            this.ContractID,
+            this.UserID,
+            this.UserNumber,
+            this.PhotoPath,
+            this.DefaultModule});
             this.dgvUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvUser.EnableHeadersVisualStyles = false;
             this.dgvUser.GridColor = System.Drawing.Color.White;
@@ -371,14 +371,13 @@ namespace EzPos.GUIs.Controls
             // 
             // UserName
             // 
-            this.UserName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.UserName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.UserName.DataPropertyName = "UserName";
             this.UserName.HeaderText = "ឈ្មោះបុគ្គលិក";
             this.UserName.Name = "UserName";
             this.UserName.ReadOnly = true;
             this.UserName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.UserName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.UserName.Width = 250;
             // 
             // PhoneNumber
             // 

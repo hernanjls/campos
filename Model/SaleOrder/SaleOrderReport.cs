@@ -9,6 +9,8 @@ namespace EzPos.Model
 
         public int ReportID { get; set; }
 
+        public int SalesOrderId { get; set; }
+
         public string SaleOrderNumber { get; set; }
 
         public DateTime SaleOrderDate { get; set; }
@@ -58,5 +60,7 @@ namespace EzPos.Model
         public string ReferenceNum { get; set; }
 
         public string ReportTypeStr { get; set; }
+
+        public float DepositAmount { get; set; }
     }
 }

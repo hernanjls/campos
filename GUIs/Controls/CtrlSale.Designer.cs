@@ -35,6 +35,7 @@ namespace EzPos.GUIs.Controls
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.btnProductAdjustment = new System.Windows.Forms.Button();
             this.grbInvoice = new System.Windows.Forms.GroupBox();
@@ -54,7 +55,7 @@ namespace EzPos.GUIs.Controls
             this.lblCustomer = new System.Windows.Forms.Label();
             this.lblDCardNum = new System.Windows.Forms.Label();
             this.lblDisPercentage = new System.Windows.Forms.Label();
-            this.btnReturn = new System.Windows.Forms.Button();
+            this.btnDeposit = new System.Windows.Forms.Button();
             this.btnSearchSaleOrder = new System.Windows.Forms.Button();
             this.btnValid = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -65,15 +66,16 @@ namespace EzPos.GUIs.Controls
             this.ProductNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.QtySold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PublicUPOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnitPriceOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Discount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PublicUPOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SaleItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitPriceIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitPriceOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FKProduct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColSaleOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pnlBodySearch = new System.Windows.Forms.Panel();
             this.pnlBodySepartor = new System.Windows.Forms.Panel();
             this.lblProductName = new System.Windows.Forms.Label();
             this.lblReference = new System.Windows.Forms.Label();
@@ -87,6 +89,7 @@ namespace EzPos.GUIs.Controls
             this.grbPrintProduct.SuspendLayout();
             this.pnlBodyLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItem)).BeginInit();
+            this.pnlBodySearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbDisplay)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,7 +101,7 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyRight.Controls.Add(this.grbInvoice);
             this.pnlBodyRight.Controls.Add(this.lblCustomerInfo);
             this.pnlBodyRight.Controls.Add(this.grbPrintProduct);
-            this.pnlBodyRight.Controls.Add(this.btnReturn);
+            this.pnlBodyRight.Controls.Add(this.btnDeposit);
             this.pnlBodyRight.Controls.Add(this.btnSearchSaleOrder);
             this.pnlBodyRight.Controls.Add(this.btnValid);
             this.pnlBodyRight.Controls.Add(this.btnCancel);
@@ -331,25 +334,24 @@ namespace EzPos.GUIs.Controls
             this.lblDisPercentage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblDisPercentage.Visible = false;
             // 
-            // btnReturn
+            // btnDeposit
             // 
-            this.btnReturn.BackColor = System.Drawing.Color.Transparent;
-            this.btnReturn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnReturn.Enabled = false;
-            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnReturn.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReturn.ForeColor = System.Drawing.Color.White;
-            this.btnReturn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReturn.Location = new System.Drawing.Point(28, 519);
-            this.btnReturn.Name = "btnReturn";
-            this.btnReturn.Size = new System.Drawing.Size(144, 40);
-            this.btnReturn.TabIndex = 25;
-            this.btnReturn.TabStop = false;
-            this.btnReturn.Text = "សង";
-            this.btnReturn.UseVisualStyleBackColor = false;
-            this.btnReturn.MouseLeave += new System.EventHandler(this.btnReturn_MouseLeave);
-            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
-            this.btnReturn.MouseEnter += new System.EventHandler(this.btnReturn_MouseEnter);
+            this.btnDeposit.BackColor = System.Drawing.Color.Transparent;
+            this.btnDeposit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDeposit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeposit.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeposit.ForeColor = System.Drawing.Color.White;
+            this.btnDeposit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDeposit.Location = new System.Drawing.Point(28, 478);
+            this.btnDeposit.Name = "btnDeposit";
+            this.btnDeposit.Size = new System.Drawing.Size(144, 40);
+            this.btnDeposit.TabIndex = 25;
+            this.btnDeposit.TabStop = false;
+            this.btnDeposit.Text = "កក់ប្រាក់";
+            this.btnDeposit.UseVisualStyleBackColor = false;
+            this.btnDeposit.MouseLeave += new System.EventHandler(this.btnReturn_MouseLeave);
+            this.btnDeposit.Click += new System.EventHandler(this.btnDeposit_Click);
+            this.btnDeposit.MouseEnter += new System.EventHandler(this.btnReturn_MouseEnter);
             // 
             // btnSearchSaleOrder
             // 
@@ -397,7 +399,7 @@ namespace EzPos.GUIs.Controls
             this.btnCancel.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(28, 478);
+            this.btnCancel.Location = new System.Drawing.Point(28, 519);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(144, 40);
             this.btnCancel.TabIndex = 14;
@@ -413,14 +415,7 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyLeft.BackColor = System.Drawing.Color.Transparent;
             this.pnlBodyLeft.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlBodyLeft.Controls.Add(this.dgvSaleItem);
-            this.pnlBodyLeft.Controls.Add(this.pnlBodySepartor);
-            this.pnlBodyLeft.Controls.Add(this.lblProductName);
-            this.pnlBodyLeft.Controls.Add(this.lblReference);
-            this.pnlBodyLeft.Controls.Add(this.lblPurchaseInfo);
-            this.pnlBodyLeft.Controls.Add(this.lblPrice);
-            this.pnlBodyLeft.Controls.Add(this.cmbProduct);
-            this.pnlBodyLeft.Controls.Add(this.ptbDisplay);
-            this.pnlBodyLeft.Controls.Add(this.txtHidden);
+            this.pnlBodyLeft.Controls.Add(this.pnlBodySearch);
             this.pnlBodyLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBodyLeft.Location = new System.Drawing.Point(0, 0);
             this.pnlBodyLeft.Name = "pnlBodyLeft";
@@ -448,23 +443,24 @@ namespace EzPos.GUIs.Controls
             this.dgvSaleItem.ColumnHeadersHeight = 40;
             this.dgvSaleItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvSaleItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                                                                                                this.DelColumn,
-                                                                                                this.ProdPicture,
-                                                                                                this.ProductNameCol,
-                                                                                                this.ProductDisplayName,
-                                                                                                this.QtySold,
-                                                                                                this.PublicUPOut,
-                                                                                                this.Discount,
-                                                                                                this.SubTotal,
-                                                                                                this.SaleItemID,
-                                                                                                this.SaleOrderID,
-                                                                                                this.ProductID,
-                                                                                                this.UnitPriceIn,
-                                                                                                this.UnitPriceOut,
-                                                                                                this.FKProduct});
+            this.DelColumn,
+            this.ProdPicture,
+            this.ProductNameCol,
+            this.ProductDisplayName,
+            this.QtySold,
+            this.UnitPriceOut,
+            this.Discount,
+            this.PublicUPOut,
+            this.SubTotal,
+            this.SaleItemID,
+            this.ProductID,
+            this.UnitPriceIn,
+            this.FKProduct,
+            this.ColSaleOrderId});
+            this.dgvSaleItem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSaleItem.EnableHeadersVisualStyles = false;
             this.dgvSaleItem.GridColor = System.Drawing.Color.White;
-            this.dgvSaleItem.Location = new System.Drawing.Point(0, 125);
+            this.dgvSaleItem.Location = new System.Drawing.Point(0, 128);
             this.dgvSaleItem.MultiSelect = false;
             this.dgvSaleItem.Name = "dgvSaleItem";
             this.dgvSaleItem.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -479,10 +475,10 @@ namespace EzPos.GUIs.Controls
             this.dgvSaleItem.RowTemplate.Height = 100;
             this.dgvSaleItem.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvSaleItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSaleItem.Size = new System.Drawing.Size(820, 480);
+            this.dgvSaleItem.Size = new System.Drawing.Size(820, 459);
             this.dgvSaleItem.TabIndex = 27;
-            this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellClick);
             this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellDoubleClick);
+            this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellClick);
             this.dgvSaleItem.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSaleItem_DataError);
             // 
             // DelColumn
@@ -521,14 +517,13 @@ namespace EzPos.GUIs.Controls
             // 
             // ProductDisplayName
             // 
-            this.ProductDisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProductDisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.ProductDisplayName.DataPropertyName = "ProductDisplayName";
             this.ProductDisplayName.HeaderText = "ឈ្មោះ";
             this.ProductDisplayName.Name = "ProductDisplayName";
             this.ProductDisplayName.ReadOnly = true;
             this.ProductDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ProductDisplayName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ProductDisplayName.Width = 315;
             // 
             // QtySold
             // 
@@ -542,19 +537,19 @@ namespace EzPos.GUIs.Controls
             this.QtySold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.QtySold.Width = 60;
             // 
-            // PublicUPOut
+            // UnitPriceOut
             // 
-            this.PublicUPOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.PublicUPOut.DataPropertyName = "PublicUPOut";
+            this.UnitPriceOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.UnitPriceOut.DataPropertyName = "UnitPriceOut";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle4.Format = "C2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.PublicUPOut.DefaultCellStyle = dataGridViewCellStyle4;
-            this.PublicUPOut.HeaderText = "តំលៃ";
-            this.PublicUPOut.Name = "PublicUPOut";
-            this.PublicUPOut.ReadOnly = true;
-            this.PublicUPOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PublicUPOut.Width = 110;
+            this.UnitPriceOut.DefaultCellStyle = dataGridViewCellStyle4;
+            this.UnitPriceOut.HeaderText = "តំលៃ";
+            this.UnitPriceOut.Name = "UnitPriceOut";
+            this.UnitPriceOut.ReadOnly = true;
+            this.UnitPriceOut.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.UnitPriceOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.UnitPriceOut.Width = 110;
             // 
             // Discount
             // 
@@ -568,14 +563,28 @@ namespace EzPos.GUIs.Controls
             this.Discount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Discount.Width = 50;
             // 
+            // PublicUPOut
+            // 
+            this.PublicUPOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PublicUPOut.DataPropertyName = "PublicUPOut";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "C2";
+            dataGridViewCellStyle6.NullValue = null;
+            this.PublicUPOut.DefaultCellStyle = dataGridViewCellStyle6;
+            this.PublicUPOut.HeaderText = "តំលៃលក់";
+            this.PublicUPOut.Name = "PublicUPOut";
+            this.PublicUPOut.ReadOnly = true;
+            this.PublicUPOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PublicUPOut.Width = 110;
+            // 
             // SubTotal
             // 
             this.SubTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.SubTotal.DataPropertyName = "SubTotal";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "C2";
-            dataGridViewCellStyle6.NullValue = null;
-            this.SubTotal.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "C2";
+            dataGridViewCellStyle7.NullValue = null;
+            this.SubTotal.DefaultCellStyle = dataGridViewCellStyle7;
             this.SubTotal.HeaderText = "សរុប";
             this.SubTotal.Name = "SubTotal";
             this.SubTotal.ReadOnly = true;
@@ -592,16 +601,6 @@ namespace EzPos.GUIs.Controls
             this.SaleItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.SaleItemID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.SaleItemID.Visible = false;
-            // 
-            // SaleOrderID
-            // 
-            this.SaleOrderID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.SaleOrderID.DataPropertyName = "SaleOrderID";
-            this.SaleOrderID.HeaderText = "SaleOrderID";
-            this.SaleOrderID.Name = "SaleOrderID";
-            this.SaleOrderID.ReadOnly = true;
-            this.SaleOrderID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SaleOrderID.Visible = false;
             // 
             // ProductID
             // 
@@ -623,17 +622,6 @@ namespace EzPos.GUIs.Controls
             this.UnitPriceIn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.UnitPriceIn.Visible = false;
             // 
-            // UnitPriceOut
-            // 
-            this.UnitPriceOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.UnitPriceOut.DataPropertyName = "UnitPriceOut";
-            this.UnitPriceOut.HeaderText = "PublicUPOut";
-            this.UnitPriceOut.Name = "UnitPriceOut";
-            this.UnitPriceOut.ReadOnly = true;
-            this.UnitPriceOut.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.UnitPriceOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.UnitPriceOut.Visible = false;
-            // 
             // FKProduct
             // 
             this.FKProduct.DataPropertyName = "FKProduct";
@@ -641,12 +629,37 @@ namespace EzPos.GUIs.Controls
             this.FKProduct.Name = "FKProduct";
             this.FKProduct.Visible = false;
             // 
+            // ColSaleOrderId
+            // 
+            this.ColSaleOrderId.DataPropertyName = "SaleOrderId";
+            this.ColSaleOrderId.HeaderText = "SaleOrderId";
+            this.ColSaleOrderId.Name = "ColSaleOrderId";
+            this.ColSaleOrderId.Visible = false;
+            // 
+            // pnlBodySearch
+            // 
+            this.pnlBodySearch.Controls.Add(this.pnlBodySepartor);
+            this.pnlBodySearch.Controls.Add(this.lblProductName);
+            this.pnlBodySearch.Controls.Add(this.lblReference);
+            this.pnlBodySearch.Controls.Add(this.lblPurchaseInfo);
+            this.pnlBodySearch.Controls.Add(this.lblPrice);
+            this.pnlBodySearch.Controls.Add(this.cmbProduct);
+            this.pnlBodySearch.Controls.Add(this.ptbDisplay);
+            this.pnlBodySearch.Controls.Add(this.txtHidden);
+            this.pnlBodySearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlBodySearch.Location = new System.Drawing.Point(0, 0);
+            this.pnlBodySearch.Name = "pnlBodySearch";
+            this.pnlBodySearch.Size = new System.Drawing.Size(820, 128);
+            this.pnlBodySearch.TabIndex = 28;
+            // 
             // pnlBodySepartor
             // 
+            this.pnlBodySepartor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlBodySepartor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlBodySepartor.Location = new System.Drawing.Point(0, 120);
             this.pnlBodySepartor.Name = "pnlBodySepartor";
-            this.pnlBodySepartor.Size = new System.Drawing.Size(803, 1);
+            this.pnlBodySepartor.Size = new System.Drawing.Size(820, 1);
             this.pnlBodySepartor.TabIndex = 18;
             // 
             // lblProductName
@@ -685,6 +698,7 @@ namespace EzPos.GUIs.Controls
             // 
             // lblPrice
             // 
+            this.lblPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPrice.BackColor = System.Drawing.Color.Transparent;
             this.lblPrice.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPrice.ForeColor = System.Drawing.Color.Silver;
@@ -700,13 +714,13 @@ namespace EzPos.GUIs.Controls
             this.cmbProduct.Location = new System.Drawing.Point(501, 85);
             this.cmbProduct.Name = "cmbProduct";
             this.cmbProduct.Size = new System.Drawing.Size(142, 21);
-            this.cmbProduct.Sorted = true;
             this.cmbProduct.TabIndex = 25;
             this.cmbProduct.Visible = false;
             this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.cmbProduct_SelectedIndexChanged);
             // 
             // ptbDisplay
             // 
+            this.ptbDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ptbDisplay.BackColor = System.Drawing.Color.Transparent;
             this.ptbDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ptbDisplay.Location = new System.Drawing.Point(649, 4);
@@ -718,12 +732,13 @@ namespace EzPos.GUIs.Controls
             // 
             // txtHidden
             // 
+            this.txtHidden.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHidden.Location = new System.Drawing.Point(651, 58);
             this.txtHidden.Name = "txtHidden";
             this.txtHidden.Size = new System.Drawing.Size(150, 20);
             this.txtHidden.TabIndex = 24;
-            this.txtHidden.Leave += new System.EventHandler(this.txtHidden_Leave);
             this.txtHidden.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHidden_KeyDown);
+            this.txtHidden.Leave += new System.EventHandler(this.txtHidden_Leave);
             // 
             // CtrlSale
             // 
@@ -741,8 +756,9 @@ namespace EzPos.GUIs.Controls
             this.grbInvoice.PerformLayout();
             this.grbPrintProduct.ResumeLayout(false);
             this.pnlBodyLeft.ResumeLayout(false);
-            this.pnlBodyLeft.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSaleItem)).EndInit();
+            this.pnlBodySearch.ResumeLayout(false);
+            this.pnlBodySearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbDisplay)).EndInit();
             this.ResumeLayout(false);
 
@@ -762,7 +778,7 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.PictureBox ptbDisplay;
         private System.Windows.Forms.Button btnValid;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnReturn;
+        private System.Windows.Forms.Button btnDeposit;
         private System.Windows.Forms.Button btnSearchSaleOrder;
         private System.Windows.Forms.Label lblCustomerInfo;
         private System.Windows.Forms.GroupBox grbPrintProduct;
@@ -782,21 +798,23 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.Label lblDCardNum;
         private System.Windows.Forms.Label lblDisPercentage;
         private System.Windows.Forms.Label lblInvoiceInfo;
+        private System.Windows.Forms.Button btnProductAdjustment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SaleOrderID;
+        private System.Windows.Forms.Panel pnlBodySearch;
         private System.Windows.Forms.DataGridViewImageColumn DelColumn;
         private System.Windows.Forms.DataGridViewImageColumn ProdPicture;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductNameCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductDisplayName;
         private System.Windows.Forms.DataGridViewTextBoxColumn QtySold;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PublicUPOut;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn Discount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PublicUPOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn SubTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn SaleItemID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SaleOrderID;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductID;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceIn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn FKProduct;
-        private System.Windows.Forms.Button btnProductAdjustment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColSaleOrderId;
 
     }
 }

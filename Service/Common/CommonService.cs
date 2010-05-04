@@ -11,6 +11,7 @@ using EzPos.GUIs.Components;
 using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Utility;
+using DataTable=System.Data.DataTable;
 
 namespace EzPos.Service.Common
 {
@@ -139,11 +140,11 @@ namespace EzPos.Service.Common
         {
             appParamComboBox.DataSource = GetAppParametersByType(
                 appParamList, appParamType);
-            if (((IList) appParamComboBox.DataSource).Count != 0)
-            {
-                appParamComboBox.DisplayMember = Resources.AppParamDisplay;
-                appParamComboBox.ValueMember = Resources.AppParamValue;
-            }
+            if (((IList) appParamComboBox.DataSource).Count == 0) 
+                return;
+
+            appParamComboBox.DisplayMember = Resources.AppParamDisplay;
+            appParamComboBox.ValueMember = Resources.AppParamValue;
         }
 
         public void PopAppParamExtendedCombobox(
@@ -376,9 +377,10 @@ namespace EzPos.Service.Common
             StoreApplicationContext(AppContext.User, exchangeRate);
         }
 
-        public static void RecordLog(string logMsg)
+        public static void RecordLog(string logMsg, string startUpPath)
         {
-            var directoryInfo = new DirectoryInfo(Application.StartupPath);
+            //var directoryInfo = new DirectoryInfo(Application.StartupPath);
+            var directoryInfo = new DirectoryInfo(startUpPath);
             if (!directoryInfo.Exists) 
                 return;
 

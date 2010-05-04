@@ -31,11 +31,11 @@ namespace EzPos.GUIs.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBodyLeft = new System.Windows.Forms.Panel();
             this.dgvCustomer = new System.Windows.Forms.DataGridView();
             this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +55,7 @@ namespace EzPos.GUIs.Controls
             this.FKDiscountCard = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DiscountRejected = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlBodyRight = new System.Windows.Forms.Panel();
+            this.btnOutstandingInvoice = new System.Windows.Forms.Button();
             this.cmbDiscountCard = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblAmount = new System.Windows.Forms.Label();
             this.grbAmount = new System.Windows.Forms.GroupBox();
@@ -68,6 +69,7 @@ namespace EzPos.GUIs.Controls
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
             this.pnlBodySearch = new System.Windows.Forms.Panel();
+            this.chbDeposit = new System.Windows.Forms.CheckBox();
             this.lblResultInfo = new System.Windows.Forms.Label();
             this.lblPhoneNumber = new System.Windows.Forms.Label();
             this.txtPhoneNumber = new System.Windows.Forms.TextBox();
@@ -75,13 +77,10 @@ namespace EzPos.GUIs.Controls
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.lblCardNum = new System.Windows.Forms.Label();
             this.txtCardNum = new System.Windows.Forms.TextBox();
-            this.cmbGender = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
-            this.lblGender = new System.Windows.Forms.Label();
             this.cmbDCardType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblDCountType = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.btnOutstandingInvoice = new System.Windows.Forms.Button();
             this.pnlBodyLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomer)).BeginInit();
             this.pnlBodyRight.SuspendLayout();
@@ -110,14 +109,14 @@ namespace EzPos.GUIs.Controls
             this.dgvCustomer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvCustomer.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvCustomer.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.InfoText;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.InfoText;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvCustomer.ColumnHeadersHeight = 40;
             this.dgvCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvCustomer.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -184,20 +183,19 @@ namespace EzPos.GUIs.Controls
             // 
             // CustomerName
             // 
-            this.CustomerName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CustomerName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.CustomerName.DataPropertyName = "CustomerName";
             this.CustomerName.HeaderText = "ឈ្មោះអតិថិជន";
             this.CustomerName.Name = "CustomerName";
             this.CustomerName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.CustomerName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CustomerName.Width = 270;
             // 
             // GenderStr
             // 
             this.GenderStr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.GenderStr.DataPropertyName = "GenderStr";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.GenderStr.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.GenderStr.DefaultCellStyle = dataGridViewCellStyle7;
             this.GenderStr.HeaderText = "ភេទ";
             this.GenderStr.Name = "GenderStr";
             this.GenderStr.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -280,8 +278,8 @@ namespace EzPos.GUIs.Controls
             // 
             this.DiscountCardNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.DiscountCardNumber.DataPropertyName = "DiscountCardNumber";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DiscountCardNumber.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DiscountCardNumber.DefaultCellStyle = dataGridViewCellStyle8;
             this.DiscountCardNumber.HeaderText = "លេខកាត";
             this.DiscountCardNumber.Name = "DiscountCardNumber";
             this.DiscountCardNumber.ReadOnly = true;
@@ -293,8 +291,8 @@ namespace EzPos.GUIs.Controls
             // 
             this.DiscountCardType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.DiscountCardType.DataPropertyName = "DiscountCardType";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DiscountCardType.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DiscountCardType.DefaultCellStyle = dataGridViewCellStyle9;
             this.DiscountCardType.HeaderText = "ប្រភេទកាត";
             this.DiscountCardType.Name = "DiscountCardType";
             this.DiscountCardType.ReadOnly = true;
@@ -306,10 +304,10 @@ namespace EzPos.GUIs.Controls
             // 
             this.DiscountPercentage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.DiscountPercentage.DataPropertyName = "DiscountPercentage";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "N0";
-            dataGridViewCellStyle15.NullValue = null;
-            this.DiscountPercentage.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "N0";
+            dataGridViewCellStyle10.NullValue = null;
+            this.DiscountPercentage.DefaultCellStyle = dataGridViewCellStyle10;
             this.DiscountPercentage.HeaderText = "%";
             this.DiscountPercentage.Name = "DiscountPercentage";
             this.DiscountPercentage.ReadOnly = true;
@@ -352,6 +350,26 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyRight.Name = "pnlBodyRight";
             this.pnlBodyRight.Size = new System.Drawing.Size(200, 591);
             this.pnlBodyRight.TabIndex = 2;
+            // 
+            // btnOutstandingInvoice
+            // 
+            this.btnOutstandingInvoice.BackColor = System.Drawing.Color.Transparent;
+            this.btnOutstandingInvoice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnOutstandingInvoice.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnOutstandingInvoice.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOutstandingInvoice.ForeColor = System.Drawing.Color.White;
+            this.btnOutstandingInvoice.Image = global::EzPos.Properties.Resources.Customer32;
+            this.btnOutstandingInvoice.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnOutstandingInvoice.Location = new System.Drawing.Point(28, 478);
+            this.btnOutstandingInvoice.Name = "btnOutstandingInvoice";
+            this.btnOutstandingInvoice.Size = new System.Drawing.Size(144, 40);
+            this.btnOutstandingInvoice.TabIndex = 102;
+            this.btnOutstandingInvoice.Text = "ប្រាក់កក់";
+            this.btnOutstandingInvoice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOutstandingInvoice.UseVisualStyleBackColor = false;
+            this.btnOutstandingInvoice.MouseLeave += new System.EventHandler(this.btnOutstandingInvoice_MouseLeave);
+            this.btnOutstandingInvoice.Click += new System.EventHandler(this.btnOutstandingInvoice_Click);
+            this.btnOutstandingInvoice.MouseEnter += new System.EventHandler(this.btnOutstandingInvoice_MouseEnter);
             // 
             // cmbDiscountCard
             // 
@@ -509,6 +527,7 @@ namespace EzPos.GUIs.Controls
             // pnlBodySearch
             // 
             this.pnlBodySearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBodySearch.Controls.Add(this.chbDeposit);
             this.pnlBodySearch.Controls.Add(this.lblResultInfo);
             this.pnlBodySearch.Controls.Add(this.lblPhoneNumber);
             this.pnlBodySearch.Controls.Add(this.txtPhoneNumber);
@@ -516,8 +535,6 @@ namespace EzPos.GUIs.Controls
             this.pnlBodySearch.Controls.Add(this.txtCustomerName);
             this.pnlBodySearch.Controls.Add(this.lblCardNum);
             this.pnlBodySearch.Controls.Add(this.txtCardNum);
-            this.pnlBodySearch.Controls.Add(this.cmbGender);
-            this.pnlBodySearch.Controls.Add(this.lblGender);
             this.pnlBodySearch.Controls.Add(this.cmbDCardType);
             this.pnlBodySearch.Controls.Add(this.lblDCountType);
             this.pnlBodySearch.Controls.Add(this.btnReset);
@@ -527,6 +544,18 @@ namespace EzPos.GUIs.Controls
             this.pnlBodySearch.Name = "pnlBodySearch";
             this.pnlBodySearch.Size = new System.Drawing.Size(824, 120);
             this.pnlBodySearch.TabIndex = 0;
+            // 
+            // chbDeposit
+            // 
+            this.chbDeposit.AutoSize = true;
+            this.chbDeposit.BackColor = System.Drawing.Color.Transparent;
+            this.chbDeposit.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbDeposit.Location = new System.Drawing.Point(625, 10);
+            this.chbDeposit.Name = "chbDeposit";
+            this.chbDeposit.Size = new System.Drawing.Size(123, 34);
+            this.chbDeposit.TabIndex = 15;
+            this.chbDeposit.Text = "បានកក់ប្រាក់";
+            this.chbDeposit.UseVisualStyleBackColor = false;
             // 
             // lblResultInfo
             // 
@@ -540,7 +569,7 @@ namespace EzPos.GUIs.Controls
             // 
             this.lblPhoneNumber.AutoSize = true;
             this.lblPhoneNumber.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhoneNumber.Location = new System.Drawing.Point(297, 12);
+            this.lblPhoneNumber.Location = new System.Drawing.Point(320, 12);
             this.lblPhoneNumber.Name = "lblPhoneNumber";
             this.lblPhoneNumber.Size = new System.Drawing.Size(61, 27);
             this.lblPhoneNumber.TabIndex = 12;
@@ -549,7 +578,7 @@ namespace EzPos.GUIs.Controls
             // txtPhoneNumber
             // 
             this.txtPhoneNumber.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhoneNumber.Location = new System.Drawing.Point(364, 12);
+            this.txtPhoneNumber.Location = new System.Drawing.Point(388, 12);
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(184, 27);
             this.txtPhoneNumber.TabIndex = 13;
@@ -590,31 +619,11 @@ namespace EzPos.GUIs.Controls
             this.txtCardNum.Size = new System.Drawing.Size(184, 27);
             this.txtCardNum.TabIndex = 1;
             // 
-            // cmbGender
-            // 
-            this.cmbGender.DropDownWidth = 180;
-            this.cmbGender.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbGender.FormattingEnabled = true;
-            this.cmbGender.Location = new System.Drawing.Point(621, 12);
-            this.cmbGender.Name = "cmbGender";
-            this.cmbGender.Size = new System.Drawing.Size(184, 27);
-            this.cmbGender.TabIndex = 5;
-            // 
-            // lblGender
-            // 
-            this.lblGender.AutoSize = true;
-            this.lblGender.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGender.Location = new System.Drawing.Point(572, 12);
-            this.lblGender.Name = "lblGender";
-            this.lblGender.Size = new System.Drawing.Size(43, 27);
-            this.lblGender.TabIndex = 4;
-            this.lblGender.Text = "ភេទ";
-            // 
             // cmbDCardType
             // 
             this.cmbDCardType.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbDCardType.FormattingEnabled = true;
-            this.cmbDCardType.Location = new System.Drawing.Point(364, 49);
+            this.cmbDCardType.Location = new System.Drawing.Point(388, 49);
             this.cmbDCardType.Name = "cmbDCardType";
             this.cmbDCardType.Size = new System.Drawing.Size(184, 27);
             this.cmbDCardType.TabIndex = 3;
@@ -623,7 +632,7 @@ namespace EzPos.GUIs.Controls
             // 
             this.lblDCountType.AutoSize = true;
             this.lblDCountType.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDCountType.Location = new System.Drawing.Point(296, 49);
+            this.lblDCountType.Location = new System.Drawing.Point(320, 49);
             this.lblDCountType.Name = "lblDCountType";
             this.lblDCountType.Size = new System.Drawing.Size(62, 27);
             this.lblDCountType.TabIndex = 2;
@@ -656,24 +665,6 @@ namespace EzPos.GUIs.Controls
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // btnOutstandingInvoice
-            // 
-            this.btnOutstandingInvoice.BackColor = System.Drawing.Color.Transparent;
-            this.btnOutstandingInvoice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOutstandingInvoice.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnOutstandingInvoice.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOutstandingInvoice.ForeColor = System.Drawing.Color.White;
-            this.btnOutstandingInvoice.Image = global::EzPos.Properties.Resources.Customer32;
-            this.btnOutstandingInvoice.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btnOutstandingInvoice.Location = new System.Drawing.Point(28, 478);
-            this.btnOutstandingInvoice.Name = "btnOutstandingInvoice";
-            this.btnOutstandingInvoice.Size = new System.Drawing.Size(144, 40);
-            this.btnOutstandingInvoice.TabIndex = 102;
-            this.btnOutstandingInvoice.Text = "វិក័យប័ត្រ";
-            this.btnOutstandingInvoice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOutstandingInvoice.UseVisualStyleBackColor = false;
-            this.btnOutstandingInvoice.Click += new System.EventHandler(this.btnOutstandingInvoice_Click);
             // 
             // CtrlCustomer
             // 
@@ -718,8 +709,6 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.Panel pnlBodySearch;
         private System.Windows.Forms.Label lblCardNum;
         private System.Windows.Forms.TextBox txtCardNum;
-        private ExtendedComboBox cmbGender;
-        private System.Windows.Forms.Label lblGender;
         private ExtendedComboBox cmbDCardType;
         private System.Windows.Forms.Label lblDCountType;
         private System.Windows.Forms.Button btnReset;
@@ -730,6 +719,7 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.TextBox txtPhoneNumber;
         private System.Windows.Forms.Label lblResultInfo;
         private ExtendedComboBox cmbDiscountCard;
+        private System.Windows.Forms.Button btnOutstandingInvoice;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
@@ -746,6 +736,6 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.DataGridViewTextBoxColumn DiscountPercentage;
         private System.Windows.Forms.DataGridViewTextBoxColumn FKDiscountCard;
         private System.Windows.Forms.DataGridViewTextBoxColumn DiscountRejected;
-        private System.Windows.Forms.Button btnOutstandingInvoice;
+        private System.Windows.Forms.CheckBox chbDeposit;
     }
 }

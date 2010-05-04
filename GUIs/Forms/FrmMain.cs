@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using EzPos.Control;
 using EzPos.GUIs.Controls;
 using EzPos.Model;
 using EzPos.Properties;
@@ -66,14 +65,14 @@ namespace EzPos.GUIs.Forms
         {
             try
             {
-                string remotePath = AppContext.ServerPhotoPath;
-                string localPath = AppContext.Counter.ProductPhotoNetworkPath;
+                var remotePath = AppContext.ServerPhotoPath;
+                var localPath = AppContext.Counter.ProductPhotoNetworkPath;
 
                 CommonService.DoSynchronizePhoto(remotePath, localPath);
             }
             catch (Exception exception)
             {
-                CommonService.RecordLog(exception.Message);
+                CommonService.RecordLog(exception.Message, Application.StartupPath);
             }
         }
 
@@ -137,9 +136,10 @@ namespace EzPos.GUIs.Forms
 
         private void UpdateDateInfo()
         {
-            lblDateInfo.Text = DateTime.Now.ToShortDateString() +
-                               "\n" + DateTime.Now.ToLongTimeString() +
-                               "\n" + AppContext.User.LogInName;
+            lblDateInfo.Text = 
+                DateTime.Now.ToShortDateString() +
+                "\n" + DateTime.Now.ToLongTimeString() +
+                "\n" + AppContext.User.LogInName;
         }
 
         private void tmrRefresh_Tick(object sender, EventArgs e)
@@ -159,12 +159,13 @@ namespace EzPos.GUIs.Forms
 
             SetDisableToButton("btnSaleOrder");
 
-            var ctrlSale = new CtrlSale
-                               {
-                                   ProductService = _ProductService,
-                                   SaleOrderService = _SaleOrderService,
-                                   CustomerService = _CustomerService
-                               };
+            var ctrlSale = 
+                new CtrlSale
+                {
+                    ProductService = _ProductService,
+                    SaleOrderService = _SaleOrderService,
+                    CustomerService = _CustomerService
+                };
 
             InsertBodyControl(ctrlSale);
         }
@@ -176,22 +177,27 @@ namespace EzPos.GUIs.Forms
 
             SetDisableToButton("btnProduct");
 
-            var ctrlCatalog = new CtrlCatalog {ProductService = _ProductService, CommonService = _CommonService};
+            var ctrlCatalog = 
+                new CtrlCatalog
+                {
+                    ProductService = _ProductService, 
+                    CommonService = _CommonService
+                };
 
             InsertBodyControl(ctrlCatalog);
         }
 
         private void SetDisableToButton(string btnName)
         {
-            foreach (System.Windows.Forms.Control button in pnlFooter.Controls)
+            foreach (Control button in pnlFooter.Controls)
             {
-                if (button.GetType() == typeof (Button))
-                {
-                    if (button.Name == "btnQuit")
-                        continue;
+                if (button.GetType() != typeof (Button)) 
+                    continue;
 
-                    button.Enabled = button.Name != btnName;
-                }
+                if (button.Name == "btnQuit")
+                    continue;
+
+                button.Enabled = button.Name != btnName;
             }
         }
 
@@ -224,11 +230,12 @@ namespace EzPos.GUIs.Forms
 
             SetDisableToButton("btnDiscountCard");
 
-            var ctrlDiscountCard = new CtrlDiscountCard
-                                       {
-                                           CustomerService = _CustomerService,
-                                           CommonService = _CommonService
-                                       };
+            var ctrlDiscountCard = 
+                new CtrlDiscountCard
+                {
+                    CustomerService = _CustomerService,
+                    CommonService = _CommonService
+                };
 
             InsertBodyControl(ctrlDiscountCard);
         }
@@ -272,7 +279,12 @@ namespace EzPos.GUIs.Forms
 
             SetDisableToButton("btnExpense");
 
-            var ctrlExpense = new CtrlExpense {CommonService = _CommonService, ExpenseService = _ExpenseService};
+            var ctrlExpense = 
+                new CtrlExpense
+                {
+                    CommonService = _CommonService, 
+                    ExpenseService = _ExpenseService
+                };
 
             InsertBodyControl(ctrlExpense);
         }
@@ -357,7 +369,7 @@ namespace EzPos.GUIs.Forms
             SetBackGroundImage(btnExpense, Resources.background_2);
         }
 
-        private static void SetBackGroundImage(System.Windows.Forms.Control button, Image backgroundImage)
+        private static void SetBackGroundImage(Control button, Image backgroundImage)
         {
             button.BackgroundImage = backgroundImage;
         }
@@ -369,13 +381,24 @@ namespace EzPos.GUIs.Forms
 
             SetDisableToButton("btnSupplier");
 
-            var ctrlSupplier = new CtrlSupplier
-                                   {
-                                       SupplierService = _SupplierService,
-                                       CommonService = _CommonService
-                                   };
+            var ctrlSupplier = 
+                new CtrlSupplier
+                {
+                    SupplierService = _SupplierService,
+                    CommonService = _CommonService
+                };
 
             InsertBodyControl(ctrlSupplier);
+        }
+
+        private void btnSupplier_MouseEnter(object sender, EventArgs e)
+        {
+            SetBackGroundImage(btnSupplier, Resources.background_9);
+        }
+
+        private void btnSupplier_MouseLeave(object sender, EventArgs e)
+        {
+            SetBackGroundImage(btnSupplier, Resources.background_2);
         }
     }
 }

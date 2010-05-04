@@ -31,6 +31,8 @@ namespace EzPos.GUIs.DataSets {
         
         private DtbExpensesDataTable tableDtbExpenses;
         
+        private DtbDepositsDataTable tableDtbDeposits;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -65,6 +67,9 @@ namespace EzPos.GUIs.DataSets {
                 }
                 if ((ds.Tables["DtbExpenses"] != null)) {
                     base.Tables.Add(new DtbExpensesDataTable(ds.Tables["DtbExpenses"]));
+                }
+                if ((ds.Tables["DtbDeposits"] != null)) {
+                    base.Tables.Add(new DtbDepositsDataTable(ds.Tables["DtbDeposits"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -108,6 +113,15 @@ namespace EzPos.GUIs.DataSets {
         public DtbExpensesDataTable DtbExpenses {
             get {
                 return this.tableDtbExpenses;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public DtbDepositsDataTable DtbDeposits {
+            get {
+                return this.tableDtbDeposits;
             }
         }
         
@@ -179,6 +193,9 @@ namespace EzPos.GUIs.DataSets {
                 if ((ds.Tables["DtbExpenses"] != null)) {
                     base.Tables.Add(new DtbExpensesDataTable(ds.Tables["DtbExpenses"]));
                 }
+                if ((ds.Tables["DtbDeposits"] != null)) {
+                    base.Tables.Add(new DtbDepositsDataTable(ds.Tables["DtbDeposits"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -227,6 +244,12 @@ namespace EzPos.GUIs.DataSets {
                     this.tableDtbExpenses.InitVars();
                 }
             }
+            this.tableDtbDeposits = ((DtbDepositsDataTable)(base.Tables["DtbDeposits"]));
+            if ((initTable == true)) {
+                if ((this.tableDtbDeposits != null)) {
+                    this.tableDtbDeposits.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -242,6 +265,8 @@ namespace EzPos.GUIs.DataSets {
             base.Tables.Add(this.tableDtbSaleReports);
             this.tableDtbExpenses = new DtbExpensesDataTable();
             base.Tables.Add(this.tableDtbExpenses);
+            this.tableDtbDeposits = new DtbDepositsDataTable();
+            base.Tables.Add(this.tableDtbDeposits);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -256,6 +281,11 @@ namespace EzPos.GUIs.DataSets {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private bool ShouldSerializeDtbExpenses() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private bool ShouldSerializeDtbDeposits() {
             return false;
         }
         
@@ -318,6 +348,8 @@ namespace EzPos.GUIs.DataSets {
         
         public delegate void DtbExpensesRowChangeEventHandler(object sender, DtbExpensesRowChangeEvent e);
         
+        public delegate void DtbDepositsRowChangeEventHandler(object sender, DtbDepositsRowChangeEvent e);
+        
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
@@ -377,6 +409,8 @@ namespace EzPos.GUIs.DataSets {
             private global::System.Data.DataColumn columnPublicQty;
             
             private global::System.Data.DataColumn columnLastUpdate;
+            
+            private global::System.Data.DataColumn columnForeignCode;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public DtbProductsDataTable() {
@@ -591,6 +625,13 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ForeignCodeColumn {
+                get {
+                    return this.columnForeignCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -645,7 +686,8 @@ namespace EzPos.GUIs.DataSets {
                         string ProductPic, 
                         string PrintCheck, 
                         string PublicQty, 
-                        System.DateTime LastUpdate) {
+                        System.DateTime LastUpdate, 
+                        string ForeignCode) {
                 DtbProductsRow rowDtbProductsRow = ((DtbProductsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ProductID,
@@ -673,7 +715,8 @@ namespace EzPos.GUIs.DataSets {
                         ProductPic,
                         PrintCheck,
                         PublicQty,
-                        LastUpdate};
+                        LastUpdate,
+                        ForeignCode};
                 rowDtbProductsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDtbProductsRow);
                 return rowDtbProductsRow;
@@ -725,6 +768,7 @@ namespace EzPos.GUIs.DataSets {
                 this.columnPrintCheck = base.Columns["PrintCheck"];
                 this.columnPublicQty = base.Columns["PublicQty"];
                 this.columnLastUpdate = base.Columns["LastUpdate"];
+                this.columnForeignCode = base.Columns["ForeignCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -781,6 +825,8 @@ namespace EzPos.GUIs.DataSets {
                 base.Columns.Add(this.columnPublicQty);
                 this.columnLastUpdate = new global::System.Data.DataColumn("LastUpdate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLastUpdate);
+                this.columnForeignCode = new global::System.Data.DataColumn("ForeignCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnForeignCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("DtbProductsProductID", new global::System.Data.DataColumn[] {
                                 this.columnProductID}, true));
                 this.columnProductID.AllowDBNull = false;
@@ -961,6 +1007,10 @@ namespace EzPos.GUIs.DataSets {
             private global::System.Data.DataColumn columnReferenceNum;
             
             private global::System.Data.DataColumn columnReportTypeStr;
+            
+            private global::System.Data.DataColumn columnSalesOrderId;
+            
+            private global::System.Data.DataColumn columnDepositAmount;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public DtbSaleReportsDataTable() {
@@ -1175,6 +1225,20 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn SalesOrderIdColumn {
+                get {
+                    return this.columnSalesOrderId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DepositAmountColumn {
+                get {
+                    return this.columnDepositAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1229,7 +1293,9 @@ namespace EzPos.GUIs.DataSets {
                         string CardNumber, 
                         int ReportHeader, 
                         string ReferenceNum, 
-                        string ReportTypeStr) {
+                        string ReportTypeStr, 
+                        int SalesOrderId, 
+                        double DepositAmount) {
                 DtbSaleReportsRow rowDtbSaleReportsRow = ((DtbSaleReportsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ReportID,
@@ -1257,7 +1323,9 @@ namespace EzPos.GUIs.DataSets {
                         CardNumber,
                         ReportHeader,
                         ReferenceNum,
-                        ReportTypeStr};
+                        ReportTypeStr,
+                        SalesOrderId,
+                        DepositAmount};
                 rowDtbSaleReportsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDtbSaleReportsRow);
                 return rowDtbSaleReportsRow;
@@ -1309,6 +1377,8 @@ namespace EzPos.GUIs.DataSets {
                 this.columnReportHeader = base.Columns["ReportHeader"];
                 this.columnReferenceNum = base.Columns["ReferenceNum"];
                 this.columnReportTypeStr = base.Columns["ReportTypeStr"];
+                this.columnSalesOrderId = base.Columns["SalesOrderId"];
+                this.columnDepositAmount = base.Columns["DepositAmount"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1365,6 +1435,10 @@ namespace EzPos.GUIs.DataSets {
                 base.Columns.Add(this.columnReferenceNum);
                 this.columnReportTypeStr = new global::System.Data.DataColumn("ReportTypeStr", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnReportTypeStr);
+                this.columnSalesOrderId = new global::System.Data.DataColumn("SalesOrderId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSalesOrderId);
+                this.columnDepositAmount = new global::System.Data.DataColumn("DepositAmount", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepositAmount);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnReportID}, true));
                 this.columnReportID.AllowDBNull = false;
@@ -1652,6 +1726,12 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DtbExpensesRow FindByExpenseID(int ExpenseID) {
+                return ((DtbExpensesRow)(this.Rows.Find(new object[] {
+                            ExpenseID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public override global::System.Data.DataTable Clone() {
                 DtbExpensesDataTable cln = ((DtbExpensesDataTable)(base.Clone()));
                 cln.InitVars();
@@ -1696,6 +1776,10 @@ namespace EzPos.GUIs.DataSets {
                 base.Columns.Add(this.columnCurrencyID);
                 this.columnExchangeRate = new global::System.Data.DataColumn("ExchangeRate", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnExchangeRate);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("DtbExpensesKey", new global::System.Data.DataColumn[] {
+                                this.columnExpenseID}, true));
+                this.columnExpenseID.AllowDBNull = false;
+                this.columnExpenseID.Unique = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1773,6 +1857,554 @@ namespace EzPos.GUIs.DataSets {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "DtbExpensesDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class DtbDepositsDataTable : global::System.Data.TypedTableBase<DtbDepositsRow> {
+            
+            private global::System.Data.DataColumn columnDepositId;
+            
+            private global::System.Data.DataColumn columnDepositNumber;
+            
+            private global::System.Data.DataColumn columnDepositDate;
+            
+            private global::System.Data.DataColumn columnCustomerName;
+            
+            private global::System.Data.DataColumn columnCashierName;
+            
+            private global::System.Data.DataColumn columnExchangeRate;
+            
+            private global::System.Data.DataColumn columnAmountSoldInt;
+            
+            private global::System.Data.DataColumn columnAmountPaidInt;
+            
+            private global::System.Data.DataColumn columnAmountPaidRiel;
+            
+            private global::System.Data.DataColumn columnAmountReturnInt;
+            
+            private global::System.Data.DataColumn columnAmountReturnRiel;
+            
+            private global::System.Data.DataColumn columnTotalDiscount;
+            
+            private global::System.Data.DataColumn columnProductName;
+            
+            private global::System.Data.DataColumn columnUnitPriceIn;
+            
+            private global::System.Data.DataColumn columnUnitPriceOut;
+            
+            private global::System.Data.DataColumn columnDiscount;
+            
+            private global::System.Data.DataColumn columnQtySold;
+            
+            private global::System.Data.DataColumn columnSubTotal;
+            
+            private global::System.Data.DataColumn columnDepositItemId;
+            
+            private global::System.Data.DataColumn columnProductId;
+            
+            private global::System.Data.DataColumn columnCardNumber;
+            
+            private global::System.Data.DataColumn columnUpdateDate;
+            
+            private global::System.Data.DataColumn columnReferenceNum;
+            
+            private global::System.Data.DataColumn columnProductCode;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DtbDepositsDataTable() {
+                this.TableName = "DtbDeposits";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal DtbDepositsDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected DtbDepositsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DepositIdColumn {
+                get {
+                    return this.columnDepositId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DepositNumberColumn {
+                get {
+                    return this.columnDepositNumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DepositDateColumn {
+                get {
+                    return this.columnDepositDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn CustomerNameColumn {
+                get {
+                    return this.columnCustomerName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn CashierNameColumn {
+                get {
+                    return this.columnCashierName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ExchangeRateColumn {
+                get {
+                    return this.columnExchangeRate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn AmountSoldIntColumn {
+                get {
+                    return this.columnAmountSoldInt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn AmountPaidIntColumn {
+                get {
+                    return this.columnAmountPaidInt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn AmountPaidRielColumn {
+                get {
+                    return this.columnAmountPaidRiel;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn AmountReturnIntColumn {
+                get {
+                    return this.columnAmountReturnInt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn AmountReturnRielColumn {
+                get {
+                    return this.columnAmountReturnRiel;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn TotalDiscountColumn {
+                get {
+                    return this.columnTotalDiscount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ProductNameColumn {
+                get {
+                    return this.columnProductName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn UnitPriceInColumn {
+                get {
+                    return this.columnUnitPriceIn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn UnitPriceOutColumn {
+                get {
+                    return this.columnUnitPriceOut;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DiscountColumn {
+                get {
+                    return this.columnDiscount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn QtySoldColumn {
+                get {
+                    return this.columnQtySold;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn SubTotalColumn {
+                get {
+                    return this.columnSubTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn DepositItemIdColumn {
+                get {
+                    return this.columnDepositItemId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ProductIdColumn {
+                get {
+                    return this.columnProductId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn CardNumberColumn {
+                get {
+                    return this.columnCardNumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn UpdateDateColumn {
+                get {
+                    return this.columnUpdateDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ReferenceNumColumn {
+                get {
+                    return this.columnReferenceNum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ProductCodeColumn {
+                get {
+                    return this.columnProductCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DtbDepositsRow this[int index] {
+                get {
+                    return ((DtbDepositsRow)(this.Rows[index]));
+                }
+            }
+            
+            public event DtbDepositsRowChangeEventHandler DtbDepositsRowChanging;
+            
+            public event DtbDepositsRowChangeEventHandler DtbDepositsRowChanged;
+            
+            public event DtbDepositsRowChangeEventHandler DtbDepositsRowDeleting;
+            
+            public event DtbDepositsRowChangeEventHandler DtbDepositsRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void AddDtbDepositsRow(DtbDepositsRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DtbDepositsRow AddDtbDepositsRow(
+                        int DepositId, 
+                        string DepositNumber, 
+                        System.DateTime DepositDate, 
+                        string CustomerName, 
+                        string CashierName, 
+                        double ExchangeRate, 
+                        double AmountSoldInt, 
+                        double AmountPaidInt, 
+                        double AmountPaidRiel, 
+                        double AmountReturnInt, 
+                        double AmountReturnRiel, 
+                        double TotalDiscount, 
+                        string ProductName, 
+                        double UnitPriceIn, 
+                        double UnitPriceOut, 
+                        double Discount, 
+                        double QtySold, 
+                        double SubTotal, 
+                        int DepositItemId, 
+                        int ProductId, 
+                        string CardNumber, 
+                        System.DateTime UpdateDate, 
+                        string ReferenceNum, 
+                        string ProductCode) {
+                DtbDepositsRow rowDtbDepositsRow = ((DtbDepositsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        DepositId,
+                        DepositNumber,
+                        DepositDate,
+                        CustomerName,
+                        CashierName,
+                        ExchangeRate,
+                        AmountSoldInt,
+                        AmountPaidInt,
+                        AmountPaidRiel,
+                        AmountReturnInt,
+                        AmountReturnRiel,
+                        TotalDiscount,
+                        ProductName,
+                        UnitPriceIn,
+                        UnitPriceOut,
+                        Discount,
+                        QtySold,
+                        SubTotal,
+                        DepositItemId,
+                        ProductId,
+                        CardNumber,
+                        UpdateDate,
+                        ReferenceNum,
+                        ProductCode};
+                rowDtbDepositsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowDtbDepositsRow);
+                return rowDtbDepositsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public override global::System.Data.DataTable Clone() {
+                DtbDepositsDataTable cln = ((DtbDepositsDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new DtbDepositsDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal void InitVars() {
+                this.columnDepositId = base.Columns["DepositId"];
+                this.columnDepositNumber = base.Columns["DepositNumber"];
+                this.columnDepositDate = base.Columns["DepositDate"];
+                this.columnCustomerName = base.Columns["CustomerName"];
+                this.columnCashierName = base.Columns["CashierName"];
+                this.columnExchangeRate = base.Columns["ExchangeRate"];
+                this.columnAmountSoldInt = base.Columns["AmountSoldInt"];
+                this.columnAmountPaidInt = base.Columns["AmountPaidInt"];
+                this.columnAmountPaidRiel = base.Columns["AmountPaidRiel"];
+                this.columnAmountReturnInt = base.Columns["AmountReturnInt"];
+                this.columnAmountReturnRiel = base.Columns["AmountReturnRiel"];
+                this.columnTotalDiscount = base.Columns["TotalDiscount"];
+                this.columnProductName = base.Columns["ProductName"];
+                this.columnUnitPriceIn = base.Columns["UnitPriceIn"];
+                this.columnUnitPriceOut = base.Columns["UnitPriceOut"];
+                this.columnDiscount = base.Columns["Discount"];
+                this.columnQtySold = base.Columns["QtySold"];
+                this.columnSubTotal = base.Columns["SubTotal"];
+                this.columnDepositItemId = base.Columns["DepositItemId"];
+                this.columnProductId = base.Columns["ProductId"];
+                this.columnCardNumber = base.Columns["CardNumber"];
+                this.columnUpdateDate = base.Columns["UpdateDate"];
+                this.columnReferenceNum = base.Columns["ReferenceNum"];
+                this.columnProductCode = base.Columns["ProductCode"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitClass() {
+                this.columnDepositId = new global::System.Data.DataColumn("DepositId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepositId);
+                this.columnDepositNumber = new global::System.Data.DataColumn("DepositNumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepositNumber);
+                this.columnDepositDate = new global::System.Data.DataColumn("DepositDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepositDate);
+                this.columnCustomerName = new global::System.Data.DataColumn("CustomerName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCustomerName);
+                this.columnCashierName = new global::System.Data.DataColumn("CashierName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCashierName);
+                this.columnExchangeRate = new global::System.Data.DataColumn("ExchangeRate", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnExchangeRate);
+                this.columnAmountSoldInt = new global::System.Data.DataColumn("AmountSoldInt", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmountSoldInt);
+                this.columnAmountPaidInt = new global::System.Data.DataColumn("AmountPaidInt", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmountPaidInt);
+                this.columnAmountPaidRiel = new global::System.Data.DataColumn("AmountPaidRiel", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmountPaidRiel);
+                this.columnAmountReturnInt = new global::System.Data.DataColumn("AmountReturnInt", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmountReturnInt);
+                this.columnAmountReturnRiel = new global::System.Data.DataColumn("AmountReturnRiel", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmountReturnRiel);
+                this.columnTotalDiscount = new global::System.Data.DataColumn("TotalDiscount", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotalDiscount);
+                this.columnProductName = new global::System.Data.DataColumn("ProductName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProductName);
+                this.columnUnitPriceIn = new global::System.Data.DataColumn("UnitPriceIn", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnitPriceIn);
+                this.columnUnitPriceOut = new global::System.Data.DataColumn("UnitPriceOut", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnitPriceOut);
+                this.columnDiscount = new global::System.Data.DataColumn("Discount", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDiscount);
+                this.columnQtySold = new global::System.Data.DataColumn("QtySold", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQtySold);
+                this.columnSubTotal = new global::System.Data.DataColumn("SubTotal", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubTotal);
+                this.columnDepositItemId = new global::System.Data.DataColumn("DepositItemId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDepositItemId);
+                this.columnProductId = new global::System.Data.DataColumn("ProductId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProductId);
+                this.columnCardNumber = new global::System.Data.DataColumn("CardNumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCardNumber);
+                this.columnUpdateDate = new global::System.Data.DataColumn("UpdateDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUpdateDate);
+                this.columnReferenceNum = new global::System.Data.DataColumn("ReferenceNum", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReferenceNum);
+                this.columnProductCode = new global::System.Data.DataColumn("ProductCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProductCode);
+                this.columnDepositId.AllowDBNull = false;
+                this.columnProductId.Caption = "ProductID";
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DtbDepositsRow NewDtbDepositsRow() {
+                return ((DtbDepositsRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new DtbDepositsRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Type GetRowType() {
+                return typeof(DtbDepositsRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.DtbDepositsRowChanged != null)) {
+                    this.DtbDepositsRowChanged(this, new DtbDepositsRowChangeEvent(((DtbDepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.DtbDepositsRowChanging != null)) {
+                    this.DtbDepositsRowChanging(this, new DtbDepositsRowChangeEvent(((DtbDepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.DtbDepositsRowDeleted != null)) {
+                    this.DtbDepositsRowDeleted(this, new DtbDepositsRowChangeEvent(((DtbDepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.DtbDepositsRowDeleting != null)) {
+                    this.DtbDepositsRowDeleting(this, new DtbDepositsRowChangeEvent(((DtbDepositsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void RemoveDtbDepositsRow(DtbDepositsRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DtsModels ds = new DtsModels();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "DtbDepositsDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -2213,6 +2845,21 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ForeignCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbProducts.ForeignCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ForeignCode\' in table \'DtbProducts\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbProducts.ForeignCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsProductCodeNull() {
                 return this.IsNull(this.tableDtbProducts.ProductCodeColumn);
             }
@@ -2460,6 +3107,16 @@ namespace EzPos.GUIs.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetLastUpdateNull() {
                 this[this.tableDtbProducts.LastUpdateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsForeignCodeNull() {
+                return this.IsNull(this.tableDtbProducts.ForeignCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetForeignCodeNull() {
+                this[this.tableDtbProducts.ForeignCodeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2863,6 +3520,36 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int SalesOrderId {
+                get {
+                    try {
+                        return ((int)(this[this.tableDtbSaleReports.SalesOrderIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SalesOrderId\' in table \'DtbSaleReports\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbSaleReports.SalesOrderIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double DepositAmount {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbSaleReports.DepositAmountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DepositAmount\' in table \'DtbSaleReports\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbSaleReports.DepositAmountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsSaleOrderNumberNull() {
                 return this.IsNull(this.tableDtbSaleReports.SaleOrderNumberColumn);
             }
@@ -3111,6 +3798,26 @@ namespace EzPos.GUIs.DataSets {
             public void SetReportTypeStrNull() {
                 this[this.tableDtbSaleReports.ReportTypeStrColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsSalesOrderIdNull() {
+                return this.IsNull(this.tableDtbSaleReports.SalesOrderIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetSalesOrderIdNull() {
+                this[this.tableDtbSaleReports.SalesOrderIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsDepositAmountNull() {
+                return this.IsNull(this.tableDtbSaleReports.DepositAmountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetDepositAmountNull() {
+                this[this.tableDtbSaleReports.DepositAmountColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -3130,12 +3837,7 @@ namespace EzPos.GUIs.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public int ExpenseID {
                 get {
-                    try {
-                        return ((int)(this[this.tableDtbExpenses.ExpenseIDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ExpenseID\' in table \'DtbExpenses\' is DBNull.", e);
-                    }
+                    return ((int)(this[this.tableDtbExpenses.ExpenseIDColumn]));
                 }
                 set {
                     this[this.tableDtbExpenses.ExpenseIDColumn] = value;
@@ -3263,16 +3965,6 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IsExpenseIDNull() {
-                return this.IsNull(this.tableDtbExpenses.ExpenseIDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetExpenseIDNull() {
-                this[this.tableDtbExpenses.ExpenseIDColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsExpenseTypeIDNull() {
                 return this.IsNull(this.tableDtbExpenses.ExpenseTypeIDColumn);
             }
@@ -3350,6 +4042,606 @@ namespace EzPos.GUIs.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetExchangeRateNull() {
                 this[this.tableDtbExpenses.ExchangeRateColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public partial class DtbDepositsRow : global::System.Data.DataRow {
+            
+            private DtbDepositsDataTable tableDtbDeposits;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal DtbDepositsRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableDtbDeposits = ((DtbDepositsDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int DepositId {
+                get {
+                    return ((int)(this[this.tableDtbDeposits.DepositIdColumn]));
+                }
+                set {
+                    this[this.tableDtbDeposits.DepositIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string DepositNumber {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.DepositNumberColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DepositNumber\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.DepositNumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public System.DateTime DepositDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableDtbDeposits.DepositDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DepositDate\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.DepositDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string CustomerName {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.CustomerNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CustomerName\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.CustomerNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string CashierName {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.CashierNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CashierName\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.CashierNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double ExchangeRate {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.ExchangeRateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ExchangeRate\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.ExchangeRateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double AmountSoldInt {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.AmountSoldIntColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AmountSoldInt\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.AmountSoldIntColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double AmountPaidInt {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.AmountPaidIntColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AmountPaidInt\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.AmountPaidIntColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double AmountPaidRiel {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.AmountPaidRielColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AmountPaidRiel\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.AmountPaidRielColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double AmountReturnInt {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.AmountReturnIntColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AmountReturnInt\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.AmountReturnIntColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double AmountReturnRiel {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.AmountReturnRielColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AmountReturnRiel\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.AmountReturnRielColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double TotalDiscount {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.TotalDiscountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TotalDiscount\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.TotalDiscountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ProductName {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.ProductNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProductName\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.ProductNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double UnitPriceIn {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.UnitPriceInColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UnitPriceIn\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.UnitPriceInColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double UnitPriceOut {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.UnitPriceOutColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UnitPriceOut\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.UnitPriceOutColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double Discount {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.DiscountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Discount\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.DiscountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double QtySold {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.QtySoldColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'QtySold\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.QtySoldColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public double SubTotal {
+                get {
+                    try {
+                        return ((double)(this[this.tableDtbDeposits.SubTotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SubTotal\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.SubTotalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int DepositItemId {
+                get {
+                    try {
+                        return ((int)(this[this.tableDtbDeposits.DepositItemIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DepositItemId\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.DepositItemIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int ProductId {
+                get {
+                    try {
+                        return ((int)(this[this.tableDtbDeposits.ProductIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProductId\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.ProductIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string CardNumber {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.CardNumberColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CardNumber\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.CardNumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public System.DateTime UpdateDate {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableDtbDeposits.UpdateDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UpdateDate\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.UpdateDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ReferenceNum {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.ReferenceNumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReferenceNum\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.ReferenceNumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ProductCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.ProductCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProductCode\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.ProductCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsDepositNumberNull() {
+                return this.IsNull(this.tableDtbDeposits.DepositNumberColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetDepositNumberNull() {
+                this[this.tableDtbDeposits.DepositNumberColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsDepositDateNull() {
+                return this.IsNull(this.tableDtbDeposits.DepositDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetDepositDateNull() {
+                this[this.tableDtbDeposits.DepositDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsCustomerNameNull() {
+                return this.IsNull(this.tableDtbDeposits.CustomerNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetCustomerNameNull() {
+                this[this.tableDtbDeposits.CustomerNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsCashierNameNull() {
+                return this.IsNull(this.tableDtbDeposits.CashierNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetCashierNameNull() {
+                this[this.tableDtbDeposits.CashierNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsExchangeRateNull() {
+                return this.IsNull(this.tableDtbDeposits.ExchangeRateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetExchangeRateNull() {
+                this[this.tableDtbDeposits.ExchangeRateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsAmountSoldIntNull() {
+                return this.IsNull(this.tableDtbDeposits.AmountSoldIntColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetAmountSoldIntNull() {
+                this[this.tableDtbDeposits.AmountSoldIntColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsAmountPaidIntNull() {
+                return this.IsNull(this.tableDtbDeposits.AmountPaidIntColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetAmountPaidIntNull() {
+                this[this.tableDtbDeposits.AmountPaidIntColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsAmountPaidRielNull() {
+                return this.IsNull(this.tableDtbDeposits.AmountPaidRielColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetAmountPaidRielNull() {
+                this[this.tableDtbDeposits.AmountPaidRielColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsAmountReturnIntNull() {
+                return this.IsNull(this.tableDtbDeposits.AmountReturnIntColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetAmountReturnIntNull() {
+                this[this.tableDtbDeposits.AmountReturnIntColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsAmountReturnRielNull() {
+                return this.IsNull(this.tableDtbDeposits.AmountReturnRielColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetAmountReturnRielNull() {
+                this[this.tableDtbDeposits.AmountReturnRielColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsTotalDiscountNull() {
+                return this.IsNull(this.tableDtbDeposits.TotalDiscountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetTotalDiscountNull() {
+                this[this.tableDtbDeposits.TotalDiscountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsProductNameNull() {
+                return this.IsNull(this.tableDtbDeposits.ProductNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetProductNameNull() {
+                this[this.tableDtbDeposits.ProductNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsUnitPriceInNull() {
+                return this.IsNull(this.tableDtbDeposits.UnitPriceInColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetUnitPriceInNull() {
+                this[this.tableDtbDeposits.UnitPriceInColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsUnitPriceOutNull() {
+                return this.IsNull(this.tableDtbDeposits.UnitPriceOutColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetUnitPriceOutNull() {
+                this[this.tableDtbDeposits.UnitPriceOutColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsDiscountNull() {
+                return this.IsNull(this.tableDtbDeposits.DiscountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetDiscountNull() {
+                this[this.tableDtbDeposits.DiscountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsQtySoldNull() {
+                return this.IsNull(this.tableDtbDeposits.QtySoldColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetQtySoldNull() {
+                this[this.tableDtbDeposits.QtySoldColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsSubTotalNull() {
+                return this.IsNull(this.tableDtbDeposits.SubTotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetSubTotalNull() {
+                this[this.tableDtbDeposits.SubTotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsDepositItemIdNull() {
+                return this.IsNull(this.tableDtbDeposits.DepositItemIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetDepositItemIdNull() {
+                this[this.tableDtbDeposits.DepositItemIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsProductIdNull() {
+                return this.IsNull(this.tableDtbDeposits.ProductIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetProductIdNull() {
+                this[this.tableDtbDeposits.ProductIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsCardNumberNull() {
+                return this.IsNull(this.tableDtbDeposits.CardNumberColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetCardNumberNull() {
+                this[this.tableDtbDeposits.CardNumberColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsUpdateDateNull() {
+                return this.IsNull(this.tableDtbDeposits.UpdateDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetUpdateDateNull() {
+                this[this.tableDtbDeposits.UpdateDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsReferenceNumNull() {
+                return this.IsNull(this.tableDtbDeposits.ReferenceNumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetReferenceNumNull() {
+                this[this.tableDtbDeposits.ReferenceNumColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsProductCodeNull() {
+                return this.IsNull(this.tableDtbDeposits.ProductCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetProductCodeNull() {
+                this[this.tableDtbDeposits.ProductCodeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3433,6 +4725,37 @@ namespace EzPos.GUIs.DataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public DtbExpensesRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public class DtbDepositsRowChangeEvent : global::System.EventArgs {
+            
+            private DtbDepositsRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DtbDepositsRowChangeEvent(DtbDepositsRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public DtbDepositsRow Row {
                 get {
                     return this.eventRow;
                 }

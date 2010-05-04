@@ -5,7 +5,7 @@
 				<settings>
 					<item key="hibernate.connection.provider">NHibernate.Connection.DriverConnectionProvider</item>
 					<item key="hibernate.connection.driver_class">NHibernate.Driver.SqlClientDriver</item>
-					<item key="hibernate.connection.connection_string">Database=BrandSelection;Data Source=YIM-DELL\SQL2000;User ID=sa;Password=khmerDEV$$</item>
+					<item key="hibernate.connection.connection_string">Database=EzPos;Data Source=YIM-DELL\SQL2005;User ID=sa;Password=khmerDEV$$</item>
 					<item key="hibernate.dialect">NHibernate.Dialect.MsSql2000Dialect</item>
 				</settings>
 				<resources>
@@ -24,10 +24,15 @@
           <!--================= Products ===================-->
           <resource name="../Conf/Product/Products.hbm.xml" />
           <resource name="../Conf/Product/ProductAdjustments.hbm.xml" />
+          <!--================= Deposit ==================-->
+          <resource name="../Conf/Deposit/Deposits.hbm.xml" />
+          <resource name="../Conf/Deposit/DepositItems.hbm.xml" />
           <!--================= SaleOrder ==================-->
           <resource name="../Conf/SaleOrder/SaleOrders.hbm.xml" />
           <resource name="../Conf/SaleOrder/SaleItems.hbm.xml" />
           <resource name="../Conf/SaleOrder/SaleOrdersReport.hbm.xml" />
+          <!--================= Payment ==================-->
+          <resource name="../Conf/Payment/Payments.hbm.xml" />
           <!--================= User ==================-->          
           <resource name="../Conf/User/Permissions.hbm.xml" />
           <resource name="../Conf/User/Users.hbm.xml" />

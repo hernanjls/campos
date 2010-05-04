@@ -32,7 +32,7 @@ namespace EzPos.GUIs.Forms
         {
             this.components = new System.ComponentModel.Container();
             this.pnlBody = new System.Windows.Forms.Panel();
-            this.cmbDCountType = new ExtendedComboBox(this.components);
+            this.cmbDCountType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.cmbDiscountCard = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -119,9 +119,9 @@ namespace EzPos.GUIs.Forms
             this.txtSearch.Size = new System.Drawing.Size(242, 36);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtSearch.Enter += new System.EventHandler(this.txtDCardNum_Enter);
-            this.txtSearch.Leave += new System.EventHandler(this.txtDCardNum_Leave);
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
+            this.txtSearch.Leave += new System.EventHandler(this.txtDCardNum_Leave);
+            this.txtSearch.Enter += new System.EventHandler(this.txtDCardNum_Enter);
             // 
             // cmbDiscountCard
             // 
@@ -286,9 +286,9 @@ namespace EzPos.GUIs.Forms
             this.txtAmountPaidRiel.TabIndex = 35;
             this.txtAmountPaidRiel.Text = "0.00";
             this.txtAmountPaidRiel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtAmountPaidRiel.Leave += new System.EventHandler(this.TxtAmountPaidRiel_Leave);
             this.txtAmountPaidRiel.TextChanged += new System.EventHandler(this.txtAmountPaidRiel_TextChanged);
             this.txtAmountPaidRiel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmPayment_KeyDown);
+            this.txtAmountPaidRiel.Leave += new System.EventHandler(this.TxtAmountPaidRiel_Leave);
             // 
             // lblAmoutPaidRiel
             // 
@@ -323,9 +323,9 @@ namespace EzPos.GUIs.Forms
             this.txtAmountPaidUsd.TabIndex = 33;
             this.txtAmountPaidUsd.Text = "0.00";
             this.txtAmountPaidUsd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtAmountPaidUsd.Leave += new System.EventHandler(this.txtAmountPaidUsd_Leave);
             this.txtAmountPaidUsd.TextChanged += new System.EventHandler(this.txtAmountPaidUsd_TextChanged);
             this.txtAmountPaidUsd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmPayment_KeyDown);
+            this.txtAmountPaidUsd.Leave += new System.EventHandler(this.txtAmountPaidUsd_Leave);
             // 
             // txtTotalAmountRiel
             // 
@@ -487,6 +487,7 @@ namespace EzPos.GUIs.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(695, 574);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlTop);
@@ -497,9 +498,9 @@ namespace EzPos.GUIs.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmPayment";
+            this.Load += new System.EventHandler(this.FrmPayment_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPayment_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmPayment_KeyDown);
-            this.Load += new System.EventHandler(this.FrmPayment_Load);
             this.pnlBody.ResumeLayout(false);
             this.pnlBody.PerformLayout();
             this.pnlTop.ResumeLayout(false);

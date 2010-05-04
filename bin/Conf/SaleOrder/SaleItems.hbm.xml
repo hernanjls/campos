@@ -9,10 +9,9 @@
     <property name="UnitPriceIn" column="UnitPriceIn" type="float" />
     <property name="UnitPriceOut" column="UnitPriceOut" type="float" />
     <property name="Discount" column="Discount" type="float" />
-    <property name="QtySold" column="QtySold" type="float" />
+    <property name="QtySold" column="QtySold" type="Int32" />
 
     <many-to-one name="FKProduct" column="ProductID" class="EzPos.Model.Product, EzPos" insert="false" update="false"	/>
-    <!-- many-to-one name="FKSaleOrder" column="SaleOrderID" class="EzPos.Model.SaleOrder, EzPos" insert="false" update="false"	/-->
   </class>
 </hibernate-mapping>
 		

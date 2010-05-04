@@ -5,10 +5,11 @@ namespace EzPos.Model
     /// </summary>
     public class SaleOrder
     {
-        public const string CONST_SALE_ORDER_ID = "SaleOrderID";
+        public const string CONST_SALE_ORDER_ID = "SaleOrderId";
+        public const string CONST_SALE_ORDER_DATE = "SaleOrderDate";
         public const string CONST_SALE_ORDER_NUMBER = "SaleOrderNumber";
 
-        public int SaleOrderID { get; set; }
+        public int SaleOrderId { get; set; }
 
         public string SaleOrderNumber { get; set; }
 
@@ -18,7 +19,7 @@ namespace EzPos.Model
 
         public int CustomerID { get; set; }
 
-        public int CashierID { get; set; }
+        public int CashierId { get; set; }
 
         public int DelivererID { get; set; }
 
@@ -51,5 +52,7 @@ namespace EzPos.Model
         public Customer FKCustomer { get; set; }
 
         public string ReferenceNum { get; set; }
+
+        public float DepositAmount { get; set; }
     }
 }

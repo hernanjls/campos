@@ -2,5 +2,8 @@
 {
     partial class DtsModels
     {
+        partial class DtbDepositsDataTable
+        {
+        }
     }
 }

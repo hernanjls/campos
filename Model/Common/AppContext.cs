@@ -14,6 +14,7 @@ namespace EzPos.Model
         private static string _ShopAddress;
         private static string _ShopContact;
         private static string _ShopName;
+        private static string _ReceiptHeader;
         private static User _User;
         private static IList _UserPermissionList;
 
@@ -75,6 +76,12 @@ namespace EzPos.Model
         {
             get { return _ReceiptFooter; }
             set { _ReceiptFooter = value; }
+        }
+
+        public static string ReceiptHeader
+        {
+            get { return _ReceiptHeader; }
+            set { _ReceiptHeader = value; }
         }
 
         public static IList IntegratedModuleList
