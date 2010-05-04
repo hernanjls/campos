@@ -12,7 +12,7 @@ namespace EzPos.Model
             return typePropertiesCollection.Sort(new[]
                                                      {
                                                          "SaleItemID",
-                                                         "SaleOrderID",
+                                                         "SaleOrderId",
                                                          "ProductID",
                                                          "ProdPicture",
                                                          "ProductName",

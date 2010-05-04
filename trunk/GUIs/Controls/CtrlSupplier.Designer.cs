@@ -49,10 +49,10 @@ namespace EzPos.GUIs.Controls
             this.lblResultInfo = new System.Windows.Forms.Label();
             this.lblCardNum = new System.Windows.Forms.Label();
             this.txtSupplierName = new System.Windows.Forms.TextBox();
+            this.cmbCountry = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblCountry = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.cmbCountry = new ExtendedComboBox(this.components);
             this.SupplierName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PhoneNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FaxNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -103,17 +103,17 @@ namespace EzPos.GUIs.Controls
             this.dgvSupplier.ColumnHeadersHeight = 40;
             this.dgvSupplier.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvSupplier.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                                                                                                this.SupplierName,
-                                                                                                this.PhoneNumber,
-                                                                                                this.FaxNumber,
-                                                                                                this.CountryStr,
-                                                                                                this.SupplierId,
-                                                                                                this.SupplierCode,
-                                                                                                this.Address,
-                                                                                                this.EmailAddress,
-                                                                                                this.Website,
-                                                                                                this.CountryId,
-                                                                                                this.BankInformation});
+            this.SupplierName,
+            this.PhoneNumber,
+            this.FaxNumber,
+            this.CountryStr,
+            this.SupplierId,
+            this.SupplierCode,
+            this.Address,
+            this.EmailAddress,
+            this.Website,
+            this.CountryId,
+            this.BankInformation});
             this.dgvSupplier.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSupplier.EnableHeadersVisualStyles = false;
             this.dgvSupplier.GridColor = System.Drawing.Color.White;
@@ -299,6 +299,15 @@ namespace EzPos.GUIs.Controls
             this.txtSupplierName.Size = new System.Drawing.Size(184, 27);
             this.txtSupplierName.TabIndex = 1;
             // 
+            // cmbCountry
+            // 
+            this.cmbCountry.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCountry.FormattingEnabled = true;
+            this.cmbCountry.Location = new System.Drawing.Point(351, 12);
+            this.cmbCountry.Name = "cmbCountry";
+            this.cmbCountry.Size = new System.Drawing.Size(184, 27);
+            this.cmbCountry.TabIndex = 3;
+            // 
             // lblCountry
             // 
             this.lblCountry.AutoSize = true;
@@ -337,18 +346,9 @@ namespace EzPos.GUIs.Controls
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // cmbCountry
-            // 
-            this.cmbCountry.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCountry.FormattingEnabled = true;
-            this.cmbCountry.Location = new System.Drawing.Point(351, 12);
-            this.cmbCountry.Name = "cmbCountry";
-            this.cmbCountry.Size = new System.Drawing.Size(184, 27);
-            this.cmbCountry.TabIndex = 3;
-            // 
             // SupplierName
             // 
-            this.SupplierName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SupplierName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.SupplierName.DataPropertyName = "SupplierName";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             this.SupplierName.DefaultCellStyle = dataGridViewCellStyle2;
@@ -357,7 +357,6 @@ namespace EzPos.GUIs.Controls
             this.SupplierName.ReadOnly = true;
             this.SupplierName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.SupplierName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SupplierName.Width = 300;
             // 
             // PhoneNumber
             // 

@@ -28,21 +28,21 @@ namespace EzPos.GUIs.Forms
 
         private void FrmSplash_Load(object sender, EventArgs e)
         {
-            //var deadLine = new DateTime(2010, 6, 30);
-            //if (DateTime.Now.CompareTo(deadLine) >= 0)
-            //{
-            //    const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
-            //    var detailMsg = Resources.MsgTrialPeriodExpire;
-            //    using (var frmMessageBox = new ExtendedMessageBox())
-            //    {
-            //        frmMessageBox.BriefMsgStr = briefMsg;
-            //        frmMessageBox.DetailMsgStr = detailMsg;
-            //        frmMessageBox.IsCanceledOnly = true;
-            //        frmMessageBox.ShowDialog(this);
-            //        Close();
-            //        return;
-            //    }
-            //}
+            var deadLine = new DateTime(2010, 6, 30);
+            if (DateTime.Now.CompareTo(deadLine) >= 0)
+            {
+                const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
+                var detailMsg = Resources.MsgTrialPeriodExpire;
+                using (var frmMessageBox = new ExtendedMessageBox())
+                {
+                    frmMessageBox.BriefMsgStr = briefMsg;
+                    frmMessageBox.DetailMsgStr = detailMsg;
+                    frmMessageBox.IsCanceledOnly = true;
+                    frmMessageBox.ShowDialog(this);
+                    Close();
+                    return;
+                }
+            }
 
             ThreadStart threadStart = RetrieveConfiguration;
             var thread = new Thread(threadStart)
@@ -51,12 +51,12 @@ namespace EzPos.GUIs.Forms
                              };
             thread.Start();
 
-            ThreadStart crystalReportThreadStart = PreLoadCrystalReport;
-            var crystalReportThread = new Thread(crystalReportThreadStart)
-                                          {
-                                              Priority = ThreadPriority.Lowest
-                                          };
-            crystalReportThread.Start();
+            //ThreadStart crystalReportThreadStart = PreLoadCrystalReport;
+            //var crystalReportThread = new Thread(crystalReportThreadStart)
+            //                              {
+            //                                  Priority = ThreadPriority.Lowest
+            //                              };
+            //crystalReportThread.Start();
         }
 
         private void RetrieveConfiguration()
@@ -152,7 +152,7 @@ namespace EzPos.GUIs.Forms
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
                 var detailMsg = Resources.MsgConnectionLost;
@@ -196,10 +196,10 @@ namespace EzPos.GUIs.Forms
 
         private static void PreLoadCrystalReport()
         {
-            var csrEmpty = new CsrEmpty();
-            //csrEmpty.SetDataSource(null);
-            var crvReport = new CrystalReportViewer();
-            crvReport.ReportSource = csrEmpty;            
+            //var csrEmpty = new CsrEmpty();
+            ////csrEmpty.SetDataSource(null);
+            //var crvReport = new CrystalReportViewer();
+            //crvReport.ReportSource = csrEmpty;            
         }
 
         #region Nested type: SafeCrossCallBackDelegate

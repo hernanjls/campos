@@ -114,7 +114,7 @@ namespace EzPos.GUIs.Forms
             this.lblInfo.Size = new System.Drawing.Size(500, 74);
             this.lblInfo.TabIndex = 5;
             this.lblInfo.Text = "Please enter User name and Password provided by EzPos administrator to start the " +
-                                "session.";
+                "session.";
             this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnlTop
@@ -172,6 +172,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
             // 
             // btnLogIn
             // 
@@ -190,7 +192,9 @@ namespace EzPos.GUIs.Forms
             this.btnLogIn.Text = "យល់ព្រម";
             this.btnLogIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnLogIn.UseVisualStyleBackColor = false;
+            this.btnLogIn.MouseLeave += new System.EventHandler(this.btnLogIn_MouseLeave);
             this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
+            this.btnLogIn.MouseEnter += new System.EventHandler(this.btnLogIn_MouseEnter);
             // 
             // FrmLogIn
             // 

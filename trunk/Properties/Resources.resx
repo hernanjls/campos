@@ -133,9 +133,6 @@
   <data name="OK32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\icons\ok32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MessageCaptionUnknownError" xml:space="preserve">
-    <value>Unknown error detected</value>
-  </data>
   <data name="OperationRequestDelete" xml:space="preserve">
     <value>DEL</value>
   </data>
@@ -273,15 +270,6 @@
   </data>
   <data name="AppParamExchangeRate" xml:space="preserve">
     <value>21</value>
-  </data>
-  <data name="MessageCaptionConfirm" xml:space="preserve">
-    <value>Confirm</value>
-  </data>
-  <data name="MessageCaptionError" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="MessageCaptionInformation" xml:space="preserve">
-    <value>Information</value>
   </data>
   <data name="MsgCaptionConfirm" xml:space="preserve">
     <value>Confirm</value>
@@ -515,6 +503,30 @@
     <value>Customer debt</value>
   </data>
   <data name="MsgConfirmCreditPayment" xml:space="preserve">
-    <value>The input amount is less then due amount. Do you want to proceed ?</value>
+    <value>ទឹកប្រាក់ដែលអ្នកបានបញ្ចូលពុំទាន់គ្រប់គ្រាន់ទេ ។ តើអ្នកពិតជាចង់បន្តដំណើរការទៀត?</value>
+  </data>
+  <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Icons\logo.tif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MsgConfirmDeliverProduct" xml:space="preserve">
+    <value>សូមមេត្តាចុចលើប៊ូតុងយល់ព្រមដើម្បីប្រគល់ទំនិញទៅ អោយអតិថិជន ។</value>
+  </data>
+  <data name="PermissionAddDeposit" xml:space="preserve">
+    <value>47</value>
+  </data>
+  <data name="PermissionDeleteDeposit" xml:space="preserve">
+    <value>49</value>
+  </data>
+  <data name="PermissionEditDeposit" xml:space="preserve">
+    <value>48</value>
+  </data>
+  <data name="PermissionViewDepositReport" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="ConstDepositExcelFile" xml:space="preserve">
+    <value>invoice-deposit.xlsx</value>
+  </data>
+  <data name="ConstSaleExcelFile" xml:space="preserve">
+    <value>invoice-sale.xlsx</value>
   </data>
 </root>

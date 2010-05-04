@@ -14,10 +14,7 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmPayment : Form
     {
-        private float _AmountPaidInt;
-        private float _AmountPaidRiel;
         private CommonService _CommonService;
-        private Customer _Customer;
         private BindingList<Customer> _CustomerList;
         private CustomerService _CustomerService;
         private BindingList<DiscountCard> _DiscountCardList;
@@ -46,20 +43,13 @@ namespace EzPos.GUIs.Forms
             set { _TotalAmountInt = value; }
         }
 
-        public float AmountPaidInt
-        {
-            get { return _AmountPaidInt; }
-        }
+        public float AmountPaidInt { get; private set; }
 
-        public float AmountPaidRiel
-        {
-            get { return _AmountPaidRiel; }
-        }
+        public float AmountPaidRiel { get; private set; }
 
-        public Customer Customer
-        {
-            get { return _Customer; }
-        }
+        public Customer Customer { get; private set; }
+
+        public bool IsDeposit { get; set; }
 
         private void FrmPayment_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -68,7 +58,7 @@ namespace EzPos.GUIs.Forms
                 if (DialogResult != DialogResult.OK)
                     return;
 
-                if (_Customer == null)
+                if (Customer == null)
                 {
                     const string briefMsg = "អំពីអតិថិជន";
                     var detailMsg = "ការ​គិត​លុយ​ពុំ​អាច​ប្រព្រឹត្ត​ទៅ​ដោយ​គ្មាន​អតិថិជន​ឡើយ ។";
@@ -88,40 +78,61 @@ namespace EzPos.GUIs.Forms
                 var amountReturnRiel = float.Parse(txtAmountReturnRiel.Text);
                 if (amountReturnRiel < 0)
                 {
-                    if (!CommonService.IsIntegratedModule(Resources.ModCustomerDebt))
-                    {
-                        if (((-1)*amountReturnRiel) >= 0)
-                        {
-                            const string briefMsg = "អំពីការប្រគល់ប្រាក់";
-                            const string detailMsg = "ទឹក​ប្រាក់​ដែល​អ្នក​បាន​បញ្ចូល​ពុំ​ទាន់​គ្រប់​គ្រាន់​ទេ ។";
-                            using (var frmMessageBox = new ExtendedMessageBox())
-                            {
-                                frmMessageBox.BriefMsgStr = briefMsg;
-                                frmMessageBox.DetailMsgStr = detailMsg;
-                                frmMessageBox.IsCanceledOnly = true;
-                                frmMessageBox.ShowDialog(this);
-                            }
+                    //if (!CommonService.IsIntegratedModule(Resources.ModCustomerDebt))
+                    //{
+                    //    if (((-1)*amountReturnRiel) >= 0)
+                    //    {
+                    //        const string briefMsg = "អំពីការប្រគល់ប្រាក់";
+                    //        const string detailMsg = "ទឹក​ប្រាក់​ដែល​អ្នក​បាន​បញ្ចូល​ពុំ​ទាន់​គ្រប់​គ្រាន់​ទេ ។";
+                    //        using (var frmMessageBox = new ExtendedMessageBox())
+                    //        {
+                    //            frmMessageBox.BriefMsgStr = briefMsg;
+                    //            frmMessageBox.DetailMsgStr = detailMsg;
+                    //            frmMessageBox.IsCanceledOnly = true;
+                    //            frmMessageBox.ShowDialog(this);
+                    //        }
 
-                            e.Cancel = true;
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        const string briefMsg = "អំពីការប្រគល់ប្រាក់";
-                        var detailMsg = Resources.MsgConfirmCreditPayment;
-                        using (var frmMessageBox = new ExtendedMessageBox())
+                    //        e.Cancel = true;
+                    //        return;
+                    //    }
+                    //}
+                    //else
+                    //{
+                        if(!IsDeposit)
                         {
-                            frmMessageBox.BriefMsgStr = briefMsg;
-                            frmMessageBox.DetailMsgStr = detailMsg;
-                            frmMessageBox.IsCanceledOnly = false;
-                            if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
+                            if (((-1) * amountReturnRiel) >= 0)
                             {
+                                const string briefMsg = "អំពីការប្រគល់ប្រាក់";
+                                const string detailMsg = "ទឹក​ប្រាក់​ដែល​អ្នក​បាន​បញ្ចូល​ពុំ​ទាន់​គ្រប់​គ្រាន់​ទេ ។";
+                                using (var frmMessageBox = new ExtendedMessageBox())
+                                {
+                                    frmMessageBox.BriefMsgStr = briefMsg;
+                                    frmMessageBox.DetailMsgStr = detailMsg;
+                                    frmMessageBox.IsCanceledOnly = true;
+                                    frmMessageBox.ShowDialog(this);
+                                }
+
                                 e.Cancel = true;
                                 return;
                             }
-                        }                        
-                    }
+                        }
+                        //else
+                        //{
+                        //    const string briefMsg = "អំពីការប្រគល់ប្រាក់";
+                        //    var detailMsg = Resources.MsgConfirmCreditPayment;
+                        //    using (var frmMessageBox = new ExtendedMessageBox())
+                        //    {
+                        //        frmMessageBox.BriefMsgStr = briefMsg;
+                        //        frmMessageBox.DetailMsgStr = detailMsg;
+                        //        frmMessageBox.IsCanceledOnly = false;
+                        //        if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
+                        //        {
+                        //            e.Cancel = true;
+                        //            return;
+                        //        }
+                        //    }                            
+                        //}
+                    //}
                 }
 
                 if (CommonService.IsIntegratedModule(Resources.ModDiscountCard))
@@ -192,7 +203,7 @@ namespace EzPos.GUIs.Forms
                 if (!CommonService.IsIntegratedModule(Resources.ModCustomer))
                 {
                     IList searchCriteria = new List<string> {"CustomerName|Retail Customer"};
-                    IList customerList = _CustomerService.GetCustomers(searchCriteria);
+                    var customerList = _CustomerService.GetCustomers(searchCriteria);
                     foreach (Customer customer in customerList)
                         _CustomerList.Add(customer);
                     txtSearch.Enabled = false;
@@ -236,12 +247,12 @@ namespace EzPos.GUIs.Forms
                     txtTotalAmountUsd.Text = "0.00";
 
                 var amountToPay = float.Parse(txtTotalAmountUsd.Text);
-                _AmountPaidInt = float.Parse(txtAmountPaidUsd.Text);
-                _AmountPaidRiel = float.Parse(txtAmountPaidRiel.Text);
+                AmountPaidInt = float.Parse(txtAmountPaidUsd.Text);
+                AmountPaidRiel = float.Parse(txtAmountPaidRiel.Text);
 
-                _AmountPaidInt += float.Parse(txtAmountPaidRiel.Text)/_ExchangeRate;
-                txtAmountReturnUsd.Text = (_AmountPaidInt - amountToPay).ToString("N", AppContext.CultureInfo);
-                txtAmountReturnRiel.Text = ((_AmountPaidInt - amountToPay)*_ExchangeRate).ToString("N",
+                AmountPaidInt += float.Parse(txtAmountPaidRiel.Text)/_ExchangeRate;
+                txtAmountReturnUsd.Text = (AmountPaidInt - amountToPay).ToString("N", AppContext.CultureInfo);
+                txtAmountReturnRiel.Text = ((AmountPaidInt - amountToPay)*_ExchangeRate).ToString("N",
                                                                                                    AppContext.
                                                                                                        CultureInfo);
             }
@@ -260,7 +271,7 @@ namespace EzPos.GUIs.Forms
                 ResetCustomerInfo();
             else
             {
-                _Customer = lsbCustomer.SelectedItem as Customer;
+                Customer = lsbCustomer.SelectedItem as Customer;
                 SetCustomerInfo();
             }
             CalculateDiscount();
@@ -268,21 +279,21 @@ namespace EzPos.GUIs.Forms
 
         private void SetCustomerInfo()
         {
-            if (_Customer == null)
+            if (Customer == null)
                 return;
 
             cmbDiscountCard.SelectedIndex = -1;
             var strCustomerInfo =
-                "អតិថិជន: " + _Customer.CustomerName + "\n" +
-                "លេខទូរស័ព្ទ: " + _Customer.PhoneNumber + "\n" +
-                "ទឹកប្រាក់បានទិញ: $" + _Customer.PurchasedAmount.ToString("N", AppContext.CultureInfo) + "\n";
+                "អតិថិជន: " + Customer.CustomerName + "\n" +
+                "លេខទូរស័ព្ទ: " + Customer.PhoneNumber + "\n" +
+                "ទឹកប្រាក់បានទិញ: $" + Customer.PurchasedAmount.ToString("N", AppContext.CultureInfo) + "\n";
             lblCustomerInfo.Text = strCustomerInfo;
 
             if (_DiscountCardList == null)
                 return;
             for (var counter = 0; counter < _DiscountCardList.Count; counter++)
             {
-                if (_Customer.CustomerID != (_DiscountCardList[counter]).CustomerID) 
+                if (Customer.CustomerID != (_DiscountCardList[counter]).CustomerID) 
                     continue;
 
                 cmbDiscountCard.SelectedIndex = counter;
@@ -291,18 +302,18 @@ namespace EzPos.GUIs.Forms
 
             if (cmbDiscountCard.SelectedItem != null)
             {
-                _Customer.FKDiscountCard = (DiscountCard) cmbDiscountCard.SelectedItem;
+                Customer.FKDiscountCard = (DiscountCard) cmbDiscountCard.SelectedItem;
 
-                txtSearch.Text = _Customer.FKDiscountCard.CardNumber;
-                txtDiscount.Text = _Customer.FKDiscountCard.DiscountPercentage + " %";
+                txtSearch.Text = Customer.FKDiscountCard.CardNumber;
+                txtDiscount.Text = Customer.FKDiscountCard.DiscountPercentage + " %";
                 strCustomerInfo =
-                    _Customer.FKDiscountCard.CardNumber + " :ប័ណ្ណបញ្ចុះតំលៃ" + "\n " +
-                    _Customer.FKDiscountCard.DiscountCardTypeStr + " :ប្រភេទប័ណ្ណ" + "\n" +
-                    _Customer.FKDiscountCard.DiscountPercentage + "% :%បញ្ចុះតំលៃ";
+                    Customer.FKDiscountCard.CardNumber + " :ប័ណ្ណបញ្ចុះតំលៃ" + "\n " +
+                    Customer.FKDiscountCard.DiscountCardTypeStr + " :ប្រភេទប័ណ្ណ" + "\n" +
+                    Customer.FKDiscountCard.DiscountPercentage + "% :%បញ្ចុះតំលៃ";
 
-                _Customer.DiscountCardNumber = _Customer.FKDiscountCard.CardNumber;
-                _Customer.DiscountCardType = _Customer.FKDiscountCard.DiscountCardTypeStr;
-                _Customer.DiscountPercentage = _Customer.FKDiscountCard.DiscountPercentage;
+                Customer.DiscountCardNumber = Customer.FKDiscountCard.CardNumber;
+                Customer.DiscountCardType = Customer.FKDiscountCard.DiscountCardTypeStr;
+                Customer.DiscountPercentage = Customer.FKDiscountCard.DiscountPercentage;
 
                 cmbDiscountCard.SelectedIndex = -1;
             }
@@ -326,10 +337,10 @@ namespace EzPos.GUIs.Forms
         private void CalculateDiscount()
         {
             float totalAmountPurchase;
-            if (_Customer == null)
+            if (Customer == null)
                 totalAmountPurchase = _TotalAmountInt;
             else
-                totalAmountPurchase = _Customer.PurchasedAmount + _TotalAmountInt;
+                totalAmountPurchase = Customer.PurchasedAmount + _TotalAmountInt;
 
             if (_DiscountTypeList == null)
             {
@@ -562,21 +573,27 @@ namespace EzPos.GUIs.Forms
 
         private void DiscountCardManagement()
         {
-            if (_Customer == null)
+            if (Customer == null)
                 return;
 
             var dCardTypeList =
                 _CommonService.GetAppParametersByType(
                     Int32.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo));
 
-            _Customer.PurchasedAmount += _TotalAmountInt;
-            if (_Customer.FKDiscountCard != null)
-                _Customer.PurchasedAmount -= ((_TotalAmountInt*_Customer.FKDiscountCard.DiscountPercentage)/100);
+            float purchaseAmount;
+            if (!IsDeposit)
+                purchaseAmount = _TotalAmountInt;
+            else
+                float.TryParse(txtAmountPaidUsd.Text, out purchaseAmount);
+
+            Customer.PurchasedAmount += purchaseAmount;
+            if (Customer.FKDiscountCard != null)
+                Customer.PurchasedAmount -= ((purchaseAmount * Customer.FKDiscountCard.DiscountPercentage) / 100);
 
             var counter = -1;
             foreach (AppParameter appParameter in dCardTypeList)
             {
-                if (_Customer.PurchasedAmount < float.Parse(appParameter.ParameterCode, AppContext.CultureInfo))
+                if (Customer.PurchasedAmount < float.Parse(appParameter.ParameterCode, AppContext.CultureInfo))
                     continue;
 
                 if (counter == -1)
@@ -590,21 +607,21 @@ namespace EzPos.GUIs.Forms
             if (counter == -1)
                 return;
 
-            if (_Customer.FKDiscountCard == null)
+            if (Customer.FKDiscountCard == null)
             {
                 DiscountCardDistribution(
-                    _Customer,
+                    Customer,
                     "",
                     ((AppParameter) dCardTypeList[counter]).ParameterLabel);
             }
             else
             {
-                if (_Customer.FKDiscountCard.DiscountCardTypeID !=
+                if (Customer.FKDiscountCard.DiscountCardTypeID !=
                     ((AppParameter) dCardTypeList[counter]).ParameterID)
                 {
                     DiscountCardDistribution(
-                        _Customer,
-                        _Customer.FKDiscountCard.DiscountCardTypeStr,
+                        Customer,
+                        Customer.FKDiscountCard.DiscountCardTypeStr,
                         ((AppParameter) dCardTypeList[counter]).ParameterLabel);
                 }
             }
@@ -653,7 +670,7 @@ namespace EzPos.GUIs.Forms
                 {
                     frmCustomer.Customer = customer;
                     if (frmCustomer.ShowDialog(this) == DialogResult.OK)
-                        _Customer = frmCustomer.Customer;
+                        Customer = frmCustomer.Customer;
                     Visible = true;
                 }
             }
@@ -678,13 +695,13 @@ namespace EzPos.GUIs.Forms
             txtTotalAmountUsd.Text = currentAmount.ToString("N", AppContext.CultureInfo);
             txtTotalAmountRiel.Text =
                 (_ExchangeRate*currentAmount).ToString("N", AppContext.CultureInfo);
-            if (_Customer == null) 
+            if (Customer == null) 
                 return;
 
-            if (_Customer.FKDiscountCard == null)
-                _Customer.FKDiscountCard = new DiscountCard();
-            _Customer.FKDiscountCard.DiscountPercentage = dPercentage;
-            _Customer.DiscountPercentage = dPercentage;
+            if (Customer.FKDiscountCard == null)
+                Customer.FKDiscountCard = new DiscountCard();
+            Customer.FKDiscountCard.DiscountPercentage = dPercentage;
+            Customer.DiscountPercentage = dPercentage;
         }
 
         private void UpdateControlContent()

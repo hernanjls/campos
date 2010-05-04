@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using EzPos.Model;
@@ -11,9 +10,12 @@ namespace EzPos.DataAccess
     {
         public virtual IList GetSaleOrders()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(SaleOrder.CONST_SALE_ORDER_ID));
-            orderList.Add(Order.Asc(SaleOrder.CONST_SALE_ORDER_NUMBER));
+            var orderList = 
+                new Collection<Order>
+                {
+                    Order.Asc(SaleOrder.CONST_SALE_ORDER_ID),
+                    Order.Asc(SaleOrder.CONST_SALE_ORDER_NUMBER)
+                };
 
             return SelectObjects(typeof (SaleOrder), orderList).List();
         }
@@ -25,55 +27,53 @@ namespace EzPos.DataAccess
             {
                 foreach (string strCriteria in searchCriteria)
                 {
-                    int delimiterIndex = strCriteria.IndexOf("|");
+                    var delimiterIndex = strCriteria.IndexOf("|");
                     if (delimiterIndex >= 0)
-                        criterionList.Add(Expression.Eq(
-                                              StringHelper.Left(strCriteria, delimiterIndex),
-                                              StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
+                        criterionList.Add(
+                            Expression.Eq(
+                                StringHelper.Left(strCriteria, delimiterIndex),
+                                StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
                     else
                         criterionList.Add(Expression.Sql(strCriteria));
                 }
             }
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(SaleOrderReport.CONST_SALE_ORDER_DATE));
-            orderList.Add(Order.Asc(SaleOrderReport.CONST_SALE_ORDER_NUMBER));
-
-            return SelectObjects(typeof (SaleOrderReport), criterionList, orderList).List();
-        }
-
-        public virtual IList GetSaleOrders(String soNumber)
-        {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("SaleOrderNumber", soNumber));
-
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(SaleOrder.CONST_SALE_ORDER_NUMBER));
+            var orderList = 
+                new Collection<Order>
+                {
+                    Order.Asc(SaleOrder.CONST_SALE_ORDER_DATE),
+                    Order.Asc(SaleOrder.CONST_SALE_ORDER_NUMBER)
+                };
 
             return SelectObjects(typeof (SaleOrder), criterionList, orderList).List();
         }
 
-        public virtual IList GetPreviousSaleOrders(string saleOrderId)
-        {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Lt("SaleOrderID", saleOrderId));
+        //public virtual IList GetDeposits(String soNumber)
+        //{
+        //    var criterionList = new Collection<ICriterion> {Expression.Eq("SaleOrderNumber", soNumber)};
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Desc(SaleOrder.CONST_SALE_ORDER_ID));
+        //    var orderList = new Collection<Order> {Order.Asc(SaleOrder.CONST_SALE_ORDER_NUMBER)};
 
-            return SelectObjects(typeof (SaleOrder), criterionList, orderList).List();
-        }
+        //    return SelectObjects(typeof (SaleOrder), criterionList, orderList).List();
+        //}
 
-        public virtual IList GetNextSaleOrder(string saleOrderId)
-        {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Gt("SaleOrderID", saleOrderId));
+        //public virtual IList GetPreviousSaleOrders(string saleOrderId)
+        //{
+        //    var criterionList = new Collection<ICriterion> {Expression.Lt("SaleOrderId", saleOrderId)};
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(SaleOrder.CONST_SALE_ORDER_ID));
+        //    var orderList = new Collection<Order> {Order.Desc(SaleOrder.CONST_SALE_ORDER_ID)};
 
-            return SelectObjects(typeof (SaleOrder), criterionList, orderList).List();
-        }
+        //    return SelectObjects(typeof (SaleOrder), criterionList, orderList).List();
+        //}
+
+        //public virtual IList GetNextSaleOrder(string saleOrderId)
+        //{
+        //    var criterionList = new Collection<ICriterion> {Expression.Gt("SaleOrderId", saleOrderId)};
+
+        //    var orderList = new Collection<Order> {Order.Asc(SaleOrder.CONST_SALE_ORDER_ID)};
+
+        //    return SelectObjects(typeof (SaleOrder), criterionList, orderList).List();
+        //}
 
         public virtual void UpdateSaleOrder(SaleOrder saleOrder)
         {
@@ -88,19 +88,16 @@ namespace EzPos.DataAccess
         //SaleItem
         public virtual IList GetSaleItems()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(SaleItem.CONST_SALE_ORDER_ID));
+            var orderList = new Collection<Order> {Order.Asc(SaleItem.CONST_SALE_ORDER_ID)};
 
             return SelectObjects(typeof (SaleItem), orderList).List();
         }
 
         public virtual IList GetSaleItems(int saleOrderId)
         {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("SaleOrderID", saleOrderId));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("SaleOrderID", saleOrderId)};
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(SaleItem.CONST_PRODUCT_ID));
+            var orderList = new Collection<Order> {Order.Asc(SaleItem.CONST_PRODUCT_ID)};
 
             return SelectObjects(typeof (SaleItem), criterionList, orderList).List();
         }
@@ -122,19 +119,23 @@ namespace EzPos.DataAccess
             {
                 foreach (string strCriteria in searchCriteria)
                 {
-                    int delimiterIndex = strCriteria.IndexOf("|");
+                    var delimiterIndex = strCriteria.IndexOf("|");
                     if (delimiterIndex >= 0)
-                        criterionList.Add(Expression.Eq(
-                                              StringHelper.Left(strCriteria, delimiterIndex),
-                                              StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
+                        criterionList.Add(
+                            Expression.Eq(
+                                StringHelper.Left(strCriteria, delimiterIndex),
+                                StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
                     else
                         criterionList.Add(Expression.Sql(strCriteria));
                 }
             }
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(SaleOrderReport.CONST_SALE_ORDER_DATE));
-            orderList.Add(Order.Asc(SaleOrderReport.CONST_SALE_ORDER_NUMBER));
+            var orderList = 
+                new Collection<Order>
+                {
+                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_DATE),
+                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_NUMBER)
+                };
 
             return SelectObjects(typeof (SaleOrderReport), criterionList, orderList).List();
         }

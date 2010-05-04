@@ -389,6 +389,24 @@ namespace EzPos.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to invoice-deposit.xlsx.
+        /// </summary>
+        internal static string ConstDepositExcelFile {
+            get {
+                return ResourceManager.GetString("ConstDepositExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to invoice-sale.xlsx.
+        /// </summary>
+        internal static string ConstSaleExcelFile {
+            get {
+                return ResourceManager.GetString("ConstSaleExcelFile", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap Customer32 {
             get {
                 object obj = ResourceManager.GetObject("Customer32", resourceCulture);
@@ -410,39 +428,10 @@ namespace EzPos.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Confirm.
-        /// </summary>
-        internal static string MessageCaptionConfirm {
+        internal static System.Drawing.Bitmap logo {
             get {
-                return ResourceManager.GetString("MessageCaptionConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        internal static string MessageCaptionError {
-            get {
-                return ResourceManager.GetString("MessageCaptionError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Information.
-        /// </summary>
-        internal static string MessageCaptionInformation {
-            get {
-                return ResourceManager.GetString("MessageCaptionInformation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown error detected.
-        /// </summary>
-        internal static string MessageCaptionUnknownError {
-            get {
-                return ResourceManager.GetString("MessageCaptionUnknownError", resourceCulture);
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -510,11 +499,20 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The input amount is less then due amount. Do you want to proceed ?.
+        ///   Looks up a localized string similar to ទឹកប្រាក់ដែលអ្នកបានបញ្ចូលពុំទាន់គ្រប់គ្រាន់ទេ ។ តើអ្នកពិតជាចង់បន្តដំណើរការទៀត?.
         /// </summary>
         internal static string MsgConfirmCreditPayment {
             get {
                 return ResourceManager.GetString("MsgConfirmCreditPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to សូមមេត្តាចុចលើប៊ូតុងយល់ព្រមដើម្បីប្រគល់ទំនិញទៅ អោយអតិថិជន ។.
+        /// </summary>
+        internal static string MsgConfirmDeliverProduct {
+            get {
+                return ResourceManager.GetString("MsgConfirmDeliverProduct", resourceCulture);
             }
         }
         
@@ -767,6 +765,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 47.
+        /// </summary>
+        internal static string PermissionAddDeposit {
+            get {
+                return ResourceManager.GetString("PermissionAddDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 27.
         /// </summary>
         internal static string PermissionAddExpense {
@@ -857,6 +864,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 49.
+        /// </summary>
+        internal static string PermissionDeleteDeposit {
+            get {
+                return ResourceManager.GetString("PermissionDeleteDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 28.
         /// </summary>
         internal static string PermissionDeleteExpense {
@@ -916,6 +932,15 @@ namespace EzPos.Properties {
         internal static string PermissionEditCustomer {
             get {
                 return ResourceManager.GetString("PermissionEditCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48.
+        /// </summary>
+        internal static string PermissionEditDeposit {
+            get {
+                return ResourceManager.GetString("PermissionEditDeposit", resourceCulture);
             }
         }
         
@@ -1087,6 +1112,15 @@ namespace EzPos.Properties {
         internal static string PermissionViewAllProductInfo {
             get {
                 return ResourceManager.GetString("PermissionViewAllProductInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 50.
+        /// </summary>
+        internal static string PermissionViewDepositReport {
+            get {
+                return ResourceManager.GetString("PermissionViewDepositReport", resourceCulture);
             }
         }
         

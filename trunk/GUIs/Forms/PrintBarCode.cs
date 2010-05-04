@@ -4,9 +4,8 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 using EzPos.Model;
-using EzPos.Utility;
 
-namespace EzPos.GUI
+namespace EzPos.GUIs.Forms
 {
     public class PrintBarCode
     {
@@ -18,14 +17,16 @@ namespace EzPos.GUI
         public static void InializePrinting(List<BarCode> barCodeList)
         {
             _BarCodeList = barCodeList;
-            PrintPreviewDialog printPreviewDialog;
-            printPreviewDialog = new PrintPreviewDialog();
-            printPreviewDialog.WindowState = FormWindowState.Maximized;
-            printPreviewDialog.FormBorderStyle = FormBorderStyle.None;
-            printPreviewDialog.UseAntiAlias = true;
-            printPreviewDialog.Document = printDocument;
+            var printPreviewDialog = new PrintPreviewDialog
+                                         {
+                                             WindowState = FormWindowState.Maximized,
+                                             FormBorderStyle = FormBorderStyle.None,
+                                             UseAntiAlias = true,
+                                             Document = printDocument
+                                         };
 
-            printDocument.PrinterSettings.PrinterName = AppContext.Counter.BarCodePrinter;
+            if (AppContext.Counter != null)
+                printDocument.PrinterSettings.PrinterName = AppContext.Counter.BarCodePrinter;
             printDocument.BeginPrint += printDoc_BeginPrint;
             printDocument.PrintPage += printDocument_PrintPage;
 
@@ -37,93 +38,97 @@ namespace EzPos.GUI
 
         private static void printDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            int recHeight, recWidth;
-            int posX = 12, posY = 30;
+            int posX = 10, posY = 30;
             int rowIndex = 0, colIndex = 0;
 
-            var fontBarCode = new Font("Free 3 of 9 Extended", 24, FontStyle.Regular);
+            var fontBarCode = new Font("Free 3 of 9 Extended", 30, FontStyle.Regular);
             var solidBrush = new SolidBrush(Color.Black);
-            recWidth = (e.MarginBounds.Left + e.MarginBounds.Right)/5;
-            recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom)/8;
+            var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 3;
+            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 8;
 
             while (_Counter <= _BarCodeList.Count - 1)
             {
-                var fontDisplayName = new Font("Arial", 8, FontStyle.Bold);
                 if (rowIndex == 8)
                 {
                     e.HasMorePages = true;
                     return;
                 }
 
-                BarCode barCode = _BarCodeList[_Counter];
-                string printStr = "*" + barCode.BarCodeValue + "*";
-                int widthBarCode = Int32.Parse(
+                var barCode = _BarCodeList[_Counter];
+                var printStr = "*" + barCode.BarCodeValue + "*";
+                var txtWidth = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Width, 0).ToString());
-                int txtPosY = 5 + Int32.Parse(
-                                      Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString())/
-                                  2;
+                var txtPosY = 
+                    5 + Int32.Parse(Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) / 2;
 
-                printStr =
-                    StringHelper.Right("000" + DateTime.Today.Day, 3) +
-                    StringHelper.Right("000" + DateTime.Today.Month, 3) +
-                    StringHelper.Right("000" + DateTime.Today.Year, 3);
-
-                e.Graphics.DrawString(
-                    printStr,
-                    fontDisplayName,
-                    solidBrush,
-                    ((2*posX) + recWidth - widthBarCode)/2 + 2,
-                    posY,
-                    StrFormat);
-
-                printStr = "*" + barCode.BarCodeValue + "*";
+                var txtPosX = (posX + recWidth - txtWidth) / 2;
+                var recPosx = txtPosX;
                 e.Graphics.DrawString(
                     printStr,
                     fontBarCode,
                     solidBrush,
-                    ((2*posX) + recWidth - widthBarCode)/2,
+                    txtPosX + 10,
                     5 + posY + txtPosY,
                     StrFormat);
 
-                fontDisplayName = new Font("Arial", 10, FontStyle.Bold);
+                var fontDisplayName = new Font("Arial", 10, FontStyle.Bold);
                 printStr = barCode.BarCodeValue;
+                txtWidth = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
+                txtPosX = (posX + recWidth - txtWidth) / 2;
                 e.Graphics.DrawString(
                     printStr,
                     fontDisplayName,
                     solidBrush,
-                    ((2*posX) + recWidth - widthBarCode)/2 + 5,
+                    txtPosX + 10,
                     posY + txtPosY + 30,
                     StrFormat);
 
                 fontDisplayName = new Font("Arial", 13, FontStyle.Bold);
-                widthBarCode = ((2*posX) + recWidth - widthBarCode)/2 + widthBarCode;
-                printStr = "$" + barCode.DisplayStr;
-                int widthTxt = Int32.Parse(
+                printStr = barCode.DisplayStr;
+                txtWidth = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
+                txtPosX = (posX + recWidth - txtWidth) / 2;
                 e.Graphics.DrawString(
                     printStr,
                     fontDisplayName,
                     solidBrush,
-                    widthBarCode - widthTxt - 5,
-                    posY + txtPosY + 30,
+                    txtPosX + 10,
+                    posY + txtPosY + 55,
                     StrFormat);
 
-                if (colIndex < 4)
+                printStr = barCode.AdditionalStr;
+                txtWidth = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
+                txtPosX = (posX + recWidth - txtWidth) / 2;
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    txtPosX + 10,
+                    posY + txtPosY + 75,
+                    StrFormat);
+
+                var rectangle =
+                    new Rectangle(
+                        recPosx - 20,
+                        posY,
+                        recWidth - 20,
+                        recHeight - 20);
+                var pen = new Pen(solidBrush, 0.1f);
+                e.Graphics.DrawRectangle(pen, rectangle);
+
+                if (colIndex < 2)
                 {
                     colIndex++;
-                    posX += recWidth - 4;
+                    posX += recWidth + 250;
                 }
                 else
                 {
                     colIndex = 0;
                     posX = 12;
                     rowIndex++;
-                    if (rowIndex == 2)
-                        posY -= 10;
-                    if (rowIndex == 5)
-                        posY -= 10;
-
-                    posY += recHeight;
+                    posY += (recHeight - 10);
                 }
 
                 _Counter++;
@@ -135,10 +140,13 @@ namespace EzPos.GUI
         {
             try
             {
-                StrFormat = new StringFormat();
-                StrFormat.Alignment = StringAlignment.Near;
-                StrFormat.LineAlignment = StringAlignment.Center;
-                StrFormat.Trimming = StringTrimming.EllipsisCharacter;
+                StrFormat = 
+                    new StringFormat
+                    {
+                        Alignment = StringAlignment.Near,
+                        LineAlignment = StringAlignment.Center,
+                        Trimming = StringTrimming.EllipsisCharacter
+                    };
 
                 _Counter = 0;
             }

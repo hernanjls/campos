@@ -113,12 +113,12 @@ namespace EzPos.GUIs.Forms
                             "ProductID IN (SELECT ProductID FROM TProducts WHERE ProductCode LIKE '%" +
                             txtProductCode.Text + "%')");
 
-                    SaleOrderService saleOrderService =
+                    var saleOrderService =
                         ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
                     IListToBindingList(
-                        saleOrderService.GetSaleOrders(searchCriteria));
+                        saleOrderService.GetSaleHistories(searchCriteria));
 
-                    string searchInfo = String.Format(
+                    var searchInfo = String.Format(
                         "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
                         _SaleOrderReportList.Count);
                     lblSearchInfo.Text = searchInfo;
@@ -222,6 +222,7 @@ namespace EzPos.GUIs.Forms
             dgvSearchResult.Visible = !isVisible;
 
             btnSearch.Text = isVisible ? "​ស្វែងរក" : "ម្ដង​ទៀត";
+            btnDeleteDeposit.Visible = ((!isVisible) && rbtDeposit.Checked);
         }
 
         private void InitializeSaleOrderReportList()
@@ -284,5 +285,35 @@ namespace EzPos.GUIs.Forms
         private delegate void SafeCrossCallBackDelegate();
 
         #endregion
+
+        private void btnDeleteDeposit_MouseEnter(object sender, EventArgs e)
+        {
+            btnDeleteDeposit.BackgroundImage = Resources.background_9;
+        }
+
+        private void btnDeleteDeposit_MouseLeave(object sender, EventArgs e)
+        {
+            btnDeleteDeposit.BackgroundImage = Resources.background_2;
+        }
+
+        private void btnDeleteDeposit_Click(object sender, EventArgs e)
+        {
+            if (!UserService.AllowToPerform(Resources.PermissionDeleteDeposit))
+            {
+                const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
+                var detailMsg = Resources.MsgUserPermissionDeny;
+                using (var frmMessageBox = new ExtendedMessageBox())
+                {
+                    frmMessageBox.BriefMsgStr = briefMsg;
+                    frmMessageBox.DetailMsgStr = detailMsg;
+                    frmMessageBox.IsCanceledOnly = true;
+                    frmMessageBox.ShowDialog(this);
+                    return;
+                }
+            }
+
+            if(dgvSearchResult.CurrentRow == null)
+                return;
+        }
     }
 }

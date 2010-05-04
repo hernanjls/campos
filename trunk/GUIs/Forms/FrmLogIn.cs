@@ -79,5 +79,25 @@ namespace EzPos.GUIs.Forms
                     exception.Message);
             }
         }
+
+        private void btnLogIn_MouseEnter(object sender, EventArgs e)
+        {
+            btnLogIn.BackgroundImage = Resources.background_9;
+        }
+
+        private void btnLogIn_MouseLeave(object sender, EventArgs e)
+        {
+            btnLogIn.BackgroundImage = Resources.background_2;
+        }
+
+        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancel.BackgroundImage = Resources.background_9;
+        }
+
+        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancel.BackgroundImage = Resources.background_2;
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ExtendedComboBox = EzPos.GUIs.Components.ExtendedComboBox;
 
-namespace EzPos.Control
+namespace EzPos.GUIs.Controls
 {
     partial class CtrlCatalog
     {
@@ -589,33 +589,33 @@ namespace EzPos.Control
             this.dgvProduct.ColumnHeadersHeight = 40;
             this.dgvProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvProduct.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.PrintCheck,
-            this.PublicQty,
-            this.ProductPic,
-            this.DisplayName,
-            this.Description,
-            this.QtyInStock,
-            this.UnitPriceOut,
-            this.DiscountPercentage,
-            this.ProductID,
-            this.PhotoPath,
-            this.UnitPriceIn,
-            this.CategoryID,
-            this.CategoryStr,
-            this.MarkID,
-            this.MarkStr,
-            this.ColorID,
-            this.ColorStr,
-            this.SkinID,
-            this.SkinStr,
-            this.SizeID,
-            this.SizeStr,
-            this.ProductNameCol,
-            this.ProductCode,
-            this.QtySold,
-            this.ExtraPercentage,
-            this.LastUpdate,
-            this.ForeignCode});
+                                                                                               this.PrintCheck,
+                                                                                               this.PublicQty,
+                                                                                               this.ProductPic,
+                                                                                               this.DisplayName,
+                                                                                               this.Description,
+                                                                                               this.QtyInStock,
+                                                                                               this.UnitPriceOut,
+                                                                                               this.DiscountPercentage,
+                                                                                               this.ProductID,
+                                                                                               this.PhotoPath,
+                                                                                               this.UnitPriceIn,
+                                                                                               this.CategoryID,
+                                                                                               this.CategoryStr,
+                                                                                               this.MarkID,
+                                                                                               this.MarkStr,
+                                                                                               this.ColorID,
+                                                                                               this.ColorStr,
+                                                                                               this.SkinID,
+                                                                                               this.SkinStr,
+                                                                                               this.SizeID,
+                                                                                               this.SizeStr,
+                                                                                               this.ProductNameCol,
+                                                                                               this.ProductCode,
+                                                                                               this.QtySold,
+                                                                                               this.ExtraPercentage,
+                                                                                               this.LastUpdate,
+                                                                                               this.ForeignCode});
             this.dgvProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProduct.EnableHeadersVisualStyles = false;
             this.dgvProduct.GridColor = System.Drawing.Color.White;
@@ -676,7 +676,7 @@ namespace EzPos.Control
             // 
             // DisplayName
             // 
-            this.DisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.DisplayName.DataPropertyName = "DisplayName";
             dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -686,7 +686,6 @@ namespace EzPos.Control
             this.DisplayName.ReadOnly = true;
             this.DisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.DisplayName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DisplayName.Width = 508;
             // 
             // Description
             // 

@@ -24,7 +24,7 @@ namespace EzPos.Model
 
         public float Discount { get; set; }
 
-        public float QtySold { get; set; }
+        public int QtySold { get; set; }
 
         public float SubTotal { get; set; }
 

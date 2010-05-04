@@ -13,9 +13,7 @@ namespace EzPos.DataAccess
     {
         public virtual IList GetProducts()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Desc(Product.CONST_PRODUCT_CODE));
-            //orderList.Add(Order.Desc(Product.CONST_PRODUCT_ID));
+            var orderList = new Collection<Order> {Order.Desc(Product.CONST_PRODUCT_CODE)};
 
             return SelectObjects(typeof (Product), orderList).List();
         }
@@ -37,49 +35,39 @@ namespace EzPos.DataAccess
                 }
             }
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Desc(Product.CONST_PRODUCT_CODE));
-            //orderList.Add(Order.Desc(Product.CONST_PRODUCT_ID));
+            var orderList = new Collection<Order> {Order.Desc(Product.CONST_PRODUCT_CODE)};
 
             return SelectObjects(typeof (Product), criterionList, orderList).List();
         }
 
         public virtual IList GetProductByID(int productId)
         {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("ProductID", productId));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("ProductID", productId)};
 
             return SelectObjects(typeof (Product), criterionList).List();
         }
 
         public virtual Product GetProductByCode(string productCode)
         {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("ProductCode", productCode));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("ProductCode", productCode)};
 
             return (Product) SelectObjects(typeof (Product), criterionList).UniqueResult();
         }
 
         public virtual IList GetAvailableProducts()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Desc(Product.CONST_PRODUCT_CODE));
-            //orderList.Add(Order.Desc(Product.CONST_PRODUCT_ID));
+            var orderList = new Collection<Order> {Order.Desc(Product.CONST_PRODUCT_CODE)};
 
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Gt("QtyInStock", 0));
+            var criterionList = new Collection<ICriterion> {Expression.Gt("QtyInStock", 0)};
 
             return SelectObjects(typeof (Product), criterionList, orderList).List();
         }
 
         public virtual IList GetUnavailableProducts()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Desc(Product.CONST_PRODUCT_CODE));
-            //orderList.Add(Order.Desc(Product.CONST_PRODUCT_ID));
+            var orderList = new Collection<Order> {Order.Desc(Product.CONST_PRODUCT_CODE)};
 
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Le("QtyInStock", 0));
+            var criterionList = new Collection<ICriterion> {Expression.Le("QtyInStock", 0)};
 
             return SelectObjects(typeof (Product), criterionList, orderList).List();
         }
@@ -101,12 +89,9 @@ namespace EzPos.DataAccess
 
         public virtual IList GetProductByPhoto(string photoPath)
         {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("PhotoPath", photoPath));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("PhotoPath", photoPath)};
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Desc(Product.CONST_PRODUCT_CODE));
-            //orderList.Add(Order.Desc(Product.CONST_PRODUCT_ID));
+            var orderList = new Collection<Order> {Order.Desc(Product.CONST_PRODUCT_CODE)};
 
             return SelectObjects(typeof (Product), criterionList, orderList).List();
         }

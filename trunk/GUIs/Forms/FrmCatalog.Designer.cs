@@ -52,8 +52,12 @@ namespace EzPos.GUIs.Forms
             this.txtForeignCode = new System.Windows.Forms.TextBox();
             this.lblProductCode = new System.Windows.Forms.Label();
             this.lblSize = new System.Windows.Forms.Label();
+            this.cmbSize = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblQty = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.cmbColor = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.cmbMark = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.cmbCategory = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblProductName = new System.Windows.Forms.Label();
@@ -66,10 +70,6 @@ namespace EzPos.GUIs.Forms
             this.tmsGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmbSize = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
-            this.cmbColor = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
-            this.cmbMark = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
-            this.cmbCategory = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ptbProduct)).BeginInit();
             this.pnlBody.SuspendLayout();
             this.pnlHeader.SuspendLayout();
@@ -302,7 +302,6 @@ namespace EzPos.GUIs.Forms
             this.txtForeignCode.BackColor = System.Drawing.SystemColors.Info;
             this.txtForeignCode.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtForeignCode.Location = new System.Drawing.Point(151, 19);
-            this.txtForeignCode.MaxLength = 9;
             this.txtForeignCode.Name = "txtForeignCode";
             this.txtForeignCode.Size = new System.Drawing.Size(230, 36);
             this.txtForeignCode.TabIndex = 1;
@@ -330,6 +329,18 @@ namespace EzPos.GUIs.Forms
             this.lblSize.Text = "ទំហំ";
             this.lblSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // cmbSize
+            // 
+            this.cmbSize.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbSize.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbSize.FormattingEnabled = true;
+            this.cmbSize.Location = new System.Drawing.Point(151, 171);
+            this.cmbSize.Name = "cmbSize";
+            this.cmbSize.Size = new System.Drawing.Size(230, 36);
+            this.cmbSize.TabIndex = 9;
+            this.cmbSize.Leave += new System.EventHandler(this.cmbSize_Leave);
+            this.cmbSize.Enter += new System.EventHandler(this.cmbSize_Enter);
+            // 
             // lblQty
             // 
             this.lblQty.AutoSize = true;
@@ -349,6 +360,43 @@ namespace EzPos.GUIs.Forms
             this.label3.Size = new System.Drawing.Size(52, 29);
             this.label3.TabIndex = 10;
             this.label3.Text = "តំលៃ";
+            // 
+            // cmbColor
+            // 
+            this.cmbColor.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbColor.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbColor.FormattingEnabled = true;
+            this.cmbColor.Location = new System.Drawing.Point(151, 133);
+            this.cmbColor.Name = "cmbColor";
+            this.cmbColor.Size = new System.Drawing.Size(230, 36);
+            this.cmbColor.TabIndex = 7;
+            this.cmbColor.Leave += new System.EventHandler(this.cmbColor_Leave);
+            this.cmbColor.Enter += new System.EventHandler(this.cmbColor_Enter);
+            // 
+            // cmbMark
+            // 
+            this.cmbMark.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbMark.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMark.FormattingEnabled = true;
+            this.cmbMark.Location = new System.Drawing.Point(151, 95);
+            this.cmbMark.Name = "cmbMark";
+            this.cmbMark.Size = new System.Drawing.Size(230, 36);
+            this.cmbMark.TabIndex = 5;
+            this.cmbMark.Leave += new System.EventHandler(this.cmbMark_Leave);
+            this.cmbMark.Enter += new System.EventHandler(this.cmbMark_Enter);
+            // 
+            // cmbCategory
+            // 
+            this.cmbCategory.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbCategory.DropDownWidth = 230;
+            this.cmbCategory.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCategory.FormattingEnabled = true;
+            this.cmbCategory.Location = new System.Drawing.Point(151, 57);
+            this.cmbCategory.Name = "cmbCategory";
+            this.cmbCategory.Size = new System.Drawing.Size(230, 36);
+            this.cmbCategory.TabIndex = 3;
+            this.cmbCategory.Leave += new System.EventHandler(this.cmbCategory_Leave);
+            this.cmbCategory.Enter += new System.EventHandler(this.cmbCategory_Enter);
             // 
             // groupBox1
             // 
@@ -500,60 +548,12 @@ namespace EzPos.GUIs.Forms
             this.tsmImport.Text = "នាំចូលមកពីឃ្លាំង";
             this.tsmImport.Click += new System.EventHandler(this.tsmImport_Click);
             // 
-            // cmbSize
-            // 
-            this.cmbSize.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbSize.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbSize.FormattingEnabled = true;
-            this.cmbSize.Location = new System.Drawing.Point(151, 171);
-            this.cmbSize.Name = "cmbSize";
-            this.cmbSize.Size = new System.Drawing.Size(230, 36);
-            this.cmbSize.TabIndex = 9;
-            this.cmbSize.Leave += new System.EventHandler(this.cmbSize_Leave);
-            this.cmbSize.Enter += new System.EventHandler(this.cmbSize_Enter);
-            // 
-            // cmbColor
-            // 
-            this.cmbColor.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbColor.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbColor.FormattingEnabled = true;
-            this.cmbColor.Location = new System.Drawing.Point(151, 133);
-            this.cmbColor.Name = "cmbColor";
-            this.cmbColor.Size = new System.Drawing.Size(230, 36);
-            this.cmbColor.TabIndex = 7;
-            this.cmbColor.Leave += new System.EventHandler(this.cmbColor_Leave);
-            this.cmbColor.Enter += new System.EventHandler(this.cmbColor_Enter);
-            // 
-            // cmbMark
-            // 
-            this.cmbMark.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbMark.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMark.FormattingEnabled = true;
-            this.cmbMark.Location = new System.Drawing.Point(151, 95);
-            this.cmbMark.Name = "cmbMark";
-            this.cmbMark.Size = new System.Drawing.Size(230, 36);
-            this.cmbMark.TabIndex = 5;
-            this.cmbMark.Leave += new System.EventHandler(this.cmbMark_Leave);
-            this.cmbMark.Enter += new System.EventHandler(this.cmbMark_Enter);
-            // 
-            // cmbCategory
-            // 
-            this.cmbCategory.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbCategory.DropDownWidth = 230;
-            this.cmbCategory.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(151, 57);
-            this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(230, 36);
-            this.cmbCategory.TabIndex = 3;
-            this.cmbCategory.Leave += new System.EventHandler(this.cmbCategory_Leave);
-            this.cmbCategory.Enter += new System.EventHandler(this.cmbCategory_Enter);
-            // 
             // FrmCatalog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(695, 537);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlFooter);

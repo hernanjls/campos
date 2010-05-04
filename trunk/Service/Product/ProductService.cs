@@ -173,6 +173,9 @@ namespace EzPos.Service
                     product.ProductName + "\r" +
                     "Size: " + product.SizeStr + "\r" +
                     "Code: " + product.ProductCode;
+
+                if (!string.IsNullOrEmpty(product.ForeignCode))
+                    product.DisplayName += " (" + product.ForeignCode + ")";
             }
             return productList;
         }

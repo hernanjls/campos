@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using Castle.Facilities.NHibernateExtension;
 using NHibernate;
@@ -44,21 +45,53 @@ namespace EzPos.DataAccess
                 throw new ArgumentNullException("persistentClass", "PersistentClass");
 
             CreateSession();
-            ICriteria criteria;
 
-            criteria = _Session.CreateCriteria(persistentClass);
+            var criteria = _Session.CreateCriteria(persistentClass);
             if (orders != null)
             {
-                foreach (Order order in orders)
+                foreach (var order in orders)
                     criteria.AddOrder(order);
             }
 
             if (expressions != null)
             {
-                foreach (ICriterion expression in expressions)
+                foreach (var expression in expressions)
                     criteria.Add(expression);
             }
             return criteria;
+        }
+
+        protected IList SelectObjects(string qryStr)
+        {
+            if (string.IsNullOrEmpty(qryStr))
+                throw new ArgumentNullException("qryStr", "Query");
+
+            CreateSession();
+            return _Session.CreateQuery(qryStr).List();
+        }
+
+        protected IList SelectObjects(string qryStr, string[] aliasList, Type[] typeList)
+        {
+            if (string.IsNullOrEmpty(qryStr))
+                throw new ArgumentNullException("qryStr", "Query");
+
+            if (aliasList == null)
+                throw new ArgumentNullException("aliasList", "aliasList");
+
+            if (aliasList.Length == 0)
+                throw new ArgumentNullException("aliasList", "aliasList");
+
+            if (typeList == null)
+                throw new ArgumentNullException("typeList", "typeList");
+
+            if (typeList.Length == 0)
+                throw new ArgumentNullException("typeList", "typeList");
+
+            CreateSession();
+            return _Session.CreateSQLQuery(
+                qryStr,
+                aliasList,
+                typeList).List();
         }
 
         protected void UpdateObject(object instantObj)

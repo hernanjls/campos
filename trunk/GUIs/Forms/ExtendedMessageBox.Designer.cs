@@ -30,11 +30,13 @@
         {
             this.pnlImage = new System.Windows.Forms.Panel();
             this.pnlMessage = new System.Windows.Forms.Panel();
-            this.txtDetailMsg = new System.Windows.Forms.TextBox();
-            this.lblBriefMsg = new System.Windows.Forms.Label();
+            this.pnlFooter = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
+            this.txtDetailMsg = new System.Windows.Forms.TextBox();
+            this.lblBriefMsg = new System.Windows.Forms.Label();
             this.pnlMessage.SuspendLayout();
+            this.pnlFooter.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlImage
@@ -47,36 +49,24 @@
             // 
             // pnlMessage
             // 
+            this.pnlMessage.Controls.Add(this.pnlFooter);
             this.pnlMessage.Controls.Add(this.txtDetailMsg);
             this.pnlMessage.Controls.Add(this.lblBriefMsg);
-            this.pnlMessage.Controls.Add(this.btnCancel);
-            this.pnlMessage.Controls.Add(this.btnAccept);
             this.pnlMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMessage.Location = new System.Drawing.Point(0, 0);
             this.pnlMessage.Name = "pnlMessage";
             this.pnlMessage.Size = new System.Drawing.Size(398, 164);
             this.pnlMessage.TabIndex = 1;
             // 
-            // txtDetailMsg
+            // pnlFooter
             // 
-            this.txtDetailMsg.BackColor = System.Drawing.Color.White;
-            this.txtDetailMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDetailMsg.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDetailMsg.Location = new System.Drawing.Point(6, 47);
-            this.txtDetailMsg.Multiline = true;
-            this.txtDetailMsg.Name = "txtDetailMsg";
-            this.txtDetailMsg.ReadOnly = true;
-            this.txtDetailMsg.Size = new System.Drawing.Size(386, 68);
-            this.txtDetailMsg.TabIndex = 52;
-            // 
-            // lblBriefMsg
-            // 
-            this.lblBriefMsg.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBriefMsg.Location = new System.Drawing.Point(6, 9);
-            this.lblBriefMsg.Name = "lblBriefMsg";
-            this.lblBriefMsg.Size = new System.Drawing.Size(386, 35);
-            this.lblBriefMsg.TabIndex = 51;
-            this.lblBriefMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pnlFooter.Controls.Add(this.btnCancel);
+            this.pnlFooter.Controls.Add(this.btnAccept);
+            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlFooter.Location = new System.Drawing.Point(0, 115);
+            this.pnlFooter.Name = "pnlFooter";
+            this.pnlFooter.Size = new System.Drawing.Size(398, 49);
+            this.pnlFooter.TabIndex = 53;
             // 
             // btnCancel
             // 
@@ -89,7 +79,7 @@
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Image = global::EzPos.Properties.Resources.Cancel32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(200, 121);
+            this.btnCancel.Location = new System.Drawing.Point(200, 8);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(116, 35);
             this.btnCancel.TabIndex = 49;
@@ -110,7 +100,7 @@
             this.btnAccept.ForeColor = System.Drawing.Color.White;
             this.btnAccept.Image = global::EzPos.Properties.Resources.OK32;
             this.btnAccept.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAccept.Location = new System.Drawing.Point(82, 121);
+            this.btnAccept.Location = new System.Drawing.Point(82, 8);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(116, 35);
             this.btnAccept.TabIndex = 48;
@@ -119,6 +109,28 @@
             this.btnAccept.UseVisualStyleBackColor = false;
             this.btnAccept.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
             this.btnAccept.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            // 
+            // txtDetailMsg
+            // 
+            this.txtDetailMsg.BackColor = System.Drawing.Color.White;
+            this.txtDetailMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtDetailMsg.Enabled = false;
+            this.txtDetailMsg.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDetailMsg.Location = new System.Drawing.Point(6, 47);
+            this.txtDetailMsg.Multiline = true;
+            this.txtDetailMsg.Name = "txtDetailMsg";
+            this.txtDetailMsg.ReadOnly = true;
+            this.txtDetailMsg.Size = new System.Drawing.Size(386, 68);
+            this.txtDetailMsg.TabIndex = 52;
+            // 
+            // lblBriefMsg
+            // 
+            this.lblBriefMsg.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBriefMsg.Location = new System.Drawing.Point(6, 9);
+            this.lblBriefMsg.Name = "lblBriefMsg";
+            this.lblBriefMsg.Size = new System.Drawing.Size(386, 35);
+            this.lblBriefMsg.TabIndex = 51;
+            this.lblBriefMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ExtendedMessageBox
             // 
@@ -137,6 +149,7 @@
             this.Load += new System.EventHandler(this.FrmMessageBox_Load);
             this.pnlMessage.ResumeLayout(false);
             this.pnlMessage.PerformLayout();
+            this.pnlFooter.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -149,5 +162,6 @@
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Label lblBriefMsg;
         private System.Windows.Forms.TextBox txtDetailMsg;
+        private System.Windows.Forms.Panel pnlFooter;
     }
 }

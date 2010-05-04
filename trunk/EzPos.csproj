@@ -137,11 +137,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="NHibernate, Version=0.9.0.0, Culture=neutral, PublicKeyToken=154fdcb44c4484fc">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -166,6 +168,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationContainer.cs" />
+    <Compile Include="DataAccess\Deposit\DepositDataAccess.cs" />
+    <Compile Include="DataAccess\Payments\PaymentDataAccess.cs" />
+    <Compile Include="EzPosUnitTest.cs" />
+    <Compile Include="GUIs\Components\ExtendedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUIs\Components\ExtendedButton.Designer.cs">
+      <DependentUpon>ExtendedButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUIs\Components\ExtendedComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -243,14 +254,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsModels.xsd</DependentUpon>
     </Compile>
-    <Compile Include="GUIs\Forms\FrmOutstandingInvoice.cs">
+    <Compile Include="GUIs\Forms\FrmProductSearch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUIs\Forms\FrmOutstandingInvoice.Designer.cs">
-      <DependentUpon>FrmOutstandingInvoice.cs</DependentUpon>
+    <Compile Include="GUIs\Forms\FrmProductSearch.Designer.cs">
+      <DependentUpon>FrmProductSearch.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUIs\Reports\CsrEmpty.cs">
-      <DependentUpon>CsrEmpty.rpt</DependentUpon>
+    <Compile Include="GUIs\Forms\FrmOutstandingPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIs\Forms\FrmOutstandingPayment.Designer.cs">
+      <DependentUpon>FrmOutstandingPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\Forms\FrmDeposit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIs\Forms\FrmDeposit.Designer.cs">
+      <DependentUpon>FrmDeposit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIs\Forms\PrintReceipt.cs" />
+    <Compile Include="GUIs\Reports\CsrDeposit.cs">
+      <DependentUpon>CsrDeposit.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
@@ -260,12 +284,6 @@
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="GUIs\Reports\CsrDailyReport.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CsrDailyReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUIs\Reports\CsrExpense.cs">
       <AutoGen>True</AutoGen>
@@ -394,6 +412,10 @@
     <Compile Include="Model\Common\OperationLog.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Deposit\DepositReport.cs" />
+    <Compile Include="Model\Deposit\DepositItem.cs" />
+    <Compile Include="Model\Deposit\Deposit.cs" />
+    <Compile Include="Model\Payments\Payment.cs" />
     <Compile Include="Model\Supplier\Supplier.cs" />
     <Compile Include="Model\Customer\Customer.cs" />
     <Compile Include="Model\Customer\DiscountCard.cs" />
@@ -446,21 +468,25 @@
       <DependentUpon>CtrlAppParam.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\Forms\FrmOutstandingInvoice.resx">
-      <DependentUpon>FrmOutstandingInvoice.cs</DependentUpon>
+    <EmbeddedResource Include="GUIs\Forms\FrmProductSearch.resx">
+      <DependentUpon>FrmProductSearch.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\Reports\CsrEmpty.rpt">
+    <EmbeddedResource Include="GUIs\Forms\FrmOutstandingPayment.resx">
+      <DependentUpon>FrmOutstandingPayment.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUIs\Forms\FrmDeposit.resx">
+      <DependentUpon>FrmDeposit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUIs\Reports\CsrDeposit.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CsrEmpty.cs</LastGenOutput>
+      <LastGenOutput>CsrDeposit.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\Reports\CsrCatalogShorten.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CsrCatalogShorten.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\Reports\CsrDailyReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CsrDailyReport.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\Reports\CsrExpense.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -559,8 +585,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Service\Common\CommonService.cs" />
+    <Compile Include="Service\Deposit\DepositService.cs" />
     <Compile Include="Service\Customer\CustomerService.cs" />
     <Compile Include="Service\Expense\ExpenseService.cs" />
+    <Compile Include="Service\Payment\PaymentService.cs" />
     <Compile Include="Service\Product\ProductService.cs" />
     <Compile Include="Service\SaleOrder\SaleOrderService.cs" />
     <Compile Include="Service\ServiceFactory.cs" />
@@ -577,6 +605,9 @@
     <Content Include="bin\Conf\Common\Counters.hbm.xml" />
     <Content Include="bin\Conf\Common\OperationLogs.hbm.xml" />
     <Content Include="bin\Conf\Common\ExchangeRates.hbm.xml" />
+    <Content Include="bin\Conf\Payment\Payments.hbm.xml" />
+    <Content Include="bin\Conf\Deposit\DepositItems.hbm.xml" />
+    <Content Include="bin\Conf\Deposit\Deposits.hbm.xml" />
     <Content Include="bin\Conf\Supplier\Suppliers.hbm.xml" />
     <Content Include="bin\Conf\Customer\Customers.hbm.xml" />
     <Content Include="bin\Conf\Customer\DiscountCards.hbm.xml" />
@@ -624,21 +655,11 @@
     <None Include="Images\Icons\Product32.png" />
     <None Include="Images\Icons\b_drop.png" />
     <None Include="Images\Icons\Cart32.jpg" />
-    <None Include="Images\Background\background.jpg" />
     <None Include="Images\Background\background_2.jpg" />
-    <None Include="Images\Background\background_3.jpg" />
-    <None Include="Images\Background\background_4.jpg" />
-    <None Include="Images\Background\background_6.jpg" />
     <None Include="Images\Background\background_5.jpg" />
-    <None Include="Images\Background\background_7.jpg" />
-    <None Include="Images\Background\background_8.jpg" />
     <None Include="Images\Background\background_9.jpg" />
-    <None Include="Images\Background\backgroud_10.jpg" />
     <None Include="Images\Background\backgroud_11.jpg" />
     <None Include="Images\Background\backgroud_12.jpg" />
-    <None Include="Images\Background\backgroud_13.jpg" />
-    <None Include="Images\Background\background_14.gif" />
-    <None Include="Images\Background\background_15.jpg" />
     <None Include="Images\Background\background_16.jpg" />
     <Content Include="Images\Icons\Loading32.gif" />
     <None Include="Images\Icons\save32.png" />
@@ -646,7 +667,7 @@
     <None Include="Images\Icons\Sale32.png" />
     <None Include="Images\Icons\Purchase32.png" />
     <None Include="Images\Icons\NoImage.jpg" />
-    <None Include="Images\Icons\masterCard.jpg" />
+    <Content Include="Images\Icons\logo.tif" />
     <Content Include="Images\Icons\pnlBodyRight.jpg" />
     <Content Include="Images\Icons\pnlHeaderSeparator.jpg" />
     <None Include="Images\Icons\Printer.png" />
@@ -677,6 +698,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

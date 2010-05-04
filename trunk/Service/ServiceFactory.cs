@@ -1,6 +1,7 @@
 using System;
 using System.Configuration;
 using EzPos.Service.Common;
+using EzPos.Service.Payment;
 
 namespace EzPos.Service
 {
@@ -36,6 +37,16 @@ namespace EzPos.Service
         public SaleOrderService GenerateSaleOrderService()
         {
             return (SaleOrderService) _ApplicationContainer[typeof (SaleOrderService)];
+        }
+
+        public DepositService GenerateDepositService()
+        {
+            return (DepositService)_ApplicationContainer[typeof(DepositService)];
+        }
+
+        public PaymentService GeneratePaymentService()
+        {
+            return (PaymentService)_ApplicationContainer[typeof(PaymentService)];
         }
 
         public UserService GenerateUserService()

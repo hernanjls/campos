@@ -20,7 +20,7 @@ namespace EzPos.GUIs.Forms
         public static bool ConfirmMessage(string messageKey, string complementStr)
         {
             _MsgStr = string.Format("{0} {1}?", messageKey, complementStr);
-            _MsgCaption = Resources.MessageCaptionConfirm;
+            _MsgCaption = Resources.MsgCaptionConfirm;
             _MsgButton = MessageBoxButtons.YesNo;
             _MsgIcon = MessageBoxIcon.Question;
             _MsgDefaultButton = MessageBoxDefaultButton.Button2;
@@ -31,7 +31,7 @@ namespace EzPos.GUIs.Forms
         public static void InformMessage(string messageKey)
         {
             _MsgStr = string.Format("{0}", messageKey);
-            _MsgCaption = Resources.MessageCaptionConfirm;
+            _MsgCaption = Resources.MsgCaptionConfirm;
             _MsgButton = MessageBoxButtons.OK;
             _MsgIcon = MessageBoxIcon.Information;
             MessageBox.Show(_MsgStr, _MsgCaption, _MsgButton, _MsgIcon);
@@ -40,7 +40,7 @@ namespace EzPos.GUIs.Forms
         public static void ErrorMessage(string messageKey)
         {
             _MsgStr = string.Format("{0}", messageKey);
-            _MsgCaption = Resources.MessageCaptionError;
+            _MsgCaption = Resources.MsgCaptionError;
             _MsgButton = MessageBoxButtons.OK;
             _MsgIcon = MessageBoxIcon.Error;
             MessageBox.Show(_MsgStr, _MsgCaption, _MsgButton, _MsgIcon);
@@ -50,7 +50,7 @@ namespace EzPos.GUIs.Forms
         {
             _MsgStr = string.Format("{0}\nAdditional message: {1}",
                                     messageKey, additionnalMsg);
-            _MsgCaption = Resources.MessageCaptionUnknownError;
+            _MsgCaption = Resources.MsgCaptionUnknownError;
             _MsgButton = MessageBoxButtons.OK;
             _MsgIcon = MessageBoxIcon.Error;
             MessageBox.Show(_MsgStr, _MsgCaption, _MsgButton, _MsgIcon);

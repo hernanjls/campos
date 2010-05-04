@@ -222,12 +222,32 @@ namespace EzPos.GUIs.Forms
             var searchCriteria = new List<string>
                                      {
                                          "ParameterTypeID IN (" +
+                                         Resources.AppParamProductCodeLength + ", " +
                                          Resources.AppParamCategory + ", " +
                                          Resources.AppParamMark + ", " +
                                          Resources.AppParamColor + ", " +
                                          Resources.AppParamSize + ")"
                                      };
             var objectList = _CommonService.GetAppParameters(searchCriteria);
+            var productCodeLengthList = 
+                _CommonService.GetAppParametersByType(
+                    objectList, 
+                    Int32.Parse(Resources.AppParamProductCodeLength));
+            if (productCodeLengthList.Count != 0)
+            {
+                var productCodeLength = productCodeLengthList[0] as AppParameter;
+                if (productCodeLength != null)
+                {
+                    int codeLength;
+                    Int32.TryParse(
+                        (string.IsNullOrEmpty(productCodeLength.ParameterLabel) ?
+                        string.Empty :
+                        productCodeLength.ParameterLabel),
+                        out codeLength);
+
+                    txtForeignCode.MaxLength = codeLength;
+                }
+            }
 
             _CommonService.PopAppParamExtendedCombobox(
                 ref cmbCategory, objectList, int.Parse(Resources.AppParamCategory), true);
@@ -327,8 +347,6 @@ namespace EzPos.GUIs.Forms
                 if (_Product == null)
                     _Product = new Product();
 
-                //if (!string.IsNullOrEmpty(txtForeignCode.Text))
-                //    _Product.ProductCode = StringHelper.Right("000000000" + txtForeignCode.Text, 9);
                 _Product.CategoryID = int.Parse(cmbCategory.SelectedValue.ToString());
                 _Product.CategoryStr = cmbCategory.Text;
                 _Product.MarkID = int.Parse(cmbMark.SelectedValue.ToString());
@@ -423,7 +441,8 @@ namespace EzPos.GUIs.Forms
                     discountPercentage = float.Parse(txtDiscount.Text);
                     unitPriceOut = unitPriceIn + ((unitPriceIn*extraPercentage)/100);
                     unitPriceOut = unitPriceOut - ((unitPriceOut*discountPercentage)/100);
-                    txtUPOut.Text = Math.Round(unitPriceOut, 0).ToString("N", AppContext.CultureInfo);
+                    //txtUPOut.Text = Math.Round(unitPriceOut, 0).ToString("N", AppContext.CultureInfo);
+                    txtUPOut.Text = unitPriceOut.ToString("N", AppContext.CultureInfo);
                     _DefaultUnitPriceOut = float.Parse(txtUPOut.Text);
                 }
             }
@@ -808,11 +827,9 @@ namespace EzPos.GUIs.Forms
             if (String.IsNullOrEmpty(foreignCode))
                 return;
 
-            foreignCode = foreignCode.Replace("+", "");
-            foreignCode = foreignCode.Replace("-", "");
+            foreignCode = foreignCode.Replace("+", string.Empty);
+            foreignCode = foreignCode.Replace("-", string.Empty);
             cmbProduct.SelectedIndex = -1;
-            //var selectedIndex = cmbProduct.FindStringExact(
-            //    StringHelper.Right("000000000" + foreignCode, 9));
             var selectedIndex = cmbProduct.FindStringExact(foreignCode);
             cmbProduct.SelectedIndex = selectedIndex;
             if ((selectedIndex != -1) || (!isAllowed)) 
@@ -823,7 +840,7 @@ namespace EzPos.GUIs.Forms
                 {
                     "ForeignCode|" + foreignCode,
                     "QtyInStock > 0",
-                    "ProductID <> " + _Product.ProductID
+                    "ProductID <> " + (_Product == null ? 0 : _Product.ProductID)
                 };
             var productList = _ProductService.GetObjects(strCriteria);
             if (productList.Count == 0) 

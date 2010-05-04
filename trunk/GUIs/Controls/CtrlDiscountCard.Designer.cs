@@ -40,6 +40,7 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnReturnCard = new System.Windows.Forms.Button();
+            this.cmbCustomerHidden = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblPrintCard = new System.Windows.Forms.Label();
             this.grbPrintCard = new System.Windows.Forms.GroupBox();
             this.btnPrint = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@ namespace EzPos.GUIs.Controls
             this.grbNewCard = new System.Windows.Forms.GroupBox();
             this.btnNew = new System.Windows.Forms.Button();
             this.txtNumCard = new System.Windows.Forms.TextBox();
+            this.cmbDiscountType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblNumCard = new System.Windows.Forms.Label();
             this.lblCardType = new System.Windows.Forms.Label();
             this.pnlBodySearch = new System.Windows.Forms.Panel();
@@ -60,14 +62,12 @@ namespace EzPos.GUIs.Controls
             this.chbUsed = new System.Windows.Forms.CheckBox();
             this.lblCardNum = new System.Windows.Forms.Label();
             this.txtCardNum = new System.Windows.Forms.TextBox();
+            this.cmbCustomer = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblCustomer = new System.Windows.Forms.Label();
+            this.cmbDCardType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblDCountType = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.cmbCustomer = new ExtendedComboBox(this.components);
-            this.cmbDCardType = new ExtendedComboBox(this.components);
-            this.cmbCustomerHidden = new ExtendedComboBox(this.components);
-            this.cmbDiscountType = new ExtendedComboBox(this.components);
             this.PrintCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.CardNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DiscountCardTypeStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -119,17 +119,17 @@ namespace EzPos.GUIs.Controls
             this.dgvDiscountCard.ColumnHeadersHeight = 40;
             this.dgvDiscountCard.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvDiscountCard.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                                                                                                    this.PrintCheck,
-                                                                                                    this.CardNumber,
-                                                                                                    this.DiscountCardTypeStr,
-                                                                                                    this.DiscountCardTypeID,
-                                                                                                    this.DiscountPercentage,
-                                                                                                    this.CustomerID,
-                                                                                                    this.CustomerStr,
-                                                                                                    this.DiscountCardID,
-                                                                                                    this.ExpireDate,
-                                                                                                    this.FKCustomer,
-                                                                                                    this.AllowDiscount});
+            this.PrintCheck,
+            this.CardNumber,
+            this.DiscountCardTypeStr,
+            this.DiscountCardTypeID,
+            this.DiscountPercentage,
+            this.CustomerID,
+            this.CustomerStr,
+            this.DiscountCardID,
+            this.ExpireDate,
+            this.FKCustomer,
+            this.AllowDiscount});
             this.dgvDiscountCard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDiscountCard.EnableHeadersVisualStyles = false;
             this.dgvDiscountCard.GridColor = System.Drawing.Color.White;
@@ -210,6 +210,17 @@ namespace EzPos.GUIs.Controls
             this.btnReturnCard.MouseLeave += new System.EventHandler(this.btnReturnCard_MouseLeave);
             this.btnReturnCard.Click += new System.EventHandler(this.btnReturnCard_Click);
             this.btnReturnCard.MouseEnter += new System.EventHandler(this.btnReturnCard_MouseEnter);
+            // 
+            // cmbCustomerHidden
+            // 
+            this.cmbCustomerHidden.DropDownWidth = 180;
+            this.cmbCustomerHidden.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCustomerHidden.FormattingEnabled = true;
+            this.cmbCustomerHidden.Location = new System.Drawing.Point(10, 368);
+            this.cmbCustomerHidden.Name = "cmbCustomerHidden";
+            this.cmbCustomerHidden.Size = new System.Drawing.Size(184, 28);
+            this.cmbCustomerHidden.TabIndex = 6;
+            this.cmbCustomerHidden.Visible = false;
             // 
             // lblPrintCard
             // 
@@ -370,6 +381,16 @@ namespace EzPos.GUIs.Controls
             this.txtNumCard.Size = new System.Drawing.Size(160, 27);
             this.txtNumCard.TabIndex = 3;
             // 
+            // cmbDiscountType
+            // 
+            this.cmbDiscountType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDiscountType.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDiscountType.FormattingEnabled = true;
+            this.cmbDiscountType.Location = new System.Drawing.Point(8, 65);
+            this.cmbDiscountType.Name = "cmbDiscountType";
+            this.cmbDiscountType.Size = new System.Drawing.Size(163, 27);
+            this.cmbDiscountType.TabIndex = 1;
+            // 
             // lblNumCard
             // 
             this.lblNumCard.AutoSize = true;
@@ -466,6 +487,16 @@ namespace EzPos.GUIs.Controls
             this.txtCardNum.Size = new System.Drawing.Size(184, 27);
             this.txtCardNum.TabIndex = 1;
             // 
+            // cmbCustomer
+            // 
+            this.cmbCustomer.DropDownWidth = 180;
+            this.cmbCustomer.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCustomer.FormattingEnabled = true;
+            this.cmbCustomer.Location = new System.Drawing.Point(626, 12);
+            this.cmbCustomer.Name = "cmbCustomer";
+            this.cmbCustomer.Size = new System.Drawing.Size(184, 27);
+            this.cmbCustomer.TabIndex = 5;
+            // 
             // lblCustomer
             // 
             this.lblCustomer.AutoSize = true;
@@ -475,6 +506,15 @@ namespace EzPos.GUIs.Controls
             this.lblCustomer.Size = new System.Drawing.Size(72, 27);
             this.lblCustomer.TabIndex = 4;
             this.lblCustomer.Text = "អតិថិជន";
+            // 
+            // cmbDCardType
+            // 
+            this.cmbDCardType.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDCardType.FormattingEnabled = true;
+            this.cmbDCardType.Location = new System.Drawing.Point(351, 12);
+            this.cmbDCardType.Name = "cmbDCardType";
+            this.cmbDCardType.Size = new System.Drawing.Size(184, 27);
+            this.cmbDCardType.TabIndex = 3;
             // 
             // lblDCountType
             // 
@@ -513,46 +553,6 @@ namespace EzPos.GUIs.Controls
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
-            // 
-            // cmbCustomer
-            // 
-            this.cmbCustomer.DropDownWidth = 180;
-            this.cmbCustomer.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCustomer.FormattingEnabled = true;
-            this.cmbCustomer.Location = new System.Drawing.Point(626, 12);
-            this.cmbCustomer.Name = "cmbCustomer";
-            this.cmbCustomer.Size = new System.Drawing.Size(184, 27);
-            this.cmbCustomer.TabIndex = 5;
-            // 
-            // cmbDCardType
-            // 
-            this.cmbDCardType.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbDCardType.FormattingEnabled = true;
-            this.cmbDCardType.Location = new System.Drawing.Point(351, 12);
-            this.cmbDCardType.Name = "cmbDCardType";
-            this.cmbDCardType.Size = new System.Drawing.Size(184, 27);
-            this.cmbDCardType.TabIndex = 3;
-            // 
-            // cmbCustomerHidden
-            // 
-            this.cmbCustomerHidden.DropDownWidth = 180;
-            this.cmbCustomerHidden.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCustomerHidden.FormattingEnabled = true;
-            this.cmbCustomerHidden.Location = new System.Drawing.Point(10, 368);
-            this.cmbCustomerHidden.Name = "cmbCustomerHidden";
-            this.cmbCustomerHidden.Size = new System.Drawing.Size(184, 28);
-            this.cmbCustomerHidden.TabIndex = 6;
-            this.cmbCustomerHidden.Visible = false;
-            // 
-            // cmbDiscountType
-            // 
-            this.cmbDiscountType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDiscountType.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbDiscountType.FormattingEnabled = true;
-            this.cmbDiscountType.Location = new System.Drawing.Point(8, 65);
-            this.cmbDiscountType.Name = "cmbDiscountType";
-            this.cmbDiscountType.Size = new System.Drawing.Size(163, 27);
-            this.cmbDiscountType.TabIndex = 1;
             // 
             // PrintCheck
             // 
@@ -626,14 +626,13 @@ namespace EzPos.GUIs.Controls
             // 
             // CustomerStr
             // 
-            this.CustomerStr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CustomerStr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.CustomerStr.DataPropertyName = "CustomerStr";
             this.CustomerStr.HeaderText = "អតិថិជន";
             this.CustomerStr.Name = "CustomerStr";
             this.CustomerStr.ReadOnly = true;
             this.CustomerStr.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.CustomerStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CustomerStr.Width = 300;
             // 
             // DiscountCardID
             // 
