@@ -810,6 +810,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 49.
+        /// </summary>
+        internal static string PermissionCancelDeposit {
+            get {
+                return ResourceManager.GetString("PermissionCancelDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 9.
         /// </summary>
         internal static string PermissionCard {
@@ -860,15 +869,6 @@ namespace EzPos.Properties {
         internal static string PermissionDeleteCustomer {
             get {
                 return ResourceManager.GetString("PermissionDeleteCustomer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 49.
-        /// </summary>
-        internal static string PermissionDeleteDeposit {
-            get {
-                return ResourceManager.GetString("PermissionDeleteDeposit", resourceCulture);
             }
         }
         

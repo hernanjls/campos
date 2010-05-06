@@ -664,7 +664,8 @@ namespace EzPos.GUIs.Controls
                             frmPayment.AmountPaidRiel,
                             frmPayment.Customer,
                             string.Empty,
-                            frmPayment.Customer.FKDiscountCard.DiscountPercentage);
+                            frmPayment.Customer.FKDiscountCard.DiscountPercentage,
+                            false);
 
                         if (_Deposit == null)
                             return;

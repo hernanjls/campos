@@ -116,22 +116,22 @@ namespace EzPos.GUIs.Forms
                                 return;
                             }
                         }
-                        //else
-                        //{
-                        //    const string briefMsg = "អំពីការប្រគល់ប្រាក់";
-                        //    var detailMsg = Resources.MsgConfirmCreditPayment;
-                        //    using (var frmMessageBox = new ExtendedMessageBox())
-                        //    {
-                        //        frmMessageBox.BriefMsgStr = briefMsg;
-                        //        frmMessageBox.DetailMsgStr = detailMsg;
-                        //        frmMessageBox.IsCanceledOnly = false;
-                        //        if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
-                        //        {
-                        //            e.Cancel = true;
-                        //            return;
-                        //        }
-                        //    }                            
-                        //}
+                        else
+                        {
+                            const string briefMsg = "អំពីការប្រគល់ប្រាក់";
+                            var detailMsg = Resources.MsgConfirmCreditPayment;
+                            using (var frmMessageBox = new ExtendedMessageBox())
+                            {
+                                frmMessageBox.BriefMsgStr = briefMsg;
+                                frmMessageBox.DetailMsgStr = detailMsg;
+                                frmMessageBox.IsCanceledOnly = false;
+                                if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
+                                {
+                                    e.Cancel = true;
+                                    return;
+                                }
+                            }
+                        }
                     //}
                 }
 
@@ -587,8 +587,11 @@ namespace EzPos.GUIs.Forms
                 float.TryParse(txtAmountPaidUsd.Text, out purchaseAmount);
 
             Customer.PurchasedAmount += purchaseAmount;
-            if (Customer.FKDiscountCard != null)
-                Customer.PurchasedAmount -= ((purchaseAmount * Customer.FKDiscountCard.DiscountPercentage) / 100);
+            if (!IsDeposit)
+            {
+                if (Customer.FKDiscountCard != null)
+                    Customer.PurchasedAmount -= ((purchaseAmount*Customer.FKDiscountCard.DiscountPercentage)/100);
+            }
 
             var counter = -1;
             foreach (AppParameter appParameter in dCardTypeList)
@@ -611,7 +614,7 @@ namespace EzPos.GUIs.Forms
             {
                 DiscountCardDistribution(
                     Customer,
-                    "",
+                    string.Empty,
                     ((AppParameter) dCardTypeList[counter]).ParameterLabel);
             }
             else

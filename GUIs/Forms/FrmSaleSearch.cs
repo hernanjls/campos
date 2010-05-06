@@ -298,7 +298,7 @@ namespace EzPos.GUIs.Forms
 
         private void btnDeleteDeposit_Click(object sender, EventArgs e)
         {
-            if (!UserService.AllowToPerform(Resources.PermissionDeleteDeposit))
+            if (!UserService.AllowToPerform(Resources.PermissionCancelDeposit))
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;

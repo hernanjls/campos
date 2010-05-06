@@ -39,11 +39,10 @@ namespace EzPos.GUIs.Forms
             this.btnCancel = new System.Windows.Forms.Button();
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.btnDeliver = new System.Windows.Forms.Button();
-            this.btnDetailDeposit = new System.Windows.Forms.Button();
+            this.btnCancelDeposit = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.pnlBody = new System.Windows.Forms.Panel();
             this.dgvDeposit = new System.Windows.Forms.DataGridView();
-            this.lblSearchInfo = new System.Windows.Forms.Label();
             this.DepositId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DepositNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DepositDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +69,7 @@ namespace EzPos.GUIs.Forms
             this.ReferenceNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblSearchInfo = new System.Windows.Forms.Label();
             this.pnlHeader.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.pnlBody.SuspendLayout();
@@ -124,7 +124,7 @@ namespace EzPos.GUIs.Forms
             this.pnlFooter.BackgroundImage = global::EzPos.Properties.Resources.background_5;
             this.pnlFooter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pnlFooter.Controls.Add(this.btnDeliver);
-            this.pnlFooter.Controls.Add(this.btnDetailDeposit);
+            this.pnlFooter.Controls.Add(this.btnCancelDeposit);
             this.pnlFooter.Controls.Add(this.btnPrint);
             this.pnlFooter.Controls.Add(this.btnCancel);
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -152,24 +152,24 @@ namespace EzPos.GUIs.Forms
             this.btnDeliver.Click += new System.EventHandler(this.btnDeliver_Click);
             this.btnDeliver.MouseEnter += new System.EventHandler(this.btnDeliver_MouseEnter);
             // 
-            // btnDetailDeposit
+            // btnCancelDeposit
             // 
-            this.btnDetailDeposit.BackColor = System.Drawing.Color.Transparent;
-            this.btnDetailDeposit.BackgroundImage = global::EzPos.Properties.Resources.background_2;
-            this.btnDetailDeposit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnDetailDeposit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDetailDeposit.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDetailDeposit.ForeColor = System.Drawing.Color.White;
-            this.btnDetailDeposit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDetailDeposit.Location = new System.Drawing.Point(20, 9);
-            this.btnDetailDeposit.Name = "btnDetailDeposit";
-            this.btnDetailDeposit.Size = new System.Drawing.Size(116, 36);
-            this.btnDetailDeposit.TabIndex = 49;
-            this.btnDetailDeposit.Text = "លំអិត";
-            this.btnDetailDeposit.UseVisualStyleBackColor = false;
-            this.btnDetailDeposit.MouseLeave += new System.EventHandler(this.btnDetailDeposit_MouseLeave);
-            this.btnDetailDeposit.Click += new System.EventHandler(this.btnDetailDeposit_Click);
-            this.btnDetailDeposit.MouseEnter += new System.EventHandler(this.btnDetailDeposit_MouseEnter);
+            this.btnCancelDeposit.BackColor = System.Drawing.Color.Transparent;
+            this.btnCancelDeposit.BackgroundImage = global::EzPos.Properties.Resources.background_2;
+            this.btnCancelDeposit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCancelDeposit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCancelDeposit.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelDeposit.ForeColor = System.Drawing.Color.White;
+            this.btnCancelDeposit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelDeposit.Location = new System.Drawing.Point(20, 9);
+            this.btnCancelDeposit.Name = "btnCancelDeposit";
+            this.btnCancelDeposit.Size = new System.Drawing.Size(116, 36);
+            this.btnCancelDeposit.TabIndex = 49;
+            this.btnCancelDeposit.Text = "បោះបង់";
+            this.btnCancelDeposit.UseVisualStyleBackColor = false;
+            this.btnCancelDeposit.MouseLeave += new System.EventHandler(this.btnDetailDeposit_MouseLeave);
+            this.btnCancelDeposit.Click += new System.EventHandler(this.btnCancelDeposit_Click);
+            this.btnCancelDeposit.MouseEnter += new System.EventHandler(this.btnDetailDeposit_MouseEnter);
             // 
             // btnPrint
             // 
@@ -272,14 +272,6 @@ namespace EzPos.GUIs.Forms
             this.dgvDeposit.Size = new System.Drawing.Size(657, 359);
             this.dgvDeposit.TabIndex = 3;
             this.dgvDeposit.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearchResult_CellDoubleClick);
-            // 
-            // lblSearchInfo
-            // 
-            this.lblSearchInfo.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSearchInfo.Location = new System.Drawing.Point(14, 13);
-            this.lblSearchInfo.Name = "lblSearchInfo";
-            this.lblSearchInfo.Size = new System.Drawing.Size(668, 29);
-            this.lblSearchInfo.TabIndex = 4;
             // 
             // DepositId
             // 
@@ -509,6 +501,14 @@ namespace EzPos.GUIs.Forms
             this.CustomerName.ReadOnly = true;
             this.CustomerName.Visible = false;
             // 
+            // lblSearchInfo
+            // 
+            this.lblSearchInfo.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSearchInfo.Location = new System.Drawing.Point(14, 13);
+            this.lblSearchInfo.Name = "lblSearchInfo";
+            this.lblSearchInfo.Size = new System.Drawing.Size(668, 29);
+            this.lblSearchInfo.TabIndex = 4;
+            // 
             // FrmDeposit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -542,7 +542,7 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.DataGridView dgvDeposit;
         private System.Windows.Forms.Label lblSearchInfo;
         private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.Button btnDetailDeposit;
+        private System.Windows.Forms.Button btnCancelDeposit;
         private System.Windows.Forms.Button btnDeliver;
         private System.Windows.Forms.DataGridViewTextBoxColumn DepositId;
         private System.Windows.Forms.DataGridViewTextBoxColumn DepositNumber;

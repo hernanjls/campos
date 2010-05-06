@@ -59,17 +59,22 @@ namespace EzPos.Service
             float totalAmountPaidRiel,
             Customer customer,
             string referenceNum,
-            float discount)
+            float discount,
+            bool isReturned)
         {
             if (depositItemList == null)
                 throw new ArgumentNullException("depositItemList", "Deposit item");
+
+            var factor = 1;
+            if (isReturned)
+                factor = -1;
 
             //Deposit
             var deposit = 
                 new Deposit
                 {
                     DepositDate = DateTime.Now,
-                    DepositTypeId = 0,
+                    DepositTypeId = isReturned ? 1 : 0,
                     CustomerId = customer.CustomerID,
                     CashierId = AppContext.User.UserID,
                     DelivererId = 0,
@@ -77,19 +82,37 @@ namespace EzPos.Service
                     PaymentTypeId = 0,
                     CurrencyId = 0,
                     ExchangeRate = 
-                        (AppContext.ExchangeRate == null ? 0 : AppContext.ExchangeRate.ExchangeValue),
-                    AmountSoldInt = 
-                        (totalAmountInt - ((totalAmountInt * discount) / 100))
+                        (AppContext.ExchangeRate == null ? 0 : AppContext.ExchangeRate.ExchangeValue)
+                    //AmountSoldInt = 
+                    //    (totalAmountInt - ((totalAmountInt * discount) / 100))
                 };
 
-            deposit.AmountSoldRiel = deposit.AmountSoldInt*deposit.ExchangeRate;
-            deposit.AmountPaidInt = totalAmountPaidInt;
-            deposit.AmountPaidRiel = totalAmountPaidRiel;
-            deposit.AmountReturnInt = deposit.AmountPaidInt - deposit.AmountSoldInt;
+            if (isReturned)
+            {
+                deposit.AmountSoldInt = totalAmountInt;
+                deposit.AmountPaidInt = deposit.AmountSoldInt;
+                deposit.AmountPaidRiel = 0;
+                deposit.AmountReturnInt = 0;
+            }
+            else
+            {
+                deposit.AmountSoldInt =
+                    (totalAmountInt - ((totalAmountInt * discount) / 100));
+                deposit.AmountPaidInt = totalAmountPaidInt;
+                deposit.AmountPaidRiel = totalAmountPaidRiel;
+                deposit.AmountReturnInt = deposit.AmountPaidInt - deposit.AmountSoldInt;
+                deposit.Discount = discount;
+            }
+
+            deposit.AmountSoldInt *= factor;
+            deposit.AmountPaidInt *= factor;
+            deposit.AmountSoldRiel = deposit.AmountSoldInt * deposit.ExchangeRate;
             deposit.AmountReturnRiel = deposit.AmountReturnInt * deposit.ExchangeRate;
-            deposit.Discount = discount;
-            deposit.DiscountTypeId = customer.FKDiscountCard.DiscountCardTypeID;
-            deposit.CardNumber = customer.FKDiscountCard.CardNumber;
+            if (customer.FKDiscountCard != null)
+            {
+                deposit.DiscountTypeId = customer.FKDiscountCard.DiscountCardTypeID;
+                deposit.CardNumber = customer.FKDiscountCard.CardNumber;
+            }
             deposit.ReferenceNum = referenceNum;
 
             //Deposit
@@ -97,7 +120,8 @@ namespace EzPos.Service
 
             //Customer
             var customerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
-            //customer.PurchasedAmount += deposit.AmountPaidInt;
+            if(isReturned)
+                customer.PurchasedAmount += deposit.AmountPaidInt;
             customerService.CustomerManagement(
                 customer,
                 Resources.OperationRequestUpdate);
@@ -106,14 +130,18 @@ namespace EzPos.Service
             deposit.FKCustomer = customer;
 
             //Deposit item      
-            foreach (DepositItem depositItem in depositItemList)
+            if (!isReturned)
             {
-                if (depositItem.ProductId == 0)
-                    continue;
+                foreach (DepositItem depositItem in depositItemList)
+                {
+                    if (depositItem.ProductId == 0)
+                        continue;
 
-                //DepositItem
-                depositItem.DepositId = deposit.DepositId;
-                _DepositDataAccess.InsertDepositItem(depositItem);
+                    //if (isReturned)
+                    //    depositItem.QtySold *= factor;
+                    depositItem.DepositId = deposit.DepositId;
+                    _DepositDataAccess.InsertDepositItem(depositItem);
+                }
             }
             return deposit;
         }
@@ -168,12 +196,16 @@ namespace EzPos.Service
                 var depositItem = anObject[3] as DepositItem;
                 var product = anObject[4] as Product;
 
-                if ((deposit == null) || (customer == null) || (user == null) || (depositItem == null) || (product == null))
+                //if ((deposit == null) || (customer == null) || (user == null) || (depositItem == null) || (product == null))
+                if ((deposit == null) || (customer == null) || (user == null))
                     continue;
 
-                var unitPriceOut =
-                    depositItem.UnitPriceOut -
-                    ((depositItem.UnitPriceOut * depositItem.Discount) / 100);
+                var unitPriceOut = 0f;
+                if (depositItem != null)
+                {
+                    unitPriceOut = depositItem.UnitPriceOut -
+                        ((depositItem.UnitPriceOut*depositItem.Discount)/100);
+                }
 
                 var depositReport = 
                     new DepositReport
@@ -187,14 +219,14 @@ namespace EzPos.Service
                         CardNumber = deposit.CardNumber,
                         ReferenceNum = deposit.ReferenceNum,
                         UpdateDate = deposit.UpdateDate,
-                        ProductId = depositItem.ProductId,
-                        ProductName = product.ProductName + " (" + product.ForeignCode + ")",
-                        UnitPriceIn = depositItem.UnitPriceIn,
+                        ProductId = depositItem != null ? depositItem.ProductId : 0,
+                        ProductName = product != null ? (product.ProductName + " (" + product.ForeignCode + ")") : string.Empty,
+                        UnitPriceIn = depositItem != null ? depositItem.UnitPriceIn : 0,
                         UnitPriceOut = unitPriceOut,
-                        Discount = depositItem.Discount,
-                        QtySold = depositItem.QtySold,
-                        SubTotal = (depositItem.QtySold * unitPriceOut),
-                        DepositItemId = depositItem.DepositItemId
+                        Discount = depositItem != null ? depositItem.Discount : 0,
+                        QtySold = depositItem != null ? depositItem.QtySold : 0,
+                        SubTotal = depositItem != null ? (depositItem.QtySold * unitPriceOut) : 0,
+                        DepositItemId = depositItem != null ? depositItem.DepositItemId : 0
                     };
 
                 if(depositId != deposit.DepositId)

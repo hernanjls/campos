@@ -514,7 +514,7 @@
   <data name="PermissionAddDeposit" xml:space="preserve">
     <value>47</value>
   </data>
-  <data name="PermissionDeleteDeposit" xml:space="preserve">
+  <data name="PermissionCancelDeposit" xml:space="preserve">
     <value>49</value>
   </data>
   <data name="PermissionEditDeposit" xml:space="preserve">

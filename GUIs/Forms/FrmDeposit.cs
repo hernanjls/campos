@@ -59,7 +59,8 @@ namespace EzPos.GUIs.Forms
                     new List<string>
                     {
                         "CustomerId|" + CustomerId,
-                        "AmountPaidInt < AmountSoldInt"
+                        "AmountPaidInt < AmountSoldInt",
+                        "DepositNumber NOT IN (SELECT ReferenceNum FROM TDeposits WHERE ReferenceNum IS NOT NULL)"
                     };
 
                 IListToBindingList(
@@ -206,12 +207,12 @@ namespace EzPos.GUIs.Forms
 
         private void btnDetailDeposit_MouseEnter(object sender, EventArgs e)
         {
-            btnDetailDeposit.BackgroundImage = Resources.background_9;
+            btnCancelDeposit.BackgroundImage = Resources.background_9;
         }
 
         private void btnDetailDeposit_MouseLeave(object sender, EventArgs e)
         {
-            btnDetailDeposit.BackgroundImage = Resources.background_2;
+            btnCancelDeposit.BackgroundImage = Resources.background_2;
         }
 
         private void btnDeliver_MouseEnter(object sender, EventArgs e)
@@ -310,9 +311,75 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void btnDetailDeposit_Click(object sender, EventArgs e)
+        private void btnCancelDeposit_Click(object sender, EventArgs e)
         {
+            var briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
+            var detailMsg = Resources.MsgUserPermissionDeny;
+            if (!UserService.AllowToPerform(Resources.PermissionCancelDeposit))
+            {
+                using (var frmMessageBox = new ExtendedMessageBox())
+                {
+                    frmMessageBox.BriefMsgStr = briefMsg;
+                    frmMessageBox.DetailMsgStr = detailMsg;
+                    frmMessageBox.IsCanceledOnly = true;
+                    frmMessageBox.ShowDialog(this);
+                    return;
+                }
+            }
 
+            if (_DepositList == null)
+                return;
+
+            if (_DepositList.Count == 0)
+                return;
+
+            if (dgvDeposit.CurrentRow == null)
+                return;
+
+            _Deposit = _DepositList[dgvDeposit.CurrentRow.Index];
+            if (_Deposit == null)
+                return;
+
+            _DepositItemList = _DepositService.GetDepositItems(_Deposit.DepositId);
+
+            if (_Deposit == null)
+                return;
+
+            if (_DepositItemList.Count == 0)
+                return;
+
+            briefMsg = "អំពីការបោះបង់";
+            detailMsg = "សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​បញ្ជាក់​ពី​ការ​ប្រគល់​សង​។";
+            using (var frmMessageBox = new ExtendedMessageBox())
+            {
+                frmMessageBox.BriefMsgStr = briefMsg;
+                frmMessageBox.DetailMsgStr = detailMsg;
+                if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
+                    return;
+            }
+
+            _Deposit = _DepositService.RecordDeposit(
+                _DepositItemList,
+                _Deposit.AmountSoldInt,
+                _Deposit.AmountPaidInt,
+                0,
+                _Deposit.FKCustomer,
+                _Deposit.DepositNumber,
+                _Deposit.Discount,
+                true);
+
+            var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
+            var payment =
+                new Model.Payments.Payment
+                {
+                    PaymentDate = _Deposit.DepositDate,
+                    PaymentAmount = _Deposit.AmountPaidInt,
+                    SalesOrderId = _Deposit.DepositId,
+                    CashierId = _Deposit.CashierId
+                };
+            paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
+
+            RetrieveDataHandler();
         }
     }
 }
