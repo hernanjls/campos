@@ -86,33 +86,53 @@ namespace EzPos.DataAccess
                 "    {d.*}, " +
                 "    {e.*} " +
                 "FROM " +
-                "    TDeposits a, " +
-                "    TCustomers b, " + 
-                "    TUsers c, " + 
-                "    TDepositItems d, " + 
-                "    TProducts e " + 
-                "WHERE " + 
-                "    a.CustomerId = b.CustomerId " + 
-                "    and a.CashierId = c.UserId " +
-                "    and a.DepositId = d.DepositId " +
-                "    and d.ProductId = e.ProductId ";
+                "    TDeposits a " +
+                "    INNER JOIN TCustomers b on a.CustomerId = b.CustomerId " +  
+                "    INNER JOIN TUsers c on a.CashierId = c.UserId " + 
+                "    LEFT JOIN TDepositItems d on a.DepositId = d.DepositId " + 
+                "    LEFT JOIN TProducts e on d.ProductId = e.ProductId ";
+                //"    TUsers c, " + 
+                //"    TDepositItems d, " + 
+                //"    TProducts e " + 
+                //"WHERE " + 
+                //"    a.CustomerId = b.CustomerId " + 
+                //"    and a.CashierId = c.UserId " +
+                //"    and a.DepositId = d.DepositId " +
+                //"    and d.ProductId = e.ProductId ";
 
+            var whereClause = string.Empty;
             foreach (string strCriteria in searchCriteria)
-                qryStr += strCriteria;    
+            {
+                if (!string.IsNullOrEmpty(whereClause))
+                    whereClause += " AND ";
+                whereClause += strCriteria;
+                //qryStr += strCriteria;
+            }
 
+            if (!string.IsNullOrEmpty(whereClause))
+                whereClause = " WHERE " + whereClause;
+
+            qryStr += whereClause;
             var aliasList = new string[5];
             aliasList[0] = "a";
             aliasList[1] = "b";
             aliasList[2] = "c";
             aliasList[3] = "d";
             aliasList[4] = "e";
+            //var aliasList = new string[2];
+            //aliasList[0] = "a";
+            //aliasList[1] = "b";
 
             var typeList = new Type[5];
-            typeList[0] = typeof (Deposit);
-            typeList[1] = typeof (Customer);
-            typeList[2] = typeof (User);
-            typeList[3] = typeof (DepositItem);
-            typeList[4] = typeof (Product);
+            typeList[0] = typeof(Deposit);
+            typeList[1] = typeof(Customer);
+            typeList[2] = typeof(User);
+            typeList[3] = typeof(DepositItem);
+            typeList[4] = typeof(Product);
+
+            //var typeList = new Type[2];
+            //typeList[0] = typeof (Deposit);
+            //typeList[1] = typeof (Customer);
 
             return SelectObjects(qryStr, aliasList, typeList);
         }

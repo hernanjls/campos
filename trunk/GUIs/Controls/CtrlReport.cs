@@ -381,12 +381,13 @@ namespace EzPos.GUIs.Controls
             var searchCriteria =
                 new List<string>
                 {
-                    "and (DepositDate BETWEEN CONVERT(DATETIME, '" +
+                    "(DepositDate BETWEEN CONVERT(DATETIME, '" +
                     dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     "', 103) AND CONVERT(DATETIME, '" +
                     dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                    " 23:59', 103)) ",
-                    "and (AmountPaidInt < AmountSoldInt) "
+                    " 23:59', 103)) "
+                    //,
+                    //"and (AmountPaidInt < AmountSoldInt) "
                 };
 
             var assessmentList = _DepositService.GetDepositHistories(searchCriteria);
