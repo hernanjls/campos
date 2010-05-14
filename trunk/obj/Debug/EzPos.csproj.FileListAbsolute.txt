@@ -46,3 +46,11 @@ D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\EzPos.Propert
 D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\EzPos.csproj.GenerateResource.Cache
 D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\EzPos.exe
 D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\EzPos.pdb
+D:\users\ysakal\private\point of sales\ezpos\source code\bin\Debug\Interop.CrystalActiveXReportViewerLib105.dll
+D:\users\ysakal\private\point of sales\ezpos\source code\bin\Debug\AxInterop.CrystalActiveXReportViewerLib105.dll
+D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\Interop.CrystalActiveXReportViewerLib105.dll
+D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\AxInterop.CrystalActiveXReportViewerLib105.dll
+D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\EzPos.csproj.ResolveComReference.cache
+D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\EzPos.GUIs.Controls.CtrlReportTest.resources
+D:\users\ysakal\private\point of sales\ezpos\source code\bin\Debug\Interop.CRAXDDRT.dll
+D:\users\ysakal\private\point of sales\ezpos\source code\obj\Debug\Interop.CRAXDDRT.dll

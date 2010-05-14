@@ -180,70 +180,72 @@ namespace EzPos.Service
             return productList;
         }
 
-        public void ImportGroupCatalog(string folderPath,
-                                       int categoryID, string categoryStr,
-                                       int markID, string markStr,
-                                       int colorID, string colorStr,
-                                       int sizeID, string sizeStr)
+        public void ImportGroupCatalog(
+            string folderPath,
+            int categoryID, string categoryStr,
+            int markID, string markStr,
+            int colorID, string colorStr,
+            int sizeID, string sizeStr)
         {
             if (String.IsNullOrEmpty(folderPath))
                 throw new ArgumentNullException("folderPath", "Folder path");
 
             var directoryInfo = new DirectoryInfo(folderPath);
-            if (directoryInfo.Exists)
+            if (!directoryInfo.Exists) 
+                return;
+
+            foreach (var subDirectoryInfo in directoryInfo.GetDirectories())
+                ImportGroupCatalog(
+                    subDirectoryInfo.FullName,
+                    categoryID,
+                    categoryStr,
+                    markID,
+                    markStr,
+                    colorID,
+                    colorStr,
+                    sizeID,
+                    sizeStr);
+
+            foreach (var fileInfo in directoryInfo.GetFiles())
             {
-                foreach (DirectoryInfo subDirectoryInfo in directoryInfo.GetDirectories())
-                    ImportGroupCatalog(
-                        subDirectoryInfo.FullName,
-                        categoryID,
-                        categoryStr,
-                        markID,
-                        markStr,
-                        colorID,
-                        colorStr,
-                        sizeID,
-                        sizeStr);
-
-                foreach (var fileInfo in directoryInfo.GetFiles())
+                if (fileInfo.Extension == ".bmp" ||
+                    fileInfo.Extension == ".gif" ||
+                    fileInfo.Extension == ".jpg")
                 {
-                    if (fileInfo.Extension == ".bmp" ||
-                        fileInfo.Extension == ".gif" ||
-                        fileInfo.Extension == ".jpg")
+                    var productList = _ProductDataAccess.GetProductByPhoto(
+                        fileInfo.FullName);
+
+                    if (productList.Count == 0)
                     {
-                        var productList = _ProductDataAccess.GetProductByPhoto(
-                            fileInfo.FullName);
+                        var product = new Product
+                                          {
+                                              ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
+                                              CategoryID = categoryID,
+                                              CategoryStr = categoryStr,
+                                              MarkID = markID,
+                                              MarkStr = markStr,
+                                              ColorID = colorID,
+                                              ColorStr = colorStr,
+                                              SizeID = sizeID,
+                                              SizeStr = sizeStr,
+                                              PhotoPath = fileInfo.FullName,
+                                              QtyInStock = 1
+                                          };
 
-                        if (productList.Count == 0)
-                        {
-                            var product = new Product
-                                              {
-                                                  ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
-                                                  CategoryID = categoryID,
-                                                  CategoryStr = categoryStr,
-                                                  MarkID = markID,
-                                                  MarkStr = markStr,
-                                                  ColorID = colorID,
-                                                  ColorStr = colorStr,
-                                                  SizeID = sizeID,
-                                                  SizeStr = sizeStr,
-                                                  PhotoPath = fileInfo.FullName,
-                                                  QtyInStock = 1
-                                              };
-
-                            ManageProduct(
-                                product,
-                                Resources.OperationRequestInsert);
-                        }
+                        ManageProduct(
+                            product,
+                            Resources.OperationRequestInsert);
                     }
                 }
             }
         }
 
-        public void ImportGroupCatalog(string[] fileNames,
-                                       int categoryID, string categoryStr,
-                                       int markID, string markStr,
-                                       int colorID, string colorStr,
-                                       int sizeID, string sizeStr)
+        public void ImportGroupCatalog(
+            string[] fileNames,
+            int categoryID, string categoryStr,
+            int markID, string markStr,
+            int colorID, string colorStr,
+            int sizeID, string sizeStr)
         {
             if (fileNames.Length == 0)
                 return;
@@ -251,16 +253,17 @@ namespace EzPos.Service
             if (String.IsNullOrEmpty(fileNames[0]))
                 return;
 
-            foreach (string fileName in fileNames)
+            foreach (var fileName in fileNames)
             {
                 var directoryInfo = new DirectoryInfo(fileName);
                 if (directoryInfo.Exists)
                 {
-                    ImportGroupCatalog(fileName,
-                                       categoryID, categoryStr,
-                                       markID, markStr,
-                                       colorID, colorStr,
-                                       sizeID, sizeStr);
+                    ImportGroupCatalog(
+                        fileName,
+                        categoryID, categoryStr,
+                        markID, markStr,
+                        colorID, colorStr,
+                        sizeID, sizeStr);
                     continue;
                 }
 
@@ -273,30 +276,31 @@ namespace EzPos.Service
                     fileInfo.Extension != ".jpg")
                     continue;
 
-                IList productList = _ProductDataAccess.GetProductByPhoto(
+                var productList = _ProductDataAccess.GetProductByPhoto(
                     fileInfo.FullName);
 
-                if (productList.Count == 0)
-                {
-                    var product = new Product
-                                      {
-                                          ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
-                                          CategoryID = categoryID,
-                                          CategoryStr = categoryStr,
-                                          MarkID = markID,
-                                          MarkStr = markStr,
-                                          ColorID = colorID,
-                                          ColorStr = colorStr,
-                                          SizeID = sizeID,
-                                          SizeStr = sizeStr,
-                                          PhotoPath = fileInfo.FullName,
-                                          QtyInStock = 1
-                                      };
+                if (productList.Count != 0) 
+                    continue;
 
-                    ManageProduct(
-                        product,
-                        Resources.OperationRequestInsert);
-                }
+                var product = 
+                    new Product
+                    {
+                        ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
+                        CategoryID = categoryID,
+                        CategoryStr = categoryStr,
+                        MarkID = markID,
+                        MarkStr = markStr,
+                        ColorID = colorID,
+                        ColorStr = colorStr,
+                        SizeID = sizeID,
+                        SizeStr = sizeStr,
+                        PhotoPath = fileInfo.FullName,
+                        QtyInStock = 1
+                    };
+
+                ManageProduct(
+                    product,
+                    Resources.OperationRequestInsert);
             }
         }
 

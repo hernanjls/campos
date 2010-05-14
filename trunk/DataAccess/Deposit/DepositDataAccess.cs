@@ -91,14 +91,6 @@ namespace EzPos.DataAccess
                 "    INNER JOIN TUsers c on a.CashierId = c.UserId " + 
                 "    LEFT JOIN TDepositItems d on a.DepositId = d.DepositId " + 
                 "    LEFT JOIN TProducts e on d.ProductId = e.ProductId ";
-                //"    TUsers c, " + 
-                //"    TDepositItems d, " + 
-                //"    TProducts e " + 
-                //"WHERE " + 
-                //"    a.CustomerId = b.CustomerId " + 
-                //"    and a.CashierId = c.UserId " +
-                //"    and a.DepositId = d.DepositId " +
-                //"    and d.ProductId = e.ProductId ";
 
             var whereClause = string.Empty;
             foreach (string strCriteria in searchCriteria)
@@ -106,7 +98,6 @@ namespace EzPos.DataAccess
                 if (!string.IsNullOrEmpty(whereClause))
                     whereClause += " AND ";
                 whereClause += strCriteria;
-                //qryStr += strCriteria;
             }
 
             if (!string.IsNullOrEmpty(whereClause))
@@ -119,9 +110,6 @@ namespace EzPos.DataAccess
             aliasList[2] = "c";
             aliasList[3] = "d";
             aliasList[4] = "e";
-            //var aliasList = new string[2];
-            //aliasList[0] = "a";
-            //aliasList[1] = "b";
 
             var typeList = new Type[5];
             typeList[0] = typeof(Deposit);
@@ -129,10 +117,6 @@ namespace EzPos.DataAccess
             typeList[2] = typeof(User);
             typeList[3] = typeof(DepositItem);
             typeList[4] = typeof(Product);
-
-            //var typeList = new Type[2];
-            //typeList[0] = typeof (Deposit);
-            //typeList[1] = typeof (Customer);
 
             return SelectObjects(qryStr, aliasList, typeList);
         }

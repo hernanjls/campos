@@ -258,9 +258,7 @@ namespace EzPos.GUIs.Controls
                 if (rdbSale.Checked)
                     RefreshReportSale(chbShowBenefit.Checked);
                 else if (rdbDeposit.Checked)
-                {
                     RefreshReportDeposit();
-                }
                 else
                     RefreshReportReturn();
             }
@@ -390,7 +388,7 @@ namespace EzPos.GUIs.Controls
                     //"and (AmountPaidInt < AmountSoldInt) "
                 };
 
-            var assessmentList = _DepositService.GetDepositHistories(searchCriteria);
+            var assessmentList = _DepositService.GetDepositHistories(searchCriteria, false);
 
             DataSet dtsModel = new DtsModels();
             var PropertyInfos = typeof(DepositReport).GetProperties();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Resources;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
@@ -240,13 +241,31 @@ namespace EzPos
             try
             {
                 var depositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
-                var depositList = depositService.GetDepositHistories(null);
+                var depositList = depositService.GetDepositHistories(null, false);
                 MessageBox.Show(depositList.Count.ToString());
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        [Test]
+        public void ToPinyinput()
+        {
+            string CName;
+            foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+            {
+                CName = lang.Culture.EnglishName;
+                MessageBox.Show(CName);
+
+                if (CName.StartsWith("Khmer"))
+                {
+                    InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
+                    //InputLanguage.CurrentInputLanguage = lang;
+                }
+            }
+
         }
     }
 }
