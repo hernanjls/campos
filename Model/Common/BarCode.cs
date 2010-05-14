@@ -14,5 +14,7 @@ namespace EzPos.Model
         public string DisplayStr { get; set; }
 
         public string AdditionalStr { get; set; }
+
+        public string UnitPrice { get; set; }
     }
 }

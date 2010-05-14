@@ -431,18 +431,23 @@ namespace EzPos.GUIs.Controls
                     _BarCodeList.Clear();
                     for (var counter = 0; counter < _ProductList.Count; counter++)
                     {
-                        for (var qtyCounter = 0; qtyCounter < (_ProductList[counter]).QtyInStock; qtyCounter++)
+                        var product = _ProductList[counter];
+                        if(product == null)
+                            continue;
+
+                        for (var qtyCounter = 0; qtyCounter < product.QtyInStock; qtyCounter++)
                         {
+                            //var product = _ProductList[counter];
                             var barCode = 
                                 new BarCode
                                 {
-                                    BarCodeValue = (_ProductList[counter]).ProductCode,
-                                    DisplayStr = (_ProductList[counter]).CategoryStr,
-                                    AdditionalStr =
-                                        "$ " + (_ProductList[counter]).UnitPriceOut.ToString("N", AppContext.CultureInfo)
+                                    BarCodeValue = product.ProductCode,
+                                    DisplayStr = product.CategoryStr,
+                                    AdditionalStr = (product.QtyInStock.ToString("N0") + " / " + product.QtyInStock.ToString("N0")),
+                                    UnitPrice = "$ " + (_ProductList[counter]).UnitPriceOut.ToString("N", AppContext.CultureInfo)
                                 };
 
-                            var foreignCode = (_ProductList[counter]).ForeignCode;
+                            var foreignCode = product.ForeignCode;
                             if (!string.IsNullOrEmpty(foreignCode))
                                 barCode.DisplayStr += " (" + foreignCode + ")";
                             _BarCodeList.Add(barCode);
@@ -532,8 +537,13 @@ namespace EzPos.GUIs.Controls
 
             foreach (var barCode in _BarCodeList)
             {
+                //if (barCode.BarCodeValue == product.ProductCode)
+                //    barCode.DisplayStr = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
                 if (barCode.BarCodeValue == product.ProductCode)
-                    barCode.DisplayStr = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
+                    barCode.DisplayStr = product.CategoryStr;
+
+                if (string.IsNullOrEmpty(product.ForeignCode))
+                    barCode.DisplayStr += " (" + product.ForeignCode + ")";
             }
         }
 
@@ -696,11 +706,16 @@ namespace EzPos.GUIs.Controls
 
                     for (var counter = 0; counter < (curProduct.QtyInStock - preQtyInStock); counter++)
                     {
-                        var barCode = new BarCode
-                                          {
-                                              BarCodeValue = curProduct.ProductCode,
-                                              DisplayStr = curProduct.UnitPriceOut.ToString("N", AppContext.CultureInfo)
-                                          };
+                        var barCode = 
+                            new BarCode
+                            {
+                                BarCodeValue = curProduct.ProductCode,
+                                //DisplayStr = curProduct.UnitPriceOut.ToString("N", AppContext.CultureInfo)
+                                DisplayStr = curProduct.CategoryStr
+                            };
+
+                        if (string.IsNullOrEmpty(curProduct.ForeignCode))
+                            barCode.DisplayStr += " (" + curProduct.ForeignCode + ")";
                         _BarCodeList.Add(barCode);
                     }
                 }
@@ -868,9 +883,8 @@ namespace EzPos.GUIs.Controls
                             BarCodeValue = _ProductList[dgvProduct.CurrentRow.Index].ProductCode,
                             DisplayStr = 
                                 _ProductList[dgvProduct.CurrentRow.Index].CategoryStr,
-                            //AdditionalStr = (currentPrintedQty.ToString("N0") + " / " + totalQty.ToString("N0"))
-                            AdditionalStr = 
-                                "$ " + _ProductList[dgvProduct.CurrentRow.Index].UnitPriceOut.ToString("N", AppContext.CultureInfo)
+                            AdditionalStr = (currentPrintedQty.ToString("N0") + " / " + totalQty.ToString("N0")),
+                            UnitPrice = "$ " + (_ProductList[dgvProduct.CurrentRow.Index]).UnitPriceOut.ToString("N", AppContext.CultureInfo)
                         };
 
                     var foreignCode = _ProductList[dgvProduct.CurrentRow.Index].ForeignCode;
