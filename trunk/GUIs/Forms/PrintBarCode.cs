@@ -17,13 +17,14 @@ namespace EzPos.GUIs.Forms
         public static void InializePrinting(List<BarCode> barCodeList)
         {
             _BarCodeList = barCodeList;
-            var printPreviewDialog = new PrintPreviewDialog
-                                         {
-                                             WindowState = FormWindowState.Maximized,
-                                             FormBorderStyle = FormBorderStyle.None,
-                                             UseAntiAlias = true,
-                                             Document = printDocument
-                                         };
+            var printPreviewDialog = 
+                new PrintPreviewDialog
+                {
+                    WindowState = FormWindowState.Maximized,
+                    FormBorderStyle = FormBorderStyle.None,
+                    UseAntiAlias = true,
+                    Document = printDocument
+                };
 
             if (AppContext.Counter != null)
                 printDocument.PrinterSettings.PrinterName = AppContext.Counter.BarCodePrinter;
@@ -38,17 +39,22 @@ namespace EzPos.GUIs.Forms
 
         private static void printDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            int posX = 10, posY = 30;
+            int posX = 0, posY = 30;
             int rowIndex = 0, colIndex = 0;
 
-            var fontBarCode = new Font("Free 3 of 9 Extended", 30, FontStyle.Regular);
+            var fontBarCode = new Font("Free 3 of 9 Extended", 45, FontStyle.Regular);
             var solidBrush = new SolidBrush(Color.Black);
-            var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 3;
-            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 8;
+            var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 2;
+            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 6;
 
+            var leftMargin = e.MarginBounds.Left;
+            var rightMargin = e.MarginBounds.Right;
+            var medianPaper = e.MarginBounds.Width / 2;
+
+            posX = leftMargin - 50;
             while (_Counter <= _BarCodeList.Count - 1)
             {
-                if (rowIndex == 8)
+                if (rowIndex == 6)
                 {
                     e.HasMorePages = true;
                     return;
@@ -61,72 +67,75 @@ namespace EzPos.GUIs.Forms
                 var txtPosY = 
                     5 + Int32.Parse(Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) / 2;
 
-                var txtPosX = (posX + recWidth - txtWidth) / 2;
-                var recPosx = txtPosX;
+                posX += medianPaper * colIndex;
+
+                var pen = new Pen(solidBrush, 0.1f);
+                var rectangle = 
+                    colIndex < 1 ? 
+                    new Rectangle(
+                        posX,
+                        posY,
+                        medianPaper + 50,
+                        recHeight - 20) : 
+                    new Rectangle(
+                        medianPaper + 100,
+                        posY,
+                        rightMargin - medianPaper - 50,
+                        recHeight - 20);
+                
+                e.Graphics.DrawRectangle(pen, rectangle);
+
                 e.Graphics.DrawString(
                     printStr,
                     fontBarCode,
                     solidBrush,
-                    txtPosX + 10,
-                    5 + posY + txtPosY,
+                    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
+                    20 + posY + txtPosY,
                     StrFormat);
 
-                var fontDisplayName = new Font("Arial", 10, FontStyle.Bold);
+                var fontDisplayName = new Font("Arial", 12, FontStyle.Bold);
                 printStr = barCode.BarCodeValue;
                 txtWidth = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
-                txtPosX = (posX + recWidth - txtWidth) / 2;
                 e.Graphics.DrawString(
                     printStr,
                     fontDisplayName,
                     solidBrush,
-                    txtPosX + 10,
-                    posY + txtPosY + 30,
+                    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
+                    posY + txtPosY + 60,
                     StrFormat);
 
-                fontDisplayName = new Font("Arial", 13, FontStyle.Bold);
+                fontDisplayName = new Font("Arial", 15, FontStyle.Bold);
                 printStr = barCode.DisplayStr;
                 txtWidth = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
-                txtPosX = (posX + recWidth - txtWidth) / 2;
                 e.Graphics.DrawString(
                     printStr,
                     fontDisplayName,
                     solidBrush,
-                    txtPosX + 10,
-                    posY + txtPosY + 55,
+                    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
+                    posY + txtPosY + 95,
                     StrFormat);
 
-                printStr = barCode.AdditionalStr;
+                printStr = barCode.UnitPrice;
                 txtWidth = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
-                txtPosX = (posX + recWidth - txtWidth) / 2;
                 e.Graphics.DrawString(
                     printStr,
                     fontDisplayName,
                     solidBrush,
-                    txtPosX + 10,
-                    posY + txtPosY + 75,
+                    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
+                    posY + txtPosY + 120,
                     StrFormat);
 
-                var rectangle =
-                    new Rectangle(
-                        recPosx - 20,
-                        posY,
-                        recWidth - 20,
-                        recHeight - 20);
-                var pen = new Pen(solidBrush, 0.1f);
-                e.Graphics.DrawRectangle(pen, rectangle);
-
-                if (colIndex < 2)
+                if (colIndex < 1)
                 {
                     colIndex++;
-                    posX += recWidth + 250;
                 }
                 else
                 {
                     colIndex = 0;
-                    posX = 12;
+                    posX = leftMargin - 50;
                     rowIndex++;
                     posY += (recHeight - 10);
                 }
