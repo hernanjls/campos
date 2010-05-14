@@ -64,5 +64,6 @@ namespace EzPos.Model
         
         public int DepositItemId { get; set; }
 
+        public int ReportHeader { get; set; }
     }
 }

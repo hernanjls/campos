@@ -210,8 +210,9 @@ namespace EzPos.Service
                 {
                     if (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode))
                     {
-                        var productCode = saleItem.FKProduct.ProductCode;
-                        productCode = Int32.Parse(productCode, AppContext.CultureInfo).ToString();
+                        //var productCode = saleItem.FKProduct.ProductCode;
+                        var productCode = saleItem.FKProduct.ForeignCode;
+                        //productCode = Int32.Parse(productCode, AppContext.CultureInfo).ToString();
                         productCode = productCode.Replace(",", string.Empty);
                         productCode = productCode.Replace(" ", string.Empty);
                         saleOrderReport.ProductName = saleItem.ProductName + " (" + productCode + ")";

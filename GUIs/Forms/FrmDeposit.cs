@@ -340,13 +340,14 @@ namespace EzPos.GUIs.Forms
             if (_Deposit == null)
                 return;
 
-            _DepositItemList = _DepositService.GetDepositItems(_Deposit.DepositId);
+            _DepositItemList = new List<DepositItem>();
+            //_DepositService.GetDepositItems(_Deposit.DepositId);
 
             if (_Deposit == null)
                 return;
 
-            if (_DepositItemList.Count == 0)
-                return;
+            //if (_DepositItemList.Count == 0)
+            //    return;
 
             briefMsg = "អំពីការបោះបង់";
             detailMsg = "សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​បញ្ជាក់​ពី​ការ​ប្រគល់​សង​។";
@@ -358,6 +359,7 @@ namespace EzPos.GUIs.Forms
                     return;
             }
 
+            _Deposit.DepositDate = DateTime.Now;
             _Deposit = _DepositService.RecordDeposit(
                 _DepositItemList,
                 _Deposit.AmountSoldInt,

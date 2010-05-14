@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using EzPos.Model;
@@ -158,13 +159,23 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtAddress_Enter(object sender, EventArgs e)
+        private void txtDescription_Enter(object sender, EventArgs e)
         {
+            try
+            {
+                InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
+            }
+            catch (Exception)
+            {
+                InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
+            }
+            
             txtDescription.TextChanged += ModificationHandler;
         }
 
-        private void txtAddress_Leave(object sender, EventArgs e)
+        private void txtDescription_Leave(object sender, EventArgs e)
         {
+            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en"));
             txtDescription.TextChanged -= ModificationHandler;
         }
 

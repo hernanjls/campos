@@ -15,6 +15,7 @@ namespace EzPos.GUIs.Forms
     {
         private CommonService _CommonService;
         private BindingList<SaleOrderReport> _SaleOrderReportList;
+        private IList _DepositReportList;
         private string _SONumber = string.Empty;
 
         public FrmSaleSearch()
@@ -61,67 +62,135 @@ namespace EzPos.GUIs.Forms
             {
                 try
                 {
-                    var searchCriteria = 
-                        new List<string>
+                    if (rbtSale.Checked)
+                    {
+                        var searchCriteria =
+                            new List<string>
+                            {
+                                "(ReportHeader = 1) AND (QtySold >= 0)",
+                                "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
+                                dtpStartDate.Value.ToString("dd/MM/yyyy") +
+                                "', 103) AND CONVERT(DATETIME, '" +
+                                dtpStopDate.Value.ToString("dd/MM/yyyy") + " 23:59', 103)"
+                            };
+
+                        if (!String.IsNullOrEmpty(txtInvoiceNumber.Text))
+                            searchCriteria.Add(
+                                "SaleOrderNumber LIKE '%" + txtInvoiceNumber.Text + "%'");
+
+                        if (cmbCustomer.SelectedItem != null)
+                            searchCriteria.Add(
+                                "CustomerID = " + Int32.Parse(cmbCustomer.SelectedValue.ToString()));
+
+                        if (!String.IsNullOrEmpty(txtPhoneNumber.Text))
+                            searchCriteria.Add(
+                                "CustomerID IN (SELECT CustomerID FROM TCustomers WHERE PhoneNumber LIKE '%" +
+                                txtPhoneNumber.Text + "%')");
+
+                        if (!String.IsNullOrEmpty(txtCardNumber.Text))
+                            searchCriteria.Add(
+                                "CardNumber LIKE '%" + txtCardNumber.Text + "%'");
+
+                        if (cmbDiscountType.SelectedItem != null)
+                            searchCriteria.Add(
+                                "DiscountTypeID = " +
+                                Int32.Parse(cmbDiscountType.SelectedValue.ToString()));
+
+                        if (cmbCategory.SelectedItem != null)
+                            searchCriteria.Add(
+                                "ProductID IN (SELECT ProductID FROM TProducts WHERE CategoryID =  " +
+                                Int32.Parse(cmbCategory.SelectedValue.ToString()) + ")");
+
+                        if (cmbBrand.SelectedItem != null)
+                            searchCriteria.Add(
+                                "ProductID IN (SELECT ProductID FROM TProducts WHERE MarkID =  " +
+                                Int32.Parse(cmbBrand.SelectedValue.ToString()) + ")");
+
+                        if (cmbColor.SelectedItem != null)
+                            searchCriteria.Add(
+                                "ProductID IN (SELECT ProductID FROM TProducts WHERE ColorID =  " +
+                                Int32.Parse(cmbColor.SelectedValue.ToString()) + ")");
+
+                        if (!String.IsNullOrEmpty(txtProductCode.Text))
+                            searchCriteria.Add(
+                                "ProductID IN (SELECT ProductID FROM TProducts WHERE ProductCode LIKE '%" +
+                                txtProductCode.Text + "%')");
+
+                        var saleOrderService =
+                            ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
+                        IListToBindingList(
+                            saleOrderService.GetSaleHistories(searchCriteria));
+
+                        var searchInfo = String.Format(
+                            "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
+                            _SaleOrderReportList.Count);
+                        lblSearchInfo.Text = searchInfo;
+                    }
+                    else
+                    {
+                        var searchCriteria =
+                            new List<string>
                         {
-                            "(ReportHeader = 1) AND (QtySold >= 0)",
-                            "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
-                            dtpStartDate.Value.ToString("dd/MM/yyyy") +
+                            "(a.DepositDate BETWEEN CONVERT(DATETIME, '" +
+                            dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                             "', 103) AND CONVERT(DATETIME, '" +
-                            dtpStopDate.Value.ToString("dd/MM/yyyy") + " 23:59', 103)"
+                            dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                            " 23:59', 103)) ",
+                            "(a.AmountPaidInt < a.AmountSoldInt) "
                         };
 
-                    if (!String.IsNullOrEmpty(txtInvoiceNumber.Text))
-                        searchCriteria.Add(
-                            "SaleOrderNumber LIKE '%" + txtInvoiceNumber.Text + "%'");
+                        if (!String.IsNullOrEmpty(txtInvoiceNumber.Text))
+                            searchCriteria.Add(
+                                "a.DepositNumber LIKE '%" + txtInvoiceNumber.Text + "%'");
 
-                    if (cmbCustomer.SelectedItem != null)
-                        searchCriteria.Add(
-                            "CustomerID = " + Int32.Parse(cmbCustomer.SelectedValue.ToString()));
+                        if (cmbCustomer.SelectedItem != null)
+                            searchCriteria.Add(
+                                "a.CustomerId = " + Int32.Parse(cmbCustomer.SelectedValue.ToString()));
 
-                    if (!String.IsNullOrEmpty(txtPhoneNumber.Text))
-                        searchCriteria.Add(
-                            "CustomerID IN (SELECT CustomerID FROM TCustomers WHERE PhoneNumber LIKE '%" +
-                            txtPhoneNumber.Text + "%')");
+                        if (!String.IsNullOrEmpty(txtPhoneNumber.Text))
+                            searchCriteria.Add(
+                                "a.CustomerId IN (SELECT CustomerID FROM TCustomers WHERE PhoneNumber LIKE '%" +
+                                txtPhoneNumber.Text + "%')");
 
-                    if (!String.IsNullOrEmpty(txtCardNumber.Text))
-                        searchCriteria.Add(
-                            "CardNumber LIKE '%" + txtCardNumber.Text + "%'");
+                        if (!String.IsNullOrEmpty(txtCardNumber.Text))
+                            searchCriteria.Add(
+                                "a.CardNumber LIKE '%" + txtCardNumber.Text + "%'");
 
-                    if (cmbDiscountType.SelectedItem != null)
-                        searchCriteria.Add(
-                            "DiscountTypeID = " +
-                            Int32.Parse(cmbDiscountType.SelectedValue.ToString()));
+                        if (cmbDiscountType.SelectedItem != null)
+                            searchCriteria.Add(
+                                "a.DiscountTypeId = " +
+                                Int32.Parse(cmbDiscountType.SelectedValue.ToString()));
 
-                    if (cmbCategory.SelectedItem != null)
-                        searchCriteria.Add(
-                            "ProductID IN (SELECT ProductID FROM TProducts WHERE CategoryID =  " +
-                            Int32.Parse(cmbCategory.SelectedValue.ToString()) + ")");
+                        if (cmbCategory.SelectedItem != null)
+                            searchCriteria.Add(
+                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE CategoryID =  " +
+                                Int32.Parse(cmbCategory.SelectedValue.ToString()) + ")");
 
-                    if (cmbBrand.SelectedItem != null)
-                        searchCriteria.Add(
-                            "ProductID IN (SELECT ProductID FROM TProducts WHERE MarkID =  " +
-                            Int32.Parse(cmbBrand.SelectedValue.ToString()) + ")");
+                        if (cmbBrand.SelectedItem != null)
+                            searchCriteria.Add(
+                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE MarkID =  " +
+                                Int32.Parse(cmbBrand.SelectedValue.ToString()) + ")");
 
-                    if (cmbColor.SelectedItem != null)
-                        searchCriteria.Add(
-                            "ProductID IN (SELECT ProductID FROM TProducts WHERE ColorID =  " +
-                            Int32.Parse(cmbColor.SelectedValue.ToString()) + ")");
+                        if (cmbColor.SelectedItem != null)
+                            searchCriteria.Add(
+                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE ColorID =  " +
+                                Int32.Parse(cmbColor.SelectedValue.ToString()) + ")");
 
-                    if (!String.IsNullOrEmpty(txtProductCode.Text))
-                        searchCriteria.Add(
-                            "ProductID IN (SELECT ProductID FROM TProducts WHERE ProductCode LIKE '%" +
-                            txtProductCode.Text + "%')");
+                        if (!String.IsNullOrEmpty(txtProductCode.Text))
+                            searchCriteria.Add(
+                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE ProductCode LIKE '%" +
+                                txtProductCode.Text + "%')");
 
-                    var saleOrderService =
-                        ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
-                    IListToBindingList(
-                        saleOrderService.GetSaleHistories(searchCriteria));
-
-                    var searchInfo = String.Format(
-                        "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
-                        _SaleOrderReportList.Count);
-                    lblSearchInfo.Text = searchInfo;
+                        var depositService =
+                            ServiceFactory.GenerateServiceInstance().GenerateDepositService();
+                        _DepositReportList = depositService.GetDepositHistories(searchCriteria, true);
+                        IListToBindingList(
+                            depositService.GetSaleHistories(_DepositReportList));
+                        var searchInfo = String.Format(
+                            "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
+                            _DepositReportList.Count);
+                        lblSearchInfo.Text = searchInfo;
+                    }
                     SetVisibleControls(false);
                 }
                 catch (Exception exception)
@@ -270,6 +339,9 @@ namespace EzPos.GUIs.Forms
 
         private void dgvSearchResult_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if(rbtDeposit.Checked)
+                return;
+
             if (e == null)
                 return;
 
@@ -298,10 +370,10 @@ namespace EzPos.GUIs.Forms
 
         private void btnDeleteDeposit_Click(object sender, EventArgs e)
         {
+            var briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
+            var detailMsg = Resources.MsgUserPermissionDeny;
             if (!UserService.AllowToPerform(Resources.PermissionCancelDeposit))
             {
-                const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                var detailMsg = Resources.MsgUserPermissionDeny;
                 using (var frmMessageBox = new ExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
@@ -312,8 +384,61 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if(dgvSearchResult.CurrentRow == null)
+            if (_DepositReportList == null)
                 return;
+
+            if (_DepositReportList.Count == 0)
+                return;
+
+            if (dgvSearchResult.CurrentRow == null)
+                return;
+
+            var depositReport = _DepositReportList[dgvSearchResult.CurrentRow.Index] as DepositReport;
+            if(depositReport == null)
+                return;
+
+            var depositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
+            var searchCriteria = new List<string> {"DepositId|" + depositReport.DepositId};
+            var depositList = depositService.GetDeposits(searchCriteria);
+            if (depositList.Count == 0)
+                return;
+
+            var deposit = depositList[0] as Deposit;
+            if (deposit == null)
+                return;
+
+            briefMsg = "អំពីការបោះបង់";
+            detailMsg = "សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​បញ្ជាក់​ពី​ការ​ប្រគល់​សង​។";
+            using (var frmMessageBox = new ExtendedMessageBox())
+            {
+                frmMessageBox.BriefMsgStr = briefMsg;
+                frmMessageBox.DetailMsgStr = detailMsg;
+                if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
+                    return;
+            }
+
+            deposit.DepositDate = DateTime.Now;
+            deposit = depositService.RecordDeposit(
+                new List<DepositItem>(),
+                deposit.AmountSoldInt,
+                deposit.AmountPaidInt,
+                0,
+                deposit.FKCustomer,
+                deposit.DepositNumber,
+                deposit.Discount,
+                true);
+
+            var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
+            var payment =
+                new Model.Payments.Payment
+                {
+                    PaymentDate = deposit.DepositDate,
+                    PaymentAmount = deposit.AmountPaidInt,
+                    SalesOrderId = deposit.DepositId,
+                    CashierId = deposit.CashierId
+                };
+            paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
+            btnSave_Click(null, null);
         }
     }
 }

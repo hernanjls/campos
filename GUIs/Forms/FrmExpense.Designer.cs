@@ -42,7 +42,7 @@ namespace EzPos.GUIs.Forms
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblExpenseDate = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmbExpenseType = new ExtendedComboBox(this.components);
+            this.cmbExpenseType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -81,7 +81,7 @@ namespace EzPos.GUIs.Forms
             this.pnlBody.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlBody.Location = new System.Drawing.Point(0, 89);
             this.pnlBody.Name = "pnlBody";
-            this.pnlBody.Size = new System.Drawing.Size(695, 269);
+            this.pnlBody.Size = new System.Drawing.Size(695, 289);
             this.pnlBody.TabIndex = 1;
             // 
             // dtpExpenseDate
@@ -93,14 +93,14 @@ namespace EzPos.GUIs.Forms
             this.dtpExpenseDate.Name = "dtpExpenseDate";
             this.dtpExpenseDate.Size = new System.Drawing.Size(230, 36);
             this.dtpExpenseDate.TabIndex = 3;
-            this.dtpExpenseDate.Enter += new System.EventHandler(this.dtpExpenseDate_Enter);
             this.dtpExpenseDate.Leave += new System.EventHandler(this.dtpExpenseDate_Leave);
+            this.dtpExpenseDate.Enter += new System.EventHandler(this.dtpExpenseDate_Enter);
             // 
             // lblExpenseAmountRiel
             // 
             this.lblExpenseAmountRiel.AutoSize = true;
             this.lblExpenseAmountRiel.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExpenseAmountRiel.Location = new System.Drawing.Point(191, 169);
+            this.lblExpenseAmountRiel.Location = new System.Drawing.Point(191, 189);
             this.lblExpenseAmountRiel.Name = "lblExpenseAmountRiel";
             this.lblExpenseAmountRiel.Size = new System.Drawing.Size(103, 29);
             this.lblExpenseAmountRiel.TabIndex = 7;
@@ -110,33 +110,33 @@ namespace EzPos.GUIs.Forms
             // 
             this.txtExpenseAmountInt.BackColor = System.Drawing.SystemColors.Window;
             this.txtExpenseAmountInt.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExpenseAmountInt.Location = new System.Drawing.Point(300, 202);
+            this.txtExpenseAmountInt.Location = new System.Drawing.Point(300, 222);
             this.txtExpenseAmountInt.Name = "txtExpenseAmountInt";
             this.txtExpenseAmountInt.Size = new System.Drawing.Size(230, 36);
             this.txtExpenseAmountInt.TabIndex = 10;
             this.txtExpenseAmountInt.Text = "0.00";
             this.txtExpenseAmountInt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtExpenseAmountInt.Enter += new System.EventHandler(this.txtExpenseAmountInt_Enter);
             this.txtExpenseAmountInt.Leave += new System.EventHandler(this.txtExpenseAmountInt_Leave);
+            this.txtExpenseAmountInt.Enter += new System.EventHandler(this.txtExpenseAmountInt_Enter);
             // 
             // txtExpenseAmountRiel
             // 
             this.txtExpenseAmountRiel.BackColor = System.Drawing.SystemColors.Window;
             this.txtExpenseAmountRiel.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExpenseAmountRiel.Location = new System.Drawing.Point(300, 164);
+            this.txtExpenseAmountRiel.Location = new System.Drawing.Point(300, 184);
             this.txtExpenseAmountRiel.Name = "txtExpenseAmountRiel";
             this.txtExpenseAmountRiel.Size = new System.Drawing.Size(230, 36);
             this.txtExpenseAmountRiel.TabIndex = 8;
             this.txtExpenseAmountRiel.Text = "0.00";
             this.txtExpenseAmountRiel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtExpenseAmountRiel.Enter += new System.EventHandler(this.txtExpenseAmountRiel_Enter);
             this.txtExpenseAmountRiel.Leave += new System.EventHandler(this.txtExpenseAmountRiel_Leave);
+            this.txtExpenseAmountRiel.Enter += new System.EventHandler(this.txtExpenseAmountRiel_Enter);
             // 
             // lblExpenseAmountInt
             // 
             this.lblExpenseAmountInt.AutoSize = true;
             this.lblExpenseAmountInt.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExpenseAmountInt.Location = new System.Drawing.Point(188, 207);
+            this.lblExpenseAmountInt.Location = new System.Drawing.Point(188, 227);
             this.lblExpenseAmountInt.Name = "lblExpenseAmountInt";
             this.lblExpenseAmountInt.Size = new System.Drawing.Size(106, 29);
             this.lblExpenseAmountInt.TabIndex = 9;
@@ -159,10 +159,10 @@ namespace EzPos.GUIs.Forms
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDescription.Size = new System.Drawing.Size(230, 43);
+            this.txtDescription.Size = new System.Drawing.Size(230, 65);
             this.txtDescription.TabIndex = 5;
-            this.txtDescription.Enter += new System.EventHandler(this.txtAddress_Enter);
-            this.txtDescription.Leave += new System.EventHandler(this.txtAddress_Leave);
+            this.txtDescription.Leave += new System.EventHandler(this.txtDescription_Leave);
+            this.txtDescription.Enter += new System.EventHandler(this.txtDescription_Enter);
             // 
             // lblExpenseDate
             // 
@@ -178,7 +178,7 @@ namespace EzPos.GUIs.Forms
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.groupBox1.Location = new System.Drawing.Point(170, 157);
+            this.groupBox1.Location = new System.Drawing.Point(170, 177);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(360, 2);
             this.groupBox1.TabIndex = 6;
@@ -204,7 +204,7 @@ namespace EzPos.GUIs.Forms
             this.pnlFooter.Controls.Add(this.btnCancel);
             this.pnlFooter.Controls.Add(this.btnSave);
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlFooter.Location = new System.Drawing.Point(0, 358);
+            this.pnlFooter.Location = new System.Drawing.Point(0, 378);
             this.pnlFooter.Name = "pnlFooter";
             this.pnlFooter.Size = new System.Drawing.Size(695, 48);
             this.pnlFooter.TabIndex = 107;
@@ -280,7 +280,8 @@ namespace EzPos.GUIs.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(695, 406);
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(695, 426);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlFooter);
@@ -288,8 +289,8 @@ namespace EzPos.GUIs.Forms
             this.Name = "FrmExpense";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "   .: Expense :.";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmExpense_FormClosing);
             this.Load += new System.EventHandler(this.FrmExpense_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmExpense_FormClosing);
             this.pnlBody.ResumeLayout(false);
             this.pnlBody.PerformLayout();
             this.pnlFooter.ResumeLayout(false);

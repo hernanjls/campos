@@ -76,11 +76,10 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (!_IsModified)
-            {
-                DialogResult = DialogResult.Cancel;
+            if (_IsModified) 
                 return;
-            }
+
+            DialogResult = DialogResult.Cancel;
         }
 
         private void ModificationHandler(object sender, EventArgs e)
@@ -284,7 +283,6 @@ namespace EzPos.GUIs.Forms
             if (product == null)
                 return;
 
-            //txtForeignCode.Enabled = product.ProductID == 0;
             txtForeignCode.Text = product.ForeignCode;
             lblProductName.Text = product.ProductName + "\r" + product.ProductCode;
             cmbCategory.SelectedValue = product.CategoryID;
@@ -583,7 +581,7 @@ namespace EzPos.GUIs.Forms
                 if (openFileDialog.FileNames.Length == 0)
                     return;
 
-                const string briefMsg = "អំពីការលុប";
+                const string briefMsg = "អំពីការបង្កើតផលិតផល";
                 var detailMsg = Resources.MsgOperationImportGroupCatalog;
                 using (var frmMessageBox = new ExtendedMessageBox())
                 {

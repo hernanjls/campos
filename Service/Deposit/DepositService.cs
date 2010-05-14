@@ -82,30 +82,18 @@ namespace EzPos.Service
                     PaymentTypeId = 0,
                     CurrencyId = 0,
                     ExchangeRate = 
-                        (AppContext.ExchangeRate == null ? 0 : AppContext.ExchangeRate.ExchangeValue)
-                    //AmountSoldInt = 
-                    //    (totalAmountInt - ((totalAmountInt * discount) / 100))
+                        (AppContext.ExchangeRate == null ? 0 : AppContext.ExchangeRate.ExchangeValue),
+                    AmountSoldInt = 
+                        isReturned ? totalAmountInt : (totalAmountInt - ((totalAmountInt * discount) / 100)),
+                    AmountPaidInt = totalAmountPaidInt,
+                    AmountPaidRiel = totalAmountPaidRiel,
+                    Discount = discount
                 };
-
-            if (isReturned)
-            {
-                deposit.AmountSoldInt = totalAmountInt;
-                deposit.AmountPaidInt = deposit.AmountSoldInt;
-                deposit.AmountPaidRiel = 0;
-                deposit.AmountReturnInt = 0;
-            }
-            else
-            {
-                deposit.AmountSoldInt =
-                    (totalAmountInt - ((totalAmountInt * discount) / 100));
-                deposit.AmountPaidInt = totalAmountPaidInt;
-                deposit.AmountPaidRiel = totalAmountPaidRiel;
-                deposit.AmountReturnInt = deposit.AmountPaidInt - deposit.AmountSoldInt;
-                deposit.Discount = discount;
-            }
-
+           
+            deposit.AmountReturnInt = totalAmountPaidInt - deposit.AmountSoldInt;
             deposit.AmountSoldInt *= factor;
             deposit.AmountPaidInt *= factor;
+            deposit.AmountReturnInt *= factor;
             deposit.AmountSoldRiel = deposit.AmountSoldInt * deposit.ExchangeRate;
             deposit.AmountReturnRiel = deposit.AmountReturnInt * deposit.ExchangeRate;
             if (customer.FKDiscountCard != null)
@@ -137,8 +125,6 @@ namespace EzPos.Service
                     if (depositItem.ProductId == 0)
                         continue;
 
-                    //if (isReturned)
-                    //    depositItem.QtySold *= factor;
                     depositItem.DepositId = deposit.DepositId;
                     _DepositDataAccess.InsertDepositItem(depositItem);
                 }
@@ -180,7 +166,7 @@ namespace EzPos.Service
         }
 
         //Report
-        public IList GetDepositHistories(IList searchCriteria)
+        public IList GetDepositHistories(IList searchCriteria, bool headerOnly)
         {
             var depositReportList = new List<DepositReport>();
             var depositList = _DepositDataAccess.GetDepositHistories(searchCriteria);
@@ -196,7 +182,6 @@ namespace EzPos.Service
                 var depositItem = anObject[3] as DepositItem;
                 var product = anObject[4] as Product;
 
-                //if ((deposit == null) || (customer == null) || (user == null) || (depositItem == null) || (product == null))
                 if ((deposit == null) || (customer == null) || (user == null))
                     continue;
 
@@ -233,6 +218,7 @@ namespace EzPos.Service
                 {
                     depositId = deposit.DepositId;
 
+                    depositReport.ReportHeader = 1;
                     depositReport.AmountSoldInt = deposit.AmountSoldInt;
                     depositReport.AmountPaidInt = deposit.AmountPaidInt;
                     depositReport.AmountPaidRiel = deposit.AmountPaidRiel;
@@ -240,10 +226,60 @@ namespace EzPos.Service
                     depositReport.AmountReturnRiel = (-1) * deposit.AmountReturnRiel;
                     depositReport.TotalDiscount = deposit.Discount;
                 }
-                depositReportList.Add(depositReport);
+                if (headerOnly)
+                {
+                    if(depositReport.ReportHeader == 1)
+                        depositReportList.Add(depositReport);
+                }
+                else
+                    depositReportList.Add(depositReport);
             }
 
             return depositReportList;
+        }
+
+        public IList GetSaleHistories(IList depositReportList)
+        {
+            var saleOrderReportList = new List<SaleOrderReport>();
+            foreach (DepositReport depositReport in depositReportList)
+            {
+                if(depositReport == null)
+                    continue;
+
+                var saleOrderReport = new SaleOrderReport();
+                saleOrderReport.AmountPaidInt = depositReport.AmountPaidInt;
+                saleOrderReport.AmountPaidRiel = depositReport.AmountPaidRiel;
+                saleOrderReport.AmountReturnInt = depositReport.AmountReturnInt;
+                saleOrderReport.AmountReturnRiel = depositReport.AmountReturnRiel;
+                saleOrderReport.AmountSoldInt = depositReport.AmountSoldInt;
+                saleOrderReport.CardNumber = depositReport.CardNumber;
+                saleOrderReport.CashierName = depositReport.CashierName;
+                //saleOrderReport.CustomerID = depositReport.C
+                saleOrderReport.CustomerName = depositReport.CustomerName;
+                //saleOrderReport.DepositAmount = 0;
+                saleOrderReport.Discount = depositReport.Discount;
+                //saleOrderReport.DiscountTypeID = depositReport.D
+                saleOrderReport.ExchangeRate = depositReport.ExchangeRate;
+                saleOrderReport.ProductID = depositReport.ProductId;
+                saleOrderReport.ProductName = depositReport.ProductName;
+                saleOrderReport.QtySold = depositReport.QtySold;
+                saleOrderReport.ReferenceNum = depositReport.ReferenceNum;
+                //saleOrderReport.ReportHeader = 
+                //saleOrderReport.ReportID = depositReport.
+                //saleOrderReport.ReportTypeStr = 
+                saleOrderReport.SaleItemID = depositReport.DepositItemId;
+                saleOrderReport.SaleOrderDate = (DateTime)depositReport.DepositDate;
+                saleOrderReport.SaleOrderNumber = depositReport.DepositNumber;
+                saleOrderReport.SalesOrderId = depositReport.DepositId;
+                saleOrderReport.SubTotal = depositReport.SubTotal;
+                saleOrderReport.TotalDiscount = depositReport.TotalDiscount;
+                saleOrderReport.UnitPriceIn = depositReport.UnitPriceIn;
+                saleOrderReport.UnitPriceOut = depositReport.UnitPriceOut;
+
+                saleOrderReportList.Add(saleOrderReport);
+            }
+
+            return saleOrderReportList;
         }
     }
 }

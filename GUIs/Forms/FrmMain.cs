@@ -256,6 +256,7 @@ namespace EzPos.GUIs.Forms
             SetDisableToButton("btnReport");
 
             var ctrlReport = new CtrlReport();
+            //var ctrlReport = new CtrlReportTest();
 
             InsertBodyControl(ctrlReport);
         }

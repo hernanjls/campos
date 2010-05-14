@@ -974,7 +974,7 @@ namespace EzPos.GUIs.Controls
             }
             else
             {
-                txtHidden.Text = "";
+                txtHidden.Text = string.Empty;
                 const string briefMsg = "អំពីផលិតផល";
                 var detailMsg = Resources.MsgOperationRequestProductNotFound;
                 using (var frmMessageBox = new ExtendedMessageBox())
