@@ -25,7 +25,7 @@ namespace EzPos.DataAccess
             {
                 foreach (string strCriteria in searchCriteria)
                 {
-                    int delimiterIndex = strCriteria.IndexOf("|");
+                    var delimiterIndex = strCriteria.IndexOf("|");
                     if (delimiterIndex >= 0)
                         criterionList.Add(Expression.Eq(
                                               StringHelper.Left(strCriteria, delimiterIndex),
