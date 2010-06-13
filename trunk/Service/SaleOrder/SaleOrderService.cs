@@ -153,7 +153,13 @@ namespace EzPos.Service
 
             //Customer
             var customerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
-            customer.DebtAmount += saleOrder.AmountReturnInt;
+            if(fromDeposit)
+            {
+                customer.PurchasedAmount += saleOrder.AmountPaidInt;
+                customer.DebtAmount += saleOrder.AmountPaidInt;
+            }
+            else
+                customer.DebtAmount += saleOrder.AmountReturnInt;
             customerService.CustomerManagement(
                 customer,
                 Resources.OperationRequestUpdate);
@@ -202,17 +208,17 @@ namespace EzPos.Service
                     saleOrderReport.TotalDiscount = saleOrder.Discount;
                     saleOrderReport.CardNumber = saleOrder.CardNumber;
                     saleOrderReport.ReportHeader = 1;
-                    saleOrderReport.ReferenceNum = referenceNum;
+                    saleOrderReport.DepositAmount = depositAmount;
                 }
                 saleOrderReport.SaleItemID = saleItem.SaleItemID;
                 saleOrderReport.ProductID = saleItem.ProductID;
+                saleOrderReport.ReferenceNum = referenceNum;
+
                 if (saleItem.FKProduct != null)
                 {
                     if (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode))
                     {
-                        //var productCode = saleItem.FKProduct.ProductCode;
                         var productCode = saleItem.FKProduct.ForeignCode;
-                        //productCode = Int32.Parse(productCode, AppContext.CultureInfo).ToString();
                         productCode = productCode.Replace(",", string.Empty);
                         productCode = productCode.Replace(" ", string.Empty);
                         saleOrderReport.ProductName = saleItem.ProductName + " (" + productCode + ")";
@@ -291,6 +297,9 @@ namespace EzPos.Service
             var saleOrderReportList = _SaleOrderDataAccess.GetSaleHistories(searchCriteria);
             foreach (SaleOrderReport saleOrderReport in saleOrderReportList)
             {
+                if (!string.IsNullOrEmpty(saleOrderReport.ReferenceNum))
+                    saleOrderReport.SaleOrderNumber += " (" + saleOrderReport.ReferenceNum + ")";
+
                 if (!string.IsNullOrEmpty(saleOrderReport.CardNumber))
                     saleOrderReport.CustomerName += " (" + saleOrderReport.CardNumber + ")";
             }

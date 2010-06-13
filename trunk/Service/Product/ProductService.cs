@@ -208,35 +208,39 @@ namespace EzPos.Service
 
             foreach (var fileInfo in directoryInfo.GetFiles())
             {
-                if (fileInfo.Extension == ".bmp" ||
-                    fileInfo.Extension == ".gif" ||
-                    fileInfo.Extension == ".jpg")
-                {
-                    var productList = _ProductDataAccess.GetProductByPhoto(
-                        fileInfo.FullName);
+                var fileExtension = fileInfo.Extension;
+                if (string.IsNullOrEmpty(fileExtension))
+                    continue;
 
-                    if (productList.Count == 0)
+                fileExtension = fileExtension.ToUpper();
+                if ((fileExtension != ".BMP" && fileExtension != ".GIF") && fileExtension != ".JPG") 
+                    continue;
+
+                var productList = _ProductDataAccess.GetProductByPhoto(
+                    fileInfo.FullName);
+
+                if (productList.Count != 0) 
+                    continue;
+
+                var product = 
+                    new Product
                     {
-                        var product = new Product
-                                          {
-                                              ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
-                                              CategoryID = categoryID,
-                                              CategoryStr = categoryStr,
-                                              MarkID = markID,
-                                              MarkStr = markStr,
-                                              ColorID = colorID,
-                                              ColorStr = colorStr,
-                                              SizeID = sizeID,
-                                              SizeStr = sizeStr,
-                                              PhotoPath = fileInfo.FullName,
-                                              QtyInStock = 1
-                                          };
+                        ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
+                        CategoryID = categoryID,
+                        CategoryStr = categoryStr,
+                        MarkID = markID,
+                        MarkStr = markStr,
+                        ColorID = colorID,
+                        ColorStr = colorStr,
+                        SizeID = sizeID,
+                        SizeStr = sizeStr,
+                        PhotoPath = fileInfo.FullName,
+                        QtyInStock = 1
+                    };
 
-                        ManageProduct(
-                            product,
-                            Resources.OperationRequestInsert);
-                    }
-                }
+                ManageProduct(
+                    product,
+                    Resources.OperationRequestInsert);
             }
         }
 
@@ -271,9 +275,14 @@ namespace EzPos.Service
                 if (!fileInfo.Exists)
                     continue;
 
-                if (fileInfo.Extension != ".bmp" &&
-                    fileInfo.Extension != ".gif" &&
-                    fileInfo.Extension != ".jpg")
+                var fileExtension = fileInfo.Extension;
+                if(string.IsNullOrEmpty(fileExtension))
+                    continue;
+
+                fileExtension = fileExtension.ToUpper();
+                if (fileExtension != ".BMP" &&
+                    fileInfo.Extension != ".GIF" &&
+                    fileInfo.Extension != ".JPG")
                     continue;
 
                 var productList = _ProductDataAccess.GetProductByPhoto(
