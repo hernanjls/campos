@@ -13,11 +13,7 @@ namespace EzPos.GUIs.Controls
 {
     public partial class CtrlReport : UserControl
     {
-        private ExpenseService _ExpenseService;
-        private ProductService _ProductService;
-        private SaleOrderService _SaleOrderService;
-        private DepositService _DepositService;
-
+        private DepositService DepositService;
         public CtrlReport()
         {
             InitializeComponent();
@@ -78,19 +74,19 @@ namespace EzPos.GUIs.Controls
                 {
                     "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 0)",
                     "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
-                    dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     "', 103) AND CONVERT(DATETIME, '" +
-                    dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     " 23:59', 103)"
                 };
             var saleList = _SaleOrderService.GetSaleHistories(searchCriteria);
 
             DataSet dtsModel = new DtsModels();
-            var PropertyInfos = typeof (SaleOrderReport).GetProperties();
+            var propertyInfos = typeof (SaleOrderReport).GetProperties();
             foreach (var objInstance in saleList)
             {
                 var dataRow = dtsModel.Tables[1].NewRow();
-                foreach (var propertyInfo in PropertyInfos)
+                foreach (var propertyInfo in propertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dtsModel.Tables[1].Rows.Add(dataRow);
             }
@@ -130,20 +126,20 @@ namespace EzPos.GUIs.Controls
                 {
                     "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 1)",
                     "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
-                    dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     "', 103) AND CONVERT(DATETIME, '" +
-                    dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     " 23:59', 103)"
                 };
 
             var assessmentList = _SaleOrderService.GetSaleHistories(searchCriteria);
 
             DataSet dtsModel = new DtsModels();
-            var PropertyInfos = typeof (SaleOrderReport).GetProperties();
+            var propertyInfos = typeof (SaleOrderReport).GetProperties();
             foreach (var objInstance in assessmentList)
             {
                 var dataRow = dtsModel.Tables[1].NewRow();
-                foreach (var propertyInfo in PropertyInfos)
+                foreach (var propertyInfo in propertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dtsModel.Tables[1].Rows.Add(dataRow);
             }
@@ -216,11 +212,11 @@ namespace EzPos.GUIs.Controls
                 var productList = _ProductService.GetObjects(searchCriteria);
 
                 DataSet dtsProduct = new DtsModels();
-                var PropertyInfos = typeof (Product).GetProperties();
+                var propertyInfos = typeof (Product).GetProperties();
                 foreach (var objInstance in productList)
                 {
                     var dataRow = dtsProduct.Tables[0].NewRow();
-                    foreach (var propertyInfo in PropertyInfos)
+                    foreach (var propertyInfo in propertyInfos)
                         dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                     dtsProduct.Tables[0].Rows.Add(dataRow);
                 }
@@ -246,21 +242,23 @@ namespace EzPos.GUIs.Controls
             }
         }
 
-        private void btnSearchStock_Click(object sender, EventArgs e)
+        private void BtnSearchStockClick(object sender, EventArgs e)
         {
             RefreshReportStock();
         }
 
-        private void btnSearchSale_Click(object sender, EventArgs e)
+        private void BtnSearchSaleClick(object sender, EventArgs e)
         {
             try
             {
                 if (rdbSale.Checked)
                     RefreshReportSale(chbShowBenefit.Checked);
                 else if (rdbDeposit.Checked)
-                    RefreshReportDeposit();
-                else
+                    RefreshReportDeposit(chbAllDeposit.Checked);
+                else if (rdbReturn.Checked)
                     RefreshReportReturn();
+                else
+                    RefreshDailyExpenseReport();
             }
             catch (Exception exception)
             {
@@ -271,32 +269,32 @@ namespace EzPos.GUIs.Controls
             }
         }
 
-        private void btnSearchStock_MouseEnter(object sender, EventArgs e)
+        private void BtnSearchStockMouseEnter(object sender, EventArgs e)
         {
             btnSearchStock.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSearchStock_MouseLeave(object sender, EventArgs e)
+        private void BtnSearchStockMouseLeave(object sender, EventArgs e)
         {
             btnSearchStock.BackgroundImage = null;
         }
 
-        private void btnSearchSale_MouseEnter(object sender, EventArgs e)
+        private void BtnSearchSaleMouseEnter(object sender, EventArgs e)
         {
             btnSearchSale.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSearchSale_MouseLeave(object sender, EventArgs e)
+        private void BtnSearchSaleMouseLeave(object sender, EventArgs e)
         {
             btnSearchSale.BackgroundImage = null;
         }
 
-        private void btnDailyReport_Click(object sender, EventArgs e)
-        {
-            refreshDailyExpenseReport();
-        }
+        //private void btnDailyReport_Click(object sender, EventArgs e)
+        //{
+        //    refreshDailyExpenseReport();
+        //}
 
-        private void refreshDailyExpenseReport()
+        private void RefreshDailyExpenseReport()
         {
             if (!UserService.AllowToPerform(Resources.PermissionViewExpenseReport))
             {
@@ -316,19 +314,19 @@ namespace EzPos.GUIs.Controls
                 new List<string>
                 {
                     "CONVERT(DATETIME, ExpenseDate, 103) BETWEEN CONVERT(DATETIME, '" +
-                    dtpExpenseStart.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     "', 103) AND CONVERT(DATETIME, '" +
-                    dtpExpenseStop.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     " 23:59', 103)"
                 };
             var expenseList = _ExpenseService.GetExpenses(searchCriteria);
 
             DataSet dtsProduct = new DtsModels();
-            var PropertyInfos = typeof (Expense).GetProperties();
+            var propertyInfos = typeof (Expense).GetProperties();
             foreach (var objInstance in expenseList)
             {
                 var dataRow = dtsProduct.Tables["DtbExpenses"].NewRow();
-                foreach (var propertyInfo in PropertyInfos)
+                foreach (var propertyInfo in propertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dtsProduct.Tables["DtbExpenses"].Rows.Add(dataRow);
             }
@@ -338,29 +336,29 @@ namespace EzPos.GUIs.Controls
             crvReport.ReportSource = csrExpense;
         }
 
-        private void btnDailyReport_MouseEnter(object sender, EventArgs e)
-        {
-            btnDailyReport.BackgroundImage = Resources.background_9;
-        }
+        //private void btnDailyReport_MouseEnter(object sender, EventArgs e)
+        //{
+        //    btnDailyReport.BackgroundImage = Resources.background_9;
+        //}
 
-        private void btnDailyReport_MouseLeave(object sender, EventArgs e)
-        {
-            btnDailyReport.BackgroundImage = null;
-        }
+        //private void btnDailyReport_MouseLeave(object sender, EventArgs e)
+        //{
+        //    btnDailyReport.BackgroundImage = null;
+        //}
 
         private void CtrlReport_Load(object sender, EventArgs e)
         {
             if (_SaleOrderService == null)
                 _SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
-            if (_DepositService == null)
-                _DepositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
+            if (DepositService == null)
+                DepositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
             if (_ProductService == null)
                 _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
             if (_ExpenseService == null)
                 _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
         }               
 
-        private void RefreshReportDeposit()
+        private void RefreshReportDeposit(bool allDeposit)
         {
             if (!UserService.AllowToPerform(Resources.PermissionViewDepositReport))
             {
@@ -376,26 +374,34 @@ namespace EzPos.GUIs.Controls
                 }
             }
 
-            var searchCriteria =
+            var searchCriteria = 
+                !allDeposit ? 
                 new List<string>
                 {
                     "(DepositDate BETWEEN CONVERT(DATETIME, '" +
-                    dtpStartAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) + 
                     "', 103) AND CONVERT(DATETIME, '" +
-                    dtpStopAdmin.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    " 23:59', 103)) ",
+                    "(AmountPaidInt < AmountSoldInt) ",
+                    "DepositNumber NOT IN (SELECT ReferenceNum FROM TDeposits WHERE ReferenceNum IS NOT NULL) "
+                } : 
+                new List<string>
+                {
+                    "(DepositDate BETWEEN CONVERT(DATETIME, '" +
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    "', 103) AND CONVERT(DATETIME, '" +
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     " 23:59', 103)) "
-                    //,
-                    //"and (AmountPaidInt < AmountSoldInt) "
                 };
-
-            var assessmentList = _DepositService.GetDepositHistories(searchCriteria, false);
+            var assessmentList = DepositService.GetDepositHistories(searchCriteria, false);
 
             DataSet dtsModel = new DtsModels();
-            var PropertyInfos = typeof(DepositReport).GetProperties();
+            var propertyInfos = typeof(DepositReport).GetProperties();
             foreach (var objInstance in assessmentList)
             {
                 var dataRow = dtsModel.Tables[3].NewRow();
-                foreach (var propertyInfo in PropertyInfos)
+                foreach (var propertyInfo in propertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dtsModel.Tables[3].Rows.Add(dataRow);
             }
@@ -403,6 +409,36 @@ namespace EzPos.GUIs.Controls
             var rptDeposit = new CsrDeposit();
             rptDeposit.SetDataSource(dtsModel);
             crvReport.ReportSource = rptDeposit;           
+        }
+
+        private void ChbShowBenefitEnter(object sender, EventArgs e)
+        {
+            chbShowBenefit.CheckedChanged += ChbShowBenefitCheckedChanged;
+        }
+
+        private void ChbShowBenefitLeave(object sender, EventArgs e)
+        {
+            chbShowBenefit.CheckedChanged -= ChbShowBenefitCheckedChanged;
+        }
+
+        private void ChbAllDepositEnter(object sender, EventArgs e)
+        {
+            chbAllDeposit.CheckedChanged += ChbAllDepositCheckedChanged;
+        }
+
+        private void ChbAllDepositLeave(object sender, EventArgs e)
+        {
+            chbAllDeposit.CheckedChanged += ChbAllDepositCheckedChanged;
+        }
+
+        private void ChbShowBenefitCheckedChanged(object sender, EventArgs e)
+        {
+            rdbSale.Checked = true;
+        }
+
+        private void ChbAllDepositCheckedChanged(object sender, EventArgs e)
+        {
+            rdbDeposit.Checked = true;
         }
     }
 }

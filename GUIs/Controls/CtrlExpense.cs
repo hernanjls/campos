@@ -54,9 +54,6 @@ namespace EzPos.GUIs.Controls
                     frmMessageBox.ShowDialog(this);
                     return;
                 }
-
-                //ExtendedMessageBox.InformMessage(Resources.MsgUserPermissionDeny);
-                //return;
             }
             ExpenseManagement(Resources.OperationRequestInsert);
         }
@@ -77,16 +74,8 @@ namespace EzPos.GUIs.Controls
                     frmMessageBox.ShowDialog(this);
                     return;
                 }
-
-                //ExtendedMessageBox.InformMessage(Resources.MsgUserPermissionDeny);
-                //return;
             }
 
-            //if (!ExtendedMessageBox.ConfirmMessage("MsgOperationRequestDelete",
-            //                                      "\n\n" + dgvExpense.CurrentRow.Cells["ExpenseTypeStr"].Value + " : " +
-            //                                      dgvExpense.CurrentRow.Cells["Description"].Value))
-            //    return;
-            //string briefMsg, detailMsg;
             briefMsg = "អំពីការលុប";
             detailMsg = Resources.MsgOperationRequestDelete + "\n" +
                         dgvExpense.CurrentRow.Cells["Description"].Value + " ?";
@@ -241,7 +230,7 @@ namespace EzPos.GUIs.Controls
 
         private void UpdateControlContent()
         {
-            IList objList = _CommonService.GetAppParametersByType(
+            var objList = _CommonService.GetAppParametersByType(
                 Int32.Parse(Resources.AppParamExpense, AppContext.CultureInfo));
 
             if (cmbExpenseType.InvokeRequired)
@@ -256,11 +245,11 @@ namespace EzPos.GUIs.Controls
 
         private void UpdateResultInfo()
         {
-            int resultNum = 0;
+            var resultNum = 0;
             if (_ExpenseList != null)
                 resultNum = _ExpenseList.Count;
 
-            string strResultInfo = string.Format(
+            var strResultInfo = string.Format(
                 "ការសែ្វងរករបស់អ្នកផ្តល់លទ្ឋផលចំនួន {0}",
                 resultNum.ToString("N0", AppContext.CultureInfo));
             lblResultInfo.Text = strResultInfo;
@@ -290,14 +279,15 @@ namespace EzPos.GUIs.Controls
         {
             if (_ExpenseService == null)
                 _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
-            var searchCriteria = new List<string>
-                                     {
-                                         "ExpenseDate BETWEEN CONVERT(DATETIME, '" +
-                                         dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         "', 103) AND CONVERT(DATETIME, '" +
-                                         dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                                         "', 103)"
-                                     };
+            var searchCriteria = 
+                new List<string>
+                {
+                    "ExpenseDate BETWEEN CONVERT(DATETIME, '" +
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    "', 103) AND CONVERT(DATETIME, '" +
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+                    "', 103)"
+                };
             var expenseList = _ExpenseService.GetExpenses(searchCriteria);
             IListToBindingList(expenseList);
         }

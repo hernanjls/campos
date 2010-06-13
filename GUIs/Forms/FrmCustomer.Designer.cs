@@ -31,10 +31,11 @@ namespace EzPos.GUIs.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBody = new System.Windows.Forms.Panel();
+            this.chbDiscountRejected = new System.Windows.Forms.CheckBox();
             this.lblNewCard = new System.Windows.Forms.Label();
             this.currentCardLbl = new System.Windows.Forms.Label();
             this.lblCurrentCard = new System.Windows.Forms.Label();
@@ -42,8 +43,8 @@ namespace EzPos.GUIs.Forms
             this.lblDisPercentage = new System.Windows.Forms.Label();
             this.lblDPercentage = new System.Windows.Forms.Label();
             this.lblDCardType = new System.Windows.Forms.Label();
-            this.cmbDCardType = new ExtendedComboBox(this.components);
-            this.cmbGender = new ExtendedComboBox(this.components);
+            this.cmbDCardType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.cmbGender = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblSize = new System.Windows.Forms.Label();
             this.txtWebsite = new System.Windows.Forms.TextBox();
             this.lblEmail = new System.Windows.Forms.Label();
@@ -67,7 +68,6 @@ namespace EzPos.GUIs.Forms
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.chbDiscountRejected = new System.Windows.Forms.CheckBox();
             this.pnlBody.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlFooter.SuspendLayout();
@@ -76,6 +76,7 @@ namespace EzPos.GUIs.Forms
             // pnlBody
             // 
             this.pnlBody.BackColor = System.Drawing.Color.Transparent;
+            this.pnlBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlBody.Controls.Add(this.chbDiscountRejected);
             this.pnlBody.Controls.Add(this.lblNewCard);
             this.pnlBody.Controls.Add(this.currentCardLbl);
@@ -105,6 +106,17 @@ namespace EzPos.GUIs.Forms
             this.pnlBody.Name = "pnlBody";
             this.pnlBody.Size = new System.Drawing.Size(695, 329);
             this.pnlBody.TabIndex = 1;
+            // 
+            // chbDiscountRejected
+            // 
+            this.chbDiscountRejected.AutoSize = true;
+            this.chbDiscountRejected.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbDiscountRejected.Location = new System.Drawing.Point(139, 141);
+            this.chbDiscountRejected.Name = "chbDiscountRejected";
+            this.chbDiscountRejected.Size = new System.Drawing.Size(170, 33);
+            this.chbDiscountRejected.TabIndex = 25;
+            this.chbDiscountRejected.Text = "មិនអាចបញ្ចុះតំលៃ";
+            this.chbDiscountRejected.UseVisualStyleBackColor = true;
             // 
             // lblNewCard
             // 
@@ -221,8 +233,8 @@ namespace EzPos.GUIs.Forms
             this.txtWebsite.Name = "txtWebsite";
             this.txtWebsite.Size = new System.Drawing.Size(250, 36);
             this.txtWebsite.TabIndex = 9;
-            this.txtWebsite.Enter += new System.EventHandler(this.txtWebsite_Enter);
             this.txtWebsite.Leave += new System.EventHandler(this.txtWebsite_Leave);
+            this.txtWebsite.Enter += new System.EventHandler(this.txtWebsite_Enter);
             // 
             // lblEmail
             // 
@@ -241,8 +253,8 @@ namespace EzPos.GUIs.Forms
             this.txtEmailAddress.Name = "txtEmailAddress";
             this.txtEmailAddress.Size = new System.Drawing.Size(250, 36);
             this.txtEmailAddress.TabIndex = 7;
-            this.txtEmailAddress.Enter += new System.EventHandler(this.txtEmailAddress_Enter);
             this.txtEmailAddress.Leave += new System.EventHandler(this.txtEmailAddress_Leave);
+            this.txtEmailAddress.Enter += new System.EventHandler(this.txtEmailAddress_Enter);
             // 
             // lblTelephone
             // 
@@ -261,8 +273,8 @@ namespace EzPos.GUIs.Forms
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(250, 36);
             this.txtPhoneNumber.TabIndex = 5;
-            this.txtPhoneNumber.Enter += new System.EventHandler(this.txtPhoneNumber_Enter);
             this.txtPhoneNumber.Leave += new System.EventHandler(this.txtPhoneNumber_Leave);
+            this.txtPhoneNumber.Enter += new System.EventHandler(this.txtPhoneNumber_Enter);
             // 
             // txtAddress
             // 
@@ -273,8 +285,8 @@ namespace EzPos.GUIs.Forms
             this.txtAddress.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtAddress.Size = new System.Drawing.Size(250, 50);
             this.txtAddress.TabIndex = 11;
-            this.txtAddress.Enter += new System.EventHandler(this.txtAddress_Enter);
             this.txtAddress.Leave += new System.EventHandler(this.txtAddress_Leave);
+            this.txtAddress.Enter += new System.EventHandler(this.txtAddress_Enter);
             // 
             // lblCustomerName
             // 
@@ -294,8 +306,8 @@ namespace EzPos.GUIs.Forms
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(250, 36);
             this.txtCustomerName.TabIndex = 1;
-            this.txtCustomerName.Enter += new System.EventHandler(this.txtCustomerName_Enter);
             this.txtCustomerName.Leave += new System.EventHandler(this.txtCustomerName_Leave);
+            this.txtCustomerName.Enter += new System.EventHandler(this.txtCustomerName_Enter);
             // 
             // grbLine_1
             // 
@@ -360,8 +372,8 @@ namespace EzPos.GUIs.Forms
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn3.DataPropertyName = "ContactName";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewTextBoxColumn3.HeaderText = "ឈ្មោះ";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
@@ -373,8 +385,8 @@ namespace EzPos.GUIs.Forms
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn4.DataPropertyName = "PhoneNumber";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn4.HeaderText = "ទូរស័ព្ទ";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
@@ -386,10 +398,10 @@ namespace EzPos.GUIs.Forms
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn5.DataPropertyName = "EmailAddress";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.Format = "N2";
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.Format = "N2";
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn5.HeaderText = "អ៊ីមែល";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -474,22 +486,12 @@ namespace EzPos.GUIs.Forms
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             this.btnSave.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
             // 
-            // chbDiscountRejected
-            // 
-            this.chbDiscountRejected.AutoSize = true;
-            this.chbDiscountRejected.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbDiscountRejected.Location = new System.Drawing.Point(139, 141);
-            this.chbDiscountRejected.Name = "chbDiscountRejected";
-            this.chbDiscountRejected.Size = new System.Drawing.Size(170, 33);
-            this.chbDiscountRejected.TabIndex = 25;
-            this.chbDiscountRejected.Text = "មិនអាចបញ្ចុះតំលៃ";
-            this.chbDiscountRejected.UseVisualStyleBackColor = true;
-            // 
             // FrmCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(695, 466);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlHeader);
@@ -498,8 +500,8 @@ namespace EzPos.GUIs.Forms
             this.Name = "FrmCustomer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Customer";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmCustomerAdvance_FormClosing);
             this.Load += new System.EventHandler(this.FrmCustomer_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmCustomerAdvance_FormClosing);
             this.pnlBody.ResumeLayout(false);
             this.pnlBody.PerformLayout();
             this.pnlHeader.ResumeLayout(false);

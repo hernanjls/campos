@@ -215,17 +215,17 @@ namespace EzPos.GUIs.Forms
             btnCancelDeposit.BackgroundImage = Resources.background_2;
         }
 
-        private void btnDeliver_MouseEnter(object sender, EventArgs e)
+        private void BtnDeliverMouseEnter(object sender, EventArgs e)
         {
             btnDeliver.BackgroundImage = Resources.background_9;
         }
 
-        private void btnDeliver_MouseLeave(object sender, EventArgs e)
+        private void BtnDeliverMouseLeave(object sender, EventArgs e)
         {
             btnDeliver.BackgroundImage = Resources.background_2;
         }
 
-        private void btnDeliver_Click(object sender, EventArgs e)
+        private void BtnDeliverClick(object sender, EventArgs e)
         {
             try
             {
@@ -281,7 +281,7 @@ namespace EzPos.GUIs.Forms
                     0,
                     saleOrder.FKCustomer,
                     false,
-                    _Deposit.DepositId.ToString(),
+                    _Deposit.DepositNumber,
                     saleOrder.Discount,
                     _Deposit.AmountPaidInt,
                     true);

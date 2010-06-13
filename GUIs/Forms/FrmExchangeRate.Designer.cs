@@ -37,8 +37,8 @@ namespace EzPos.GUIs.Forms
             this.grbLine_0 = new System.Windows.Forms.GroupBox();
             this.lblToCurrency = new System.Windows.Forms.Label();
             this.lblFromCurrency = new System.Windows.Forms.Label();
-            this.cbbToCurrency = new ExtendedComboBox(this.components);
-            this.cbbFromCurrency = new ExtendedComboBox(this.components);
+            this.cbbToCurrency = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.cbbFromCurrency = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblExchangeDate = new System.Windows.Forms.Label();
             this.dtpExchangeDate = new System.Windows.Forms.DateTimePicker();
             this.lblExchangeRate = new System.Windows.Forms.Label();
@@ -207,6 +207,7 @@ namespace EzPos.GUIs.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.CancelButton = this.cmdCancel;
             this.ClientSize = new System.Drawing.Size(468, 302);
             this.Controls.Add(this.pnlBody);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

@@ -136,7 +136,8 @@ namespace EzPos.GUIs.Forms
                             "', 103) AND CONVERT(DATETIME, '" +
                             dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                             " 23:59', 103)) ",
-                            "(a.AmountPaidInt < a.AmountSoldInt) "
+                            "(a.AmountPaidInt < a.AmountSoldInt) ",
+                            "DepositNumber NOT IN (SELECT ReferenceNum FROM TDeposits WHERE ReferenceNum IS NOT NULL) "
                         };
 
                         if (!String.IsNullOrEmpty(txtInvoiceNumber.Text))

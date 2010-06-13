@@ -1,4 +1,5 @@
-﻿using ExtendedComboBox=EzPos.GUIs.Components.ExtendedComboBox;
+﻿using EzPos.Model;
+using ExtendedComboBox=EzPos.GUIs.Components.ExtendedComboBox;
 
 namespace EzPos.GUIs.Forms
 {
@@ -48,6 +49,7 @@ namespace EzPos.GUIs.Forms
             this.btnSave = new System.Windows.Forms.Button();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblProductName = new System.Windows.Forms.Label();
+            this.lblKeyboardLayout = new System.Windows.Forms.Label();
             this.pnlBody.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.pnlHeader.SuspendLayout();
@@ -66,6 +68,8 @@ namespace EzPos.GUIs.Forms
             // 
             // pnlBody
             // 
+            this.pnlBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBody.Controls.Add(this.lblKeyboardLayout);
             this.pnlBody.Controls.Add(this.dtpExpenseDate);
             this.pnlBody.Controls.Add(this.lblExpenseAmountRiel);
             this.pnlBody.Controls.Add(this.txtExpenseAmountInt);
@@ -93,8 +97,8 @@ namespace EzPos.GUIs.Forms
             this.dtpExpenseDate.Name = "dtpExpenseDate";
             this.dtpExpenseDate.Size = new System.Drawing.Size(230, 36);
             this.dtpExpenseDate.TabIndex = 3;
-            this.dtpExpenseDate.Leave += new System.EventHandler(this.dtpExpenseDate_Leave);
-            this.dtpExpenseDate.Enter += new System.EventHandler(this.dtpExpenseDate_Enter);
+            this.dtpExpenseDate.Leave += new System.EventHandler(this.DtpExpenseDateLeave);
+            this.dtpExpenseDate.Enter += new System.EventHandler(this.DtpExpenseDateEnter);
             // 
             // lblExpenseAmountRiel
             // 
@@ -116,8 +120,8 @@ namespace EzPos.GUIs.Forms
             this.txtExpenseAmountInt.TabIndex = 10;
             this.txtExpenseAmountInt.Text = "0.00";
             this.txtExpenseAmountInt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtExpenseAmountInt.Leave += new System.EventHandler(this.txtExpenseAmountInt_Leave);
-            this.txtExpenseAmountInt.Enter += new System.EventHandler(this.txtExpenseAmountInt_Enter);
+            this.txtExpenseAmountInt.Leave += new System.EventHandler(this.TxtExpenseAmountIntLeave);
+            this.txtExpenseAmountInt.Enter += new System.EventHandler(this.TxtExpenseAmountIntEnter);
             // 
             // txtExpenseAmountRiel
             // 
@@ -129,8 +133,8 @@ namespace EzPos.GUIs.Forms
             this.txtExpenseAmountRiel.TabIndex = 8;
             this.txtExpenseAmountRiel.Text = "0.00";
             this.txtExpenseAmountRiel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtExpenseAmountRiel.Leave += new System.EventHandler(this.txtExpenseAmountRiel_Leave);
-            this.txtExpenseAmountRiel.Enter += new System.EventHandler(this.txtExpenseAmountRiel_Enter);
+            this.txtExpenseAmountRiel.Leave += new System.EventHandler(this.TxtExpenseAmountRielLeave);
+            this.txtExpenseAmountRiel.Enter += new System.EventHandler(this.TxtExpenseAmountRielEnter);
             // 
             // lblExpenseAmountInt
             // 
@@ -161,8 +165,8 @@ namespace EzPos.GUIs.Forms
             this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDescription.Size = new System.Drawing.Size(230, 65);
             this.txtDescription.TabIndex = 5;
-            this.txtDescription.Leave += new System.EventHandler(this.txtDescription_Leave);
-            this.txtDescription.Enter += new System.EventHandler(this.txtDescription_Enter);
+            this.txtDescription.Leave += new System.EventHandler(this.TxtDescriptionLeave);
+            this.txtDescription.Enter += new System.EventHandler(this.TxtDescriptionEnter);
             // 
             // lblExpenseDate
             // 
@@ -194,8 +198,8 @@ namespace EzPos.GUIs.Forms
             this.cmbExpenseType.Name = "cmbExpenseType";
             this.cmbExpenseType.Size = new System.Drawing.Size(230, 36);
             this.cmbExpenseType.TabIndex = 1;
-            this.cmbExpenseType.Leave += new System.EventHandler(this.cmbCategory_Leave);
-            this.cmbExpenseType.Enter += new System.EventHandler(this.cmbCategory_Enter);
+            this.cmbExpenseType.Leave += new System.EventHandler(this.CmbCategoryLeave);
+            this.cmbExpenseType.Enter += new System.EventHandler(this.CmbCategoryEnter);
             // 
             // pnlFooter
             // 
@@ -227,8 +231,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // btnSave
             // 
@@ -248,9 +252,9 @@ namespace EzPos.GUIs.Forms
             this.btnSave.Text = "យល់ព្រម";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            this.btnSave.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            this.btnSave.MouseLeave += new System.EventHandler(this.BtnSaveMouseLeave);
+            this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
+            this.btnSave.MouseEnter += new System.EventHandler(this.BtnSaveMouseEnter);
             // 
             // pnlHeader
             // 
@@ -275,6 +279,15 @@ namespace EzPos.GUIs.Forms
             this.lblProductName.TabIndex = 1;
             this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblKeyboardLayout
+            // 
+            this.lblKeyboardLayout.AutoSize = true;
+            this.lblKeyboardLayout.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKeyboardLayout.Location = new System.Drawing.Point(536, 111);
+            this.lblKeyboardLayout.Name = "lblKeyboardLayout";
+            this.lblKeyboardLayout.Size = new System.Drawing.Size(0, 29);
+            this.lblKeyboardLayout.TabIndex = 11;
+            // 
             // FrmExpense
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,6 +303,7 @@ namespace EzPos.GUIs.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "   .: Expense :.";
             this.Load += new System.EventHandler(this.FrmExpense_Load);
+            this.InputLanguageChanged += new System.Windows.Forms.InputLanguageChangedEventHandler(this.FrmExpense_InputLanguageChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmExpense_FormClosing);
             this.pnlBody.ResumeLayout(false);
             this.pnlBody.PerformLayout();
@@ -318,5 +332,7 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblProductName;
         private System.Windows.Forms.DateTimePicker dtpExpenseDate;
+        private Expense _Expense;
+        private System.Windows.Forms.Label lblKeyboardLayout;
     }
 }

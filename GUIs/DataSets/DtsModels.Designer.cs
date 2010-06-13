@@ -1953,6 +1953,8 @@ namespace EzPos.GUIs.DataSets {
             
             private global::System.Data.DataColumn columnProductCode;
             
+            private global::System.Data.DataColumn columnReportHeader;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public DtbDepositsDataTable() {
                 this.TableName = "DtbDeposits";
@@ -2152,6 +2154,13 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ReportHeaderColumn {
+                get {
+                    return this.columnReportHeader;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2204,7 +2213,8 @@ namespace EzPos.GUIs.DataSets {
                         string CardNumber, 
                         System.DateTime UpdateDate, 
                         string ReferenceNum, 
-                        string ProductCode) {
+                        string ProductCode, 
+                        string ReportHeader) {
                 DtbDepositsRow rowDtbDepositsRow = ((DtbDepositsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DepositId,
@@ -2230,7 +2240,8 @@ namespace EzPos.GUIs.DataSets {
                         CardNumber,
                         UpdateDate,
                         ReferenceNum,
-                        ProductCode};
+                        ProductCode,
+                        ReportHeader};
                 rowDtbDepositsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDtbDepositsRow);
                 return rowDtbDepositsRow;
@@ -2274,6 +2285,7 @@ namespace EzPos.GUIs.DataSets {
                 this.columnUpdateDate = base.Columns["UpdateDate"];
                 this.columnReferenceNum = base.Columns["ReferenceNum"];
                 this.columnProductCode = base.Columns["ProductCode"];
+                this.columnReportHeader = base.Columns["ReportHeader"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2326,6 +2338,8 @@ namespace EzPos.GUIs.DataSets {
                 base.Columns.Add(this.columnReferenceNum);
                 this.columnProductCode = new global::System.Data.DataColumn("ProductCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProductCode);
+                this.columnReportHeader = new global::System.Data.DataColumn("ReportHeader", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReportHeader);
                 this.columnDepositId.AllowDBNull = false;
                 this.columnProductId.Caption = "ProductID";
             }
@@ -4415,6 +4429,21 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ReportHeader {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbDeposits.ReportHeaderColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReportHeader\' in table \'DtbDeposits\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbDeposits.ReportHeaderColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsDepositNumberNull() {
                 return this.IsNull(this.tableDtbDeposits.DepositNumberColumn);
             }
@@ -4642,6 +4671,16 @@ namespace EzPos.GUIs.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetProductCodeNull() {
                 this[this.tableDtbDeposits.ProductCodeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsReportHeaderNull() {
+                return this.IsNull(this.tableDtbDeposits.ReportHeaderColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetReportHeaderNull() {
+                this[this.tableDtbDeposits.ReportHeaderColumn] = global::System.Convert.DBNull;
             }
         }
         

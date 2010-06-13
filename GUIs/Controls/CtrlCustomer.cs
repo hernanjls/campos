@@ -329,7 +329,7 @@ namespace EzPos.GUIs.Controls
 
                 if (chbDeposit.Checked)
                     searchCriteria.Add(
-                        "CustomerID IN (SELECT CustomerId FROM TDeposits WHERE AmountPaidInt < AmountSoldInt)");
+                        "CustomerID IN (SELECT CustomerId FROM TDeposits WHERE (AmountPaidInt < AmountSoldInt) AND (DepositNumber NOT IN (SELECT ReferenceNum FROM TDeposits WHERE ReferenceNum IS NOT NULL)))");
 
                 if (StringHelper.Length(txtCardNum.Text) != 0)
                     searchCriteria.Add(

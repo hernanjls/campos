@@ -39,19 +39,19 @@ namespace EzPos.GUIs.Forms
 
         private static void printDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            int posX = 0, posY = 30;
+            var posY = 30;
             int rowIndex = 0, colIndex = 0;
 
-            var fontBarCode = new Font("Free 3 of 9 Extended", 45, FontStyle.Regular);
+            var fontBarCode = new Font("Free 3 of 9 Extended", 35, FontStyle.Regular);
             var solidBrush = new SolidBrush(Color.Black);
-            var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 2;
+            //var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 2;
             var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 6;
 
             var leftMargin = e.MarginBounds.Left;
             var rightMargin = e.MarginBounds.Right;
             var medianPaper = e.MarginBounds.Width / 2;
 
-            posX = leftMargin - 50;
+            var posX = leftMargin - 50;
             while (_Counter <= _BarCodeList.Count - 1)
             {
                 if (rowIndex == 6)

@@ -163,7 +163,7 @@ namespace EzPos.GUIs.Forms
             txtUPIn.TextChanged -= ModificationHandler;
             try
             {
-                txtUPIn.Text = float.Parse(txtUPIn.Text).ToString("N", AppContext.CultureInfo);
+                txtUPIn.Text = float.Parse(txtUPIn.Text).ToString("N3", AppContext.CultureInfo);
             }
             catch (Exception exception)
             {
@@ -181,7 +181,7 @@ namespace EzPos.GUIs.Forms
         private void txtUPOut_Leave(object sender, EventArgs e)
         {
             if (txtUPOut.Text.Length == 0)
-                txtUPOut.Text = "0.00";
+                txtUPOut.Text = "0.000";
 
             txtUPOut.TextChanged -= ModificationHandler;
         }
@@ -189,7 +189,7 @@ namespace EzPos.GUIs.Forms
         private void txtDiscount_Leave(object sender, EventArgs e)
         {
             if (txtDiscount.Text.Length == 0)
-                txtDiscount.Text = "0.00";
+                txtDiscount.Text = "0.000";
 
             txtDiscount.TextChanged -= ModificationHandler;
         }
@@ -218,15 +218,16 @@ namespace EzPos.GUIs.Forms
 
             _DefaultUnitPriceOut = 0;
 
-            var searchCriteria = new List<string>
-                                     {
-                                         "ParameterTypeID IN (" +
-                                         Resources.AppParamProductCodeLength + ", " +
-                                         Resources.AppParamCategory + ", " +
-                                         Resources.AppParamMark + ", " +
-                                         Resources.AppParamColor + ", " +
-                                         Resources.AppParamSize + ")"
-                                     };
+            var searchCriteria = 
+                new List<string>
+                {
+                    "ParameterTypeID IN (" +
+                    Resources.AppParamProductCodeLength + ", " +
+                    Resources.AppParamCategory + ", " +
+                    Resources.AppParamMark + ", " +
+                    Resources.AppParamColor + ", " +
+                    Resources.AppParamSize + ")"
+                };
             var objectList = _CommonService.GetAppParameters(searchCriteria);
             var productCodeLengthList = 
                 _CommonService.GetAppParametersByType(
@@ -289,7 +290,7 @@ namespace EzPos.GUIs.Forms
             cmbMark.SelectedValue = product.MarkID;
             cmbColor.SelectedValue = product.ColorID;
             cmbSize.SelectedValue = product.SizeID;
-            txtUPIn.Text = product.UnitPriceIn.ToString("N", AppContext.CultureInfo);
+            txtUPIn.Text = product.UnitPriceIn.ToString("N3", AppContext.CultureInfo);
             txtExtraPercentage.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo);
             txtDiscount.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo);
             txtUPOut.Text = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
@@ -414,13 +415,13 @@ namespace EzPos.GUIs.Forms
             try
             {
                 if (string.IsNullOrEmpty(txtUPIn.Text))
-                    txtUPIn.Text = "0";
+                    txtUPIn.Text = "0.000";
                 if (string.IsNullOrEmpty(txtExtraPercentage.Text))
                     txtExtraPercentage.Text = "0";
                 if (string.IsNullOrEmpty(txtDiscount.Text))
                     txtDiscount.Text = "0";
                 if (string.IsNullOrEmpty(txtUPOut.Text))
-                    txtUPOut.Text = "0.00";
+                    txtUPOut.Text = "0.000";
 
                 float discountPercentage;
                 float unitPriceOut;
