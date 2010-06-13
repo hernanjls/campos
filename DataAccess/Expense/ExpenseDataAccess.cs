@@ -13,8 +13,7 @@ namespace EzPos.DataAccess
     {
         public virtual IList GetExpenses()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(Expense.CONST_EXPENSE_ID));
+            var orderList = new Collection<Order> {Order.Desc(Expense.CONST_EXPENSE_ID)};
 
             return SelectObjects(
                 typeof (Expense), orderList).List();
@@ -42,19 +41,23 @@ namespace EzPos.DataAccess
             {
                 foreach (string strCriteria in searchCriteria)
                 {
-                    int delimiterIndex = strCriteria.IndexOf("|");
+                    var delimiterIndex = strCriteria.IndexOf("|");
                     if (delimiterIndex >= 0)
-                        criterionList.Add(Expression.Eq(
-                                              StringHelper.Left(strCriteria, delimiterIndex),
-                                              StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
+                        criterionList.Add(
+                            Expression.Eq(
+                                StringHelper.Left(strCriteria, delimiterIndex),
+                                StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
                     else
                         criterionList.Add(Expression.Sql(strCriteria));
                 }
             }
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(Expense.CONST_EXPENSE_DATE));
-            orderList.Add(Order.Asc(Expense.CONST_EXPENSE_TYPE_STR));
+            var orderList = 
+                new Collection<Order>
+                {
+                    Order.Desc(Expense.CONST_EXPENSE_DATE),
+                    Order.Asc(Expense.CONST_EXPENSE_TYPE_STR)
+                };
 
             return SelectObjects(typeof (Expense), criterionList, orderList).List();
         }
