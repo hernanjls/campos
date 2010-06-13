@@ -7,11 +7,27 @@ namespace EzPos.Model
         public const string CONST_SALE_ORDER_DATE = "SaleOrderDate";
         public const string CONST_SALE_ORDER_NUMBER = "SaleOrderNumber";
 
+        //private string _SaleOrderNumber;
+
         public int ReportID { get; set; }
 
         public int SalesOrderId { get; set; }
 
-        public string SaleOrderNumber { get; set; }
+        public string SaleOrderNumber
+        {
+            get; set;
+            //{
+            //    var saleOrderNumber = _SaleOrderNumber;
+            //    if(!string.IsNullOrEmpty(ReferenceNum))
+            //        saleOrderNumber += " (" + ReferenceNum + ")";
+
+            //    return saleOrderNumber;
+            //}
+            //set
+            //{
+            //    _SaleOrderNumber = value;
+            //}
+        }
 
         public DateTime SaleOrderDate { get; set; }
 
