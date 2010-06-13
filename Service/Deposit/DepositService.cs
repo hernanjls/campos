@@ -108,8 +108,10 @@ namespace EzPos.Service
 
             //Customer
             var customerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
-            if(isReturned)
+            customer.DebtAmount += deposit.AmountReturnInt;
+            if (isReturned)
                 customer.PurchasedAmount += deposit.AmountPaidInt;
+
             customerService.CustomerManagement(
                 customer,
                 Resources.OperationRequestUpdate);
@@ -214,6 +216,9 @@ namespace EzPos.Service
                         DepositItemId = depositItem != null ? depositItem.DepositItemId : 0
                     };
 
+                if (!string.IsNullOrEmpty(deposit.ReferenceNum))
+                    depositReport.DepositNumber += " (" + deposit.ReferenceNum + ")";
+ 
                 if(depositId != deposit.DepositId)
                 {
                     depositId = deposit.DepositId;
