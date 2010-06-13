@@ -12,10 +12,9 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmExpense : Form
     {
-        private CommonService _CommonService;
-        private Expense _Expense;
-        private ExpenseService _ExpenseService;
-        private bool _IsModified;
+        private CommonService CommonService;
+        private ExpenseService ExpenseService;
+        private bool IsModified;
 
         public FrmExpense()
         {
@@ -30,7 +29,7 @@ namespace EzPos.GUIs.Forms
 
         private void SetModifydStatus(bool modifyStatus)
         {
-            _IsModified = modifyStatus;
+            IsModified = modifyStatus;
             btnSave.Enabled = modifyStatus;
         }
 
@@ -39,12 +38,12 @@ namespace EzPos.GUIs.Forms
             SetModifydStatus(true);
         }
 
-        private void cmbCategory_Enter(object sender, EventArgs e)
+        private void CmbCategoryEnter(object sender, EventArgs e)
         {
             cmbExpenseType.SelectedIndexChanged += ModificationHandler;
         }
 
-        private void cmbCategory_Leave(object sender, EventArgs e)
+        private void CmbCategoryLeave(object sender, EventArgs e)
         {
             cmbExpenseType.SelectedIndexChanged -= ModificationHandler;
             cmbExpenseType.TextChanged -= ModificationHandler;
@@ -52,11 +51,11 @@ namespace EzPos.GUIs.Forms
 
         private void FrmExpense_Load(object sender, EventArgs e)
         {
-            if (_ExpenseService == null)
-                _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+            if (ExpenseService == null)
+                ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
 
-            if (_CommonService == null)
-                _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+            if (CommonService == null)
+                CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
             ThreadStart threadStart = UpdateControlContent;
             var thread = new Thread(threadStart);
@@ -70,9 +69,6 @@ namespace EzPos.GUIs.Forms
 
             try
             {
-                if (_Expense == null)
-                    return;
-
                 cmbExpenseType.SelectedValue = _Expense.ExpenseTypeID;
                 dtpExpenseDate.Value = (DateTime) _Expense.ExpenseDate;
                 txtDescription.Text = _Expense.Description;
@@ -87,7 +83,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSaveClick(object sender, EventArgs e)
         {
             try
             {
@@ -116,14 +112,9 @@ namespace EzPos.GUIs.Forms
                 _Expense.ExpenseAmountInt = float.Parse(txtExpenseAmountInt.Text);
                 _Expense.ExchangeRate = AppContext.ExchangeRate.ExchangeValue;
 
-                if (_Expense.ExpenseID != 0)
-                    _ExpenseService.ExpenseManagement(
-                        _Expense,
-                        Resources.OperationRequestUpdate);
-                else
-                    _ExpenseService.ExpenseManagement(
-                        _Expense,
-                        Resources.OperationRequestInsert);
+                ExpenseService.ExpenseManagement(
+                    _Expense,
+                    _Expense.ExpenseID != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
 
                 DialogResult = DialogResult.OK;
             }
@@ -137,8 +128,8 @@ namespace EzPos.GUIs.Forms
 
         private void UpdateControlContent()
         {
-            if (_ExpenseService == null)
-                _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+            if (ExpenseService == null)
+                ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
 
             SafeCrossCallBackDelegate safeCrossCallBackDelegate = null;
             if (cmbExpenseType.InvokeRequired)
@@ -149,9 +140,9 @@ namespace EzPos.GUIs.Forms
             else
             {
                 var searchCriteria = new List<string> {"ParameterTypeID IN (22)"};
-                var objList = _CommonService.GetAppParameters(searchCriteria);
+                var objList = CommonService.GetAppParameters(searchCriteria);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                CommonService.PopAppParamExtendedCombobox(
                     ref cmbExpenseType, objList, int.Parse(Resources.AppParamExpense), true);
 
                 SetExpenseInfo();
@@ -159,7 +150,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtDescription_Enter(object sender, EventArgs e)
+        private void TxtDescriptionEnter(object sender, EventArgs e)
         {
             try
             {
@@ -167,24 +158,25 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception)
             {
-                InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
+                InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("ca"));
             }
-            
+
             txtDescription.TextChanged += ModificationHandler;
         }
 
-        private void txtDescription_Leave(object sender, EventArgs e)
+        private void TxtDescriptionLeave(object sender, EventArgs e)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en"));
+            lblKeyboardLayout.Visible = false;
             txtDescription.TextChanged -= ModificationHandler;
         }
 
-        private void txtExpenseAmountRiel_Enter(object sender, EventArgs e)
+        private void TxtExpenseAmountRielEnter(object sender, EventArgs e)
         {
             txtExpenseAmountRiel.TextChanged += ModificationHandler;
         }
 
-        private void txtExpenseAmountRiel_Leave(object sender, EventArgs e)
+        private void TxtExpenseAmountRielLeave(object sender, EventArgs e)
         {
             txtExpenseAmountRiel.TextChanged -= ModificationHandler;
             try
@@ -199,12 +191,12 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtExpenseAmountInt_Enter(object sender, EventArgs e)
+        private void TxtExpenseAmountIntEnter(object sender, EventArgs e)
         {
             txtExpenseAmountInt.TextChanged += ModificationHandler;
         }
 
-        private void txtExpenseAmountInt_Leave(object sender, EventArgs e)
+        private void TxtExpenseAmountIntLeave(object sender, EventArgs e)
         {
             txtExpenseAmountInt.TextChanged -= ModificationHandler;
             try
@@ -221,7 +213,7 @@ namespace EzPos.GUIs.Forms
 
         private void FrmExpense_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((DialogResult == DialogResult.Cancel) && (_IsModified))
+            if ((DialogResult == DialogResult.Cancel) && (IsModified))
             {
                 const string briefMsg = "អំពីការបោះបង់";
                 var detailMsg = Resources.MsgOperationRequestCancel;
@@ -237,39 +229,39 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (!_IsModified)
+            if (!IsModified)
             {
                 DialogResult = DialogResult.Cancel;
                 return;
             }
         }
 
-        private void btnSave_MouseEnter(object sender, EventArgs e)
+        private void BtnSaveMouseEnter(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSave_MouseLeave(object sender, EventArgs e)
+        private void BtnSaveMouseLeave(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_2;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
         }
 
-        private void dtpExpenseDate_Enter(object sender, EventArgs e)
+        private void DtpExpenseDateEnter(object sender, EventArgs e)
         {
             dtpExpenseDate.ValueChanged += ModificationHandler;
         }
 
-        private void dtpExpenseDate_Leave(object sender, EventArgs e)
+        private void DtpExpenseDateLeave(object sender, EventArgs e)
         {
             dtpExpenseDate.ValueChanged -= ModificationHandler;
         }
@@ -279,5 +271,12 @@ namespace EzPos.GUIs.Forms
         private delegate void SafeCrossCallBackDelegate();
 
         #endregion
+
+        private void FrmExpense_InputLanguageChanged(object sender, InputLanguageChangedEventArgs e)
+        {
+            if (InputLanguage.CurrentInputLanguage != null)
+                lblKeyboardLayout.Text = InputLanguage.CurrentInputLanguage.Culture.TwoLetterISOLanguageName;
+            lblKeyboardLayout.Visible = true;
+        }
     }
 }

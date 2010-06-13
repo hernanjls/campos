@@ -157,7 +157,7 @@ namespace EzPos.GUIs.Controls
             lblProductName.Text = product.ProductName + @" \ " + product.ColorStr;
             lblPrice.Text = "$ " + product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
             lblReference.Text = product.ProductCode;
-            if ((product.ProductPic == null) && (String.IsNullOrEmpty(product.PhotoPath)))
+            if ((product.ProductPic == null) || (String.IsNullOrEmpty(product.PhotoPath)))
                 ptbDisplay.Image = Resources.NoImage;
             else
             {
@@ -185,11 +185,17 @@ namespace EzPos.GUIs.Controls
             if (!string.IsNullOrEmpty(product.ForeignCode))
                 saleItem.ProductDisplayName += " (" + product.ForeignCode + ")";
 
-            var publicUnitPriceOut = 
-                product.UnitPriceIn +
-                ((product.UnitPriceIn * product.ExtraPercentage) / 100);
+            var unitPriceIn =
+                float.Parse(Math.Round(product.UnitPriceIn, 3).ToString("N3", AppContext.CultureInfo),
+                            AppContext.CultureInfo);
 
-            saleItem.UnitPriceOut = publicUnitPriceOut;
+            var publicUnitPriceOut =
+                unitPriceIn + ((unitPriceIn * product.ExtraPercentage) / 100);
+
+            saleItem.UnitPriceOut =
+                float.Parse(
+                    publicUnitPriceOut.ToString("N", AppContext.CultureInfo),
+                    AppContext.CultureInfo);            
             //publicUnitPriceOut =
             //    publicUnitPriceOut -
             //    ((publicUnitPriceOut * product.DiscountPercentage) / 100);
@@ -203,10 +209,14 @@ namespace EzPos.GUIs.Controls
             //publicUnitPriceOut =
             //    float.Parse(Math.Round(publicUnitPriceOut, 0).ToString("N", AppContext.CultureInfo),
             //                AppContext.CultureInfo);
+            publicUnitPriceOut =
+                float.Parse(
+                    publicUnitPriceOut.ToString("N", AppContext.CultureInfo),
+                    AppContext.CultureInfo);
 
-            float.Parse(Math.Round(saleItem.PublicUPOut, 0).ToString("N", AppContext.CultureInfo),
-                        AppContext.CultureInfo);
-            saleItem.PublicUPOut = publicUnitPriceOut;
+            //float.Parse(Math.Round(saleItem.PublicUPOut, 0).ToString("N", AppContext.CultureInfo),
+            //            AppContext.CultureInfo);
+            saleItem.PublicUPOut = publicUnitPriceOut;            
             saleItem.Discount = discount;
             saleItem.SubTotal =
                 saleItem.QtySold * publicUnitPriceOut;
@@ -275,24 +285,26 @@ namespace EzPos.GUIs.Controls
             float totalPurchasedQty = 0;
             foreach (var saleItem in _SaleItemBindingList)
             {
-                float unitPriceOut;
+                var unitPriceIn =
+                    float.Parse(Math.Round(saleItem.UnitPriceIn, 3).ToString("N3", AppContext.CultureInfo), AppContext.CultureInfo);
+                //var unitPriceIn = saleItem.UnitPriceIn;
+
                 //if (saleItem.FKProduct.ExtraPercentage == 0)
                 //    unitPriceOut =
                 //        saleItem.UnitPriceOut;
                 //else
                 //{
-                    unitPriceOut =
-                        saleItem.UnitPriceIn +
-                        ((saleItem.UnitPriceIn * saleItem.FKProduct.ExtraPercentage) / 100);
+                var unitPriceOut =
+                    unitPriceIn +
+                    ((unitPriceIn * saleItem.FKProduct.ExtraPercentage) / 100);
 
-                    unitPriceOut =
-                        unitPriceOut -
-                        ((unitPriceOut * saleItem.Discount) / 100);
+                unitPriceOut =
+                    unitPriceOut - ((unitPriceOut * saleItem.Discount) / 100);
                 //}
 
-                //unitPriceOut =
-                //    float.Parse(Math.Round(unitPriceOut, 0).ToString("N", AppContext.CultureInfo),
-                //                AppContext.CultureInfo);
+                unitPriceOut =
+                    float.Parse(Math.Round(unitPriceOut, 2).ToString("N3", AppContext.CultureInfo),
+                                AppContext.CultureInfo);
 
                 _TotalAmountInt += saleItem.QtySold * unitPriceOut;
                 totalPurchasedQty += saleItem.QtySold;
@@ -446,10 +458,11 @@ namespace EzPos.GUIs.Controls
             _SaleOrder = null;
             _SaleItemBindingList.Clear();
             ResetProductInfo();
+//            ResetProductPrice();
             ResetCustomerInfo();
             DoActivateControls(true);
-            ScanFocusHandler();
             ReturnHandler(_ReturnEnabled = false);
+            ScanFocusHandler();
         }
 
         private void ResetProductInfo()
@@ -520,55 +533,69 @@ namespace EzPos.GUIs.Controls
             if (_SaleItemBindingList.Count == 0)
                 return;
 
-            Visible = false;
             try
             {
-                using (var frmPayment = new FrmPayment())
+                if (!_ReturnEnabled)
                 {
-                    frmPayment.CommonService = _CommonService;
-                    frmPayment.CustomerService = _CustomerService;
-                    frmPayment.TotalAmountInt = _TotalAmountInt;
-                    if (frmPayment.ShowDialog(this) == DialogResult.OK)
+                    Visible = false;
+                    using (var frmPayment = new FrmPayment())
                     {
+                        frmPayment.CommonService = _CommonService;
+                        frmPayment.CustomerService = _CustomerService;
+                        frmPayment.TotalAmountInt = _TotalAmountInt;
+                        if (frmPayment.ShowDialog(this) == DialogResult.OK)
+                        {
+                            Visible = true;
+                            var discountPercentage = frmPayment.Customer.FKDiscountCard.DiscountPercentage;
+                            _SaleOrder = _SaleOrderService.RecordSaleOrder(
+                                _SaleItemBindingList,
+                                _TotalAmountInt,
+                                frmPayment.AmountPaidInt,
+                                frmPayment.AmountPaidRiel,
+                                frmPayment.AmountPaidInt - (_TotalAmountInt - ((_TotalAmountInt * discountPercentage) / 100)),
+                                frmPayment.Customer,
+                                false,
+                                string.Empty,
+                                frmPayment.Customer.FKDiscountCard.DiscountPercentage,
+                                0,
+                                false);
+
+                            if (_SaleOrder == null)
+                                return;
+
+                            DoActivateControls(false);
+                            SetCustomerInfo(frmPayment.Customer);
+                            SetInvoiceInfo(
+                                _SaleOrder.SaleOrderNumber,
+                                _SaleOrder.AmountSoldInt,
+                                _SaleOrder.AmountPaidInt,
+                                _SaleOrder.AmountPaidRiel,
+                                _SaleOrder.AmountReturnInt);
+                            InvoicePrinting(
+                                _SaleOrder.FKCustomer,
+                                _SaleOrder.SaleOrderNumber,
+                                (DateTime)_SaleOrder.SaleOrderDate,
+                                _SaleOrder.Discount,
+                                0,
+                                _SaleOrder.AmountPaidInt,
+                                false);
+
+                            var frmThank = new FrmThank();
+                            frmThank.ShowDialog(this);
+                        }
                         Visible = true;
-                        var discountPercentage = frmPayment.Customer.FKDiscountCard.DiscountPercentage;
-                        _SaleOrder = _SaleOrderService.RecordSaleOrder(
-                            _SaleItemBindingList,
-                            _TotalAmountInt,
-                            frmPayment.AmountPaidInt,
-                            frmPayment.AmountPaidRiel,
-                            frmPayment.AmountPaidInt - (_TotalAmountInt - ((_TotalAmountInt * discountPercentage) / 100)),
-                            frmPayment.Customer,
-                            false,
-                            string.Empty,
-                            frmPayment.Customer.FKDiscountCard.DiscountPercentage,
-                            0,
-                            false);
-
-                        if (_SaleOrder == null)
-                            return;
-
-                        DoActivateControls(false);
-                        SetCustomerInfo(frmPayment.Customer);
-                        SetInvoiceInfo(
-                            _SaleOrder.SaleOrderNumber,
-                            _SaleOrder.AmountSoldInt,
-                            _SaleOrder.AmountPaidInt,
-                            _SaleOrder.AmountPaidRiel,
-                            _SaleOrder.AmountReturnInt);
-                        InvoicePrinting(
-                            _SaleOrder.FKCustomer,
-                            _SaleOrder.SaleOrderNumber,
-                            (DateTime)_SaleOrder.SaleOrderDate,
-                            _SaleOrder.Discount,
-                            0,
-                            _SaleOrder.AmountPaidInt,
-                            false);
-
-                        var frmThank = new FrmThank();
-                        frmThank.ShowDialog(this);
-                    }
-                    Visible = true;
+                    }                
+                }
+                else
+                {
+                    InvoicePrinting(
+                        _SaleOrder.FKCustomer,
+                        _SaleOrder.SaleOrderNumber,
+                        (DateTime)_SaleOrder.SaleOrderDate,
+                        _SaleOrder.Discount,
+                        0,
+                        _SaleOrder.AmountPaidInt,
+                        false);                    
                 }
             }
             catch (Exception exception)
@@ -933,9 +960,9 @@ namespace EzPos.GUIs.Controls
             var strCriteria =
                 new List<string>
                 {
-                    "ProductCode = '" + 
+                    "(ProductCode = '" + 
                     StringHelper.Right("000000000" + productCode, 9) + 
-                    "' OR ForeignCode = '" + productCode + "'",
+                    "' OR ForeignCode = '" + productCode + "')",
                     "QtyInStock > 0"
                 };
                 //new List<string>
@@ -1072,11 +1099,19 @@ namespace EzPos.GUIs.Controls
                     //publicUnitPriceOut =
                     //    float.Parse(Math.Round(publicUnitPriceOut, 0).ToString("N", AppContext.CultureInfo),
                     //                AppContext.CultureInfo);
+                    publicUnitPriceOut =
+                        float.Parse(
+                            publicUnitPriceOut.ToString("N", AppContext.CultureInfo), 
+                            AppContext.CultureInfo);
                     saleItem.PublicUPOut = publicUnitPriceOut;
                     //saleItem.UnitPriceOut = product.UnitPriceOut;
                     saleItem.UnitPriceOut = 
                         product.UnitPriceIn + 
                         ((product.UnitPriceIn * product.ExtraPercentage) / 100);
+                    saleItem.UnitPriceOut =
+                        float.Parse(
+                            saleItem.UnitPriceOut.ToString("N", AppContext.CultureInfo),
+                            AppContext.CultureInfo);
                     //saleItem.SubTotal = saleItem.QtySold * saleItem.UnitPriceOut;
                     saleItem.SubTotal = saleItem.QtySold * publicUnitPriceOut;
                     dgvSaleItem.Refresh();
@@ -1086,17 +1121,17 @@ namespace EzPos.GUIs.Controls
             ScanFocusHandler();
         }
 
-        private void btnProductAdjustment_MouseEnter(object sender, EventArgs e)
+        private void BtnProductAdjustmentMouseEnter(object sender, EventArgs e)
         {
             btnProductAdjustment.BackgroundImage = Resources.background_9;
         }
 
-        private void btnProductAdjustment_MouseLeave(object sender, EventArgs e)
+        private void BtnProductAdjustmentMouseLeave(object sender, EventArgs e)
         {
             btnProductAdjustment.BackgroundImage = Resources.background_2;
         }
 
-        private void btnProductAdjustment_Click(object sender, EventArgs e)
+        private void BtnProductAdjustmentClick(object sender, EventArgs e)
         {
             ScanFocusHandler();
             string briefMsg, detailMsg;
@@ -1201,6 +1236,30 @@ namespace EzPos.GUIs.Controls
         private void ReturnHandler(bool enableStatus)
         {
             btnSearchSaleOrder.Text = enableStatus ? "សង" : "ស្វែងរក";
+            btnValid.Enabled = true;
+            btnValid.Text = enableStatus ? "បោះពុម្ភ" : "គិតលុយ";
         }
+
+        //private void ResetProductPrice()
+        //{
+        //    if (_ProductList == null)
+        //        return;
+
+        //    if(_ProductList.Count == 0)
+        //        return;
+
+        //    foreach(var product in _ProductList)
+        //    {
+        //        var publicUnitPriceOut =
+        //            product.UnitPriceIn +
+        //            ((product.UnitPriceIn * product.ExtraPercentage) / 100);
+
+        //        publicUnitPriceOut =
+        //            publicUnitPriceOut -
+        //            ((publicUnitPriceOut * product.DiscountPercentage) / 100);
+
+        //        product.UnitPriceOut = publicUnitPriceOut;
+        //    }            
+        //}
     }
 }

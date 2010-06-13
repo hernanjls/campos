@@ -148,9 +148,9 @@ namespace EzPos.GUIs.Forms
             this.btnDeliver.TabIndex = 50;
             this.btnDeliver.Text = "ប្រគល់";
             this.btnDeliver.UseVisualStyleBackColor = false;
-            this.btnDeliver.MouseLeave += new System.EventHandler(this.btnDeliver_MouseLeave);
-            this.btnDeliver.Click += new System.EventHandler(this.btnDeliver_Click);
-            this.btnDeliver.MouseEnter += new System.EventHandler(this.btnDeliver_MouseEnter);
+            this.btnDeliver.MouseLeave += new System.EventHandler(this.BtnDeliverMouseLeave);
+            this.btnDeliver.Click += new System.EventHandler(this.BtnDeliverClick);
+            this.btnDeliver.MouseEnter += new System.EventHandler(this.BtnDeliverMouseEnter);
             // 
             // btnCancelDeposit
             // 

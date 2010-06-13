@@ -49,13 +49,14 @@ namespace EzPos.GUIs.Controls
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                var searchCriteria = new List<string>
-                                         {
-                                             "ParameterTypeID IN (" +
-                                             Resources.AppParamCategory + ", " +
-                                             Resources.AppParamMark + "," +
-                                             Resources.AppParamColor + ")"
-                                         };
+                var searchCriteria = 
+                    new List<string>
+                    {
+                        "ParameterTypeID IN (" +
+                        Resources.AppParamCategory + ", " +
+                        Resources.AppParamMark + "," +
+                        Resources.AppParamColor + ")"
+                    };
                 var objectList = _CommonService.GetAppParameters(searchCriteria);
 
                 _CommonService.PopAppParamExtendedCombobox(
@@ -504,10 +505,10 @@ namespace EzPos.GUIs.Controls
             if ((_ProductList.Count == 0) || (dgvProduct.CurrentRow == null))
             {
                 ptbProduct.Image = Resources.NoImage;
-                UPInLbl.Text = "$ 0.00";
+                UPInLbl.Text = "$ 0.000";
                 extraPercentageLbl.Text = "0 %";
                 discountLbl.Text = "0 %";
-                UPOutLbl.Text = "$ 0.00";
+                UPOutLbl.Text = "$ 0.000";
                 return;
             }
 
@@ -519,7 +520,7 @@ namespace EzPos.GUIs.Controls
                 ptbProduct.Image = Resources.NoImage;
             else
                 ptbProduct.ImageLocation = product.PhotoPath;
-            UPInLbl.Text = "$ " + product.UnitPriceIn.ToString("N", AppContext.CultureInfo);
+            UPInLbl.Text = "$ " + product.UnitPriceIn.ToString("N3", AppContext.CultureInfo);
             extraPercentageLbl.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo) + " %";
             discountLbl.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo) + " %";
             UPOutLbl.Text = "$ " + product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
@@ -563,10 +564,17 @@ namespace EzPos.GUIs.Controls
             }
 
             var strResultInfo = string.Format(
-                "ការសែ្វងរករបស់អ្នកផ្តល់លទ្ឋផលចំនួន {0} រូបត្រូវជា {1} ផលិតផលនិង {2} ដុល្លារ",
+                "ការសែ្វងរករបស់អ្នកផ្តល់លទ្ឋផលចំនួន {0} រូបត្រូវជា {1} ផលិតផល",
                 resultNum.ToString("N0", AppContext.CultureInfo),
-                totalProdNum.ToString("N0", AppContext.CultureInfo),
-                totalPriceOut.ToString("N", AppContext.CultureInfo));
+                totalProdNum.ToString("N0", AppContext.CultureInfo));
+
+            if (UserService.AllowToPerform(Resources.PermissionViewAllProductInfo))
+            {
+                strResultInfo += string.Format(
+                    "និង {0} ដុល្លារ",
+                    totalPriceOut.ToString("N", AppContext.CultureInfo));
+            }
+
             lblResultInfo.Text = strResultInfo;
             rdbPrintAll.Text = 
                 "កូដទាំងអស់ (" +

@@ -126,9 +126,9 @@ namespace EzPos.GUIs.Controls
             this.btnProductAdjustment.TabIndex = 30;
             this.btnProductAdjustment.Text = "ដកពីឃ្លាំង";
             this.btnProductAdjustment.UseVisualStyleBackColor = false;
-            this.btnProductAdjustment.MouseLeave += new System.EventHandler(this.btnProductAdjustment_MouseLeave);
-            this.btnProductAdjustment.Click += new System.EventHandler(this.btnProductAdjustment_Click);
-            this.btnProductAdjustment.MouseEnter += new System.EventHandler(this.btnProductAdjustment_MouseEnter);
+            this.btnProductAdjustment.MouseLeave += new System.EventHandler(this.BtnProductAdjustmentMouseLeave);
+            this.btnProductAdjustment.Click += new System.EventHandler(this.BtnProductAdjustmentClick);
+            this.btnProductAdjustment.MouseEnter += new System.EventHandler(this.BtnProductAdjustmentMouseEnter);
             // 
             // grbInvoice
             // 

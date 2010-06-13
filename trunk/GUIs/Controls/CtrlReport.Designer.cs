@@ -1,4 +1,6 @@
 ﻿
+using EzPos.Service;
+
 namespace EzPos.GUIs.Controls
 {
     partial class CtrlReport
@@ -6,7 +8,7 @@ namespace EzPos.GUIs.Controls
         /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private readonly System.ComponentModel.IContainer components = null;
+        private readonly System.ComponentModel.IContainer components;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -30,13 +32,6 @@ namespace EzPos.GUIs.Controls
         private void InitializeComponent()
         {
             this.pnlBodyRight = new System.Windows.Forms.Panel();
-            this.lblExpense = new System.Windows.Forms.Label();
-            this.grbExpense = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtpExpenseStop = new System.Windows.Forms.DateTimePicker();
-            this.dtpExpenseStart = new System.Windows.Forms.DateTimePicker();
-            this.btnDailyReport = new System.Windows.Forms.Button();
             this.lblStock = new System.Windows.Forms.Label();
             this.grbStock = new System.Windows.Forms.GroupBox();
             this.rdbProductExpired = new System.Windows.Forms.RadioButton();
@@ -45,20 +40,21 @@ namespace EzPos.GUIs.Controls
             this.rdbStockDetail = new System.Windows.Forms.RadioButton();
             this.lblSale = new System.Windows.Forms.Label();
             this.grbSale = new System.Windows.Forms.GroupBox();
+            this.chbAllDeposit = new System.Windows.Forms.CheckBox();
+            this.rdbExpense = new System.Windows.Forms.RadioButton();
+            this.rdbDeposit = new System.Windows.Forms.RadioButton();
             this.rdbReturn = new System.Windows.Forms.RadioButton();
             this.rdbSale = new System.Windows.Forms.RadioButton();
             this.chbShowBenefit = new System.Windows.Forms.CheckBox();
             this.btnSearchSale = new System.Windows.Forms.Button();
             this.lblStop = new System.Windows.Forms.Label();
             this.lblStart = new System.Windows.Forms.Label();
-            this.dtpStopAdmin = new System.Windows.Forms.DateTimePicker();
-            this.dtpStartAdmin = new System.Windows.Forms.DateTimePicker();
+            this.dtpStopDate = new System.Windows.Forms.DateTimePicker();
+            this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.pnlBodySearch = new System.Windows.Forms.Panel();
             this.pnlBodyLeft = new System.Windows.Forms.Panel();
             this.crvReport = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.rdbDeposit = new System.Windows.Forms.RadioButton();
             this.pnlBodyRight.SuspendLayout();
-            this.grbExpense.SuspendLayout();
             this.grbStock.SuspendLayout();
             this.grbSale.SuspendLayout();
             this.pnlBodyLeft.SuspendLayout();
@@ -68,8 +64,6 @@ namespace EzPos.GUIs.Controls
             // 
             this.pnlBodyRight.BackgroundImage = global::EzPos.Properties.Resources.backgroud_12;
             this.pnlBodyRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pnlBodyRight.Controls.Add(this.lblExpense);
-            this.pnlBodyRight.Controls.Add(this.grbExpense);
             this.pnlBodyRight.Controls.Add(this.lblStock);
             this.pnlBodyRight.Controls.Add(this.grbStock);
             this.pnlBodyRight.Controls.Add(this.lblSale);
@@ -79,92 +73,6 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyRight.Name = "pnlBodyRight";
             this.pnlBodyRight.Size = new System.Drawing.Size(200, 596);
             this.pnlBodyRight.TabIndex = 1;
-            // 
-            // lblExpense
-            // 
-            this.lblExpense.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(127)))), ((int)(((byte)(178)))));
-            this.lblExpense.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExpense.ForeColor = System.Drawing.Color.Yellow;
-            this.lblExpense.Location = new System.Drawing.Point(10, 435);
-            this.lblExpense.Name = "lblExpense";
-            this.lblExpense.Size = new System.Drawing.Size(179, 32);
-            this.lblExpense.TabIndex = 107;
-            this.lblExpense.Text = "ចំណាយ";
-            // 
-            // grbExpense
-            // 
-            this.grbExpense.BackgroundImage = global::EzPos.Properties.Resources.pnlBodyRight;
-            this.grbExpense.Controls.Add(this.label1);
-            this.grbExpense.Controls.Add(this.label2);
-            this.grbExpense.Controls.Add(this.dtpExpenseStop);
-            this.grbExpense.Controls.Add(this.dtpExpenseStart);
-            this.grbExpense.Controls.Add(this.btnDailyReport);
-            this.grbExpense.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.grbExpense.Location = new System.Drawing.Point(10, 434);
-            this.grbExpense.Name = "grbExpense";
-            this.grbExpense.Size = new System.Drawing.Size(180, 148);
-            this.grbExpense.TabIndex = 106;
-            this.grbExpense.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(1, 70);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 27);
-            this.label1.TabIndex = 109;
-            this.label1.Text = "បញ្ចប់";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1, 40);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 27);
-            this.label2.TabIndex = 107;
-            this.label2.Text = "ចាប់ផ្ដើម";
-            // 
-            // dtpExpenseStop
-            // 
-            this.dtpExpenseStop.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpExpenseStop.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpExpenseStop.Location = new System.Drawing.Point(77, 67);
-            this.dtpExpenseStop.Name = "dtpExpenseStop";
-            this.dtpExpenseStop.Size = new System.Drawing.Size(97, 27);
-            this.dtpExpenseStop.TabIndex = 110;
-            // 
-            // dtpExpenseStart
-            // 
-            this.dtpExpenseStart.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpExpenseStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpExpenseStart.Location = new System.Drawing.Point(77, 37);
-            this.dtpExpenseStart.Name = "dtpExpenseStart";
-            this.dtpExpenseStart.Size = new System.Drawing.Size(97, 27);
-            this.dtpExpenseStart.TabIndex = 108;
-            // 
-            // btnDailyReport
-            // 
-            this.btnDailyReport.BackColor = System.Drawing.Color.Transparent;
-            this.btnDailyReport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnDailyReport.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDailyReport.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDailyReport.ForeColor = System.Drawing.Color.White;
-            this.btnDailyReport.Image = global::EzPos.Properties.Resources.Search32;
-            this.btnDailyReport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDailyReport.Location = new System.Drawing.Point(18, 100);
-            this.btnDailyReport.Name = "btnDailyReport";
-            this.btnDailyReport.Size = new System.Drawing.Size(144, 40);
-            this.btnDailyReport.TabIndex = 106;
-            this.btnDailyReport.Text = "ស្វែងរក";
-            this.btnDailyReport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDailyReport.UseVisualStyleBackColor = false;
-            this.btnDailyReport.MouseLeave += new System.EventHandler(this.btnDailyReport_MouseLeave);
-            this.btnDailyReport.Click += new System.EventHandler(this.btnDailyReport_Click);
-            this.btnDailyReport.MouseEnter += new System.EventHandler(this.btnDailyReport_MouseEnter);
             // 
             // lblStock
             // 
@@ -219,9 +127,9 @@ namespace EzPos.GUIs.Controls
             this.btnSearchStock.Text = "ស្វែងរក";
             this.btnSearchStock.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearchStock.UseVisualStyleBackColor = false;
-            this.btnSearchStock.MouseLeave += new System.EventHandler(this.btnSearchStock_MouseLeave);
-            this.btnSearchStock.Click += new System.EventHandler(this.btnSearchStock_Click);
-            this.btnSearchStock.MouseEnter += new System.EventHandler(this.btnSearchStock_MouseEnter);
+            this.btnSearchStock.MouseLeave += new System.EventHandler(this.BtnSearchStockMouseLeave);
+            this.btnSearchStock.Click += new System.EventHandler(this.BtnSearchStockClick);
+            this.btnSearchStock.MouseEnter += new System.EventHandler(this.BtnSearchStockMouseEnter);
             // 
             // rdbStockShort
             // 
@@ -258,11 +166,13 @@ namespace EzPos.GUIs.Controls
             this.lblSale.Name = "lblSale";
             this.lblSale.Size = new System.Drawing.Size(179, 32);
             this.lblSale.TabIndex = 100;
-            this.lblSale.Text = "លក់ កក់ និង សង";
+            this.lblSale.Text = "លក់ សង ចំណាយ";
             // 
             // grbSale
             // 
             this.grbSale.BackgroundImage = global::EzPos.Properties.Resources.pnlBodyRight;
+            this.grbSale.Controls.Add(this.chbAllDeposit);
+            this.grbSale.Controls.Add(this.rdbExpense);
             this.grbSale.Controls.Add(this.rdbDeposit);
             this.grbSale.Controls.Add(this.rdbReturn);
             this.grbSale.Controls.Add(this.rdbSale);
@@ -270,21 +180,59 @@ namespace EzPos.GUIs.Controls
             this.grbSale.Controls.Add(this.btnSearchSale);
             this.grbSale.Controls.Add(this.lblStop);
             this.grbSale.Controls.Add(this.lblStart);
-            this.grbSale.Controls.Add(this.dtpStopAdmin);
-            this.grbSale.Controls.Add(this.dtpStartAdmin);
+            this.grbSale.Controls.Add(this.dtpStopDate);
+            this.grbSale.Controls.Add(this.dtpStartDate);
             this.grbSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.grbSale.Location = new System.Drawing.Point(10, 176);
             this.grbSale.Name = "grbSale";
-            this.grbSale.Size = new System.Drawing.Size(180, 256);
+            this.grbSale.Size = new System.Drawing.Size(180, 318);
             this.grbSale.TabIndex = 99;
             this.grbSale.TabStop = false;
+            // 
+            // chbAllDeposit
+            // 
+            this.chbAllDeposit.AutoSize = true;
+            this.chbAllDeposit.BackColor = System.Drawing.Color.Transparent;
+            this.chbAllDeposit.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbAllDeposit.Location = new System.Drawing.Point(28, 181);
+            this.chbAllDeposit.Name = "chbAllDeposit";
+            this.chbAllDeposit.Size = new System.Drawing.Size(133, 34);
+            this.chbAllDeposit.TabIndex = 18;
+            this.chbAllDeposit.Text = "បង្ហាញទាំងអស់";
+            this.chbAllDeposit.UseVisualStyleBackColor = false;
+            this.chbAllDeposit.Leave += new System.EventHandler(this.ChbAllDepositLeave);
+            this.chbAllDeposit.Enter += new System.EventHandler(this.ChbAllDepositEnter);
+            // 
+            // rdbExpense
+            // 
+            this.rdbExpense.AutoSize = true;
+            this.rdbExpense.BackColor = System.Drawing.Color.Transparent;
+            this.rdbExpense.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbExpense.Location = new System.Drawing.Point(6, 239);
+            this.rdbExpense.Name = "rdbExpense";
+            this.rdbExpense.Size = new System.Drawing.Size(145, 31);
+            this.rdbExpense.TabIndex = 17;
+            this.rdbExpense.Text = "ចំណាយប្រចាំថ្ងៃ";
+            this.rdbExpense.UseVisualStyleBackColor = false;
+            // 
+            // rdbDeposit
+            // 
+            this.rdbDeposit.AutoSize = true;
+            this.rdbDeposit.BackColor = System.Drawing.Color.Transparent;
+            this.rdbDeposit.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbDeposit.Location = new System.Drawing.Point(6, 154);
+            this.rdbDeposit.Name = "rdbDeposit";
+            this.rdbDeposit.Size = new System.Drawing.Size(146, 31);
+            this.rdbDeposit.TabIndex = 16;
+            this.rdbDeposit.Text = "របាយការណ៏កក់";
+            this.rdbDeposit.UseVisualStyleBackColor = false;
             // 
             // rdbReturn
             // 
             this.rdbReturn.AutoSize = true;
             this.rdbReturn.BackColor = System.Drawing.Color.Transparent;
             this.rdbReturn.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbReturn.Location = new System.Drawing.Point(6, 113);
+            this.rdbReturn.Location = new System.Drawing.Point(6, 211);
             this.rdbReturn.Name = "rdbReturn";
             this.rdbReturn.Size = new System.Drawing.Size(152, 31);
             this.rdbReturn.TabIndex = 15;
@@ -297,7 +245,7 @@ namespace EzPos.GUIs.Controls
             this.rdbSale.BackColor = System.Drawing.Color.Transparent;
             this.rdbSale.Checked = true;
             this.rdbSale.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbSale.Location = new System.Drawing.Point(6, 32);
+            this.rdbSale.Location = new System.Drawing.Point(6, 99);
             this.rdbSale.Name = "rdbSale";
             this.rdbSale.Size = new System.Drawing.Size(152, 31);
             this.rdbSale.TabIndex = 14;
@@ -310,12 +258,14 @@ namespace EzPos.GUIs.Controls
             this.chbShowBenefit.AutoSize = true;
             this.chbShowBenefit.BackColor = System.Drawing.Color.Transparent;
             this.chbShowBenefit.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbShowBenefit.Location = new System.Drawing.Point(28, 57);
+            this.chbShowBenefit.Location = new System.Drawing.Point(28, 126);
             this.chbShowBenefit.Name = "chbShowBenefit";
             this.chbShowBenefit.Size = new System.Drawing.Size(123, 34);
             this.chbShowBenefit.TabIndex = 13;
             this.chbShowBenefit.Text = "ប្រាក់ចំណេញ";
             this.chbShowBenefit.UseVisualStyleBackColor = false;
+            this.chbShowBenefit.Leave += new System.EventHandler(this.ChbShowBenefitLeave);
+            this.chbShowBenefit.Enter += new System.EventHandler(this.ChbShowBenefitEnter);
             // 
             // btnSearchSale
             // 
@@ -326,23 +276,23 @@ namespace EzPos.GUIs.Controls
             this.btnSearchSale.ForeColor = System.Drawing.Color.White;
             this.btnSearchSale.Image = global::EzPos.Properties.Resources.Search32;
             this.btnSearchSale.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchSale.Location = new System.Drawing.Point(18, 208);
+            this.btnSearchSale.Location = new System.Drawing.Point(18, 270);
             this.btnSearchSale.Name = "btnSearchSale";
             this.btnSearchSale.Size = new System.Drawing.Size(144, 40);
             this.btnSearchSale.TabIndex = 12;
             this.btnSearchSale.Text = "ស្វែងរក";
             this.btnSearchSale.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearchSale.UseVisualStyleBackColor = false;
-            this.btnSearchSale.MouseLeave += new System.EventHandler(this.btnSearchSale_MouseLeave);
-            this.btnSearchSale.Click += new System.EventHandler(this.btnSearchSale_Click);
-            this.btnSearchSale.MouseEnter += new System.EventHandler(this.btnSearchSale_MouseEnter);
+            this.btnSearchSale.MouseLeave += new System.EventHandler(this.BtnSearchSaleMouseLeave);
+            this.btnSearchSale.Click += new System.EventHandler(this.BtnSearchSaleClick);
+            this.btnSearchSale.MouseEnter += new System.EventHandler(this.BtnSearchSaleMouseEnter);
             // 
             // lblStop
             // 
             this.lblStop.AutoSize = true;
             this.lblStop.BackColor = System.Drawing.Color.Transparent;
             this.lblStop.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStop.Location = new System.Drawing.Point(1, 177);
+            this.lblStop.Location = new System.Drawing.Point(1, 73);
             this.lblStop.Name = "lblStop";
             this.lblStop.Size = new System.Drawing.Size(54, 27);
             this.lblStop.TabIndex = 10;
@@ -353,29 +303,29 @@ namespace EzPos.GUIs.Controls
             this.lblStart.AutoSize = true;
             this.lblStart.BackColor = System.Drawing.Color.Transparent;
             this.lblStart.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblStart.Location = new System.Drawing.Point(1, 147);
+            this.lblStart.Location = new System.Drawing.Point(1, 43);
             this.lblStart.Name = "lblStart";
             this.lblStart.Size = new System.Drawing.Size(73, 27);
             this.lblStart.TabIndex = 8;
             this.lblStart.Text = "ចាប់ផ្ដើម";
             // 
-            // dtpStopAdmin
+            // dtpStopDate
             // 
-            this.dtpStopAdmin.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpStopAdmin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpStopAdmin.Location = new System.Drawing.Point(77, 174);
-            this.dtpStopAdmin.Name = "dtpStopAdmin";
-            this.dtpStopAdmin.Size = new System.Drawing.Size(97, 27);
-            this.dtpStopAdmin.TabIndex = 11;
+            this.dtpStopDate.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpStopDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpStopDate.Location = new System.Drawing.Point(77, 70);
+            this.dtpStopDate.Name = "dtpStopDate";
+            this.dtpStopDate.Size = new System.Drawing.Size(97, 27);
+            this.dtpStopDate.TabIndex = 11;
             // 
-            // dtpStartAdmin
+            // dtpStartDate
             // 
-            this.dtpStartAdmin.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpStartAdmin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpStartAdmin.Location = new System.Drawing.Point(77, 144);
-            this.dtpStartAdmin.Name = "dtpStartAdmin";
-            this.dtpStartAdmin.Size = new System.Drawing.Size(97, 27);
-            this.dtpStartAdmin.TabIndex = 9;
+            this.dtpStartDate.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpStartDate.Location = new System.Drawing.Point(77, 40);
+            this.dtpStartDate.Name = "dtpStartDate";
+            this.dtpStartDate.Size = new System.Drawing.Size(97, 27);
+            this.dtpStartDate.TabIndex = 9;
             // 
             // pnlBodySearch
             // 
@@ -408,18 +358,6 @@ namespace EzPos.GUIs.Controls
             this.crvReport.TabIndex = 0;
             this.crvReport.ViewTimeSelectionFormula = "";
             // 
-            // rdbDeposit
-            // 
-            this.rdbDeposit.AutoSize = true;
-            this.rdbDeposit.BackColor = System.Drawing.Color.Transparent;
-            this.rdbDeposit.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbDeposit.Location = new System.Drawing.Point(6, 85);
-            this.rdbDeposit.Name = "rdbDeposit";
-            this.rdbDeposit.Size = new System.Drawing.Size(146, 31);
-            this.rdbDeposit.TabIndex = 16;
-            this.rdbDeposit.Text = "របាយការណ៏កក់";
-            this.rdbDeposit.UseVisualStyleBackColor = false;
-            // 
             // CtrlReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,8 +371,6 @@ namespace EzPos.GUIs.Controls
             this.Size = new System.Drawing.Size(1026, 596);
             this.Load += new System.EventHandler(this.CtrlReport_Load);
             this.pnlBodyRight.ResumeLayout(false);
-            this.grbExpense.ResumeLayout(false);
-            this.grbExpense.PerformLayout();
             this.grbStock.ResumeLayout(false);
             this.grbStock.PerformLayout();
             this.grbSale.ResumeLayout(false);
@@ -456,27 +392,21 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.GroupBox grbStock;
         private System.Windows.Forms.Label lblStop;
         private System.Windows.Forms.Label lblStart;
-        private System.Windows.Forms.DateTimePicker dtpStopAdmin;
-        private System.Windows.Forms.DateTimePicker dtpStartAdmin;
+        private System.Windows.Forms.DateTimePicker dtpStopDate;
+        private System.Windows.Forms.DateTimePicker dtpStartDate;
         private System.Windows.Forms.RadioButton rdbStockShort;
         private System.Windows.Forms.RadioButton rdbStockDetail;
         private System.Windows.Forms.Button btnSearchStock;
         private System.Windows.Forms.Button btnSearchSale;
         private System.Windows.Forms.CheckBox chbShowBenefit;
-        private System.Windows.Forms.Label lblExpense;
-        private System.Windows.Forms.GroupBox grbExpense;
-        private System.Windows.Forms.Button btnDailyReport;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dtpExpenseStop;
-        private System.Windows.Forms.DateTimePicker dtpExpenseStart;
         private System.Windows.Forms.RadioButton rdbReturn;
         private System.Windows.Forms.RadioButton rdbSale;
         private System.Windows.Forms.RadioButton rdbProductExpired;
         private System.Windows.Forms.RadioButton rdbDeposit;
-
-
-
-
+        private System.Windows.Forms.RadioButton rdbExpense;
+        private System.Windows.Forms.CheckBox chbAllDeposit;
+        private ExpenseService _ExpenseService;
+        private ProductService _ProductService;
+        private SaleOrderService _SaleOrderService;
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using CrystalDecisions.Windows.Forms;
-using EzPos.GUIs.Reports;
 using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Service;
@@ -28,21 +26,21 @@ namespace EzPos.GUIs.Forms
 
         private void FrmSplash_Load(object sender, EventArgs e)
         {
-            var deadLine = new DateTime(2010, 6, 30);
-            if (DateTime.Now.CompareTo(deadLine) >= 0)
-            {
-                const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
-                var detailMsg = Resources.MsgTrialPeriodExpire;
-                using (var frmMessageBox = new ExtendedMessageBox())
-                {
-                    frmMessageBox.BriefMsgStr = briefMsg;
-                    frmMessageBox.DetailMsgStr = detailMsg;
-                    frmMessageBox.IsCanceledOnly = true;
-                    frmMessageBox.ShowDialog(this);
-                    Close();
-                    return;
-                }
-            }
+            //var deadLine = new DateTime(2010, 6, 30);
+            //if (DateTime.Now.CompareTo(deadLine) >= 0)
+            //{
+            //    const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
+            //    var detailMsg = Resources.MsgTrialPeriodExpire;
+            //    using (var frmMessageBox = new ExtendedMessageBox())
+            //    {
+            //        frmMessageBox.BriefMsgStr = briefMsg;
+            //        frmMessageBox.DetailMsgStr = detailMsg;
+            //        frmMessageBox.IsCanceledOnly = true;
+            //        frmMessageBox.ShowDialog(this);
+            //        Close();
+            //        return;
+            //    }
+            //}
 
             ThreadStart threadStart = RetrieveConfiguration;
             var thread = new Thread(threadStart)

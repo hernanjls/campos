@@ -47,7 +47,7 @@ namespace EzPos.GUIs.Forms
             this.txtSupplierName = new System.Windows.Forms.TextBox();
             this.lblAddress = new System.Windows.Forms.Label();
             this.lblWebsite = new System.Windows.Forms.Label();
-            this.cmbCountry = new ExtendedComboBox(this.components);
+            this.cmbCountry = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -71,6 +71,7 @@ namespace EzPos.GUIs.Forms
             // 
             // pnlBody
             // 
+            this.pnlBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlBody.Controls.Add(this.txtBankInfo);
             this.pnlBody.Controls.Add(this.lblBankInfo);
             this.pnlBody.Controls.Add(this.lblFaxNumber);
@@ -335,6 +336,7 @@ namespace EzPos.GUIs.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(695, 406);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlHeader);

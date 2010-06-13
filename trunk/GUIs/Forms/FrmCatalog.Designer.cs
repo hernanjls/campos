@@ -34,8 +34,6 @@ namespace EzPos.GUIs.Forms
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblMark = new System.Windows.Forms.Label();
             this.lblColor = new System.Windows.Forms.Label();
-            this.txtPhotoPath = new System.Windows.Forms.TextBox();
-            this.ptbProduct = new System.Windows.Forms.PictureBox();
             this.lblUPIn = new System.Windows.Forms.Label();
             this.txtUPIn = new System.Windows.Forms.TextBox();
             this.lblUPOut = new System.Windows.Forms.Label();
@@ -48,7 +46,6 @@ namespace EzPos.GUIs.Forms
             this.txtDiscount = new System.Windows.Forms.TextBox();
             this.grbLine_1 = new System.Windows.Forms.GroupBox();
             this.pnlBody = new System.Windows.Forms.Panel();
-            this.cmbProduct = new System.Windows.Forms.ComboBox();
             this.txtForeignCode = new System.Windows.Forms.TextBox();
             this.lblProductCode = new System.Windows.Forms.Label();
             this.lblSize = new System.Windows.Forms.Label();
@@ -70,11 +67,14 @@ namespace EzPos.GUIs.Forms
             this.tmsGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmImport = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.ptbProduct)).BeginInit();
+            this.txtPhotoPath = new System.Windows.Forms.TextBox();
+            this.ptbProduct = new System.Windows.Forms.PictureBox();
+            this.cmbProduct = new System.Windows.Forms.ComboBox();
             this.pnlBody.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.cmsCatalog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbProduct)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCategory
@@ -106,27 +106,6 @@ namespace EzPos.GUIs.Forms
             this.lblColor.TabIndex = 6;
             this.lblColor.Text = "ពណ៍";
             this.lblColor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtPhotoPath
-            // 
-            this.txtPhotoPath.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhotoPath.Location = new System.Drawing.Point(395, 203);
-            this.txtPhotoPath.Name = "txtPhotoPath";
-            this.txtPhotoPath.Size = new System.Drawing.Size(230, 26);
-            this.txtPhotoPath.TabIndex = 25;
-            this.txtPhotoPath.Visible = false;
-            // 
-            // ptbProduct
-            // 
-            this.ptbProduct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ptbProduct.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ptbProduct.Location = new System.Drawing.Point(392, 19);
-            this.ptbProduct.Name = "ptbProduct";
-            this.ptbProduct.Size = new System.Drawing.Size(279, 363);
-            this.ptbProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.ptbProduct.TabIndex = 101;
-            this.ptbProduct.TabStop = false;
-            this.ptbProduct.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ptbProduct_MouseClick);
             // 
             // lblUPIn
             // 
@@ -252,6 +231,7 @@ namespace EzPos.GUIs.Forms
             // 
             this.pnlBody.BackColor = System.Drawing.Color.White;
             this.pnlBody.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pnlBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlBody.Controls.Add(this.cmbProduct);
             this.pnlBody.Controls.Add(this.txtForeignCode);
             this.pnlBody.Controls.Add(this.lblProductCode);
@@ -285,17 +265,6 @@ namespace EzPos.GUIs.Forms
             this.pnlBody.Name = "pnlBody";
             this.pnlBody.Size = new System.Drawing.Size(695, 400);
             this.pnlBody.TabIndex = 1;
-            // 
-            // cmbProduct
-            // 
-            this.cmbProduct.FormattingEnabled = true;
-            this.cmbProduct.Location = new System.Drawing.Point(392, 19);
-            this.cmbProduct.Name = "cmbProduct";
-            this.cmbProduct.Size = new System.Drawing.Size(279, 30);
-            this.cmbProduct.Sorted = true;
-            this.cmbProduct.TabIndex = 0;
-            this.cmbProduct.Visible = false;
-            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.cmbProduct_SelectedIndexChanged);
             // 
             // txtForeignCode
             // 
@@ -548,6 +517,38 @@ namespace EzPos.GUIs.Forms
             this.tsmImport.Text = "នាំចូលមកពីឃ្លាំង";
             this.tsmImport.Click += new System.EventHandler(this.tsmImport_Click);
             // 
+            // txtPhotoPath
+            // 
+            this.txtPhotoPath.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPhotoPath.Location = new System.Drawing.Point(395, 203);
+            this.txtPhotoPath.Name = "txtPhotoPath";
+            this.txtPhotoPath.Size = new System.Drawing.Size(230, 26);
+            this.txtPhotoPath.TabIndex = 25;
+            this.txtPhotoPath.Visible = false;
+            // 
+            // ptbProduct
+            // 
+            this.ptbProduct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ptbProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ptbProduct.Location = new System.Drawing.Point(392, 19);
+            this.ptbProduct.Name = "ptbProduct";
+            this.ptbProduct.Size = new System.Drawing.Size(279, 363);
+            this.ptbProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ptbProduct.TabIndex = 101;
+            this.ptbProduct.TabStop = false;
+            this.ptbProduct.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ptbProduct_MouseClick);
+            // 
+            // cmbProduct
+            // 
+            this.cmbProduct.FormattingEnabled = true;
+            this.cmbProduct.Location = new System.Drawing.Point(392, 19);
+            this.cmbProduct.Name = "cmbProduct";
+            this.cmbProduct.Size = new System.Drawing.Size(279, 30);
+            this.cmbProduct.Sorted = true;
+            this.cmbProduct.TabIndex = 0;
+            this.cmbProduct.Visible = false;
+            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.cmbProduct_SelectedIndexChanged);
+            // 
             // FrmCatalog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -564,12 +565,12 @@ namespace EzPos.GUIs.Forms
             this.Text = "Product";
             this.Load += new System.EventHandler(this.FrmProduct_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmProductAdvance_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.ptbProduct)).EndInit();
             this.pnlBody.ResumeLayout(false);
             this.pnlBody.PerformLayout();
             this.pnlHeader.ResumeLayout(false);
             this.pnlFooter.ResumeLayout(false);
             this.cmsCatalog.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ptbProduct)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -582,8 +583,6 @@ namespace EzPos.GUIs.Forms
         private ExtendedComboBox cmbMark;
         private System.Windows.Forms.Label lblColor;
         private ExtendedComboBox cmbColor;
-        private System.Windows.Forms.TextBox txtPhotoPath;
-        private System.Windows.Forms.PictureBox ptbProduct;
         private System.Windows.Forms.Label lblUPIn;
         private System.Windows.Forms.TextBox txtUPIn;
         private System.Windows.Forms.Label lblUPOut;
@@ -615,5 +614,7 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.TextBox txtForeignCode;
         private System.Windows.Forms.Label lblProductCode;
         private System.Windows.Forms.ComboBox cmbProduct;
+        private System.Windows.Forms.PictureBox ptbProduct;
+        private System.Windows.Forms.TextBox txtPhotoPath;
     }
 }

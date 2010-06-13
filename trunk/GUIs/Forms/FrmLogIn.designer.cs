@@ -202,6 +202,7 @@ namespace EzPos.GUIs.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(502, 312);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlFooter);

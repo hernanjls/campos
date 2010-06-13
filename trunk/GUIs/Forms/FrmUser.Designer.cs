@@ -53,20 +53,20 @@ namespace EzPos.GUIs.Forms
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.lblStartingDate = new System.Windows.Forms.Label();
             this.dtpStartingDate = new System.Windows.Forms.DateTimePicker();
+            this.cmbContractType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblContractType = new System.Windows.Forms.Label();
             this.lblBirthDate = new System.Windows.Forms.Label();
             this.dtpBirthDate = new System.Windows.Forms.DateTimePicker();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.grbLine_2 = new System.Windows.Forms.GroupBox();
+            this.cmbPosition = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.cmbMaritalStatus = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.cmbGender = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblProductName = new System.Windows.Forms.Label();
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.cmbContractType = new ExtendedComboBox(this.components);
-            this.cmbPosition = new ExtendedComboBox(this.components);
-            this.cmbMaritalStatus = new ExtendedComboBox(this.components);
-            this.cmbGender = new ExtendedComboBox(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ptbUser)).BeginInit();
             this.pnlBody.SuspendLayout();
             this.pnlHeader.SuspendLayout();
@@ -143,8 +143,8 @@ namespace EzPos.GUIs.Forms
             this.txtSalary.TabIndex = 22;
             this.txtSalary.Text = "0.00";
             this.txtSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtSalary.Enter += new System.EventHandler(this.txtSalary_Enter);
             this.txtSalary.Leave += new System.EventHandler(this.txtSalary_Leave);
+            this.txtSalary.Enter += new System.EventHandler(this.txtSalary_Enter);
             // 
             // grbLine_1
             // 
@@ -192,6 +192,7 @@ namespace EzPos.GUIs.Forms
             // pnlBody
             // 
             this.pnlBody.BackColor = System.Drawing.Color.White;
+            this.pnlBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlBody.Controls.Add(this.lblAccount);
             this.pnlBody.Controls.Add(this.txtPassword);
             this.pnlBody.Controls.Add(this.txtLogInName);
@@ -248,8 +249,8 @@ namespace EzPos.GUIs.Forms
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(230, 36);
             this.txtPassword.TabIndex = 27;
-            this.txtPassword.Enter += new System.EventHandler(this.txtPassword_Enter);
             this.txtPassword.Leave += new System.EventHandler(this.txtPassword_Leave);
+            this.txtPassword.Enter += new System.EventHandler(this.txtPassword_Enter);
             // 
             // txtLogInName
             // 
@@ -259,8 +260,8 @@ namespace EzPos.GUIs.Forms
             this.txtLogInName.Name = "txtLogInName";
             this.txtLogInName.Size = new System.Drawing.Size(230, 36);
             this.txtLogInName.TabIndex = 25;
-            this.txtLogInName.Enter += new System.EventHandler(this.txtLogInName_Enter);
             this.txtLogInName.Leave += new System.EventHandler(this.txtLogInName_Leave);
+            this.txtLogInName.Enter += new System.EventHandler(this.txtLogInName_Enter);
             // 
             // lblPassword
             // 
@@ -289,8 +290,8 @@ namespace EzPos.GUIs.Forms
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(230, 36);
             this.txtPhoneNumber.TabIndex = 9;
-            this.txtPhoneNumber.Enter += new System.EventHandler(this.txtPhoneNumber_Enter);
             this.txtPhoneNumber.Leave += new System.EventHandler(this.txtPhoneNumber_Leave);
+            this.txtPhoneNumber.Enter += new System.EventHandler(this.txtPhoneNumber_Enter);
             // 
             // lblPhoneNumber
             // 
@@ -311,8 +312,8 @@ namespace EzPos.GUIs.Forms
             this.txtAddress.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtAddress.Size = new System.Drawing.Size(230, 43);
             this.txtAddress.TabIndex = 11;
-            this.txtAddress.Enter += new System.EventHandler(this.txtAddress_Enter);
             this.txtAddress.Leave += new System.EventHandler(this.txtAddress_Leave);
+            this.txtAddress.Enter += new System.EventHandler(this.txtAddress_Enter);
             // 
             // lblStartingDate
             // 
@@ -333,8 +334,20 @@ namespace EzPos.GUIs.Forms
             this.dtpStartingDate.Size = new System.Drawing.Size(230, 36);
             this.dtpStartingDate.TabIndex = 18;
             this.dtpStartingDate.Value = new System.DateTime(2007, 10, 21, 0, 0, 0, 0);
-            this.dtpStartingDate.Enter += new System.EventHandler(this.dtpStartingDate_Enter);
             this.dtpStartingDate.Leave += new System.EventHandler(this.dtpStartingDate_Leave);
+            this.dtpStartingDate.Enter += new System.EventHandler(this.dtpStartingDate_Enter);
+            // 
+            // cmbContractType
+            // 
+            this.cmbContractType.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbContractType.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbContractType.FormattingEnabled = true;
+            this.cmbContractType.Location = new System.Drawing.Point(166, 300);
+            this.cmbContractType.Name = "cmbContractType";
+            this.cmbContractType.Size = new System.Drawing.Size(230, 36);
+            this.cmbContractType.TabIndex = 16;
+            this.cmbContractType.Leave += new System.EventHandler(this.cmbContractType_Leave);
+            this.cmbContractType.Enter += new System.EventHandler(this.cmbContractType_Enter);
             // 
             // lblContractType
             // 
@@ -366,8 +379,8 @@ namespace EzPos.GUIs.Forms
             this.dtpBirthDate.Size = new System.Drawing.Size(230, 36);
             this.dtpBirthDate.TabIndex = 7;
             this.dtpBirthDate.Value = new System.DateTime(2007, 10, 21, 0, 0, 0, 0);
-            this.dtpBirthDate.Enter += new System.EventHandler(this.dtpBirthDate_Enter);
             this.dtpBirthDate.Leave += new System.EventHandler(this.dtpBirthDate_Leave);
+            this.dtpBirthDate.Enter += new System.EventHandler(this.dtpBirthDate_Enter);
             // 
             // txtUserName
             // 
@@ -377,8 +390,8 @@ namespace EzPos.GUIs.Forms
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(230, 36);
             this.txtUserName.TabIndex = 1;
-            this.txtUserName.Enter += new System.EventHandler(this.txtUserName_Enter);
             this.txtUserName.Leave += new System.EventHandler(this.txtUserName_Leave);
+            this.txtUserName.Enter += new System.EventHandler(this.txtUserName_Enter);
             // 
             // grbLine_2
             // 
@@ -388,6 +401,43 @@ namespace EzPos.GUIs.Forms
             this.grbLine_2.Size = new System.Drawing.Size(352, 2);
             this.grbLine_2.TabIndex = 23;
             this.grbLine_2.TabStop = false;
+            // 
+            // cmbPosition
+            // 
+            this.cmbPosition.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbPosition.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbPosition.FormattingEnabled = true;
+            this.cmbPosition.Location = new System.Drawing.Point(166, 262);
+            this.cmbPosition.Name = "cmbPosition";
+            this.cmbPosition.Size = new System.Drawing.Size(230, 36);
+            this.cmbPosition.TabIndex = 14;
+            this.cmbPosition.Leave += new System.EventHandler(this.cmbPosition_Leave);
+            this.cmbPosition.Enter += new System.EventHandler(this.cmbPosition_Enter);
+            // 
+            // cmbMaritalStatus
+            // 
+            this.cmbMaritalStatus.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbMaritalStatus.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMaritalStatus.FormattingEnabled = true;
+            this.cmbMaritalStatus.Location = new System.Drawing.Point(166, 90);
+            this.cmbMaritalStatus.Name = "cmbMaritalStatus";
+            this.cmbMaritalStatus.Size = new System.Drawing.Size(230, 36);
+            this.cmbMaritalStatus.TabIndex = 5;
+            this.cmbMaritalStatus.Leave += new System.EventHandler(this.cmbMaritalStatus_Leave);
+            this.cmbMaritalStatus.Enter += new System.EventHandler(this.CmbMaritalStatus_Enter);
+            // 
+            // cmbGender
+            // 
+            this.cmbGender.BackColor = System.Drawing.SystemColors.Info;
+            this.cmbGender.DropDownWidth = 230;
+            this.cmbGender.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbGender.FormattingEnabled = true;
+            this.cmbGender.Location = new System.Drawing.Point(166, 52);
+            this.cmbGender.Name = "cmbGender";
+            this.cmbGender.Size = new System.Drawing.Size(230, 36);
+            this.cmbGender.TabIndex = 3;
+            this.cmbGender.Leave += new System.EventHandler(this.cmbCategory_Leave);
+            this.cmbGender.Enter += new System.EventHandler(this.cmbCategory_Enter);
             // 
             // pnlHeader
             // 
@@ -467,59 +517,11 @@ namespace EzPos.GUIs.Forms
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             this.btnSave.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
             // 
-            // cmbContractType
-            // 
-            this.cmbContractType.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbContractType.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbContractType.FormattingEnabled = true;
-            this.cmbContractType.Location = new System.Drawing.Point(166, 300);
-            this.cmbContractType.Name = "cmbContractType";
-            this.cmbContractType.Size = new System.Drawing.Size(230, 36);
-            this.cmbContractType.TabIndex = 16;
-            this.cmbContractType.Leave += new System.EventHandler(this.cmbContractType_Leave);
-            this.cmbContractType.Enter += new System.EventHandler(this.cmbContractType_Enter);
-            // 
-            // cmbPosition
-            // 
-            this.cmbPosition.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbPosition.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbPosition.FormattingEnabled = true;
-            this.cmbPosition.Location = new System.Drawing.Point(166, 262);
-            this.cmbPosition.Name = "cmbPosition";
-            this.cmbPosition.Size = new System.Drawing.Size(230, 36);
-            this.cmbPosition.TabIndex = 14;
-            this.cmbPosition.Leave += new System.EventHandler(this.cmbPosition_Leave);
-            this.cmbPosition.Enter += new System.EventHandler(this.cmbPosition_Enter);
-            // 
-            // cmbMaritalStatus
-            // 
-            this.cmbMaritalStatus.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbMaritalStatus.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMaritalStatus.FormattingEnabled = true;
-            this.cmbMaritalStatus.Location = new System.Drawing.Point(166, 90);
-            this.cmbMaritalStatus.Name = "cmbMaritalStatus";
-            this.cmbMaritalStatus.Size = new System.Drawing.Size(230, 36);
-            this.cmbMaritalStatus.TabIndex = 5;
-            this.cmbMaritalStatus.Leave += new System.EventHandler(this.cmbMaritalStatus_Leave);
-            this.cmbMaritalStatus.Enter += new System.EventHandler(this.CmbMaritalStatus_Enter);
-            // 
-            // cmbGender
-            // 
-            this.cmbGender.BackColor = System.Drawing.SystemColors.Info;
-            this.cmbGender.DropDownWidth = 230;
-            this.cmbGender.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbGender.FormattingEnabled = true;
-            this.cmbGender.Location = new System.Drawing.Point(166, 52);
-            this.cmbGender.Name = "cmbGender";
-            this.cmbGender.Size = new System.Drawing.Size(230, 36);
-            this.cmbGender.TabIndex = 3;
-            this.cmbGender.Leave += new System.EventHandler(this.cmbCategory_Leave);
-            this.cmbGender.Enter += new System.EventHandler(this.cmbCategory_Enter);
-            // 
             // FrmUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(695, 652);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlHeader);
@@ -528,8 +530,8 @@ namespace EzPos.GUIs.Forms
             this.Name = "FrmUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "   .: User :.";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmUser_FormClosing);
             this.Load += new System.EventHandler(this.FrmUser_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmUser_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.ptbUser)).EndInit();
             this.pnlBody.ResumeLayout(false);
             this.pnlBody.PerformLayout();
