@@ -40,6 +40,7 @@ namespace EzPos.GUIs.Controls
             this.rdbStockDetail = new System.Windows.Forms.RadioButton();
             this.lblSale = new System.Windows.Forms.Label();
             this.grbSale = new System.Windows.Forms.GroupBox();
+            this.chbShowQuantity = new System.Windows.Forms.CheckBox();
             this.chbAllDeposit = new System.Windows.Forms.CheckBox();
             this.rdbExpense = new System.Windows.Forms.RadioButton();
             this.rdbDeposit = new System.Windows.Forms.RadioButton();
@@ -171,6 +172,7 @@ namespace EzPos.GUIs.Controls
             // grbSale
             // 
             this.grbSale.BackgroundImage = global::EzPos.Properties.Resources.pnlBodyRight;
+            this.grbSale.Controls.Add(this.chbShowQuantity);
             this.grbSale.Controls.Add(this.chbAllDeposit);
             this.grbSale.Controls.Add(this.rdbExpense);
             this.grbSale.Controls.Add(this.rdbDeposit);
@@ -185,16 +187,30 @@ namespace EzPos.GUIs.Controls
             this.grbSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.grbSale.Location = new System.Drawing.Point(10, 176);
             this.grbSale.Name = "grbSale";
-            this.grbSale.Size = new System.Drawing.Size(180, 318);
+            this.grbSale.Size = new System.Drawing.Size(180, 346);
             this.grbSale.TabIndex = 99;
             this.grbSale.TabStop = false;
+            // 
+            // chbShowQuantity
+            // 
+            this.chbShowQuantity.AutoSize = true;
+            this.chbShowQuantity.BackColor = System.Drawing.Color.Transparent;
+            this.chbShowQuantity.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chbShowQuantity.Location = new System.Drawing.Point(29, 153);
+            this.chbShowQuantity.Name = "chbShowQuantity";
+            this.chbShowQuantity.Size = new System.Drawing.Size(89, 34);
+            this.chbShowQuantity.TabIndex = 19;
+            this.chbShowQuantity.Text = "បរិមាណ";
+            this.chbShowQuantity.UseVisualStyleBackColor = false;
+            this.chbShowQuantity.Leave += new System.EventHandler(this.ChbShowQuantityLeave);
+            this.chbShowQuantity.Enter += new System.EventHandler(this.ChbShowQuantityEnter);
             // 
             // chbAllDeposit
             // 
             this.chbAllDeposit.AutoSize = true;
             this.chbAllDeposit.BackColor = System.Drawing.Color.Transparent;
             this.chbAllDeposit.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbAllDeposit.Location = new System.Drawing.Point(28, 181);
+            this.chbAllDeposit.Location = new System.Drawing.Point(28, 209);
             this.chbAllDeposit.Name = "chbAllDeposit";
             this.chbAllDeposit.Size = new System.Drawing.Size(133, 34);
             this.chbAllDeposit.TabIndex = 18;
@@ -208,7 +224,7 @@ namespace EzPos.GUIs.Controls
             this.rdbExpense.AutoSize = true;
             this.rdbExpense.BackColor = System.Drawing.Color.Transparent;
             this.rdbExpense.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbExpense.Location = new System.Drawing.Point(6, 239);
+            this.rdbExpense.Location = new System.Drawing.Point(6, 267);
             this.rdbExpense.Name = "rdbExpense";
             this.rdbExpense.Size = new System.Drawing.Size(145, 31);
             this.rdbExpense.TabIndex = 17;
@@ -220,7 +236,7 @@ namespace EzPos.GUIs.Controls
             this.rdbDeposit.AutoSize = true;
             this.rdbDeposit.BackColor = System.Drawing.Color.Transparent;
             this.rdbDeposit.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbDeposit.Location = new System.Drawing.Point(6, 154);
+            this.rdbDeposit.Location = new System.Drawing.Point(6, 182);
             this.rdbDeposit.Name = "rdbDeposit";
             this.rdbDeposit.Size = new System.Drawing.Size(146, 31);
             this.rdbDeposit.TabIndex = 16;
@@ -232,7 +248,7 @@ namespace EzPos.GUIs.Controls
             this.rdbReturn.AutoSize = true;
             this.rdbReturn.BackColor = System.Drawing.Color.Transparent;
             this.rdbReturn.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbReturn.Location = new System.Drawing.Point(6, 211);
+            this.rdbReturn.Location = new System.Drawing.Point(6, 239);
             this.rdbReturn.Name = "rdbReturn";
             this.rdbReturn.Size = new System.Drawing.Size(152, 31);
             this.rdbReturn.TabIndex = 15;
@@ -276,7 +292,7 @@ namespace EzPos.GUIs.Controls
             this.btnSearchSale.ForeColor = System.Drawing.Color.White;
             this.btnSearchSale.Image = global::EzPos.Properties.Resources.Search32;
             this.btnSearchSale.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchSale.Location = new System.Drawing.Point(18, 270);
+            this.btnSearchSale.Location = new System.Drawing.Point(18, 298);
             this.btnSearchSale.Name = "btnSearchSale";
             this.btnSearchSale.Size = new System.Drawing.Size(144, 40);
             this.btnSearchSale.TabIndex = 12;
@@ -408,5 +424,6 @@ namespace EzPos.GUIs.Controls
         private ExpenseService _ExpenseService;
         private ProductService _ProductService;
         private SaleOrderService _SaleOrderService;
+        private System.Windows.Forms.CheckBox chbShowQuantity;
     }
 }

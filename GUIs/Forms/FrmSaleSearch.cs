@@ -54,7 +54,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSaveClick(object sender, EventArgs e)
         {
             if (btnSearch.Text == "ម្ដង​ទៀត")
                 SetVisibleControls(true);
@@ -262,22 +262,22 @@ namespace EzPos.GUIs.Forms
         {
         }
 
-        private void btnSearch_MouseEnter(object sender, EventArgs e)
+        private void BtnSearchMouseEnter(object sender, EventArgs e)
         {
             btnSearch.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSearch_MouseLeave(object sender, EventArgs e)
+        private void BtnSearchMouseLeave(object sender, EventArgs e)
         {
             btnSearch.BackgroundImage = Resources.background_2;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
         }
@@ -338,7 +338,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void dgvSearchResult_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvSearchResultCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if(rbtDeposit.Checked)
                 return;
@@ -359,17 +359,17 @@ namespace EzPos.GUIs.Forms
 
         #endregion
 
-        private void btnDeleteDeposit_MouseEnter(object sender, EventArgs e)
+        private void BtnDeleteDepositMouseEnter(object sender, EventArgs e)
         {
             btnDeleteDeposit.BackgroundImage = Resources.background_9;
         }
 
-        private void btnDeleteDeposit_MouseLeave(object sender, EventArgs e)
+        private void BtnDeleteDepositMouseLeave(object sender, EventArgs e)
         {
             btnDeleteDeposit.BackgroundImage = Resources.background_2;
         }
 
-        private void btnDeleteDeposit_Click(object sender, EventArgs e)
+        private void BtnDeleteDepositClick(object sender, EventArgs e)
         {
             var briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
             var detailMsg = Resources.MsgUserPermissionDeny;
@@ -439,7 +439,7 @@ namespace EzPos.GUIs.Forms
                     CashierId = deposit.CashierId
                 };
             paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
-            btnSave_Click(null, null);
+            BtnSaveClick(null, null);
         }
     }
 }

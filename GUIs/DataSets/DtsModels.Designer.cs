@@ -1012,6 +1012,8 @@ namespace EzPos.GUIs.DataSets {
             
             private global::System.Data.DataColumn columnDepositAmount;
             
+            private global::System.Data.DataColumn columnProductCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public DtbSaleReportsDataTable() {
                 this.TableName = "DtbSaleReports";
@@ -1239,6 +1241,13 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn ProductCodeColumn {
+                get {
+                    return this.columnProductCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1295,7 +1304,8 @@ namespace EzPos.GUIs.DataSets {
                         string ReferenceNum, 
                         string ReportTypeStr, 
                         int SalesOrderId, 
-                        double DepositAmount) {
+                        double DepositAmount, 
+                        string ProductCode) {
                 DtbSaleReportsRow rowDtbSaleReportsRow = ((DtbSaleReportsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ReportID,
@@ -1325,7 +1335,8 @@ namespace EzPos.GUIs.DataSets {
                         ReferenceNum,
                         ReportTypeStr,
                         SalesOrderId,
-                        DepositAmount};
+                        DepositAmount,
+                        ProductCode};
                 rowDtbSaleReportsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDtbSaleReportsRow);
                 return rowDtbSaleReportsRow;
@@ -1379,6 +1390,7 @@ namespace EzPos.GUIs.DataSets {
                 this.columnReportTypeStr = base.Columns["ReportTypeStr"];
                 this.columnSalesOrderId = base.Columns["SalesOrderId"];
                 this.columnDepositAmount = base.Columns["DepositAmount"];
+                this.columnProductCode = base.Columns["ProductCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1439,6 +1451,8 @@ namespace EzPos.GUIs.DataSets {
                 base.Columns.Add(this.columnSalesOrderId);
                 this.columnDepositAmount = new global::System.Data.DataColumn("DepositAmount", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDepositAmount);
+                this.columnProductCode = new global::System.Data.DataColumn("ProductCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProductCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnReportID}, true));
                 this.columnReportID.AllowDBNull = false;
@@ -3564,6 +3578,21 @@ namespace EzPos.GUIs.DataSets {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string ProductCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableDtbSaleReports.ProductCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProductCode\' in table \'DtbSaleReports\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDtbSaleReports.ProductCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsSaleOrderNumberNull() {
                 return this.IsNull(this.tableDtbSaleReports.SaleOrderNumberColumn);
             }
@@ -3831,6 +3860,16 @@ namespace EzPos.GUIs.DataSets {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetDepositAmountNull() {
                 this[this.tableDtbSaleReports.DepositAmountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsProductCodeNull() {
+                return this.IsNull(this.tableDtbSaleReports.ProductCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetProductCodeNull() {
+                this[this.tableDtbSaleReports.ProductCodeColumn] = global::System.Convert.DBNull;
             }
         }
         

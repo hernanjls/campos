@@ -34,7 +34,7 @@ namespace EzPos.GUIs.Controls
             set { _ExpenseService = value; }
         }
 
-        private void RefreshReportSale(bool showBenefit)
+        private void RefreshReportSale()
         {
             if (chbShowBenefit.Checked)
             {
@@ -91,17 +91,23 @@ namespace EzPos.GUIs.Controls
                 dtsModel.Tables[1].Rows.Add(dataRow);
             }
 
-            if (!showBenefit)
+            if (chbShowQuantity.Checked)
             {
-                var rptSaleOrder = new CsrSaleOrder();
-                rptSaleOrder.SetDataSource(dtsModel);
-                crvReport.ReportSource = rptSaleOrder;
+                var rptSaleOrderQuantity = new CsrSaleOrderQuantity();
+                rptSaleOrderQuantity.SetDataSource(dtsModel);
+                crvReport.ReportSource = rptSaleOrderQuantity;
             }
-            else
+            else if(chbShowBenefit.Checked)
             {
                 var rptSaleBenefit = new CsrSaleBenefit();
                 rptSaleBenefit.SetDataSource(dtsModel);
                 crvReport.ReportSource = rptSaleBenefit;
+            }
+            else
+            {
+                var rptSaleOrder = new CsrSaleOrder();
+                rptSaleOrder.SetDataSource(dtsModel);
+                crvReport.ReportSource = rptSaleOrder;
             }
         }
 
@@ -252,7 +258,7 @@ namespace EzPos.GUIs.Controls
             try
             {
                 if (rdbSale.Checked)
-                    RefreshReportSale(chbShowBenefit.Checked);
+                    RefreshReportSale();
                 else if (rdbDeposit.Checked)
                     RefreshReportDeposit(chbAllDeposit.Checked);
                 else if (rdbReturn.Checked)
@@ -428,17 +434,40 @@ namespace EzPos.GUIs.Controls
 
         private void ChbAllDepositLeave(object sender, EventArgs e)
         {
-            chbAllDeposit.CheckedChanged += ChbAllDepositCheckedChanged;
+            chbAllDeposit.CheckedChanged -= ChbAllDepositCheckedChanged;
         }
 
         private void ChbShowBenefitCheckedChanged(object sender, EventArgs e)
         {
             rdbSale.Checked = true;
+            chbAllDeposit.Checked = false;
+            if (chbShowBenefit.Checked)
+                chbShowQuantity.Checked = false;
         }
 
         private void ChbAllDepositCheckedChanged(object sender, EventArgs e)
         {
             rdbDeposit.Checked = true;
+            chbShowBenefit.Checked = false;
+            chbShowQuantity.Checked = false;
+        }
+
+        private void ChbShowQuantityEnter(object sender, EventArgs e)
+        {
+            chbShowQuantity.CheckedChanged += ChbShowQuantityCheckedChanged;
+        }
+
+        private void ChbShowQuantityLeave(object sender, EventArgs e)
+        {
+            chbShowQuantity.CheckedChanged -= ChbShowQuantityCheckedChanged;
+        }
+
+        private void ChbShowQuantityCheckedChanged(object sender, EventArgs e)
+        {
+            rdbSale.Checked = true;
+            chbAllDeposit.Checked = false;
+            if (chbShowQuantity.Checked)
+                chbShowBenefit.Checked = false;
         }
     }
 }

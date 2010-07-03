@@ -281,6 +281,27 @@ namespace EzPos.Service
                 saleOrderReport.UnitPriceIn = depositReport.UnitPriceIn;
                 saleOrderReport.UnitPriceOut = depositReport.UnitPriceOut;
 
+                //if (saleItem.FKProduct != null)
+                //{
+                //    if (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode))
+                //    {
+                //        var productCode =
+                //            !string.IsNullOrEmpty(depositReport..ForeignCode) ?
+                //            saleItem.FKProduct.ForeignCode :
+                //            string.Empty;
+                //        productCode = productCode.Replace(",", string.Empty);
+                //        productCode = productCode.Replace(" ", string.Empty);
+                //        saleOrderReport.ProductCode =
+                //            productCode +
+                //            " (" +
+                //            (string.IsNullOrEmpty(saleItem.FKProduct.ProductCode) ?
+                //            saleItem.FKProduct.ProductCode :
+                //            string.Empty) +
+                //            ")";
+                //        saleOrderReport.ProductName = depositReport.ProductName + " (" + productCode + ")";
+                //    }
+                //}
+
                 saleOrderReportList.Add(saleOrderReport);
             }
 

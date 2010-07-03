@@ -31,5 +31,6 @@
     <property name="ReferenceNum" column="ReferenceNum" />
     <property name="ReportTypeStr" column="ReportTypeStr" />    
     <property name="DepositAmount" column="DepositAmount" type="float" />
+    <property name="ProductCode" column="ProductCode" />
   </class>
 </hibernate-mapping>
