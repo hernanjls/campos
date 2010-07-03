@@ -267,6 +267,12 @@
       <DependentUpon>FrmDeposit.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIs\Forms\PrintReceipt.cs" />
+    <Compile Include="GUIs\Reports\CsrSaleOrderQuantity.cs">
+      <DependentUpon>CsrSaleOrderQuantity.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="GUIs\Reports\CsrDeposit.cs">
       <DependentUpon>CsrDeposit.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -469,6 +475,10 @@
     <EmbeddedResource Include="GUIs\Forms\FrmDeposit.resx">
       <DependentUpon>FrmDeposit.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUIs\Reports\CsrSaleOrderQuantity.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CsrSaleOrderQuantity.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\Reports\CsrDeposit.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

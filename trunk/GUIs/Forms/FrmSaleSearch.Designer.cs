@@ -149,9 +149,9 @@ namespace EzPos.GUIs.Forms
             this.btnSearch.Text = "​ស្វែងរក";
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearch.UseVisualStyleBackColor = false;
-            this.btnSearch.MouseLeave += new System.EventHandler(this.btnSearch_MouseLeave);
-            this.btnSearch.Click += new System.EventHandler(this.btnSave_Click);
-            this.btnSearch.MouseEnter += new System.EventHandler(this.btnSearch_MouseEnter);
+            this.btnSearch.MouseLeave += new System.EventHandler(this.BtnSearchMouseLeave);
+            this.btnSearch.Click += new System.EventHandler(this.BtnSaveClick);
+            this.btnSearch.MouseEnter += new System.EventHandler(this.BtnSearchMouseEnter);
             // 
             // btnCancel
             // 
@@ -171,8 +171,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បិទ";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // pnlFooter
             // 
@@ -205,9 +205,9 @@ namespace EzPos.GUIs.Forms
             this.btnDeleteDeposit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDeleteDeposit.UseVisualStyleBackColor = false;
             this.btnDeleteDeposit.Visible = false;
-            this.btnDeleteDeposit.MouseLeave += new System.EventHandler(this.btnDeleteDeposit_MouseLeave);
-            this.btnDeleteDeposit.Click += new System.EventHandler(this.btnDeleteDeposit_Click);
-            this.btnDeleteDeposit.MouseEnter += new System.EventHandler(this.btnDeleteDeposit_MouseEnter);
+            this.btnDeleteDeposit.MouseLeave += new System.EventHandler(this.BtnDeleteDepositMouseLeave);
+            this.btnDeleteDeposit.Click += new System.EventHandler(this.BtnDeleteDepositClick);
+            this.btnDeleteDeposit.MouseEnter += new System.EventHandler(this.BtnDeleteDepositMouseEnter);
             // 
             // pnlBody
             // 
@@ -294,7 +294,7 @@ namespace EzPos.GUIs.Forms
             this.dgvSearchResult.Size = new System.Drawing.Size(657, 349);
             this.dgvSearchResult.TabIndex = 4;
             this.dgvSearchResult.Visible = false;
-            this.dgvSearchResult.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearchResult_CellDoubleClick);
+            this.dgvSearchResult.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSearchResultCellDoubleClick);
             // 
             // lblSearchInfo
             // 

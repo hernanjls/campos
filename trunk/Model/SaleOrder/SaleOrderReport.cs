@@ -78,5 +78,7 @@ namespace EzPos.Model
         public string ReportTypeStr { get; set; }
 
         public float DepositAmount { get; set; }
+
+        public string ProductCode { get; set; }
     }
 }

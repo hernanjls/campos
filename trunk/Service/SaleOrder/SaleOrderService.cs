@@ -212,16 +212,26 @@ namespace EzPos.Service
                 }
                 saleOrderReport.SaleItemID = saleItem.SaleItemID;
                 saleOrderReport.ProductID = saleItem.ProductID;
-                saleOrderReport.ReferenceNum = referenceNum;
+                saleOrderReport.ReferenceNum = referenceNum;                
 
                 if (saleItem.FKProduct != null)
                 {
                     if (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode))
                     {
-                        var productCode = saleItem.FKProduct.ForeignCode;
+                        var productCode = 
+                            !string.IsNullOrEmpty(saleItem.FKProduct.ForeignCode) ?
+                            saleItem.FKProduct.ForeignCode :
+                            string.Empty;
                         productCode = productCode.Replace(",", string.Empty);
                         productCode = productCode.Replace(" ", string.Empty);
-                        saleOrderReport.ProductName = saleItem.ProductName + " (" + productCode + ")";
+                        saleOrderReport.ProductCode =
+                            productCode + 
+                            " (" + 
+                            (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode) ? 
+                            saleItem.FKProduct.ProductCode : 
+                            string.Empty) + 
+                            ")";
+                        saleOrderReport.ProductName = saleItem.ProductName + " (" + productCode + ")";                        
                     }
                 }
 
