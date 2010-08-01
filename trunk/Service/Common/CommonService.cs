@@ -63,12 +63,12 @@ namespace EzPos.Service.Common
             return _CommonDataAccess.GetAppParametersByType(parameterTypeID);
         }
 
-        public virtual IList GetAppParametersByTypeSortByValue(int parameterTypeID)
+        public virtual IList GetAppParametersByTypeSortByValue(int parameterTypeId)
         {
-            return _CommonDataAccess.GetAppParametersByTypeSortByValue(parameterTypeID);
+            return _CommonDataAccess.GetAppParametersByTypeSortByValue(parameterTypeId);
         }
 
-        public static IList GetAppParametersByTypeStatic(IList appParamList, int parameterTypeID)
+        public static IList GetAppParametersByTypeStatic(IList appParamList, int parameterTypeId)
         {
             if (appParamList == null)
                 throw new ArgumentNullException("appParamList", "Missing application parmeter listing");
@@ -76,7 +76,7 @@ namespace EzPos.Service.Common
             var appParamListResult = new List<AppParameter>();
             foreach (AppParameter appParameter in appParamList)
             {
-                if (appParameter.ParameterTypeID == parameterTypeID)
+                if (appParameter.ParameterTypeID == parameterTypeId)
                     appParamListResult.Add(appParameter);
             }
             return appParamListResult;
@@ -102,10 +102,10 @@ namespace EzPos.Service.Common
                 throw new ArgumentNullException("appParameter", "Missing application parmeter");
 
             if (requestStr == null)
-                throw new ArgumentNullException("requestStr", "Unknown request");
+                throw new ArgumentNullException("requestStr", Resources.MsgOperationRequestUnknown);
 
             if (requestStr.Length == 0)
-                throw new ArgumentNullException("requestStr", "Unknown request");
+                throw new ArgumentNullException("requestStr", Resources.MsgOperationRequestUnknown);
 
             if (requestStr == Resources.OperationRequestInsert)
             {

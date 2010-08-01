@@ -109,7 +109,7 @@ namespace EzPos.GUIs.Forms
             this.cmbDCountType.Name = "cmbDCountType";
             this.cmbDCountType.Size = new System.Drawing.Size(19, 36);
             this.cmbDCountType.TabIndex = 43;
-            this.cmbDCountType.SelectedIndexChanged += new System.EventHandler(this.cmbDCountType_SelectedIndexChanged);
+            this.cmbDCountType.SelectedIndexChanged += new System.EventHandler(this.CmbDCountTypeSelectedIndexChanged);
             // 
             // txtSearch
             // 
@@ -119,9 +119,9 @@ namespace EzPos.GUIs.Forms
             this.txtSearch.Size = new System.Drawing.Size(242, 36);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
-            this.txtSearch.Leave += new System.EventHandler(this.txtDCardNum_Leave);
-            this.txtSearch.Enter += new System.EventHandler(this.txtDCardNum_Enter);
+            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearchKeyDown);
+            this.txtSearch.Leave += new System.EventHandler(this.TxtDCardNumLeave);
+            this.txtSearch.Enter += new System.EventHandler(this.TxtDCardNumEnter);
             // 
             // cmbDiscountCard
             // 
@@ -174,8 +174,8 @@ namespace EzPos.GUIs.Forms
             this.lsbCustomer.Name = "lsbCustomer";
             this.lsbCustomer.Size = new System.Drawing.Size(242, 364);
             this.lsbCustomer.TabIndex = 1;
-            this.lsbCustomer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lsbCustomer_MouseDoubleClick);
-            this.lsbCustomer.SelectedIndexChanged += new System.EventHandler(this.lsbCustomer_SelectedIndexChanged);
+            this.lsbCustomer.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LsbCustomerMouseDoubleClick);
+            this.lsbCustomer.SelectedIndexChanged += new System.EventHandler(this.LsbCustomerSelectedIndexChanged);
             // 
             // label1
             // 
@@ -286,7 +286,7 @@ namespace EzPos.GUIs.Forms
             this.txtAmountPaidRiel.TabIndex = 35;
             this.txtAmountPaidRiel.Text = "0.00";
             this.txtAmountPaidRiel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtAmountPaidRiel.TextChanged += new System.EventHandler(this.txtAmountPaidRiel_TextChanged);
+            this.txtAmountPaidRiel.TextChanged += new System.EventHandler(this.TxtAmountPaidRielTextChanged);
             this.txtAmountPaidRiel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmPayment_KeyDown);
             this.txtAmountPaidRiel.Leave += new System.EventHandler(this.TxtAmountPaidRiel_Leave);
             // 
@@ -323,9 +323,9 @@ namespace EzPos.GUIs.Forms
             this.txtAmountPaidUsd.TabIndex = 33;
             this.txtAmountPaidUsd.Text = "0.00";
             this.txtAmountPaidUsd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtAmountPaidUsd.TextChanged += new System.EventHandler(this.txtAmountPaidUsd_TextChanged);
+            this.txtAmountPaidUsd.TextChanged += new System.EventHandler(this.TxtAmountPaidUsdTextChanged);
             this.txtAmountPaidUsd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmPayment_KeyDown);
-            this.txtAmountPaidUsd.Leave += new System.EventHandler(this.txtAmountPaidUsd_Leave);
+            this.txtAmountPaidUsd.Leave += new System.EventHandler(this.TxtAmountPaidUsdLeave);
             // 
             // txtTotalAmountRiel
             // 
@@ -389,9 +389,9 @@ namespace EzPos.GUIs.Forms
             this.btnNew.TabIndex = 2;
             this.btnNew.Text = "អតិថិជន​ថ្មី";
             this.btnNew.UseVisualStyleBackColor = false;
-            this.btnNew.MouseLeave += new System.EventHandler(this.btnNew_MouseLeave);
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            this.btnNew.MouseEnter += new System.EventHandler(this.btnNew_MouseEnter);
+            this.btnNew.MouseLeave += new System.EventHandler(this.BtnNewMouseLeave);
+            this.btnNew.Click += new System.EventHandler(this.BtnNewClick);
+            this.btnNew.MouseEnter += new System.EventHandler(this.BtnNewMouseEnter);
             // 
             // btnCancel
             // 
@@ -410,8 +410,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // btnSave
             // 
@@ -430,8 +430,8 @@ namespace EzPos.GUIs.Forms
             this.btnSave.Text = "យល់ព្រម";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
-            this.btnSave.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            this.btnSave.MouseLeave += new System.EventHandler(this.BtnSaveMouseLeave);
+            this.btnSave.MouseEnter += new System.EventHandler(this.BtnSaveMouseEnter);
             // 
             // pnlTop
             // 

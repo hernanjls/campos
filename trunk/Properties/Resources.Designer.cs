@@ -436,7 +436,7 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer.
+        ///   Looks up a localized string similar to Retail customer.
         /// </summary>
         internal static string ModCustomer {
             get {
@@ -445,11 +445,11 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer debt.
+        ///   Looks up a localized string similar to Deposit.
         /// </summary>
-        internal static string ModCustomerDebt {
+        internal static string ModDeposit {
             get {
-                return ResourceManager.GetString("ModCustomerDebt", resourceCulture);
+                return ResourceManager.GetString("ModDeposit", resourceCulture);
             }
         }
         
@@ -562,6 +562,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ទឹកប្រាក់កក់ពុំអាចស្មើ រឺលើសនឹងទឹកប្រាក់សរុបឡើយ។.
+        /// </summary>
+        internal static string MsgInvalidDepositPayment {
+            get {
+                return ResourceManager.GetString("MsgInvalidDepositPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to សូមអភ័យទោស ផលិតផលនេះពុំអាចលក់ជូនក្នុងតំលៃនេះបានទេ។ សូមមេត្តាព្យាយាម្ដងទៀតជាមួយតំលៃដែលខ្ពស់ជាងនេះ៕.
         /// </summary>
         internal static string MsgInvalidUnitPriceOut {
@@ -639,6 +648,15 @@ namespace EzPos.Properties {
         internal static string MsgOperationRequestProductNotFound {
             get {
                 return ResourceManager.GetString("MsgOperationRequestProductNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown request.
+        /// </summary>
+        internal static string MsgOperationRequestUnknown {
+            get {
+                return ResourceManager.GetString("MsgOperationRequestUnknown", resourceCulture);
             }
         }
         

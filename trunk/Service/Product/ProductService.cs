@@ -401,6 +401,9 @@ namespace EzPos.Service
                         continue;
                     if (propertyInfo.Name.Equals("PhotoPath"))
                     {
+                        if (string.IsNullOrEmpty(((Product)objInstance).PhotoPath))
+                            continue;
+
                         dataRow[propertyInfo.Name] =
                             StringHelper.Right(
                                 ((Product) objInstance).PhotoPath,
@@ -417,13 +420,16 @@ namespace EzPos.Service
             //Export picture to destination
             foreach (Product product in productList)
             {
+                if(string.IsNullOrEmpty(product.PhotoPath))
+                    continue;
+
                 //Fetch source file
                 var sourceFileInfo = new FileInfo(product.PhotoPath);
                 if (!sourceFileInfo.Exists)
                     continue;
 
                 //Destination path
-                string destinationPath =
+                var destinationPath =
                     folderName +
                     StringHelper.Right(
                         product.PhotoPath,

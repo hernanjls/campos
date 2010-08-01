@@ -152,22 +152,22 @@ namespace EzPos.GUIs.Forms
 
         private void TxtDescriptionEnter(object sender, EventArgs e)
         {
-            try
-            {
-                InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
-            }
-            catch (Exception)
-            {
-                InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("ca"));
-            }
+            //try
+            //{
+            //    InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
+            //}
+            //catch (Exception)
+            //{
+            //    InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("ca"));
+            //}
 
             txtDescription.TextChanged += ModificationHandler;
         }
 
         private void TxtDescriptionLeave(object sender, EventArgs e)
         {
-            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en"));
-            lblKeyboardLayout.Visible = false;
+            //InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en"));
+            //lblKeyboardLayout.Visible = false;
             txtDescription.TextChanged -= ModificationHandler;
         }
 
@@ -274,9 +274,9 @@ namespace EzPos.GUIs.Forms
 
         private void FrmExpense_InputLanguageChanged(object sender, InputLanguageChangedEventArgs e)
         {
-            if (InputLanguage.CurrentInputLanguage != null)
-                lblKeyboardLayout.Text = InputLanguage.CurrentInputLanguage.Culture.TwoLetterISOLanguageName;
-            lblKeyboardLayout.Visible = true;
+            //if (InputLanguage.CurrentInputLanguage != null)
+            //    lblKeyboardLayout.Text = InputLanguage.CurrentInputLanguage.Culture.TwoLetterISOLanguageName;
+            //lblKeyboardLayout.Visible = true;
         }
     }
 }
