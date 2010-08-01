@@ -473,7 +473,7 @@
     <value>41</value>
   </data>
   <data name="ModCustomer" xml:space="preserve">
-    <value>Customer</value>
+    <value>Retail customer</value>
   </data>
   <data name="PermissionAddSupplier" xml:space="preserve">
     <value>43</value>
@@ -499,8 +499,8 @@
   <data name="MsgExceedProductCodeLength" xml:space="preserve">
     <value>លេខកូដផលិតផលដែលបានបញ្ចូលពុំត្រឹមត្រូវទេ។ សូមមេត្តាត្រួតពិនិត្យឡើងវិញ !</value>
   </data>
-  <data name="ModCustomerDebt" xml:space="preserve">
-    <value>Customer debt</value>
+  <data name="ModDeposit" xml:space="preserve">
+    <value>Deposit</value>
   </data>
   <data name="MsgConfirmCreditPayment" xml:space="preserve">
     <value>ទឹកប្រាក់ដែលអ្នកបានបញ្ចូលពុំទាន់គ្រប់គ្រាន់ទេ ។ តើអ្នកពិតជាចង់បន្តដំណើរការទៀត?</value>
@@ -528,5 +528,11 @@
   </data>
   <data name="ConstSaleExcelFile" xml:space="preserve">
     <value>invoice-sale.xlsx</value>
+  </data>
+  <data name="MsgInvalidDepositPayment" xml:space="preserve">
+    <value>ទឹកប្រាក់កក់ពុំអាចស្មើ រឺលើសនឹងទឹកប្រាក់សរុបឡើយ។</value>
+  </data>
+  <data name="MsgOperationRequestUnknown" xml:space="preserve">
+    <value>Unknown request</value>
   </data>
 </root>

@@ -349,9 +349,9 @@ namespace EzPos.GUIs.Controls
             this.btnDeposit.TabStop = false;
             this.btnDeposit.Text = "កក់ប្រាក់";
             this.btnDeposit.UseVisualStyleBackColor = false;
-            this.btnDeposit.MouseLeave += new System.EventHandler(this.btnReturn_MouseLeave);
-            this.btnDeposit.Click += new System.EventHandler(this.btnDeposit_Click);
-            this.btnDeposit.MouseEnter += new System.EventHandler(this.btnReturn_MouseEnter);
+            this.btnDeposit.MouseLeave += new System.EventHandler(this.BtnReturnMouseLeave);
+            this.btnDeposit.Click += new System.EventHandler(this.BtnDepositClick);
+            this.btnDeposit.MouseEnter += new System.EventHandler(this.BtnReturnMouseEnter);
             // 
             // btnSearchSaleOrder
             // 
@@ -368,9 +368,9 @@ namespace EzPos.GUIs.Controls
             this.btnSearchSaleOrder.TabStop = false;
             this.btnSearchSaleOrder.Text = "ស្វែងរក";
             this.btnSearchSaleOrder.UseVisualStyleBackColor = false;
-            this.btnSearchSaleOrder.MouseLeave += new System.EventHandler(this.btnSearchSaleOrder_MouseLeave);
-            this.btnSearchSaleOrder.Click += new System.EventHandler(this.btnSearchSaleOrder_Click);
-            this.btnSearchSaleOrder.MouseEnter += new System.EventHandler(this.btnSearchSaleOrder_MouseEnter);
+            this.btnSearchSaleOrder.MouseLeave += new System.EventHandler(this.BtnSearchSaleOrderMouseLeave);
+            this.btnSearchSaleOrder.Click += new System.EventHandler(this.BtnSearchSaleOrderClick);
+            this.btnSearchSaleOrder.MouseEnter += new System.EventHandler(this.BtnSearchSaleOrderMouseEnter);
             // 
             // btnValid
             // 
@@ -387,9 +387,9 @@ namespace EzPos.GUIs.Controls
             this.btnValid.TabStop = false;
             this.btnValid.Text = "គិតលុយ";
             this.btnValid.UseVisualStyleBackColor = false;
-            this.btnValid.MouseLeave += new System.EventHandler(this.btnValid_MouseLeave);
-            this.btnValid.Click += new System.EventHandler(this.btnValid_Click);
-            this.btnValid.MouseEnter += new System.EventHandler(this.btnValid_MouseEnter);
+            this.btnValid.MouseLeave += new System.EventHandler(this.BtnValidMouseLeave);
+            this.btnValid.Click += new System.EventHandler(this.BtnValidClick);
+            this.btnValid.MouseEnter += new System.EventHandler(this.BtnValidMouseEnter);
             // 
             // btnCancel
             // 
@@ -406,9 +406,9 @@ namespace EzPos.GUIs.Controls
             this.btnCancel.TabStop = false;
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancelClick);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // pnlBodyLeft
             // 
@@ -477,9 +477,9 @@ namespace EzPos.GUIs.Controls
             this.dgvSaleItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSaleItem.Size = new System.Drawing.Size(820, 459);
             this.dgvSaleItem.TabIndex = 27;
-            this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellDoubleClick);
-            this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSaleItem_CellClick);
-            this.dgvSaleItem.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvSaleItem_DataError);
+            this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSaleItemCellDoubleClick);
+            this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSaleItemCellClick);
+            this.dgvSaleItem.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DgvSaleItemDataError);
             // 
             // DelColumn
             // 
@@ -716,7 +716,7 @@ namespace EzPos.GUIs.Controls
             this.cmbProduct.Size = new System.Drawing.Size(142, 21);
             this.cmbProduct.TabIndex = 25;
             this.cmbProduct.Visible = false;
-            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.cmbProduct_SelectedIndexChanged);
+            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.CmbProductSelectedIndexChanged);
             // 
             // ptbDisplay
             // 
@@ -737,8 +737,8 @@ namespace EzPos.GUIs.Controls
             this.txtHidden.Name = "txtHidden";
             this.txtHidden.Size = new System.Drawing.Size(150, 20);
             this.txtHidden.TabIndex = 24;
-            this.txtHidden.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHidden_KeyDown);
-            this.txtHidden.Leave += new System.EventHandler(this.txtHidden_Leave);
+            this.txtHidden.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtHiddenKeyDown);
+            this.txtHidden.Leave += new System.EventHandler(this.TxtHiddenLeave);
             // 
             // CtrlSale
             // 

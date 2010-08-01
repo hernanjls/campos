@@ -15,11 +15,11 @@ namespace EzPos.GUIs.Forms
     public partial class FrmPayment : Form
     {
         private CommonService _CommonService;
-        private BindingList<Customer> _CustomerList;
+        private BindingList<Customer> CustomerList;
         private CustomerService _CustomerService;
-        private BindingList<DiscountCard> _DiscountCardList;
-        private IList _DiscountTypeList;
-        private float _ExchangeRate;
+        private BindingList<DiscountCard> DiscountCardList;
+        private IList DiscountTypeList;
+        private float ExchangeRate;
         private float _TotalAmountInt;
 
         public FrmPayment()
@@ -61,7 +61,7 @@ namespace EzPos.GUIs.Forms
                 if (Customer == null)
                 {
                     const string briefMsg = "អំពីអតិថិជន";
-                    var detailMsg = "ការ​គិត​លុយ​ពុំ​អាច​ប្រព្រឹត្ត​ទៅ​ដោយ​គ្មាន​អតិថិជន​ឡើយ ។";
+                    const string detailMsg = "ការ​គិត​លុយ​ពុំ​អាច​ប្រព្រឹត្ត​ទៅ​ដោយ​គ្មាន​អតិថិជន​ឡើយ ។";
                     using (var frmMessageBox = new ExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
@@ -134,6 +134,22 @@ namespace EzPos.GUIs.Forms
                         }
                     //}
                 }
+                else if (IsDeposit)
+                {
+                    const string briefMsg = "អំពីការប្រគល់ប្រាក់";
+                    var detailMsg = Resources.MsgInvalidDepositPayment;
+                    using (var frmMessageBox = new ExtendedMessageBox())
+                    {
+                        frmMessageBox.BriefMsgStr = briefMsg;
+                        frmMessageBox.DetailMsgStr = detailMsg;
+                        frmMessageBox.IsCanceledOnly = true;
+                        if (frmMessageBox.ShowDialog(this) != DialogResult.OK)
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
+                    }                    
+                }
 
                 if (CommonService.IsIntegratedModule(Resources.ModDiscountCard))
                     DiscountCardManagement();
@@ -181,34 +197,34 @@ namespace EzPos.GUIs.Forms
                 thread.Start();
 
                 if (AppContext.ExchangeRate != null)
-                    _ExchangeRate = AppContext.ExchangeRate.ExchangeValue;
+                    ExchangeRate = AppContext.ExchangeRate.ExchangeValue;
 
-                _DiscountCardList = new BindingList<DiscountCard>();
-                cmbDiscountCard.DataSource = _DiscountCardList;
+                DiscountCardList = new BindingList<DiscountCard>();
+                cmbDiscountCard.DataSource = DiscountCardList;
                 cmbDiscountCard.DisplayMember = DiscountCard.CONST_DISCOUNT_CARD_NUMBER;
                 cmbDiscountCard.ValueMember = DiscountCard.CONST_DISCOUNT_CARD_ID;
 
-                _CustomerList = new BindingList<Customer>();
-                lsbCustomer.DataSource = _CustomerList;
+                CustomerList = new BindingList<Customer>();
+                lsbCustomer.DataSource = CustomerList;
                 lsbCustomer.DisplayMember = Customer.CONST_CUSTOMER_NAME;
                 lsbCustomer.ValueMember = Customer.CONST_CUSTOMER_ID;
 
-                txtExchangeRate.Text = _ExchangeRate.ToString("N", AppContext.CultureInfo);
+                txtExchangeRate.Text = ExchangeRate.ToString("N", AppContext.CultureInfo);
                 txtCurrentSaleAmount.Text = _TotalAmountInt.ToString("N", AppContext.CultureInfo);
                 CalculateDiscount();
 
                 if (UserService.AllowToPerform(Resources.PermissionSpecialDiscount))
                     cmbDCountType.Enabled = true;
 
-                if (!CommonService.IsIntegratedModule(Resources.ModCustomer))
+                if (CommonService.IsIntegratedModule(Resources.ModCustomer))
                 {
-                    IList searchCriteria = new List<string> {"CustomerName|Retail Customer"};
+                    IList searchCriteria = new List<string> {"CustomerName|Retail customer"};
                     var customerList = _CustomerService.GetCustomers(searchCriteria);
                     foreach (Customer customer in customerList)
-                        _CustomerList.Add(customer);
-                    txtSearch.Enabled = false;
-                    lsbCustomer.Enabled = false;
-                    btnNew.Enabled = false;
+                        CustomerList.Add(customer);
+                    //txtSearch.Enabled = false;
+                    //lsbCustomer.Enabled = false;
+                    //btnNew.Enabled = false;
                 }
             }
             catch (Exception exception)
@@ -219,7 +235,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtAmountPaidUsd_Leave(object sender, EventArgs e)
+        private void TxtAmountPaidUsdLeave(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtAmountPaidUsd.Text))
                 txtAmountPaidUsd.Text = "0.00";
@@ -250,9 +266,9 @@ namespace EzPos.GUIs.Forms
                 AmountPaidInt = float.Parse(txtAmountPaidUsd.Text);
                 AmountPaidRiel = float.Parse(txtAmountPaidRiel.Text);
 
-                AmountPaidInt += float.Parse(txtAmountPaidRiel.Text)/_ExchangeRate;
+                AmountPaidInt += float.Parse(txtAmountPaidRiel.Text)/ExchangeRate;
                 txtAmountReturnUsd.Text = (AmountPaidInt - amountToPay).ToString("N", AppContext.CultureInfo);
-                txtAmountReturnRiel.Text = ((AmountPaidInt - amountToPay)*_ExchangeRate).ToString("N",
+                txtAmountReturnRiel.Text = ((AmountPaidInt - amountToPay)*ExchangeRate).ToString("N",
                                                                                                    AppContext.
                                                                                                        CultureInfo);
             }
@@ -264,7 +280,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void lsbCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        private void LsbCustomerSelectedIndexChanged(object sender, EventArgs e)
         {
             if ((lsbCustomer.SelectedIndex == -1) || (lsbCustomer.DisplayMember == "") ||
                 (lsbCustomer.ValueMember == ""))
@@ -289,11 +305,11 @@ namespace EzPos.GUIs.Forms
                 "ទឹកប្រាក់បានទិញ: $" + Customer.PurchasedAmount.ToString("N", AppContext.CultureInfo) + "\n";
             lblCustomerInfo.Text = strCustomerInfo;
 
-            if (_DiscountCardList == null)
+            if (DiscountCardList == null)
                 return;
-            for (var counter = 0; counter < _DiscountCardList.Count; counter++)
+            for (var counter = 0; counter < DiscountCardList.Count; counter++)
             {
-                if (Customer.CustomerID != (_DiscountCardList[counter]).CustomerID) 
+                if (Customer.CustomerID != (DiscountCardList[counter]).CustomerID) 
                     continue;
 
                 cmbDiscountCard.SelectedIndex = counter;
@@ -342,20 +358,20 @@ namespace EzPos.GUIs.Forms
             else
                 totalAmountPurchase = Customer.PurchasedAmount + _TotalAmountInt;
 
-            if (_DiscountTypeList == null)
+            if (DiscountTypeList == null)
             {
                 CalculateSale("0 %", 0);
                 return;
             }
 
-            if (_DiscountTypeList.Count == 0)
+            if (DiscountTypeList.Count == 0)
             {
                 CalculateSale("0 %", 0);
                 return;
             }
 
             float discountPercentage = 0;
-            foreach (AppParameter appParameter in _DiscountTypeList)
+            foreach (AppParameter appParameter in DiscountTypeList)
             {
                 if (appParameter == null) 
                     continue;
@@ -377,7 +393,7 @@ namespace EzPos.GUIs.Forms
             PaymentManagement();
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
+        private void BtnNewClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionAddCustomer))
             {
@@ -400,9 +416,9 @@ namespace EzPos.GUIs.Forms
                 {
                     try
                     {
-                        _CustomerList.Add(frmCustomer.Customer);
+                        CustomerList.Add(frmCustomer.Customer);
                         if (frmCustomer.Customer.FKDiscountCard != null)
-                            _DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
+                            DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
 
                         lsbCustomer.SelectedIndex = -1;
                         lsbCustomer.SelectedIndex = lsbCustomer.FindStringExact(frmCustomer.Customer.CustomerName);
@@ -418,7 +434,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        private void TxtSearchKeyDown(object sender, KeyEventArgs e)
         {
             try
             {
@@ -440,53 +456,53 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtAmountPaidUsd_TextChanged(object sender, EventArgs e)
+        private void TxtAmountPaidUsdTextChanged(object sender, EventArgs e)
         {
             PaymentManagement();
         }
 
-        private void txtAmountPaidRiel_TextChanged(object sender, EventArgs e)
+        private void TxtAmountPaidRielTextChanged(object sender, EventArgs e)
         {
             PaymentManagement();
         }
 
-        private void txtDCardNum_Enter(object sender, EventArgs e)
+        private void TxtDCardNumEnter(object sender, EventArgs e)
         {
             txtSearch.Text = "";
             KeyDown -= FrmPayment_KeyDown;
         }
 
-        private void txtDCardNum_Leave(object sender, EventArgs e)
+        private void TxtDCardNumLeave(object sender, EventArgs e)
         {
             KeyDown += FrmPayment_KeyDown;
         }
 
-        private void btnSave_MouseEnter(object sender, EventArgs e)
+        private void BtnSaveMouseEnter(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSave_MouseLeave(object sender, EventArgs e)
+        private void BtnSaveMouseLeave(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_2;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
         }
 
-        private void btnNew_MouseEnter(object sender, EventArgs e)
+        private void BtnNewMouseEnter(object sender, EventArgs e)
         {
             btnNew.BackgroundImage = Resources.background_9;
         }
 
-        private void btnNew_MouseLeave(object sender, EventArgs e)
+        private void BtnNewMouseLeave(object sender, EventArgs e)
         {
             btnNew.BackgroundImage = Resources.background_2;
         }
@@ -506,13 +522,13 @@ namespace EzPos.GUIs.Forms
                 selectedIndex = lsbCustomer.FindString(givenParam);
                 if (selectedIndex == -1)
                 {
-                    foreach (var customer in _CustomerList)
+                    foreach (var customer in CustomerList)
                     {
                         if ((customer.CustomerName.ToUpper() != givenParam.ToUpper()) &&
                             (customer.PhoneNumber != givenParam)) 
                             continue;
 
-                        lsbCustomer.SelectedIndex = _CustomerList.IndexOf(customer);
+                        lsbCustomer.SelectedIndex = CustomerList.IndexOf(customer);
                         break;
                     }
                 }
@@ -539,12 +555,12 @@ namespace EzPos.GUIs.Forms
                 {
                     foreach (Customer customer in customerList)
                     {
-                        _CustomerList.Add(customer);
+                        CustomerList.Add(customer);
 
                         var discountCardList =
                             _CustomerService.GetDiscountCardsByCustomer(customer.CustomerID);
                         foreach (DiscountCard discountCard in discountCardList)
-                            _DiscountCardList.Add(discountCard);
+                            DiscountCardList.Add(discountCard);
                     }
 
                     DoCustomerFetching(givenParam, false);
@@ -697,7 +713,7 @@ namespace EzPos.GUIs.Forms
 
             txtTotalAmountUsd.Text = currentAmount.ToString("N", AppContext.CultureInfo);
             txtTotalAmountRiel.Text =
-                (_ExchangeRate*currentAmount).ToString("N", AppContext.CultureInfo);
+                (ExchangeRate*currentAmount).ToString("N", AppContext.CultureInfo);
             if (Customer == null) 
                 return;
 
@@ -718,12 +734,12 @@ namespace EzPos.GUIs.Forms
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                _DiscountTypeList = _CommonService.GetAppParametersByTypeSortByValue(
+                DiscountTypeList = _CommonService.GetAppParametersByTypeSortByValue(
                     Int32.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo));
 
-                if (_DiscountTypeList.Count != 0)
+                if (DiscountTypeList.Count != 0)
                 {
-                    cmbDCountType.DataSource = _DiscountTypeList;
+                    cmbDCountType.DataSource = DiscountTypeList;
                     cmbDCountType.DisplayMember = AppParameter.CONST_PARAMETER_VALUE;
                     cmbDCountType.ValueMember = AppParameter.CONST_PARAMETER_VALUE;
 
@@ -737,7 +753,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void cmbDCountType_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbDCountTypeSelectedIndexChanged(object sender, EventArgs e)
         {
             if ((cmbDCountType.DataSource == null) ||
                 String.IsNullOrEmpty(cmbDCountType.ValueMember) ||
@@ -753,7 +769,7 @@ namespace EzPos.GUIs.Forms
             cmbDCountType.SelectedIndex = -1;
         }
 
-        private void lsbCustomer_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void LsbCustomerMouseDoubleClick(object sender, MouseEventArgs e)
         {
             if ((String.IsNullOrEmpty(lsbCustomer.DisplayMember)) ||
                 (String.IsNullOrEmpty(lsbCustomer.ValueMember)) ||
@@ -786,16 +802,16 @@ namespace EzPos.GUIs.Forms
                     {
                         //Remove existing discount card of selected customer
                         if (discountCard != null)
-                            _DiscountCardList.Remove(discountCard);
+                            DiscountCardList.Remove(discountCard);
                         //Add new discount card of selected customer
                         if (frmCustomer.Customer.FKDiscountCard != null)
-                            _DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
+                            DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
 
                         //Customer
                         if (operationStr.Equals(Resources.OperationRequestInsert))
-                            _CustomerList.Add(frmCustomer.Customer);
+                            CustomerList.Add(frmCustomer.Customer);
                         else
-                            _CustomerList[_CustomerList.IndexOf(lsbCustomer.SelectedItem as Customer)] =
+                            CustomerList[CustomerList.IndexOf(lsbCustomer.SelectedItem as Customer)] =
                                 frmCustomer.Customer;
 
                         lsbCustomer.SelectedIndex = -1;

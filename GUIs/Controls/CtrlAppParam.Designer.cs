@@ -31,19 +31,19 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvAppParameter = new System.Windows.Forms.DataGridView();
+            this.ParameterID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParameterLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParameterCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParameterValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lsbAppParam = new System.Windows.Forms.ListBox();
             this.cmbAppParamValue = new System.Windows.Forms.ComboBox();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ParameterID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ParameterLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ParameterCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ParameterValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppParameter)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,10 +65,10 @@
             this.dgvAppParameter.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAppParameter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAppParameter.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                                                                                                    this.ParameterID,
-                                                                                                    this.ParameterLabel,
-                                                                                                    this.ParameterCode,
-                                                                                                    this.ParameterValue});
+            this.ParameterID,
+            this.ParameterLabel,
+            this.ParameterCode,
+            this.ParameterValue});
             this.dgvAppParameter.EnableHeadersVisualStyles = false;
             this.dgvAppParameter.GridColor = System.Drawing.Color.Silver;
             this.dgvAppParameter.Location = new System.Drawing.Point(303, 8);
@@ -99,12 +99,54 @@
             this.dgvAppParameter.Size = new System.Drawing.Size(708, 592);
             this.dgvAppParameter.TabIndex = 2;
             this.dgvAppParameter.VirtualMode = true;
+            this.dgvAppParameter.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAppParameter_CellValueChanged);
             this.dgvAppParameter.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvAppParameter_UserDeletingRow);
             this.dgvAppParameter.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvAppParameter_RowValidating);
             this.dgvAppParameter.CancelRowEdit += new System.Windows.Forms.QuestionEventHandler(this.dgvAppParameter_CancelRowEdit);
             this.dgvAppParameter.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAppParameter_RowValidated);
-            this.dgvAppParameter.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAppParameter_CellValueChanged);
             this.dgvAppParameter.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAppParameter_DataError);
+            // 
+            // ParameterID
+            // 
+            this.ParameterID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ParameterID.DataPropertyName = "ParameterID";
+            this.ParameterID.HeaderText = "ParameterID";
+            this.ParameterID.Name = "ParameterID";
+            this.ParameterID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ParameterID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ParameterID.Visible = false;
+            // 
+            // ParameterLabel
+            // 
+            this.ParameterLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ParameterLabel.DataPropertyName = "ParameterLabel";
+            this.ParameterLabel.HeaderText = "បរិយាយ";
+            this.ParameterLabel.Name = "ParameterLabel";
+            this.ParameterLabel.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ParameterLabel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ParameterLabel.Width = 330;
+            // 
+            // ParameterCode
+            // 
+            this.ParameterCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ParameterCode.DataPropertyName = "ParameterCode";
+            this.ParameterCode.HeaderText = "លេខកូដ";
+            this.ParameterCode.Name = "ParameterCode";
+            this.ParameterCode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ParameterCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ParameterCode.Width = 165;
+            // 
+            // ParameterValue
+            // 
+            this.ParameterValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ParameterValue.DataPropertyName = "ParameterValue";
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ParameterValue.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ParameterValue.HeaderText = "តំលៃ";
+            this.ParameterValue.Name = "ParameterValue";
+            this.ParameterValue.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ParameterValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ParameterValue.Width = 165;
             // 
             // lsbAppParam
             // 
@@ -115,7 +157,6 @@
             this.lsbAppParam.Location = new System.Drawing.Point(13, 8);
             this.lsbAppParam.Name = "lsbAppParam";
             this.lsbAppParam.Size = new System.Drawing.Size(282, 592);
-            this.lsbAppParam.Sorted = true;
             this.lsbAppParam.TabIndex = 0;
             this.lsbAppParam.SelectedIndexChanged += new System.EventHandler(this.lsbProduct_SelectedIndexChanged);
             // 
@@ -172,48 +213,6 @@
             this.dataGridViewTextBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.dataGridViewTextBoxColumn4.Width = 290;
-            // 
-            // ParameterID
-            // 
-            this.ParameterID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ParameterID.DataPropertyName = "ParameterID";
-            this.ParameterID.HeaderText = "ParameterID";
-            this.ParameterID.Name = "ParameterID";
-            this.ParameterID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ParameterID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ParameterID.Visible = false;
-            // 
-            // ParameterLabel
-            // 
-            this.ParameterLabel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ParameterLabel.DataPropertyName = "ParameterLabel";
-            this.ParameterLabel.HeaderText = "បរិយាយ";
-            this.ParameterLabel.Name = "ParameterLabel";
-            this.ParameterLabel.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ParameterLabel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ParameterLabel.Width = 330;
-            // 
-            // ParameterCode
-            // 
-            this.ParameterCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ParameterCode.DataPropertyName = "ParameterCode";
-            this.ParameterCode.HeaderText = "លេខកូដ";
-            this.ParameterCode.Name = "ParameterCode";
-            this.ParameterCode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ParameterCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ParameterCode.Width = 165;
-            // 
-            // ParameterValue
-            // 
-            this.ParameterValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ParameterValue.DataPropertyName = "ParameterValue";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Khmer OS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ParameterValue.DefaultCellStyle = dataGridViewCellStyle2;
-            this.ParameterValue.HeaderText = "តំលៃ";
-            this.ParameterValue.Name = "ParameterValue";
-            this.ParameterValue.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ParameterValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ParameterValue.Width = 165;
             // 
             // CtrlAppParam
             // 

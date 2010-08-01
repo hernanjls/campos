@@ -29,6 +29,7 @@ namespace EzPos.GUIs.Controls
         private DepositService _DepositService;
         private float _TotalAmountInt;
         private bool _ReturnEnabled;
+        private bool _DepositEnabled;
 
         public CtrlSale()
         {
@@ -86,6 +87,9 @@ namespace EzPos.GUIs.Controls
                 InitializeSaleItemList();
                 ResetProductInfo();
                 ScanFocusHandler();
+
+                _DepositEnabled = CommonService.IsIntegratedModule(Resources.ModDeposit);
+                btnDeposit.Enabled = _DepositEnabled;
             }
             catch (Exception exception)
             {
@@ -95,7 +99,7 @@ namespace EzPos.GUIs.Controls
             }
         }
 
-        private void cmbProduct_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbProductSelectedIndexChanged(object sender, EventArgs e)
         {
             if ((String.IsNullOrEmpty(cmbProduct.DisplayMember)) ||
                 (String.IsNullOrEmpty(cmbProduct.ValueMember)) ||
@@ -111,7 +115,7 @@ namespace EzPos.GUIs.Controls
 
                 var foundFlag = false;
                 var selectedIndex = 0;
-                dgvSaleItem.SelectionChanged -= dgvSaleItem_SelectionChanged;
+                dgvSaleItem.SelectionChanged -= DgvSaleItemSelectionChanged;
                 foreach (var saleItem in _SaleItemBindingList)
                 {
                     if (product.ProductID == saleItem.ProductID)
@@ -140,7 +144,7 @@ namespace EzPos.GUIs.Controls
 
                 dgvSaleItem.Refresh();
                 UpdateSelectedIndex(selectedIndex);
-                dgvSaleItem.SelectionChanged += dgvSaleItem_SelectionChanged;
+                dgvSaleItem.SelectionChanged += DgvSaleItemSelectionChanged;
                 CalculateSale();
                 ScanFocusHandler();
             }
@@ -341,7 +345,7 @@ namespace EzPos.GUIs.Controls
             dgvSaleItem.DataSource = _SaleItemBindingList;
         }
 
-        private void txtHidden_KeyDown(object sender, KeyEventArgs e)
+        private void TxtHiddenKeyDown(object sender, KeyEventArgs e)
         {
             if (e == null)
                 return;
@@ -480,7 +484,7 @@ namespace EzPos.GUIs.Controls
             SetPurchasedInfo(0);
         }
 
-        private void dgvSaleItem_SelectionChanged(object sender, EventArgs e)
+        private void DgvSaleItemSelectionChanged(object sender, EventArgs e)
         {
             if (_SaleItemBindingList == null)
                 return;
@@ -497,7 +501,7 @@ namespace EzPos.GUIs.Controls
                 }
                 else
                 {
-                    cmbProduct.SelectedIndexChanged -= cmbProduct_SelectedIndexChanged;
+                    cmbProduct.SelectedIndexChanged -= CmbProductSelectedIndexChanged;
                     foreach (var product in _ProductList)
                     {
                         if (product.ProductID != 
@@ -508,26 +512,26 @@ namespace EzPos.GUIs.Controls
                         cmbProduct.SelectedIndex = -1;
                         break;
                     }
-                    cmbProduct.SelectedIndexChanged += cmbProduct_SelectedIndexChanged;
+                    cmbProduct.SelectedIndexChanged += CmbProductSelectedIndexChanged;
                 }
             }
 
             ScanFocusHandler();
         }
 
-        private void dgvSaleItem_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void DgvSaleItemDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             ExtendedMessageBox.UnknownErrorMessage(
                 Resources.MsgCaptionUnknownError,
                 e.Exception.Message);
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancelClick(object sender, EventArgs e)
         {
             CancelSale();
         }
 
-        private void btnValid_Click(object sender, EventArgs e)
+        private void BtnValidClick(object sender, EventArgs e)
         {
             ScanFocusHandler();
             if (_SaleItemBindingList.Count == 0)
@@ -634,7 +638,7 @@ namespace EzPos.GUIs.Controls
                 isDeposit);
         }
 
-        private void dgvSaleItem_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvSaleItemCellClick(object sender, DataGridViewCellEventArgs e)
         {
             ScanFocusHandler();
 
@@ -649,7 +653,7 @@ namespace EzPos.GUIs.Controls
                                dgvSaleItem.SelectedRows[0].Index);
         }
 
-        private void btnDeposit_Click(object sender, EventArgs e)
+        private void BtnDepositClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionAddDeposit))
             {
@@ -728,42 +732,42 @@ namespace EzPos.GUIs.Controls
             }
         }
 
-        private void btnValid_MouseEnter(object sender, EventArgs e)
+        private void BtnValidMouseEnter(object sender, EventArgs e)
         {
             btnValid.BackgroundImage = Resources.background_9;
         }
 
-        private void btnValid_MouseLeave(object sender, EventArgs e)
+        private void BtnValidMouseLeave(object sender, EventArgs e)
         {
             btnValid.BackgroundImage = null;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = null;
         }
 
-        private void btnReturn_MouseEnter(object sender, EventArgs e)
+        private void BtnReturnMouseEnter(object sender, EventArgs e)
         {
             btnDeposit.BackgroundImage = Resources.background_9;
         }
 
-        private void btnReturn_MouseLeave(object sender, EventArgs e)
+        private void BtnReturnMouseLeave(object sender, EventArgs e)
         {
             btnDeposit.BackgroundImage = null;
         }
 
-        private void btnSearchSaleOrder_MouseEnter(object sender, EventArgs e)
+        private void BtnSearchSaleOrderMouseEnter(object sender, EventArgs e)
         {
             btnSearchSaleOrder.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSearchSaleOrder_MouseLeave(object sender, EventArgs e)
+        private void BtnSearchSaleOrderMouseLeave(object sender, EventArgs e)
         {
             btnSearchSaleOrder.BackgroundImage = null;
         }
@@ -782,7 +786,7 @@ namespace EzPos.GUIs.Controls
             dgvSaleItem.Columns["SubTotal"].DisplayIndex = 11;
         }
 
-        private void btnSearchSaleOrder_Click(object sender, EventArgs e)
+        private void BtnSearchSaleOrderClick(object sender, EventArgs e)
         {
             ScanFocusHandler();
             try
@@ -803,7 +807,7 @@ namespace EzPos.GUIs.Controls
                             if (_SaleOrder == null)
                                 return;
 
-                            dgvSaleItem.SelectionChanged += dgvSaleItem_SelectionChanged;
+                            dgvSaleItem.SelectionChanged += DgvSaleItemSelectionChanged;
                             IListToBindingList(
                                 _SaleOrderService.GetSaleItems(_SaleOrder.SaleOrderId));
                             _SaleOrder.FKCustomer.DiscountPercentage = _SaleOrder.Discount;
@@ -942,7 +946,7 @@ namespace EzPos.GUIs.Controls
             //Switch to foreign code
             if(selectedIndex == -1)
             {
-                cmbProduct.SelectedIndexChanged -= cmbProduct_SelectedIndexChanged;
+                cmbProduct.SelectedIndexChanged -= CmbProductSelectedIndexChanged;
                 cmbProduct.DisplayMember = Product.CONST_FOREIGN_CODE;
 
                 selectedIndex = cmbProduct.FindStringExact(productCode);
@@ -950,7 +954,7 @@ namespace EzPos.GUIs.Controls
                 //Switch to product code
                 cmbProduct.DisplayMember = Product.CONST_PRODUCT_CODE;
                 cmbProduct.SelectedIndex = -1;
-                cmbProduct.SelectedIndexChanged += cmbProduct_SelectedIndexChanged;
+                cmbProduct.SelectedIndexChanged += CmbProductSelectedIndexChanged;
             }
             cmbProduct.SelectedIndex = selectedIndex;
 
@@ -1024,7 +1028,7 @@ namespace EzPos.GUIs.Controls
         {
             btnValid.Enabled = isActivated;
             btnProductAdjustment.Enabled = isActivated;
-            btnDeposit.Enabled = isActivated;
+            btnDeposit.Enabled = isActivated && _DepositEnabled;
         }
 
         private void SetPurchasedInfo(IFormattable totalQtyPurchased)
@@ -1060,7 +1064,7 @@ namespace EzPos.GUIs.Controls
             }
         }
 
-        private void dgvSaleItem_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvSaleItemCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (_SaleOrder != null)
                 return;
@@ -1224,10 +1228,10 @@ namespace EzPos.GUIs.Controls
 
         private void CtrlSale_KeyDown(object sender, KeyEventArgs e)
         {
-            txtHidden_KeyDown(sender, e);
+            TxtHiddenKeyDown(sender, e);
         }
 
-        private void txtHidden_Leave(object sender, EventArgs e)
+        private void TxtHiddenLeave(object sender, EventArgs e)
         {
             if (txtHidden.CanFocus)
                 txtHidden.Focus();
