@@ -9,42 +9,41 @@ namespace EzPos.GUIs.Forms
 {
     public class PrintBarCode
     {
-        private static readonly PrintDocument printDocument = new PrintDocument();
-        private static List<BarCode> _BarCodeList = new List<BarCode>();
-        private static int _Counter;
+        private static readonly PrintDocument PrintDocument = new PrintDocument();
+        private static List<BarCode> BarCodeList = new List<BarCode>();
+        private static int Counter;
         private static StringFormat StrFormat;
 
         public static void InializePrinting(List<BarCode> barCodeList)
         {
-            _BarCodeList = barCodeList;
+            BarCodeList = barCodeList;
             var printPreviewDialog = 
                 new PrintPreviewDialog
                 {
                     WindowState = FormWindowState.Maximized,
                     FormBorderStyle = FormBorderStyle.None,
                     UseAntiAlias = true,
-                    Document = printDocument
+                    Document = PrintDocument
                 };
 
             if (AppContext.Counter != null)
-                printDocument.PrinterSettings.PrinterName = AppContext.Counter.BarCodePrinter;
-            printDocument.BeginPrint += printDoc_BeginPrint;
-            printDocument.PrintPage += printDocument_PrintPage;
+                PrintDocument.PrinterSettings.PrinterName = AppContext.Counter.BarCodePrinter;
+            PrintDocument.BeginPrint += PrintDocBeginPrint;
+            PrintDocument.PrintPage += PrintDocumentPrintPage;
 
             printPreviewDialog.ShowDialog();
 
-            printDocument.BeginPrint -= printDoc_BeginPrint;
-            printDocument.PrintPage -= printDocument_PrintPage;
+            PrintDocument.BeginPrint -= PrintDocBeginPrint;
+            PrintDocument.PrintPage -= PrintDocumentPrintPage;
         }
 
-        private static void printDocument_PrintPage(object sender, PrintPageEventArgs e)
+        private static void PrintDocumentPrintPage(object sender, PrintPageEventArgs e)
         {
-            var posY = 30;
+            var posY = 25;
             int rowIndex = 0, colIndex = 0;
 
             var fontBarCode = new Font("Free 3 of 9 Extended", 35, FontStyle.Regular);
             var solidBrush = new SolidBrush(Color.Black);
-            //var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 2;
             var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 6;
 
             var leftMargin = e.MarginBounds.Left;
@@ -52,7 +51,7 @@ namespace EzPos.GUIs.Forms
             var medianPaper = e.MarginBounds.Width / 2;
 
             var posX = leftMargin - 50;
-            while (_Counter <= _BarCodeList.Count - 1)
+            while (Counter <= BarCodeList.Count - 1)
             {
                 if (rowIndex == 6)
                 {
@@ -60,7 +59,7 @@ namespace EzPos.GUIs.Forms
                     return;
                 }
 
-                var barCode = _BarCodeList[_Counter];
+                var barCode = BarCodeList[Counter];
                 var printStr = "*" + barCode.BarCodeValue + "*";
                 var txtWidth = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Width, 0).ToString());
@@ -82,7 +81,8 @@ namespace EzPos.GUIs.Forms
                         posY,
                         rightMargin - medianPaper - 50,
                         recHeight - 20);
-                
+
+                pen.Color = Color.White;
                 e.Graphics.DrawRectangle(pen, rectangle);
 
                 e.Graphics.DrawString(
@@ -129,23 +129,21 @@ namespace EzPos.GUIs.Forms
                     StrFormat);
 
                 if (colIndex < 1)
-                {
                     colIndex++;
-                }
                 else
                 {
                     colIndex = 0;
                     posX = leftMargin - 50;
                     rowIndex++;
-                    posY += (recHeight - 10);
+                    posY += (recHeight - 20);
                 }
 
-                _Counter++;
+                Counter++;
             }
             e.HasMorePages = false;
         }
 
-        private static void printDoc_BeginPrint(object sender, PrintEventArgs e)
+        private static void PrintDocBeginPrint(object sender, PrintEventArgs e)
         {
             try
             {
@@ -157,7 +155,7 @@ namespace EzPos.GUIs.Forms
                         Trimming = StringTrimming.EllipsisCharacter
                     };
 
-                _Counter = 0;
+                Counter = 0;
             }
             catch (Exception ex)
             {

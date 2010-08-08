@@ -14,13 +14,10 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmPayment : Form
     {
-        private CommonService _CommonService;
         private BindingList<Customer> CustomerList;
-        private CustomerService _CustomerService;
         private BindingList<DiscountCard> DiscountCardList;
         private IList DiscountTypeList;
         private float ExchangeRate;
-        private float _TotalAmountInt;
 
         public FrmPayment()
         {
@@ -206,7 +203,7 @@ namespace EzPos.GUIs.Forms
 
                 CustomerList = new BindingList<Customer>();
                 lsbCustomer.DataSource = CustomerList;
-                lsbCustomer.DisplayMember = Customer.CONST_CUSTOMER_NAME;
+                lsbCustomer.DisplayMember = Customer.CONST_CUSTOMER_DISPLAY_NAME;
                 lsbCustomer.ValueMember = Customer.CONST_CUSTOMER_ID;
 
                 txtExchangeRate.Text = ExchangeRate.ToString("N", AppContext.CultureInfo);
@@ -515,7 +512,7 @@ namespace EzPos.GUIs.Forms
             cmbDiscountCard.SelectedIndex = -1;
             lsbCustomer.SelectedIndex = -1;
 
-            int selectedIndex = cmbDiscountCard.FindStringExact(
+            var selectedIndex = cmbDiscountCard.FindStringExact(
                 StringHelper.Right("000000000" + givenParam, 9));
             if (selectedIndex == -1)
             {
@@ -525,7 +522,8 @@ namespace EzPos.GUIs.Forms
                     foreach (var customer in CustomerList)
                     {
                         if ((customer.CustomerName.ToUpper() != givenParam.ToUpper()) &&
-                            (customer.PhoneNumber != givenParam)) 
+                            (customer.PhoneNumber != givenParam) &&
+                            (customer.LocalName != givenParam)) 
                             continue;
 
                         lsbCustomer.SelectedIndex = CustomerList.IndexOf(customer);
@@ -543,13 +541,15 @@ namespace EzPos.GUIs.Forms
 
             if ((lsbCustomer.SelectedIndex == -1) && (isAllowed))
             {
-                var searchCriteria = new List<string>
-                                         {
-                                             "(CustomerName LIKE '%" + givenParam + "%')" +
-                                             " OR (PhoneNumber LIKE '%" + givenParam + "%')" +
-                                             " OR (CustomerID IN (SELECT CustomerID FROM TDiscountCards WHERE CustomerID <> 0 AND CardNumber LIKE '%" +
-                                             givenParam + "%'))"
-                                         };
+                var searchCriteria = 
+                    new List<string>
+                    {
+                        "(CustomerName LIKE N'%" + givenParam + "%')" +
+                        " OR (LocalName LIKE N'%" + givenParam + "%')" +
+                        " OR (PhoneNumber LIKE '%" + givenParam + "%')" +
+                        " OR (CustomerID IN (SELECT CustomerID FROM TDiscountCards WHERE CustomerID <> 0 AND CardNumber LIKE '%" +
+                        givenParam + "%'))"
+                    };
                 var customerList = _CustomerService.GetCustomers(searchCriteria);
                 if (customerList.Count != 0)
                 {

@@ -31,32 +31,15 @@ namespace EzPos.GUIs.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBodyLeft = new System.Windows.Forms.Panel();
             this.dgvCustomer = new System.Windows.Forms.DataGridView();
-            this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenderStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PhoneNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmailAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Website = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PurchasedAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DebtAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountCardNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountCardType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountPercentage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FKDiscountCard = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountRejected = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.btnOutstandingInvoice = new System.Windows.Forms.Button();
-            this.cmbDiscountCard = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblAmount = new System.Windows.Forms.Label();
             this.grbAmount = new System.Windows.Forms.GroupBox();
             this.purchaseAmountLbl = new System.Windows.Forms.Label();
@@ -77,10 +60,29 @@ namespace EzPos.GUIs.Controls
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.lblCardNum = new System.Windows.Forms.Label();
             this.txtCardNum = new System.Windows.Forms.TextBox();
-            this.cmbDCardType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.lblDCountType = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.cmbDCardType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.cmbDiscountCard = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
+            this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenderStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PhoneNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmailAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Website = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PurchasedAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DebtAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiscountCardNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiscountCardType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiscountPercentage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FKDiscountCard = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiscountRejected = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlBodyLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomer)).BeginInit();
             this.pnlBodyRight.SuspendLayout();
@@ -109,14 +111,14 @@ namespace EzPos.GUIs.Controls
             this.dgvCustomer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvCustomer.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvCustomer.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.InfoText;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InfoText;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomer.ColumnHeadersHeight = 40;
             this.dgvCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvCustomer.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -135,7 +137,9 @@ namespace EzPos.GUIs.Controls
             this.DiscountCardType,
             this.DiscountPercentage,
             this.FKDiscountCard,
-            this.DiscountRejected});
+            this.DiscountRejected,
+            this.LocalName,
+            this.CustomerNameCol});
             this.dgvCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCustomer.EnableHeadersVisualStyles = false;
             this.dgvCustomer.GridColor = System.Drawing.Color.White;
@@ -160,178 +164,6 @@ namespace EzPos.GUIs.Controls
             this.dgvCustomer.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomer_CellDoubleClick);
             this.dgvCustomer.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvCustomer_DataError);
             this.dgvCustomer.SelectionChanged += new System.EventHandler(this.dgvCustomer_SelectionChanged);
-            // 
-            // CustomerID
-            // 
-            this.CustomerID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.CustomerID.DataPropertyName = "CustomerID";
-            this.CustomerID.HeaderText = "CustomerID";
-            this.CustomerID.Name = "CustomerID";
-            this.CustomerID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CustomerID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CustomerID.Visible = false;
-            // 
-            // CustomerCode
-            // 
-            this.CustomerCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.CustomerCode.DataPropertyName = "CustomerCode";
-            this.CustomerCode.HeaderText = "CustomerCode";
-            this.CustomerCode.Name = "CustomerCode";
-            this.CustomerCode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CustomerCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CustomerCode.Visible = false;
-            // 
-            // CustomerName
-            // 
-            this.CustomerName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.CustomerName.DataPropertyName = "CustomerName";
-            this.CustomerName.HeaderText = "ឈ្មោះអតិថិជន";
-            this.CustomerName.Name = "CustomerName";
-            this.CustomerName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CustomerName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // GenderStr
-            // 
-            this.GenderStr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.GenderStr.DataPropertyName = "GenderStr";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.GenderStr.DefaultCellStyle = dataGridViewCellStyle7;
-            this.GenderStr.HeaderText = "ភេទ";
-            this.GenderStr.Name = "GenderStr";
-            this.GenderStr.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.GenderStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.GenderStr.Width = 95;
-            // 
-            // GenderID
-            // 
-            this.GenderID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.GenderID.DataPropertyName = "GenderID";
-            this.GenderID.HeaderText = "GenderID";
-            this.GenderID.Name = "GenderID";
-            this.GenderID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.GenderID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.GenderID.Visible = false;
-            this.GenderID.Width = 80;
-            // 
-            // PhoneNumber
-            // 
-            this.PhoneNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.PhoneNumber.DataPropertyName = "PhoneNumber";
-            this.PhoneNumber.HeaderText = "លេខទូរស័ព្ទ";
-            this.PhoneNumber.Name = "PhoneNumber";
-            this.PhoneNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.PhoneNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PhoneNumber.Width = 130;
-            // 
-            // EmailAddress
-            // 
-            this.EmailAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmailAddress.DataPropertyName = "EmailAddress";
-            this.EmailAddress.HeaderText = "សារអេឡិចត្រូនិច";
-            this.EmailAddress.Name = "EmailAddress";
-            this.EmailAddress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.EmailAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.EmailAddress.Visible = false;
-            // 
-            // Website
-            // 
-            this.Website.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Website.DataPropertyName = "Website";
-            this.Website.HeaderText = "គេហៈទំព័រ";
-            this.Website.Name = "Website";
-            this.Website.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Website.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Website.Visible = false;
-            this.Website.Width = 215;
-            // 
-            // Address
-            // 
-            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Address.DataPropertyName = "Address";
-            this.Address.HeaderText = "អាស័យដ្ឋាន";
-            this.Address.Name = "Address";
-            this.Address.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Address.Visible = false;
-            // 
-            // PurchasedAmount
-            // 
-            this.PurchasedAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.PurchasedAmount.DataPropertyName = "PurchasedAmount";
-            this.PurchasedAmount.HeaderText = "PurchasedAmount";
-            this.PurchasedAmount.Name = "PurchasedAmount";
-            this.PurchasedAmount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.PurchasedAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PurchasedAmount.Visible = false;
-            // 
-            // DebtAmount
-            // 
-            this.DebtAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DebtAmount.DataPropertyName = "DebtAmount";
-            this.DebtAmount.HeaderText = "DebtAmount";
-            this.DebtAmount.Name = "DebtAmount";
-            this.DebtAmount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DebtAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DebtAmount.Visible = false;
-            // 
-            // DiscountCardNumber
-            // 
-            this.DiscountCardNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DiscountCardNumber.DataPropertyName = "DiscountCardNumber";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DiscountCardNumber.DefaultCellStyle = dataGridViewCellStyle8;
-            this.DiscountCardNumber.HeaderText = "លេខកាត";
-            this.DiscountCardNumber.Name = "DiscountCardNumber";
-            this.DiscountCardNumber.ReadOnly = true;
-            this.DiscountCardNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DiscountCardNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DiscountCardNumber.Width = 130;
-            // 
-            // DiscountCardType
-            // 
-            this.DiscountCardType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DiscountCardType.DataPropertyName = "DiscountCardType";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.DiscountCardType.DefaultCellStyle = dataGridViewCellStyle9;
-            this.DiscountCardType.HeaderText = "ប្រភេទកាត";
-            this.DiscountCardType.Name = "DiscountCardType";
-            this.DiscountCardType.ReadOnly = true;
-            this.DiscountCardType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DiscountCardType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DiscountCardType.Width = 130;
-            // 
-            // DiscountPercentage
-            // 
-            this.DiscountPercentage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DiscountPercentage.DataPropertyName = "DiscountPercentage";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "N0";
-            dataGridViewCellStyle10.NullValue = null;
-            this.DiscountPercentage.DefaultCellStyle = dataGridViewCellStyle10;
-            this.DiscountPercentage.HeaderText = "%";
-            this.DiscountPercentage.Name = "DiscountPercentage";
-            this.DiscountPercentage.ReadOnly = true;
-            this.DiscountPercentage.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DiscountPercentage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DiscountPercentage.Width = 50;
-            // 
-            // FKDiscountCard
-            // 
-            this.FKDiscountCard.DataPropertyName = "FKDiscountCard";
-            this.FKDiscountCard.HeaderText = "FKDiscountCard";
-            this.FKDiscountCard.Name = "FKDiscountCard";
-            this.FKDiscountCard.Visible = false;
-            // 
-            // DiscountRejected
-            // 
-            this.DiscountRejected.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DiscountRejected.DataPropertyName = "DiscountRejected";
-            this.DiscountRejected.HeaderText = "DiscountRejected";
-            this.DiscountRejected.Name = "DiscountRejected";
-            this.DiscountRejected.ReadOnly = true;
-            this.DiscountRejected.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DiscountRejected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DiscountRejected.Visible = false;
             // 
             // pnlBodyRight
             // 
@@ -370,16 +202,6 @@ namespace EzPos.GUIs.Controls
             this.btnOutstandingInvoice.MouseLeave += new System.EventHandler(this.btnOutstandingInvoice_MouseLeave);
             this.btnOutstandingInvoice.Click += new System.EventHandler(this.btnOutstandingInvoice_Click);
             this.btnOutstandingInvoice.MouseEnter += new System.EventHandler(this.btnOutstandingInvoice_MouseEnter);
-            // 
-            // cmbDiscountCard
-            // 
-            this.cmbDiscountCard.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbDiscountCard.FormattingEnabled = true;
-            this.cmbDiscountCard.Location = new System.Drawing.Point(8, 281);
-            this.cmbDiscountCard.Name = "cmbDiscountCard";
-            this.cmbDiscountCard.Size = new System.Drawing.Size(184, 28);
-            this.cmbDiscountCard.TabIndex = 101;
-            this.cmbDiscountCard.Visible = false;
             // 
             // lblAmount
             // 
@@ -619,15 +441,6 @@ namespace EzPos.GUIs.Controls
             this.txtCardNum.Size = new System.Drawing.Size(184, 27);
             this.txtCardNum.TabIndex = 1;
             // 
-            // cmbDCardType
-            // 
-            this.cmbDCardType.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbDCardType.FormattingEnabled = true;
-            this.cmbDCardType.Location = new System.Drawing.Point(388, 49);
-            this.cmbDCardType.Name = "cmbDCardType";
-            this.cmbDCardType.Size = new System.Drawing.Size(184, 27);
-            this.cmbDCardType.TabIndex = 3;
-            // 
             // lblDCountType
             // 
             this.lblDCountType.AutoSize = true;
@@ -665,6 +478,211 @@ namespace EzPos.GUIs.Controls
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // cmbDCardType
+            // 
+            this.cmbDCardType.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDCardType.FormattingEnabled = true;
+            this.cmbDCardType.Location = new System.Drawing.Point(388, 49);
+            this.cmbDCardType.Name = "cmbDCardType";
+            this.cmbDCardType.Size = new System.Drawing.Size(184, 27);
+            this.cmbDCardType.TabIndex = 3;
+            // 
+            // cmbDiscountCard
+            // 
+            this.cmbDiscountCard.Font = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDiscountCard.FormattingEnabled = true;
+            this.cmbDiscountCard.Location = new System.Drawing.Point(8, 281);
+            this.cmbDiscountCard.Name = "cmbDiscountCard";
+            this.cmbDiscountCard.Size = new System.Drawing.Size(184, 28);
+            this.cmbDiscountCard.TabIndex = 101;
+            this.cmbDiscountCard.Visible = false;
+            // 
+            // CustomerID
+            // 
+            this.CustomerID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CustomerID.DataPropertyName = "CustomerID";
+            this.CustomerID.HeaderText = "CustomerID";
+            this.CustomerID.Name = "CustomerID";
+            this.CustomerID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CustomerID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CustomerID.Visible = false;
+            // 
+            // CustomerCode
+            // 
+            this.CustomerCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CustomerCode.DataPropertyName = "CustomerCode";
+            this.CustomerCode.HeaderText = "CustomerCode";
+            this.CustomerCode.Name = "CustomerCode";
+            this.CustomerCode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CustomerCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CustomerCode.Visible = false;
+            // 
+            // CustomerName
+            // 
+            this.CustomerName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.CustomerName.DataPropertyName = "DisplayName";
+            this.CustomerName.HeaderText = "ឈ្មោះអតិថិជន";
+            this.CustomerName.Name = "CustomerName";
+            this.CustomerName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CustomerName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // GenderStr
+            // 
+            this.GenderStr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.GenderStr.DataPropertyName = "GenderStr";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.GenderStr.DefaultCellStyle = dataGridViewCellStyle2;
+            this.GenderStr.HeaderText = "ភេទ";
+            this.GenderStr.Name = "GenderStr";
+            this.GenderStr.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.GenderStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.GenderStr.Width = 95;
+            // 
+            // GenderID
+            // 
+            this.GenderID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.GenderID.DataPropertyName = "GenderID";
+            this.GenderID.HeaderText = "GenderID";
+            this.GenderID.Name = "GenderID";
+            this.GenderID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.GenderID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.GenderID.Visible = false;
+            this.GenderID.Width = 80;
+            // 
+            // PhoneNumber
+            // 
+            this.PhoneNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PhoneNumber.DataPropertyName = "PhoneNumber";
+            this.PhoneNumber.HeaderText = "លេខទូរស័ព្ទ";
+            this.PhoneNumber.Name = "PhoneNumber";
+            this.PhoneNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.PhoneNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PhoneNumber.Width = 130;
+            // 
+            // EmailAddress
+            // 
+            this.EmailAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmailAddress.DataPropertyName = "EmailAddress";
+            this.EmailAddress.HeaderText = "សារអេឡិចត្រូនិច";
+            this.EmailAddress.Name = "EmailAddress";
+            this.EmailAddress.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.EmailAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.EmailAddress.Visible = false;
+            // 
+            // Website
+            // 
+            this.Website.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Website.DataPropertyName = "Website";
+            this.Website.HeaderText = "គេហៈទំព័រ";
+            this.Website.Name = "Website";
+            this.Website.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Website.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Website.Visible = false;
+            this.Website.Width = 215;
+            // 
+            // Address
+            // 
+            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Address.DataPropertyName = "Address";
+            this.Address.HeaderText = "អាស័យដ្ឋាន";
+            this.Address.Name = "Address";
+            this.Address.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Address.Visible = false;
+            // 
+            // PurchasedAmount
+            // 
+            this.PurchasedAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PurchasedAmount.DataPropertyName = "PurchasedAmount";
+            this.PurchasedAmount.HeaderText = "PurchasedAmount";
+            this.PurchasedAmount.Name = "PurchasedAmount";
+            this.PurchasedAmount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.PurchasedAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PurchasedAmount.Visible = false;
+            // 
+            // DebtAmount
+            // 
+            this.DebtAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DebtAmount.DataPropertyName = "DebtAmount";
+            this.DebtAmount.HeaderText = "DebtAmount";
+            this.DebtAmount.Name = "DebtAmount";
+            this.DebtAmount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DebtAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DebtAmount.Visible = false;
+            // 
+            // DiscountCardNumber
+            // 
+            this.DiscountCardNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DiscountCardNumber.DataPropertyName = "DiscountCardNumber";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DiscountCardNumber.DefaultCellStyle = dataGridViewCellStyle3;
+            this.DiscountCardNumber.HeaderText = "លេខកាត";
+            this.DiscountCardNumber.Name = "DiscountCardNumber";
+            this.DiscountCardNumber.ReadOnly = true;
+            this.DiscountCardNumber.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DiscountCardNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DiscountCardNumber.Width = 130;
+            // 
+            // DiscountCardType
+            // 
+            this.DiscountCardType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DiscountCardType.DataPropertyName = "DiscountCardType";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.DiscountCardType.DefaultCellStyle = dataGridViewCellStyle4;
+            this.DiscountCardType.HeaderText = "ប្រភេទកាត";
+            this.DiscountCardType.Name = "DiscountCardType";
+            this.DiscountCardType.ReadOnly = true;
+            this.DiscountCardType.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DiscountCardType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DiscountCardType.Width = 130;
+            // 
+            // DiscountPercentage
+            // 
+            this.DiscountPercentage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DiscountPercentage.DataPropertyName = "DiscountPercentage";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.DiscountPercentage.DefaultCellStyle = dataGridViewCellStyle5;
+            this.DiscountPercentage.HeaderText = "%";
+            this.DiscountPercentage.Name = "DiscountPercentage";
+            this.DiscountPercentage.ReadOnly = true;
+            this.DiscountPercentage.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DiscountPercentage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DiscountPercentage.Width = 50;
+            // 
+            // FKDiscountCard
+            // 
+            this.FKDiscountCard.DataPropertyName = "FKDiscountCard";
+            this.FKDiscountCard.HeaderText = "FKDiscountCard";
+            this.FKDiscountCard.Name = "FKDiscountCard";
+            this.FKDiscountCard.Visible = false;
+            // 
+            // DiscountRejected
+            // 
+            this.DiscountRejected.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DiscountRejected.DataPropertyName = "DiscountRejected";
+            this.DiscountRejected.HeaderText = "DiscountRejected";
+            this.DiscountRejected.Name = "DiscountRejected";
+            this.DiscountRejected.ReadOnly = true;
+            this.DiscountRejected.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DiscountRejected.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DiscountRejected.Visible = false;
+            // 
+            // LocalName
+            // 
+            this.LocalName.DataPropertyName = "LocalName";
+            this.LocalName.HeaderText = "LocalName";
+            this.LocalName.Name = "LocalName";
+            this.LocalName.Visible = false;
+            // 
+            // CustomerNameCol
+            // 
+            this.CustomerNameCol.DataPropertyName = "CustomerName";
+            this.CustomerNameCol.HeaderText = "CustomerName";
+            this.CustomerNameCol.Name = "CustomerNameCol";
+            this.CustomerNameCol.Visible = false;
             // 
             // CtrlCustomer
             // 
@@ -720,6 +738,7 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.Label lblResultInfo;
         private ExtendedComboBox cmbDiscountCard;
         private System.Windows.Forms.Button btnOutstandingInvoice;
+        private System.Windows.Forms.CheckBox chbDeposit;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
@@ -736,6 +755,7 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.DataGridViewTextBoxColumn DiscountPercentage;
         private System.Windows.Forms.DataGridViewTextBoxColumn FKDiscountCard;
         private System.Windows.Forms.DataGridViewTextBoxColumn DiscountRejected;
-        private System.Windows.Forms.CheckBox chbDeposit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LocalName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerNameCol;
     }
 }

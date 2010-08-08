@@ -7,12 +7,15 @@ namespace EzPos.Model
     {
         public const string CONST_CUSTOMER_ID = "CustomerID";
         public const string CONST_CUSTOMER_NAME = "CustomerName";
+        public const string CONST_CUSTOMER_DISPLAY_NAME = "DisplayName";
 
         public int CustomerID { get; set; }
 
         public string CustomerCode { get; set; }
 
         public string CustomerName { get; set; }
+
+        public string LocalName { get; set; }
 
         public string Address { get; set; }
 
@@ -39,5 +42,20 @@ namespace EzPos.Model
         public DiscountCard FKDiscountCard { get; set; }
 
         public int DiscountRejected { get; set; }
+
+        public string DisplayName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(LocalName))
+                    return string.IsNullOrEmpty(CustomerName) ? string.Empty : CustomerName;
+                
+                return
+                    (string.IsNullOrEmpty(CustomerName) ? string.Empty : CustomerName) + 
+                    " (" +
+                    (string.IsNullOrEmpty(LocalName) ? string.Empty : LocalName) + 
+                    ")";
+            }
+        }
     }
 }
