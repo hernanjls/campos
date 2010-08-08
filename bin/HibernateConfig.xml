@@ -5,7 +5,7 @@
 				<settings>
 					<item key="hibernate.connection.provider">NHibernate.Connection.DriverConnectionProvider</item>
 					<item key="hibernate.connection.driver_class">NHibernate.Driver.SqlClientDriver</item>
-					<item key="hibernate.connection.connection_string">Database=ezpos-btb;Data Source=YIM-DELL\SQL2005;User ID=sa;Password=khmerDEV$$</item>
+					<item key="hibernate.connection.connection_string">Database=ezpos;Data Source=YIM-DELL\SQL2005;User ID=sa;Password=khmerDEV$$</item>
 					<item key="hibernate.dialect">NHibernate.Dialect.MsSql2000Dialect</item>
 				</settings>
 				<resources>

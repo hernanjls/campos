@@ -11,10 +11,7 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmCustomer : Form
     {
-        private CommonService _CommonService;
-        private Customer _Customer;
-        private CustomerService _CustomerService;
-        private bool _IsModified;
+        private bool IsModified;
 
         public FrmCustomer()
         {
@@ -41,13 +38,13 @@ namespace EzPos.GUIs.Forms
 
         private void SetModifydStatus(bool modifyStatus)
         {
-            _IsModified = modifyStatus;
+            IsModified = modifyStatus;
             btnSave.Enabled = modifyStatus;
         }
 
         private void FrmCustomerAdvance_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((DialogResult == DialogResult.Cancel) && (_IsModified))
+            if ((DialogResult == DialogResult.Cancel) && (IsModified))
             {
                 const string briefMsg = "អំពីការបោះបង់";
                 var detailMsg = Resources.MsgOperationRequestCancel;
@@ -63,14 +60,14 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (!_IsModified)
+            if (!IsModified)
             {
                 DialogResult = DialogResult.Cancel;
                 return;
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSaveClick(object sender, EventArgs e)
         {
             try
             {
@@ -91,6 +88,7 @@ namespace EzPos.GUIs.Forms
                 if (_Customer == null)
                     _Customer = new Customer();
 
+                _Customer.LocalName = txtLocalName.Text;
                 _Customer.CustomerName = txtCustomerName.Text;
                 _Customer.Address = txtAddress.Text;
                 _Customer.PhoneNumber = txtPhoneNumber.Text;
@@ -104,8 +102,8 @@ namespace EzPos.GUIs.Forms
                 if (lsbDiscountCard.SelectedItem != null)
                 {
                     var discountCard = (DiscountCard) lsbDiscountCard.SelectedItem;
-                    if (discountCard != null)
-                    {
+                    //if (discountCard != null)
+                    //{
                         if ((discountCard.CustomerID != _Customer.CustomerID) ||
                             _Customer.CustomerID == 0)
                         {
@@ -124,18 +122,16 @@ namespace EzPos.GUIs.Forms
                                     _Customer.PurchasedAmount = discountAmount;
                             }
                         }
-                    }
+                    //}
                 }
 
                 if (_CustomerService == null)
                     _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
 
-                if (_Customer.CustomerID != 0)
-                    _CustomerService.CustomerManagement(_Customer,
-                                                        Resources.OperationRequestUpdate);
-                else
-                    _CustomerService.CustomerManagement(_Customer,
-                                                        Resources.OperationRequestInsert);
+                _CustomerService.CustomerManagement(_Customer,
+                                                    _Customer.CustomerID != 0
+                                                        ? Resources.OperationRequestUpdate
+                                                        : Resources.OperationRequestInsert);
 
                 if (isAllowed)
                 {
@@ -155,52 +151,52 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtCustomerName_Enter(object sender, EventArgs e)
+        private void TxtCustomerNameEnter(object sender, EventArgs e)
         {
             txtCustomerName.TextChanged += ModificationHandler;
         }
 
-        private void txtCustomerName_Leave(object sender, EventArgs e)
+        private void TxtCustomerNameLeave(object sender, EventArgs e)
         {
             txtCustomerName.TextChanged -= ModificationHandler;
         }
 
-        private void txtPhoneNumber_Enter(object sender, EventArgs e)
+        private void TxtPhoneNumberEnter(object sender, EventArgs e)
         {
             txtPhoneNumber.TextChanged += ModificationHandler;
         }
 
-        private void txtPhoneNumber_Leave(object sender, EventArgs e)
+        private void TxtPhoneNumberLeave(object sender, EventArgs e)
         {
             txtPhoneNumber.TextChanged -= ModificationHandler;
         }
 
-        private void txtEmailAddress_Enter(object sender, EventArgs e)
+        private void TxtEmailAddressEnter(object sender, EventArgs e)
         {
             txtEmailAddress.TextChanged += ModificationHandler;
         }
 
-        private void txtEmailAddress_Leave(object sender, EventArgs e)
+        private void TxtEmailAddressLeave(object sender, EventArgs e)
         {
             txtEmailAddress.TextChanged -= ModificationHandler;
         }
 
-        private void txtWebsite_Enter(object sender, EventArgs e)
+        private void TxtWebsiteEnter(object sender, EventArgs e)
         {
             txtWebsite.TextChanged += ModificationHandler;
         }
 
-        private void txtWebsite_Leave(object sender, EventArgs e)
+        private void TxtWebsiteLeave(object sender, EventArgs e)
         {
             txtWebsite.TextChanged -= ModificationHandler;
         }
 
-        private void txtAddress_Enter(object sender, EventArgs e)
+        private void TxtAddressEnter(object sender, EventArgs e)
         {
             txtAddress.TextChanged += ModificationHandler;
         }
 
-        private void txtAddress_Leave(object sender, EventArgs e)
+        private void TxtAddressLeave(object sender, EventArgs e)
         {
             txtAddress.TextChanged -= ModificationHandler;
         }
@@ -274,6 +270,7 @@ namespace EzPos.GUIs.Forms
                     currentCardLbl.Text = discountCard.CardNumber + " (" + discountCard.DiscountCardTypeStr + ")";
             }
 
+            txtLocalName.Text = _Customer.LocalName;
             txtCustomerName.Text = _Customer.CustomerName;
             cmbGender.SelectedValue = _Customer.GenderID;
             txtAddress.Text = _Customer.Address;
@@ -282,17 +279,17 @@ namespace EzPos.GUIs.Forms
             txtWebsite.Text = _Customer.Website;
         }
 
-        private void cmbGender_Enter(object sender, EventArgs e)
+        private void CmbGenderEnter(object sender, EventArgs e)
         {
             cmbGender.SelectedIndexChanged += ModificationHandler;
         }
 
-        private void cmbGender_Leave(object sender, EventArgs e)
+        private void CmbGenderLeave(object sender, EventArgs e)
         {
             cmbGender.SelectedIndexChanged += ModificationHandler;
         }
 
-        private void cmbDCardType_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbDCardTypeSelectedIndexChanged(object sender, EventArgs e)
         {
             var criteriaList = new List<string>
                                    {
@@ -311,39 +308,49 @@ namespace EzPos.GUIs.Forms
             lsbDiscountCard.SelectedIndex = -1;
         }
 
-        private void lsbDiscountCard_Enter(object sender, EventArgs e)
+        private void LsbDiscountCardEnter(object sender, EventArgs e)
         {
             lsbDiscountCard.SelectedIndexChanged += ModificationHandler;
         }
 
-        private void lsbDiscountCard_Leave(object sender, EventArgs e)
+        private void LsbDiscountCardLeave(object sender, EventArgs e)
         {
             lsbDiscountCard.SelectedIndexChanged -= ModificationHandler;
         }
 
-        private void cmbDCardType_Enter(object sender, EventArgs e)
+        private void CmbDCardTypeEnter(object sender, EventArgs e)
         {
-            cmbDCardType.SelectedIndexChanged += cmbDCardType_SelectedIndexChanged;
+            cmbDCardType.SelectedIndexChanged += CmbDCardTypeSelectedIndexChanged;
         }
 
-        private void btnSave_MouseEnter(object sender, EventArgs e)
+        private void BtnSaveMouseEnter(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSave_MouseLeave(object sender, EventArgs e)
+        private void BtnSaveMouseLeave(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_2;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
+        }
+
+        private void TxtLocalNameMouseEnter(object sender, EventArgs e)
+        {
+            txtLocalName.TextChanged += ModificationHandler;
+        }
+
+        private void TxtLocalNameMouseLeave(object sender, EventArgs e)
+        {
+            txtLocalName.TextChanged -= ModificationHandler;
         }
     }
 }

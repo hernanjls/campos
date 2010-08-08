@@ -1,4 +1,6 @@
 ﻿using EzPos.GUIs.Components;
+using EzPos.Service;
+using EzPos.Service.Common;
 
 namespace EzPos.GUIs.Forms
 {
@@ -542,7 +544,8 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.Label lblDCardInfo;
         private ExtendedComboBox cmbDCountType;
-
-
+        private float _TotalAmountInt;
+        private CommonService _CommonService;
+        private CustomerService _CustomerService;
     }
 }

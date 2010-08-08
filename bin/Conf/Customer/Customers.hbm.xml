@@ -7,6 +7,7 @@
 
     <property name="CustomerCode" column="CustomerCode" />
     <property name="CustomerName" column="CustomerName" />
+    <property name="LocalName" column="LocalName" />
     <property name="Address" column="Address" />
 		<property name="PhoneNumber" column="PhoneNumber" />
 		<property name="EmailAddress" column="EmailAddress" />
