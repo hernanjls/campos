@@ -292,9 +292,9 @@ namespace EzPos.GUIs.Controls
             this.btnPrint.Text = "បោះពុម្ភ";
             this.btnPrint.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnPrint.UseVisualStyleBackColor = false;
-            this.btnPrint.MouseLeave += new System.EventHandler(this.btnPrint_MouseLeave);
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            this.btnPrint.MouseEnter += new System.EventHandler(this.btnPrint_MouseEnter);
+            this.btnPrint.MouseLeave += new System.EventHandler(this.BtnPrintMouseLeave);
+            this.btnPrint.Click += new System.EventHandler(this.BtnPrintClick);
+            this.btnPrint.MouseEnter += new System.EventHandler(this.BtnPrintMouseEnter);
             // 
             // rdbPrintSelected
             // 
@@ -354,9 +354,9 @@ namespace EzPos.GUIs.Controls
             this.btnDelete.Text = "លុបចោល";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.MouseLeave += new System.EventHandler(this.btnDelete_MouseLeave);
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            this.btnDelete.MouseEnter += new System.EventHandler(this.btnDelete_MouseEnter);
+            this.btnDelete.MouseLeave += new System.EventHandler(this.BtnDeleteMouseLeave);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDeleteClick);
+            this.btnDelete.MouseEnter += new System.EventHandler(this.BtnDeleteMouseEnter);
             // 
             // btnNew
             // 
@@ -374,9 +374,9 @@ namespace EzPos.GUIs.Controls
             this.btnNew.Text = "បង្កើតថ្មី";
             this.btnNew.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNew.UseVisualStyleBackColor = false;
-            this.btnNew.MouseLeave += new System.EventHandler(this.btnNew_MouseLeave);
-            this.btnNew.Click += new System.EventHandler(this.btnNewProduct_Click);
-            this.btnNew.MouseEnter += new System.EventHandler(this.btnNew_MouseEnter);
+            this.btnNew.MouseLeave += new System.EventHandler(this.BtnNewMouseLeave);
+            this.btnNew.Click += new System.EventHandler(this.BtnNewProductClick);
+            this.btnNew.MouseEnter += new System.EventHandler(this.BtnNewMouseEnter);
             // 
             // ptbProduct
             // 
@@ -435,7 +435,7 @@ namespace EzPos.GUIs.Controls
             this.chbInstockOnly.TabIndex = 9;
             this.chbInstockOnly.Text = "ក្នុងស្តុក";
             this.chbInstockOnly.UseVisualStyleBackColor = false;
-            this.chbInstockOnly.CheckedChanged += new System.EventHandler(this.chbInstockOnly_CheckedChanged);
+            this.chbInstockOnly.CheckedChanged += new System.EventHandler(this.ChbInstockOnlyCheckedChanged);
             // 
             // chbDisplayPicture
             // 
@@ -450,7 +450,7 @@ namespace EzPos.GUIs.Controls
             this.chbDisplayPicture.TabIndex = 8;
             this.chbDisplayPicture.Text = "រូបភាព";
             this.chbDisplayPicture.UseVisualStyleBackColor = false;
-            this.chbDisplayPicture.CheckedChanged += new System.EventHandler(this.chbDisplayPicture_CheckedChanged);
+            this.chbDisplayPicture.CheckedChanged += new System.EventHandler(this.ChbDisplayPictureCheckedChanged);
             // 
             // lblBarCode
             // 
@@ -483,7 +483,7 @@ namespace EzPos.GUIs.Controls
             this.btnReset.Text = "&Reset";
             this.btnReset.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnReset.Click += new System.EventHandler(this.BtnResetClick);
             // 
             // cmbColor
             // 
@@ -558,7 +558,7 @@ namespace EzPos.GUIs.Controls
             this.cmdSearchProduct.Text = "&Search";
             this.cmdSearchProduct.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdSearchProduct.UseVisualStyleBackColor = true;
-            this.cmdSearchProduct.Click += new System.EventHandler(this.cmdSearchProduct_Click);
+            this.cmdSearchProduct.Click += new System.EventHandler(this.CmdSearchProductClick);
             // 
             // pnlBodyLeft
             // 
@@ -635,12 +635,12 @@ namespace EzPos.GUIs.Controls
             this.dgvProduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProduct.Size = new System.Drawing.Size(824, 471);
             this.dgvProduct.TabIndex = 0;
-            this.dgvProduct.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvProduct_Scroll);
-            this.dgvProduct.DoubleClick += new System.EventHandler(this.dgvProduct_DoubleClick);
-            this.dgvProduct.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvProduct_DataError);
-            this.dgvProduct.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvProduct_KeyDown);
-            this.dgvProduct.SelectionChanged += new System.EventHandler(this.dgvProduct_SelectionChanged);
-            this.dgvProduct.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProduct_CellContentClick);
+            this.dgvProduct.Scroll += new System.Windows.Forms.ScrollEventHandler(this.DgvProductScroll);
+            this.dgvProduct.DoubleClick += new System.EventHandler(this.DgvProductDoubleClick);
+            this.dgvProduct.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DgvProductDataError);
+            this.dgvProduct.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvProductKeyDown);
+            this.dgvProduct.SelectionChanged += new System.EventHandler(this.DgvProductSelectionChanged);
+            this.dgvProduct.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvProductCellContentClick);
             // 
             // PrintCheck
             // 
