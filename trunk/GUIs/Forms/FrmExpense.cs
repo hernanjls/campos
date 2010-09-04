@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using EzPos.Model;
@@ -60,6 +59,8 @@ namespace EzPos.GUIs.Forms
             ThreadStart threadStart = UpdateControlContent;
             var thread = new Thread(threadStart);
             thread.Start();
+
+            dtpExpenseDate.Enabled = UserService.AllowToPerform(Resources.PermissionChangeExpenseDate);
         }
 
         private void SetExpenseInfo()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using EzPos.GUI;
@@ -266,8 +267,6 @@ namespace EzPos.GUIs.Controls
                     frmMessageBox.ShowDialog(this);
                     return;
                 }
-                //ExtendedMessageBox.InformMessage(Resources.MsgUserPermissionDeny);
-                //return;
             }
 
             //string briefMsg, detailMsg;
@@ -462,8 +461,26 @@ namespace EzPos.GUIs.Controls
                     }
                     dgvProduct.Refresh();
                 }
+                
+                var barCodePrintingTypeList =
+                    _CommonService.GetAppParametersByType(
+                        Int32.Parse(Resources.AppParamBarcodePrintingType, AppContext.CultureInfo));
 
-                PrintBarCode.InializePrinting(BarCodeList);
+                var barCodePrintingType = string.Empty;
+                if (barCodePrintingTypeList != null)
+                {
+                    if(barCodePrintingTypeList.Count != 0)
+                    {
+                        var appParameter = (AppParameter) barCodePrintingTypeList[0];
+                        if (appParameter != null)
+                            barCodePrintingType = appParameter.ParameterValue;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(barCodePrintingType))
+                    barCodePrintingType = Resources.ConstPrintTypeA4;
+
+                PrintBarCode.InializePrinting(BarCodeList, barCodePrintingType);
                 SetFocusToProductList();
             }
             catch (Exception exception)
@@ -996,7 +1013,15 @@ namespace EzPos.GUIs.Controls
                     }
                 }
 
-                PrintProduct.InializePrinting(ProductList);
+                //Generate product to print
+                var selectedProductList = new BindingList<Product>();
+                foreach (var product in
+                    ProductList.Where(product => product != null).Where(product => product.PrintCheck))
+                {
+                    selectedProductList.Add(product);
+                }
+
+                PrintProduct.InializePrinting(selectedProductList);
                 SetFocusToProductList();
             }
             catch (Exception exception)

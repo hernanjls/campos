@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Resources;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
@@ -18,35 +17,35 @@ namespace EzPos
         [Test]
         public void TestPrintInvoice()
         {
-            var saleItemBindingList = new BindingList<SaleItem>
-                {
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem(),
-                    CreateSaleItem()
-                };
+            //var saleItemBindingList = new BindingList<SaleItem>
+            //    {
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem(),
+            //        CreateSaleItem()
+            //    };
 
-            //Print
-            var printReceipt = new PrintInvoice();
-            var customer = new Customer { CustomerName = "Name", Address = "Address" };
-            var saleOrder = new SaleOrder {SaleOrderNumber = "SO number", SaleOrderDate = DateTime.Now};
+            ////Print
+            //var printReceipt = new PrintInvoice();
+            //var customer = new Customer { CustomerName = "Name", Address = "Address" };
+            //var saleOrder = new SaleOrder {SaleOrderNumber = "SO number", SaleOrderDate = DateTime.Now};
 
-            //printReceipt.SaleItemList = saleItemBindingList;
-            //printReceipt.Customer = customer;
-            //printReceipt.InvoiceNumber = saleOrder.SaleOrderNumber;
-            //printReceipt.InvoiceDate = (DateTime)saleOrder.SaleOrderDate;
-            printReceipt.InializeInvoicePrinting();
+            ////printReceipt.SaleItemList = saleItemBindingList;
+            ////printReceipt.Customer = customer;
+            ////printReceipt.InvoiceNumber = saleOrder.SaleOrderNumber;
+            ////printReceipt.InvoiceDate = (DateTime)saleOrder.SaleOrderDate;
+            //printReceipt.InializeInvoicePrinting();
 
             Assert.AreEqual(1, 1, "Test performed");
         }
@@ -92,7 +91,7 @@ namespace EzPos
                 };
 
             //Print
-            PrintBarCode.InializePrinting(barCodeList);
+            PrintBarCode.InializePrinting(barCodeList, Resources.ConstPrintTypeA4);
 
             Assert.AreEqual(1, 1, "Test performed");
         }
@@ -253,19 +252,18 @@ namespace EzPos
         [Test]
         public void ToPinyinput()
         {
-            string CName;
-            foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
-            {
-                CName = lang.Culture.EnglishName;
-                MessageBox.Show(CName);
+            //string CName;
+            //foreach (InputLanguage lang in InputLanguage.InstalledInputLanguages)
+            //{
+            //    CName = lang.Culture.EnglishName;
+            //    MessageBox.Show(CName);
 
-                if (CName.StartsWith("Khmer"))
-                {
-                    InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
-                    //InputLanguage.CurrentInputLanguage = lang;
-                }
-            }
-
+            //    if (CName.StartsWith("Khmer"))
+            //    {
+            //        InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("km-KH"));
+            //        //InputLanguage.CurrentInputLanguage = lang;
+            //    }
+            //}
         }
     }
 }
