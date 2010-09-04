@@ -401,7 +401,7 @@
     <value>សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​ដក​ហូត​ប័ណ្ណ​បញ្ចុះ​តំលៃ​ពី </value>
   </data>
   <data name="PermissionGetBackCard" xml:space="preserve">
-    <value>31</value>
+    <value>51</value>
   </data>
   <data name="Printer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Icons\Printer.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -534,5 +534,17 @@
   </data>
   <data name="MsgOperationRequestUnknown" xml:space="preserve">
     <value>Unknown request</value>
+  </data>
+  <data name="AppParamBarcodePrintingType" xml:space="preserve">
+    <value>32</value>
+  </data>
+  <data name="ConstPrintTypeA4" xml:space="preserve">
+    <value>A4</value>
+  </data>
+  <data name="ConstPrintTypeLabel" xml:space="preserve">
+    <value>LBL</value>
+  </data>
+  <data name="PermissionChangeExpenseDate" xml:space="preserve">
+    <value>52</value>
   </data>
 </root>

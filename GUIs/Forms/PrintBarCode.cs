@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Properties;
+using EzPos.Utility;
 
 namespace EzPos.GUIs.Forms
 {
@@ -13,10 +15,12 @@ namespace EzPos.GUIs.Forms
         private static List<BarCode> BarCodeList = new List<BarCode>();
         private static int Counter;
         private static StringFormat StrFormat;
+        private static string PrintType;
 
-        public static void InializePrinting(List<BarCode> barCodeList)
+        public static void InializePrinting(List<BarCode> barCodeList, string printType)
         {
             BarCodeList = barCodeList;
+            PrintType = printType;
             var printPreviewDialog = 
                 new PrintPreviewDialog
                 {
@@ -28,16 +32,26 @@ namespace EzPos.GUIs.Forms
 
             if (AppContext.Counter != null)
                 PrintDocument.PrinterSettings.PrinterName = AppContext.Counter.BarCodePrinter;
-            PrintDocument.BeginPrint += PrintDocBeginPrint;
-            PrintDocument.PrintPage += PrintDocumentPrintPage;
-
-            printPreviewDialog.ShowDialog();
-
-            PrintDocument.BeginPrint -= PrintDocBeginPrint;
-            PrintDocument.PrintPage -= PrintDocumentPrintPage;
+            
+            if (Resources.ConstPrintTypeLabel.Equals(PrintType))
+            {
+                PrintDocument.BeginPrint += PrintDocBeginPrint;
+                PrintDocument.PrintPage += PrintLabelDocumentPrintPage;
+                printPreviewDialog.ShowDialog();
+                PrintDocument.BeginPrint -= PrintDocBeginPrint;
+                PrintDocument.PrintPage -= PrintLabelDocumentPrintPage;
+            }
+            else if (Resources.ConstPrintTypeA4.Equals(PrintType))
+            {
+                PrintDocument.BeginPrint += PrintDocBeginPrint;
+                PrintDocument.PrintPage += PrintA4DocumentPrintPage;
+                printPreviewDialog.ShowDialog();
+                PrintDocument.BeginPrint -= PrintDocBeginPrint;
+                PrintDocument.PrintPage -= PrintA4DocumentPrintPage;
+            }            
         }
 
-        private static void PrintDocumentPrintPage(object sender, PrintPageEventArgs e)
+        private static void PrintA4DocumentPrintPage(object sender, PrintPageEventArgs e)
         {
             var posY = 25;
             int rowIndex = 0, colIndex = 0;
@@ -143,6 +157,102 @@ namespace EzPos.GUIs.Forms
             e.HasMorePages = false;
         }
 
+        private static void PrintLabelDocumentPrintPage(object sender, PrintPageEventArgs e)
+        {
+            int posX = 12, posY = 30;
+            int rowIndex = 0, colIndex = 0;
+
+            var fontBarCode = new Font("Free 3 of 9 Extended", 24, FontStyle.Regular);
+            var solidBrush = new SolidBrush(Color.Black);
+            var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 5;
+            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 8;
+
+            while (Counter <= BarCodeList.Count - 1)
+            {
+                var fontDisplayName = new Font("Arial", 8, FontStyle.Bold);
+                if (rowIndex == 8)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
+
+                var barCode = BarCodeList[Counter];
+                var printStr = "*" + barCode.BarCodeValue + "*";
+                var widthBarCode = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Width, 0).ToString());
+                var txtPosY = 5 + Int32.Parse(
+                                      Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) /
+                                  2;
+
+                printStr =
+                    StringHelper.Right("000" + DateTime.Today.Day, 3) +
+                    StringHelper.Right("000" + DateTime.Today.Month, 3) +
+                    StringHelper.Right("000" + DateTime.Today.Year, 3);
+
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    ((2 * posX) + recWidth - widthBarCode) / 2 + 2,
+                    posY,
+                    StrFormat);
+
+                float xValue = ((2 * posX) + recWidth - widthBarCode) / 2 + 0;
+                printStr = "*" + barCode.BarCodeValue + "*";
+                e.Graphics.DrawString(
+                    printStr,
+                    fontBarCode,
+                    solidBrush,
+                    xValue,
+                    5 + posY + txtPosY,
+                    StrFormat);
+
+                fontDisplayName = new Font("Arial", 10, FontStyle.Bold);
+                printStr = barCode.BarCodeValue;
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    ((2 * posX) + recWidth - widthBarCode) / 2 + 5,
+                    posY + txtPosY + 30,
+                    StrFormat);
+
+                fontDisplayName = new Font("Arial", 13, FontStyle.Bold);
+                widthBarCode = ((2 * posX) + recWidth - widthBarCode) / 2 + widthBarCode;
+                printStr = "$" + barCode.DisplayStr;
+                var widthTxt = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    widthBarCode - widthTxt - 5,
+                    posY + txtPosY + 30,
+                    StrFormat);
+
+                if (colIndex < 4)
+                {
+                    colIndex++;
+                    posX += recWidth - 4;
+                }
+                else
+                {
+                    colIndex = 0;
+                    posX = 12;
+                    rowIndex++;
+                    if (rowIndex == 2)
+                        posY -= 10;
+                    if (rowIndex == 5)
+                        posY -= 10;
+
+                    posY += recHeight;
+                }
+
+                Counter++;
+            }
+            e.HasMorePages = false;
+        }
+
         private static void PrintDocBeginPrint(object sender, PrintEventArgs e)
         {
             try
@@ -159,7 +269,11 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    ex.Message, 
+                    Resources.MsgCaptionError, 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
         }
     }
