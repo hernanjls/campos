@@ -13,25 +13,25 @@ namespace EzPos.Service
     [Transactional]
     public class ExpenseService
     {
-        private readonly ExpenseDataAccess _ExpenseDataAccess;
+        private readonly ExpenseDataAccess ExpenseDataAccess;
 
-        public ExpenseService(ExpenseDataAccess ExpenseDataAccess)
+        public ExpenseService(ExpenseDataAccess expenseDataAccess)
         {
-            _ExpenseDataAccess = ExpenseDataAccess;
+            ExpenseDataAccess = expenseDataAccess;
         }
 
         public IList GetExpenses()
         {
-            return _ExpenseDataAccess.GetExpenses();
+            return ExpenseDataAccess.GetExpenses();
         }
 
         public virtual void ExpenseManagement(Expense expense, string requestCode)
         {
             if (requestCode == null)
-                throw new ArgumentException("Request code", "requestCode");
+                throw new ArgumentException(Resources.MsgUnknownRequestCode, Resources.MsgUnknownRequestCode);
 
             if (expense == null)
-                throw new ArgumentNullException("expense", "Expense");
+                throw new ArgumentNullException(Resources.MsgInvalidExpense, Resources.MsgInvalidExpense);
 
             if (requestCode == Resources.OperationRequestInsert)
                 InsertExpense(expense);
@@ -46,37 +46,37 @@ namespace EzPos.Service
                 DeleteExpense(expense);
         }
 
-        private void DeleteExpense(Expense Expense)
+        private void DeleteExpense(Expense expense)
         {
-            if (Expense == null)
-                throw new ArgumentNullException("Expense", "Expense");
+            if (expense == null)
+                throw new ArgumentNullException(Resources.MsgInvalidExpense, Resources.MsgInvalidExpense);
 
-            _ExpenseDataAccess.DeleteExpense(Expense);
+            ExpenseDataAccess.DeleteExpense(expense);
         }
 
         private void InsertExpense(Expense expense)
         {
             if (expense == null)
-                throw new ArgumentNullException("expense", "Expense");
+                throw new ArgumentNullException(Resources.MsgInvalidExpense, Resources.MsgInvalidExpense);
 
             //Expense
-            _ExpenseDataAccess.InsertExpense(expense);
+            ExpenseDataAccess.InsertExpense(expense);
         }
 
-        private void UpdateExpense(Expense Expense)
+        private void UpdateExpense(Expense expense)
         {
-            if (Expense == null)
-                throw new ArgumentNullException("Expense", "Expense");
+            if (expense == null)
+                throw new ArgumentNullException(Resources.MsgInvalidExpense, Resources.MsgInvalidExpense);
 
-            _ExpenseDataAccess.UpdateExpense(Expense);
+            ExpenseDataAccess.UpdateExpense(expense);
         }
 
         public virtual IList GetExpenses(IList searchCriteria)
         {
             if (searchCriteria == null)
-                throw new ArgumentNullException("searchCriteria", "Search Criteria");
+                throw new ArgumentNullException(Resources.MsgInvalidSearchCriteria, Resources.MsgInvalidSearchCriteria);
 
-            return _ExpenseDataAccess.GetExpenses(searchCriteria);
+            return ExpenseDataAccess.GetExpenses(searchCriteria);
         }
     }
 }

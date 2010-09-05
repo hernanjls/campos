@@ -598,6 +598,24 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid expense.
+        /// </summary>
+        internal static string MsgInvalidExpense {
+            get {
+                return ResourceManager.GetString("MsgInvalidExpense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid search criteria.
+        /// </summary>
+        internal static string MsgInvalidSearchCriteria {
+            get {
+                return ResourceManager.GetString("MsgInvalidSearchCriteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to សូមអភ័យទោស ផលិតផលនេះពុំអាចលក់ជូនក្នុងតំលៃនេះបានទេ។ សូមមេត្តាព្យាយាម្ដងទៀតជាមួយតំលៃដែលខ្ពស់ជាងនេះ៕.
         /// </summary>
         internal static string MsgInvalidUnitPriceOut {
@@ -702,6 +720,15 @@ namespace EzPos.Properties {
         internal static string MsgUnknownError {
             get {
                 return ResourceManager.GetString("MsgUnknownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request code.
+        /// </summary>
+        internal static string MsgUnknownRequestCode {
+            get {
+                return ResourceManager.GetString("MsgUnknownRequestCode", resourceCulture);
             }
         }
         

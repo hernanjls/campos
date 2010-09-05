@@ -547,4 +547,13 @@
   <data name="PermissionChangeExpenseDate" xml:space="preserve">
     <value>52</value>
   </data>
+  <data name="MsgInvalidExpense" xml:space="preserve">
+    <value>Invalid expense</value>
+  </data>
+  <data name="MsgInvalidSearchCriteria" xml:space="preserve">
+    <value>Invalid search criteria</value>
+  </data>
+  <data name="MsgUnknownRequestCode" xml:space="preserve">
+    <value>Request code</value>
+  </data>
 </root>

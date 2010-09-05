@@ -61,5 +61,32 @@ namespace EzPos.DataAccess
 
             return SelectObjects(typeof (Expense), criterionList, orderList).List();
         }
+
+        public virtual IList GetExpensesByType(IList searchCriteria)
+        {
+            var criterionList = new Collection<ICriterion>();
+            if (searchCriteria != null)
+            {
+                foreach (string strCriteria in searchCriteria)
+                {
+                    var delimiterIndex = strCriteria.IndexOf("|");
+                    if (delimiterIndex >= 0)
+                        criterionList.Add(
+                            Expression.Eq(
+                                StringHelper.Left(strCriteria, delimiterIndex),
+                                StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
+                    else
+                        criterionList.Add(Expression.Sql(strCriteria));
+                }
+            }
+
+            var orderList = 
+                new Collection<Order>
+                {
+                    Order.Asc(Expense.CONST_EXPENSE_TYPE_STR)
+                };            
+
+            var expenseList = SelectObjects(typeof (Expense), criterionList, orderList);            
+        }
     }
 }
