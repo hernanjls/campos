@@ -140,7 +140,11 @@ namespace EzPos.GUIs.Forms
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                var searchCriteria = new List<string> {"ParameterTypeID IN (22)"};
+                var searchCriteria = 
+                    new List<string>
+                        {
+                            "ParameterTypeID IN (" + Resources.AppParamExpense + ")"                            
+                        };
                 var objList = CommonService.GetAppParameters(searchCriteria);
 
                 CommonService.PopAppParamExtendedCombobox(

@@ -10,15 +10,15 @@ namespace EzPos.DataAccess
     [UsesAutomaticSessionCreation]
     public class BaseDataAccess
     {
-        private ISession _Session;
+        private ISession Session;
 
         private void CreateSession()
         {
-            if (_Session == null)
-                _Session = SessionManager.CurrentSession;
+            if (Session == null)
+                Session = SessionManager.CurrentSession;
 
-            if (!_Session.IsConnected)
-                _Session = SessionManager.CurrentSession;
+            if (!Session.IsConnected)
+                Session = SessionManager.CurrentSession;            
         }
 
         protected ICriteria SelectObjects(Type persistenClass)
@@ -46,18 +46,19 @@ namespace EzPos.DataAccess
 
             CreateSession();
 
-            var criteria = _Session.CreateCriteria(persistentClass);
+            var criteria = Session.CreateCriteria(persistentClass);
             if (orders != null)
             {
                 foreach (var order in orders)
                     criteria.AddOrder(order);
-            }
+            }            
 
             if (expressions != null)
             {
                 foreach (var expression in expressions)
                     criteria.Add(expression);
             }
+            
             return criteria;
         }
 
@@ -67,7 +68,7 @@ namespace EzPos.DataAccess
                 throw new ArgumentNullException("qryStr", "Query");
 
             CreateSession();
-            return _Session.CreateQuery(qryStr).List();
+            return Session.CreateQuery(qryStr).List();
         }
 
         protected IList SelectObjects(string qryStr, string[] aliasList, Type[] typeList)
@@ -88,7 +89,7 @@ namespace EzPos.DataAccess
                 throw new ArgumentNullException("typeList", "typeList");
 
             CreateSession();
-            return _Session.CreateSQLQuery(
+            return Session.CreateSQLQuery(
                 qryStr,
                 aliasList,
                 typeList).List();
@@ -100,9 +101,9 @@ namespace EzPos.DataAccess
                 throw new ArgumentNullException("instantObj", "InstantObject");
 
             CreateSession();
-            _Session.BeginTransaction();
-            _Session.Update(instantObj);
-            _Session.Transaction.Commit();
+            Session.BeginTransaction();
+            Session.Update(instantObj);
+            Session.Transaction.Commit();
         }
 
         protected void DeleteObject(object instantObj)
@@ -113,13 +114,13 @@ namespace EzPos.DataAccess
             CreateSession();
             try
             {
-                _Session.BeginTransaction();
-                _Session.Delete(instantObj);
-                _Session.Transaction.Commit();
+                Session.BeginTransaction();
+                Session.Delete(instantObj);
+                Session.Transaction.Commit();
             }
             catch (Exception)
             {
-                _Session.Transaction.Rollback();
+                Session.Transaction.Rollback();
                 throw;
             }
         }
@@ -135,13 +136,13 @@ namespace EzPos.DataAccess
             CreateSession();
             try
             {
-                _Session.BeginTransaction();
-                _Session.Delete(qryStr);
-                _Session.Transaction.Commit();
+                Session.BeginTransaction();
+                Session.Delete(qryStr);
+                Session.Transaction.Commit();
             }
             catch (Exception)
             {
-                _Session.Transaction.Rollback();
+                Session.Transaction.Rollback();
                 throw;
             }
         }
@@ -154,13 +155,13 @@ namespace EzPos.DataAccess
             CreateSession();
             try
             {
-                _Session.BeginTransaction();
-                _Session.SaveOrUpdate(instantObj);
-                _Session.Transaction.Commit();
+                Session.BeginTransaction();
+                Session.SaveOrUpdate(instantObj);
+                Session.Transaction.Commit();
             }
             catch (Exception)
             {
-                _Session.Transaction.Rollback();
+                Session.Transaction.Rollback();
                 throw;
             }
         }
