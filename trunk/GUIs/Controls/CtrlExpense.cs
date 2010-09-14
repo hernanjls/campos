@@ -58,7 +58,7 @@ namespace EzPos.GUIs.Controls
             ExpenseManagement(Resources.OperationRequestInsert);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDeleteClick(object sender, EventArgs e)
         {
             string briefMsg, detailMsg;
 
@@ -255,27 +255,27 @@ namespace EzPos.GUIs.Controls
             lblResultInfo.Text = strResultInfo;
         }
 
-        private void btnDelete_MouseEnter(object sender, EventArgs e)
+        private void BtnDeleteMouseEnter(object sender, EventArgs e)
         {
             btnDelete.BackgroundImage = Resources.background_9;
         }
 
-        private void btnDelete_MouseLeave(object sender, EventArgs e)
+        private void BtnDeleteMouseLeave(object sender, EventArgs e)
         {
             btnDelete.BackgroundImage = null;
         }
 
-        private void btnNew_MouseEnter(object sender, EventArgs e)
+        private void BtnNewMouseEnter(object sender, EventArgs e)
         {
             btnNew.BackgroundImage = Resources.background_9;
         }
 
-        private void btnNew_MouseLeave(object sender, EventArgs e)
+        private void BtnNewMouseLeave(object sender, EventArgs e)
         {
             btnNew.BackgroundImage = null;
         }
 
-        private void cmdSearchProduct_Click(object sender, EventArgs e)
+        private void CmdSearchProductClick(object sender, EventArgs e)
         {
             if (_ExpenseService == null)
                 _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();

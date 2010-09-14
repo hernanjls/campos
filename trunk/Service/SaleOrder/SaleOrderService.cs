@@ -9,30 +9,30 @@ namespace EzPos.Service
 {
     public class SaleOrderService
     {
-        private readonly SaleOrderDataAccess _SaleOrderDataAccess;
+        private readonly SaleOrderDataAccess SaleOrderDataAccess;
 
         public SaleOrderService(SaleOrderDataAccess saleOrderDataAccess)
         {
-            _SaleOrderDataAccess = saleOrderDataAccess;
+            SaleOrderDataAccess = saleOrderDataAccess;
         }
 
         public virtual IList GetSaleOrders()
         {
-            return _SaleOrderDataAccess.GetSaleOrders();
+            return SaleOrderDataAccess.GetSaleOrders();
         }
 
         public virtual IList GetSaleOrders(IList searchCriteria)
         {
             if (searchCriteria == null)
-                throw new ArgumentNullException("searchCriteria", "Search Criteria");
+                throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
-            return _SaleOrderDataAccess.GetSaleOrders(searchCriteria);
+            return SaleOrderDataAccess.GetSaleOrders(searchCriteria);
         }
 
         public virtual SaleOrder GetSaleOrder(Deposit deposit)
         {
             if (deposit == null)
-                throw new ArgumentNullException("deposit", "Deposit");
+                throw new ArgumentNullException("deposit", Resources.MsgInvalidDeposit);
 
             var saleOrder = 
                 new SaleOrder
@@ -63,18 +63,18 @@ namespace EzPos.Service
 
         public virtual void UpdateSaleOrder(SaleOrder saleOrder)
         {
-            _SaleOrderDataAccess.UpdateSaleOrder(saleOrder);
+            SaleOrderDataAccess.UpdateSaleOrder(saleOrder);
         }
 
         public virtual void InsertSaleOrder(SaleOrder saleOrder)
         {
             if (saleOrder == null)
-                throw new ArgumentNullException("saleOrder", "SaleOrder");
+                throw new ArgumentNullException("saleOrder", Resources.MsgInvalidSaleOrder);
 
-            _SaleOrderDataAccess.InsertSaleOrder(saleOrder);
+            SaleOrderDataAccess.InsertSaleOrder(saleOrder);
             saleOrder.SaleOrderNumber = "S-00" + saleOrder.SaleOrderId;
 
-            _SaleOrderDataAccess.UpdateSaleOrder(saleOrder);
+            SaleOrderDataAccess.UpdateSaleOrder(saleOrder);
 
             //var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
             //var payment = 
@@ -102,7 +102,7 @@ namespace EzPos.Service
             bool fromDeposit)
         {
             if (saleItemList == null)
-                throw new ArgumentNullException("saleItemList", "SaleItem");
+                throw new ArgumentNullException("saleItemList", Resources.MsgInvalidSaleItem);
 
             var factor = 1;
             if (isReturned)
@@ -174,6 +174,7 @@ namespace EzPos.Service
             {
                 if (saleItem.ProductID == 0)
                     continue;
+
                 if (isReturned)
                     saleItem.QtySold *= factor;
 
@@ -183,7 +184,7 @@ namespace EzPos.Service
 
                 //SaleItem
                 saleItem.SaleOrderID = saleOrder.SaleOrderId;
-                _SaleOrderDataAccess.InsertSaleItem(saleItem);
+                SaleOrderDataAccess.InsertSaleItem(saleItem);
 
                 var saleOrderReport = 
                     new SaleOrderReport
@@ -216,6 +217,9 @@ namespace EzPos.Service
 
                 if (saleItem.FKProduct != null)
                 {
+                    saleOrderReport.CategoryStr = saleItem.FKProduct.CategoryStr;
+                    saleOrderReport.PurchaseUnitPrice = saleItem.FKProduct.UnitPriceIn;
+
                     if (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode))
                     {
                         var productCode = 
@@ -244,7 +248,7 @@ namespace EzPos.Service
                 saleOrderReport.UnitPriceOut = saleItem.PublicUPOut;
                 saleOrderReport.SubTotal = saleItem.PublicUPOut * saleItem.QtySold;
 
-                _SaleOrderDataAccess.InsertSaleOrderReport(saleOrderReport);
+                SaleOrderDataAccess.InsertSaleOrderReport(saleOrderReport);
                 isAllowed = false;
             }
             return saleOrder;
@@ -252,7 +256,7 @@ namespace EzPos.Service
 
         public virtual IList GetSaleItems(int saleOrderId)
         {
-            return _SaleOrderDataAccess.GetSaleItems(saleOrderId);
+            return SaleOrderDataAccess.GetSaleItems(saleOrderId);
         }
 
         public virtual IList GetSaleItems(IList depositItemList)
@@ -296,15 +300,33 @@ namespace EzPos.Service
 
         public virtual IList GetSaleItems()
         {
-            return _SaleOrderDataAccess.GetSaleItems();
+            return SaleOrderDataAccess.GetSaleItems();
         }
 
         public virtual IList GetSaleHistories(IList searchCriteria)
         {
             if (searchCriteria == null)
-                throw new ArgumentNullException("searchCriteria", "Search Criteria");
+                throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
-            var saleOrderReportList = _SaleOrderDataAccess.GetSaleHistories(searchCriteria);
+            var saleOrderReportList = SaleOrderDataAccess.GetSaleHistories(searchCriteria);
+            foreach (SaleOrderReport saleOrderReport in saleOrderReportList)
+            {
+                if (!string.IsNullOrEmpty(saleOrderReport.ReferenceNum))
+                    saleOrderReport.SaleOrderNumber += " (" + saleOrderReport.ReferenceNum + ")";
+
+                if (!string.IsNullOrEmpty(saleOrderReport.CardNumber))
+                    saleOrderReport.CustomerName += " (" + saleOrderReport.CardNumber + ")";
+            }
+
+            return saleOrderReportList;
+        }
+
+        public virtual IList GetSaleHistoriesOrderByProductCategory(IList searchCriteria)
+        {
+            if (searchCriteria == null)
+                throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
+
+            var saleOrderReportList = SaleOrderDataAccess.GetSaleHistoriesOrderByProductCategory(searchCriteria);
             foreach (SaleOrderReport saleOrderReport in saleOrderReportList)
             {
                 if (!string.IsNullOrEmpty(saleOrderReport.ReferenceNum))

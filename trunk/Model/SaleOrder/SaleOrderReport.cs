@@ -6,6 +6,7 @@ namespace EzPos.Model
     {
         public const string CONST_SALE_ORDER_DATE = "SaleOrderDate";
         public const string CONST_SALE_ORDER_NUMBER = "SaleOrderNumber";
+        public const string CONST_SALE_ORDER_PRODUCT_CATEGORY = "CategoryStr";
 
         //private string _SaleOrderNumber;
 
@@ -16,17 +17,6 @@ namespace EzPos.Model
         public string SaleOrderNumber
         {
             get; set;
-            //{
-            //    var saleOrderNumber = _SaleOrderNumber;
-            //    if(!string.IsNullOrEmpty(ReferenceNum))
-            //        saleOrderNumber += " (" + ReferenceNum + ")";
-
-            //    return saleOrderNumber;
-            //}
-            //set
-            //{
-            //    _SaleOrderNumber = value;
-            //}
         }
 
         public DateTime SaleOrderDate { get; set; }
@@ -80,5 +70,9 @@ namespace EzPos.Model
         public float DepositAmount { get; set; }
 
         public string ProductCode { get; set; }
+
+        public string CategoryStr { get; set; }
+
+        public float PurchaseUnitPrice { get; set; }
     }
 }

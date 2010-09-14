@@ -40,6 +40,7 @@ namespace EzPos.GUIs.Controls
             this.rdbStockDetail = new System.Windows.Forms.RadioButton();
             this.lblSale = new System.Windows.Forms.Label();
             this.grbSale = new System.Windows.Forms.GroupBox();
+            this.rdbIncomeStatement = new System.Windows.Forms.RadioButton();
             this.chbShowQuantity = new System.Windows.Forms.CheckBox();
             this.chbAllDeposit = new System.Windows.Forms.CheckBox();
             this.rdbExpense = new System.Windows.Forms.RadioButton();
@@ -55,6 +56,7 @@ namespace EzPos.GUIs.Controls
             this.pnlBodySearch = new System.Windows.Forms.Panel();
             this.pnlBodyLeft = new System.Windows.Forms.Panel();
             this.crvReport = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.wbsReport = new System.Windows.Forms.WebBrowser();
             this.pnlBodyRight.SuspendLayout();
             this.grbStock.SuspendLayout();
             this.grbSale.SuspendLayout();
@@ -172,6 +174,7 @@ namespace EzPos.GUIs.Controls
             // grbSale
             // 
             this.grbSale.BackgroundImage = global::EzPos.Properties.Resources.pnlBodyRight;
+            this.grbSale.Controls.Add(this.rdbIncomeStatement);
             this.grbSale.Controls.Add(this.chbShowQuantity);
             this.grbSale.Controls.Add(this.chbAllDeposit);
             this.grbSale.Controls.Add(this.rdbExpense);
@@ -187,9 +190,21 @@ namespace EzPos.GUIs.Controls
             this.grbSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.grbSale.Location = new System.Drawing.Point(10, 176);
             this.grbSale.Name = "grbSale";
-            this.grbSale.Size = new System.Drawing.Size(180, 346);
+            this.grbSale.Size = new System.Drawing.Size(180, 380);
             this.grbSale.TabIndex = 99;
             this.grbSale.TabStop = false;
+            // 
+            // rdbIncomeStatement
+            // 
+            this.rdbIncomeStatement.AutoSize = true;
+            this.rdbIncomeStatement.BackColor = System.Drawing.Color.Transparent;
+            this.rdbIncomeStatement.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbIncomeStatement.Location = new System.Drawing.Point(6, 295);
+            this.rdbIncomeStatement.Name = "rdbIncomeStatement";
+            this.rdbIncomeStatement.Size = new System.Drawing.Size(92, 31);
+            this.rdbIncomeStatement.TabIndex = 20;
+            this.rdbIncomeStatement.Text = "ហិរញ្ញវត្ថុ";
+            this.rdbIncomeStatement.UseVisualStyleBackColor = false;
             // 
             // chbShowQuantity
             // 
@@ -292,7 +307,7 @@ namespace EzPos.GUIs.Controls
             this.btnSearchSale.ForeColor = System.Drawing.Color.White;
             this.btnSearchSale.Image = global::EzPos.Properties.Resources.Search32;
             this.btnSearchSale.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchSale.Location = new System.Drawing.Point(18, 298);
+            this.btnSearchSale.Location = new System.Drawing.Point(18, 332);
             this.btnSearchSale.Name = "btnSearchSale";
             this.btnSearchSale.Size = new System.Drawing.Size(144, 40);
             this.btnSearchSale.TabIndex = 12;
@@ -355,6 +370,7 @@ namespace EzPos.GUIs.Controls
             // pnlBodyLeft
             // 
             this.pnlBodyLeft.Controls.Add(this.crvReport);
+            this.pnlBodyLeft.Controls.Add(this.wbsReport);
             this.pnlBodyLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBodyLeft.Location = new System.Drawing.Point(0, 0);
             this.pnlBodyLeft.Name = "pnlBodyLeft";
@@ -373,6 +389,15 @@ namespace EzPos.GUIs.Controls
             this.crvReport.Size = new System.Drawing.Size(826, 596);
             this.crvReport.TabIndex = 0;
             this.crvReport.ViewTimeSelectionFormula = "";
+            // 
+            // wbsReport
+            // 
+            this.wbsReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbsReport.Location = new System.Drawing.Point(0, 0);
+            this.wbsReport.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbsReport.Name = "wbsReport";
+            this.wbsReport.Size = new System.Drawing.Size(826, 596);
+            this.wbsReport.TabIndex = 1;
             // 
             // CtrlReport
             // 
@@ -425,5 +450,7 @@ namespace EzPos.GUIs.Controls
         private ProductService _ProductService;
         private SaleOrderService _SaleOrderService;
         private System.Windows.Forms.CheckBox chbShowQuantity;
+        private System.Windows.Forms.RadioButton rdbIncomeStatement;
+        private System.Windows.Forms.WebBrowser wbsReport;
     }
 }

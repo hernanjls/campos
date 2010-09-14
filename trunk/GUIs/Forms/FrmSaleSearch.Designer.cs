@@ -100,6 +100,9 @@ namespace EzPos.GUIs.Forms
             this.ReportTypeStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SalesOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DepositAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategoryStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PurchaseUnitPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlHeader.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.pnlBody.SuspendLayout();
@@ -150,7 +153,7 @@ namespace EzPos.GUIs.Forms
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.MouseLeave += new System.EventHandler(this.BtnSearchMouseLeave);
-            this.btnSearch.Click += new System.EventHandler(this.BtnSaveClick);
+            this.btnSearch.Click += new System.EventHandler(this.BtnSearchClick);
             this.btnSearch.MouseEnter += new System.EventHandler(this.BtnSearchMouseEnter);
             // 
             // btnCancel
@@ -273,7 +276,10 @@ namespace EzPos.GUIs.Forms
             this.ReferenceNum,
             this.ReportTypeStr,
             this.SalesOrderId,
-            this.DepositAmount});
+            this.DepositAmount,
+            this.ProductCode,
+            this.CategoryStr,
+            this.PurchaseUnitPrice});
             this.dgvSearchResult.EnableHeadersVisualStyles = false;
             this.dgvSearchResult.GridColor = System.Drawing.Color.White;
             this.dgvSearchResult.Location = new System.Drawing.Point(19, 48);
@@ -819,6 +825,30 @@ namespace EzPos.GUIs.Forms
             this.DepositAmount.ReadOnly = true;
             this.DepositAmount.Visible = false;
             // 
+            // ProductCode
+            // 
+            this.ProductCode.DataPropertyName = "ProductCode";
+            this.ProductCode.HeaderText = "ProductCode";
+            this.ProductCode.Name = "ProductCode";
+            this.ProductCode.ReadOnly = true;
+            this.ProductCode.Visible = false;
+            // 
+            // CategoryStr
+            // 
+            this.CategoryStr.DataPropertyName = "CategoryStr";
+            this.CategoryStr.HeaderText = "CategoryStr";
+            this.CategoryStr.Name = "CategoryStr";
+            this.CategoryStr.ReadOnly = true;
+            this.CategoryStr.Visible = false;
+            // 
+            // PurchaseUnitPrice
+            // 
+            this.PurchaseUnitPrice.DataPropertyName = "PurchaseUnitPrice";
+            this.PurchaseUnitPrice.HeaderText = "PurchaseUnitPrice";
+            this.PurchaseUnitPrice.Name = "PurchaseUnitPrice";
+            this.PurchaseUnitPrice.ReadOnly = true;
+            this.PurchaseUnitPrice.Visible = false;
+            // 
             // FrmSaleSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -915,6 +945,9 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn ReportTypeStr;
         private System.Windows.Forms.DataGridViewTextBoxColumn SalesOrderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn DepositAmount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CategoryStr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PurchaseUnitPrice;
 
     }
 }

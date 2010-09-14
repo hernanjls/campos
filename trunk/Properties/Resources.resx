@@ -538,11 +538,11 @@
   <data name="AppParamBarcodePrintingType" xml:space="preserve">
     <value>32</value>
   </data>
-  <data name="ConstPrintTypeA4" xml:space="preserve">
-    <value>A4</value>
+  <data name="ConstBarCodeTemplate1" xml:space="preserve">
+    <value>Template 1</value>
   </data>
-  <data name="ConstPrintTypeLabel" xml:space="preserve">
-    <value>LBL</value>
+  <data name="ConstBarCodeTemplate3" xml:space="preserve">
+    <value>Template 3</value>
   </data>
   <data name="PermissionChangeExpenseDate" xml:space="preserve">
     <value>52</value>
@@ -555,5 +555,77 @@
   </data>
   <data name="MsgUnknownRequestCode" xml:space="preserve">
     <value>Request code</value>
+  </data>
+  <data name="ConstIncomeStatementExcelFile" xml:space="preserve">
+    <value>income statement.xlsx</value>
+  </data>
+  <data name="ConstSheetIncomeStatement" xml:space="preserve">
+    <value>Income Statement</value>
+  </data>
+  <data name="ConstSheetInvoice" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="MsgMissingIncomeStatement" xml:space="preserve">
+    <value>របាយការណ៏គំរូបានបាត់ចេញពីប្រព័ន្ឋ។ សូមទាក់ទងអ្នកទទួលខុសត្រូវដើម្បីព៌តមានបន្ថែម។</value>
+  </data>
+  <data name="PermissionViewIncomeStatementReport" xml:space="preserve">
+    <value>53</value>
+  </data>
+  <data name="ConstBarCodeTemplate2" xml:space="preserve">
+    <value>Template 2</value>
+  </data>
+  <data name="LblRepeatSearch" xml:space="preserve">
+    <value>ម្ដង​ទៀត</value>
+  </data>
+  <data name="MsgInvalidDeposit" xml:space="preserve">
+    <value>Invalid deposit.</value>
+  </data>
+  <data name="MsgInvalidSaleItem" xml:space="preserve">
+    <value>Invalid sale item.</value>
+  </data>
+  <data name="MsgInvalidSaleOrder" xml:space="preserve">
+    <value>Invalid sale order.</value>
+  </data>
+  <data name="AppParamBarcodeTemplate" xml:space="preserve">
+    <value>32</value>
+  </data>
+  <data name="AppParamIssueReceipt" xml:space="preserve">
+    <value>33</value>
+  </data>
+  <data name="AppParamReceiptTemplate" xml:space="preserve">
+    <value>34</value>
+  </data>
+  <data name="ConstReceiptTemplate1" xml:space="preserve">
+    <value>Template 1</value>
+  </data>
+  <data name="ConstReceiptTemplate2" xml:space="preserve">
+    <value>Template 2</value>
+  </data>
+  <data name="ConstReceiptTemplate3" xml:space="preserve">
+    <value>Template 3</value>
+  </data>
+  <data name="MsgInvalidAppParameter" xml:space="preserve">
+    <value>Invalid paramter.</value>
+  </data>
+  <data name="MsgInvalidExchangeRate" xml:space="preserve">
+    <value>Invalid exchange rate.</value>
+  </data>
+  <data name="MsgInvalidProduct" xml:space="preserve">
+    <value>Invalid product.</value>
+  </data>
+  <data name="MsgInvalidInput" xml:space="preserve">
+    <value>Invalid input.</value>
+  </data>
+  <data name="ConstAmountZeroDollar" xml:space="preserve">
+    <value>$ 0.00</value>
+  </data>
+  <data name="ConstAmountZeroRiel" xml:space="preserve">
+    <value>R 0.00</value>
+  </data>
+  <data name="ConstPrefixDollar" xml:space="preserve">
+    <value>$ </value>
+  </data>
+  <data name="ConstPrefixRiel" xml:space="preserve">
+    <value>R </value>
   </data>
 </root>

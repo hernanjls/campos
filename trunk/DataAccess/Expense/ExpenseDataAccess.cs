@@ -62,7 +62,7 @@ namespace EzPos.DataAccess
             return SelectObjects(typeof (Expense), criterionList, orderList).List();
         }
 
-        public virtual IList GetExpensesByType(IList searchCriteria)
+        public virtual IList GetExpensesOrderByType(IList searchCriteria)
         {
             var criterionList = new Collection<ICriterion>();
             if (searchCriteria != null)
@@ -86,7 +86,7 @@ namespace EzPos.DataAccess
                     Order.Asc(Expense.CONST_EXPENSE_TYPE_STR)
                 };            
 
-            var expenseList = SelectObjects(typeof (Expense), criterionList, orderList);            
+            return SelectObjects(typeof (Expense), criterionList, orderList).List();
         }
     }
 }
