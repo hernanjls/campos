@@ -10,14 +10,14 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmSplash : Form
     {
-        public static ApplicationContext _ApplicationContext;
-        private CommonService _CommonService;
-        private CustomerService _CustomerService;
-        private SupplierService _SupplierService;
-        private ExpenseService _ExpenseService;
-        private ProductService _ProductService;
-        private SaleOrderService _SaleOrderService;
-        private UserService _UserService;
+        public static ApplicationContext ApplicationContext;
+        private CommonService CommonService;
+        private CustomerService CustomerService;
+        private SupplierService SupplierService;
+        private ExpenseService ExpenseService;
+        private ProductService ProductService;
+        private SaleOrderService SaleOrderService;
+        private UserService UserService;
 
         public FrmSplash()
         {
@@ -74,28 +74,28 @@ namespace EzPos.GUIs.Forms
 
                     //Loading Service
                     pgbService.Value += 15;
-                    _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                    CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
                     pgbService.Value += 15;
-                    _SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
+                    SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
                     pgbService.Value += 15;
-                    _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                    ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
                     pgbService.Value += 15;
-                    _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
+                    CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
                     pgbService.Value += 15;
-                    _SupplierService = ServiceFactory.GenerateServiceInstance().GenerateSupplierService();
+                    SupplierService = ServiceFactory.GenerateServiceInstance().GenerateSupplierService();
                     pgbService.Value += 15;
-                    _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+                    ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
                     pgbService.Value += 10;
-                    _UserService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
+                    UserService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
 
                     //Connecting to database                    
                     pgbGlobalConfig.Value += 50;
-                    _CommonService.InitializeGlobalConfiguration();
+                    CommonService.InitializeGlobalConfiguration();
                     pgbGlobalConfig.Value += 50;
 
                     //Initializing workspace
                     pgbInitialization.Value += 30;
-                    _CommonService.InitializeWorkSpace();
+                    CommonService.InitializeWorkSpace();
                     pgbInitialization.Value += 30;
                     if (AppContext.Counter == null)
                     {
@@ -119,26 +119,26 @@ namespace EzPos.GUIs.Forms
 
                     using (var frmLogIn = new FrmLogIn())
                     {
-                        frmLogIn.UserService = _UserService;
+                        frmLogIn.UserService = UserService;
                         if (frmLogIn.ShowDialog(this) == DialogResult.OK)
                         {
                             Visible = true;
 
                             var frmMain = new FrmMain();
-                            _ApplicationContext.MainForm = frmMain;
+                            ApplicationContext.MainForm = frmMain;
 
-                            frmMain.CommonService = _CommonService;
-                            frmMain.SaleOrderService = _SaleOrderService;
-                            frmMain.ProductService = _ProductService;
-                            frmMain.CustomerService = _CustomerService;
-                            frmMain.SupplierService = _SupplierService;
-                            frmMain.ExpenseService = _ExpenseService;
-                            frmMain.UserService = _UserService;
+                            frmMain.CommonService = CommonService;
+                            frmMain.SaleOrderService = SaleOrderService;
+                            frmMain.ProductService = ProductService;
+                            frmMain.CustomerService = CustomerService;
+                            frmMain.SupplierService = SupplierService;
+                            frmMain.ExpenseService = ExpenseService;
+                            frmMain.UserService = UserService;
 
-                            _CommonService.InitializeCustomizedConfiguration(frmLogIn.User);
+                            CommonService.InitializeCustomizedConfiguration(frmLogIn.User);
                             pgbCustomizedConfig.Value += 20;
 
-                            _CommonService.InsertOperationLog(
+                            CommonService.InsertOperationLog(
                                 AppContext.User.UserID,
                                 int.Parse(Resources.OperationLogIn));
 
@@ -146,7 +146,7 @@ namespace EzPos.GUIs.Forms
                             Close();
                         }
                         else
-                            _ApplicationContext.ExitThread();
+                            ApplicationContext.ExitThread();
                     }
                 }
             }
@@ -175,8 +175,8 @@ namespace EzPos.GUIs.Forms
                 var frmSplash = new FrmSplash();
 
                 //Keep application context
-                _ApplicationContext = new ApplicationContext(frmSplash);
-                Application.Run(_ApplicationContext);
+                ApplicationContext = new ApplicationContext(frmSplash);
+                Application.Run(ApplicationContext);
             }
             catch (Exception)
             {

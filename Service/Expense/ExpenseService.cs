@@ -78,5 +78,13 @@ namespace EzPos.Service
 
             return ExpenseDataAccess.GetExpenses(searchCriteria);
         }
+
+        public virtual IList GetExpensesOrderByType(IList searchCriteria)
+        {
+            if (searchCriteria == null)
+                throw new ArgumentNullException(Resources.MsgInvalidSearchCriteria, Resources.MsgInvalidSearchCriteria);
+
+            return ExpenseDataAccess.GetExpensesOrderByType(searchCriteria);
+        }
     }
 }

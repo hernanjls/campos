@@ -13,27 +13,27 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmSaleSearch : Form
     {
-        private CommonService _CommonService;
-        private BindingList<SaleOrderReport> _SaleOrderReportList;
-        private IList _DepositReportList;
-        private string _SONumber = string.Empty;
+        private CommonService CommonService;
+        private BindingList<SaleOrderReport> SaleOrderReportList;
+        private IList DepositReportList;
+        private string SoNumber = string.Empty;
 
         public FrmSaleSearch()
         {
             InitializeComponent();
         }
 
-        public string SONumber
+        public string SearchSoNumber
         {
-            get { return _SONumber; }
+            get { return SoNumber; }
         }
 
         private void FrmSaleOrderSearch_Load(object sender, EventArgs e)
         {
             try
             {
-                if (_CommonService == null)
-                    _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                if (CommonService == null)
+                    CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
                 dtpStartDate.Value = DateTime.Now.AddMonths(-1);
                 InitializeSaleOrderReportList();
@@ -54,9 +54,9 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void BtnSaveClick(object sender, EventArgs e)
+        private void BtnSearchClick(object sender, EventArgs e)
         {
-            if (btnSearch.Text == "ម្ដង​ទៀត")
+            if (btnSearch.Text == Resources.LblRepeatSearch)
                 SetVisibleControls(true);
             else
             {
@@ -113,8 +113,8 @@ namespace EzPos.GUIs.Forms
 
                         if (!String.IsNullOrEmpty(txtProductCode.Text))
                             searchCriteria.Add(
-                                "ProductID IN (SELECT ProductID FROM TProducts WHERE ProductCode LIKE '%" +
-                                txtProductCode.Text + "%')");
+                                "ProductID IN (SELECT ProductID FROM TProducts WHERE (ProductCode LIKE '%" +
+                                txtProductCode.Text + "%') OR (ForeignCode LIKE '%" + txtProductCode.Text + "%'))");
 
                         var saleOrderService =
                             ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
@@ -123,7 +123,7 @@ namespace EzPos.GUIs.Forms
 
                         var searchInfo = String.Format(
                             "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
-                            _SaleOrderReportList.Count);
+                            SaleOrderReportList.Count);
                         lblSearchInfo.Text = searchInfo;
                     }
                     else
@@ -184,12 +184,12 @@ namespace EzPos.GUIs.Forms
 
                         var depositService =
                             ServiceFactory.GenerateServiceInstance().GenerateDepositService();
-                        _DepositReportList = depositService.GetDepositHistories(searchCriteria, true);
+                        DepositReportList = depositService.GetDepositHistories(searchCriteria, true);
                         IListToBindingList(
-                            depositService.GetSaleHistories(_DepositReportList));
+                            depositService.GetSaleHistories(DepositReportList));
                         var searchInfo = String.Format(
                             "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
-                            _DepositReportList.Count);
+                            DepositReportList.Count);
                         lblSearchInfo.Text = searchInfo;
                     }
                     SetVisibleControls(false);
@@ -219,27 +219,27 @@ namespace EzPos.GUIs.Forms
                 var searchCriteria = new List<string> {"ParameterTypeID IN (1, 4, 3, 20)"};
 
                 var objList =
-                    _CommonService.GetAppParameters(searchCriteria);
+                    CommonService.GetAppParameters(searchCriteria);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                CommonService.PopAppParamExtendedCombobox(
                     ref cmbDiscountType,
                     objList,
                     int.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo),
                     false);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                CommonService.PopAppParamExtendedCombobox(
                     ref cmbCategory,
                     objList,
                     int.Parse(Resources.AppParamCategory, AppContext.CultureInfo),
                     false);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                CommonService.PopAppParamExtendedCombobox(
                     ref cmbBrand,
                     objList,
                     int.Parse(Resources.AppParamMark, AppContext.CultureInfo),
                     false);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                CommonService.PopAppParamExtendedCombobox(
                     ref cmbColor,
                     objList,
                     int.Parse(Resources.AppParamColor, AppContext.CultureInfo),
@@ -299,10 +299,10 @@ namespace EzPos.GUIs.Forms
         {
             try
             {
-                if (_SaleOrderReportList == null)
-                    _SaleOrderReportList = new BindingList<SaleOrderReport>();
+                if (SaleOrderReportList == null)
+                    SaleOrderReportList = new BindingList<SaleOrderReport>();
 
-                dgvSearchResult.DataSource = _SaleOrderReportList;
+                dgvSearchResult.DataSource = SaleOrderReportList;
                 dgvSearchResult.Columns["SaleOrderNumber"].DisplayIndex = 0;
                 dgvSearchResult.Columns["SaleOrderDate"].DisplayIndex = 1;
                 dgvSearchResult.Columns["CustomerName"].DisplayIndex = 2;
@@ -322,13 +322,13 @@ namespace EzPos.GUIs.Forms
         private void IListToBindingList(IList saleOrderReportList)
         {
             if (saleOrderReportList == null)
-                throw new ArgumentNullException("saleOrderReportList", "Sale Order List");
+                throw new ArgumentNullException("saleOrderReportList", Resources.MsgInvalidSaleOrder);
 
             try
             {
-                _SaleOrderReportList.Clear();
+                SaleOrderReportList.Clear();
                 foreach (SaleOrderReport saleOrderReport in saleOrderReportList)
-                    _SaleOrderReportList.Add(saleOrderReport);
+                    SaleOrderReportList.Add(saleOrderReport);
             }
             catch (Exception exception)
             {
@@ -346,10 +346,10 @@ namespace EzPos.GUIs.Forms
             if (e == null)
                 return;
 
-            if (_SaleOrderReportList.Count == 0)
+            if (SaleOrderReportList.Count == 0)
                 return;
 
-            _SONumber = (_SaleOrderReportList[e.RowIndex]).SaleOrderNumber;
+            SoNumber = (SaleOrderReportList[e.RowIndex]).SaleOrderNumber;
             DialogResult = DialogResult.OK;
         }
 
@@ -385,16 +385,16 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (_DepositReportList == null)
+            if (DepositReportList == null)
                 return;
 
-            if (_DepositReportList.Count == 0)
+            if (DepositReportList.Count == 0)
                 return;
 
             if (dgvSearchResult.CurrentRow == null)
                 return;
 
-            var depositReport = _DepositReportList[dgvSearchResult.CurrentRow.Index] as DepositReport;
+            var depositReport = DepositReportList[dgvSearchResult.CurrentRow.Index] as DepositReport;
             if(depositReport == null)
                 return;
 
@@ -439,7 +439,7 @@ namespace EzPos.GUIs.Forms
                     CashierId = deposit.CashierId
                 };
             paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
-            BtnSaveClick(null, null);
+            BtnSearchClick(null, null);
         }
     }
 }

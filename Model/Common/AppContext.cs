@@ -17,6 +17,10 @@ namespace EzPos.Model
         private static string _ReceiptHeader;
         private static User _User;
         private static IList _UserPermissionList;
+        private static string _BarCodeTemplate;
+        private static string _ReceiptTemplate;
+        private static string _IssueReceipt;
+        private static string _ReceiptPrinter;
 
         public static User User
         {
@@ -88,6 +92,30 @@ namespace EzPos.Model
         {
             get { return _IntegratedModuleList; }
             set { _IntegratedModuleList = value; }
+        }
+
+        public static string BarCodeTemplate
+        {
+            get { return _BarCodeTemplate; }
+            set { _BarCodeTemplate = value; }
+        }
+
+        public static string ReceiptTemplate
+        {
+            get { return _ReceiptTemplate; }
+            set { _ReceiptTemplate = value; }
+        }
+
+        public static string IssueReceipt
+        {
+            get { return _IssueReceipt; }
+            set { _IssueReceipt = value; }
+        }
+
+        public static string ReceiptPrinter
+        {
+            get { return _ReceiptPrinter; }
+            set { _ReceiptPrinter = value; }
         }
     }
 }

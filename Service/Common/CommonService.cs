@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using EzPos.DataAccess;
 using EzPos.GUIs.Components;
@@ -17,89 +18,77 @@ namespace EzPos.Service.Common
 {
     public class CommonService
     {
-        private readonly CommonDataAccess _CommonDataAccess;
+        private readonly CommonDataAccess _commonDataAccess;
 
         public CommonService(CommonDataAccess commonDataAccess)
         {
-            _CommonDataAccess = commonDataAccess;
+            _commonDataAccess = commonDataAccess;
         }
 
         //Operation log
-        public void InsertOperationLog(int userID, int operationID)
+        public void InsertOperationLog(int userId, int operationId)
         {
             var operationLog = 
                 new OperationLog
                 {
-                    UserID = userID,
-                    OperationID = operationID,
+                    UserID = userId,
+                    OperationID = operationId,
                     LogDateTime = DateTime.Now,
                     IPAddress = ClientInfoHelper.GetHostIP()
                 };
 
-            _CommonDataAccess.InsertOperationLog(operationLog);
+            _commonDataAccess.InsertOperationLog(operationLog);
         }
 
         //Application parameters
         public virtual IList GetAppParameterTypes()
         {
-            return _CommonDataAccess.GetAppParameterTypes();
+            return _commonDataAccess.GetAppParameterTypes();
         }
 
         public virtual IList GetAppParameters()
         {
-            return _CommonDataAccess.GetAppParameters();
+            return _commonDataAccess.GetAppParameters();
         }
 
         public virtual IList GetAppParameters(IList searchCriteria)
         {
             if (searchCriteria == null)
-                throw new ArgumentNullException("searchCriteria", "Search Criteria");
+                throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
-            return _CommonDataAccess.GetAppParameters(searchCriteria);
+            return _commonDataAccess.GetAppParameters(searchCriteria);
         }
 
-        public virtual IList GetAppParametersByType(int parameterTypeID)
+        public virtual IList GetAppParametersByType(int parameterTypeId)
         {
-            return _CommonDataAccess.GetAppParametersByType(parameterTypeID);
+            return _commonDataAccess.GetAppParametersByType(parameterTypeId);
         }
 
         public virtual IList GetAppParametersByTypeSortByValue(int parameterTypeId)
         {
-            return _CommonDataAccess.GetAppParametersByTypeSortByValue(parameterTypeId);
+            return _commonDataAccess.GetAppParametersByTypeSortByValue(parameterTypeId);
         }
 
         public static IList GetAppParametersByTypeStatic(IList appParamList, int parameterTypeId)
         {
             if (appParamList == null)
-                throw new ArgumentNullException("appParamList", "Missing application parmeter listing");
+                throw new ArgumentNullException("appParamList", Resources.MsgInvalidAppParameter);
 
-            var appParamListResult = new List<AppParameter>();
-            foreach (AppParameter appParameter in appParamList)
-            {
-                if (appParameter.ParameterTypeID == parameterTypeId)
-                    appParamListResult.Add(appParameter);
-            }
-            return appParamListResult;
+            return appParamList.Cast<AppParameter>().Where(appParameter => appParameter.ParameterTypeID == parameterTypeId).ToList();
         }
 
-        public virtual IList GetAppParametersByType(IList appParamList, int parameterTypeID)
+        public virtual IList GetAppParametersByType(IList appParamList, int parameterTypeId)
         {
             if (appParamList == null)
-                throw new ArgumentNullException("appParamList", "Missing application parmeter listing");
+                throw new ArgumentNullException("appParamList", Resources.MsgInvalidAppParameter);
 
-            var appParamListResult = new List<AppParameter>();
-            foreach (AppParameter appParameter in appParamList)
-            {
-                if (appParameter.ParameterTypeID == parameterTypeID)
-                    appParamListResult.Add(appParameter);
-            }
-            return appParamListResult;
+            return appParamList.Cast<AppParameter>().Where(appParameter => appParameter.ParameterTypeID == parameterTypeId).ToList();
         }
 
         public virtual void AppParameterManagement(AppParameter appParameter, string requestStr)
         {
             if (appParameter == null)
-                throw new ArgumentNullException("appParameter", "Missing application parmeter");
+                throw new ArgumentNullException("appParameter", Resources.MsgInvalidAppParameter);
 
             if (requestStr == null)
                 throw new ArgumentNullException("requestStr", Resources.MsgOperationRequestUnknown);
@@ -108,32 +97,26 @@ namespace EzPos.Service.Common
                 throw new ArgumentNullException("requestStr", Resources.MsgOperationRequestUnknown);
 
             if (requestStr == Resources.OperationRequestInsert)
-            {
                 InsertAppParameter(appParameter);
-            }
             else if (requestStr == Resources.OperationRequestUpdate)
-            {
                 UpdateAppParameter(appParameter);
-            }
             else
-            {
                 DeleteAppParameter(appParameter);
-            }
         }
 
         private void InsertAppParameter(AppParameter appParameter)
         {
-            _CommonDataAccess.InsertAppParameter(appParameter);
+            _commonDataAccess.InsertAppParameter(appParameter);
         }
 
         private void UpdateAppParameter(AppParameter appParameter)
         {
-            _CommonDataAccess.UpdateAppParameter(appParameter);
+            _commonDataAccess.UpdateAppParameter(appParameter);
         }
 
         private void DeleteAppParameter(AppParameter appParameter)
         {
-            _CommonDataAccess.DeleteAppParameter(appParameter);
+            _commonDataAccess.DeleteAppParameter(appParameter);
         }
 
         public void PopAppParamCombobox(ref ComboBox appParamComboBox, IList appParamList, int appParamType)
@@ -196,6 +179,10 @@ namespace EzPos.Service.Common
                     Resources.AppParamShopName + ", " +
                     Resources.AppParamShopAddress + ", " +
                     Resources.AppParamShopContact + ", " +
+                    Resources.AppParamBarcodeTemplate + ", " +
+                    Resources.AppParamIssueReceipt + ", " +
+                    Resources.AppParamReceiptTemplate + ", " +
+                    Resources.AppParamReceiptPrinter + ", " +
                     Resources.AppParamReceiptFooter + ")"
                 };
             var appParameterList = GetAppParameters(searchCriteria);
@@ -211,6 +198,14 @@ namespace EzPos.Service.Common
                     AppContext.ShopContact = appParameter.ParameterLabel;
                 else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamReceiptFooter))
                     AppContext.ReceiptFooter = appParameter.ParameterLabel;
+                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamBarcodeTemplate))
+                    AppContext.BarCodeTemplate = appParameter.ParameterLabel;
+                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamReceiptTemplate))
+                    AppContext.ReceiptTemplate = appParameter.ParameterLabel;
+                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamIssueReceipt))
+                    AppContext.IssueReceipt = appParameter.ParameterLabel;
+                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamReceiptPrinter))
+                    AppContext.ReceiptPrinter = appParameter.ParameterLabel;
             }
         }
 
@@ -243,9 +238,9 @@ namespace EzPos.Service.Common
                 return;
             AppContext.ExchangeRate = exchangeRate;
 
-            UserService userService =
+            var userService =
                 ServiceFactory.GenerateServiceInstance().GenerateUserService();
-            IList userPermissionList = userService.GetPermissionsByUser(usrObj.UserID);
+            var userPermissionList = userService.GetPermissionsByUser(usrObj.UserID);
             if (userPermissionList == null)
                 return;
             AppContext.UserPermissionList = userPermissionList;
@@ -254,14 +249,14 @@ namespace EzPos.Service.Common
         public virtual Counter GetCounter()
         {
             var ipAddress = ClientInfoHelper.GetHostIP();
-            var counterList = _CommonDataAccess.GetCounterByIP(ipAddress);
+            var counterList = _commonDataAccess.GetCounterByIP(ipAddress);
             if (counterList == null)
                 return null;
 
             if (counterList.Count == 0)
             {
                 ipAddress = ClientInfoHelper.GetHostName();
-                counterList = _CommonDataAccess.GetCounterByIP(ipAddress);
+                counterList = _commonDataAccess.GetCounterByIP(ipAddress);
             }
 
             if (counterList.Count == 0)
@@ -273,20 +268,20 @@ namespace EzPos.Service.Common
         public static DataTable IListToDataTable(Type objType, IList iListToConvert)
         {
             if (iListToConvert == null)
-                throw new ArgumentNullException("iListToConvert", "IListToConvert");
+                throw new ArgumentNullException("iListToConvert", Resources.MsgInvalidInput);
 
             var dataTableResult = new DataTable();
-            var PropertyInfos = objType.GetProperties();
-            foreach (var propertyInfo in PropertyInfos)
+            var propertyInfos = objType.GetProperties();
+            foreach (var dataColumn in
+                propertyInfos.Select(propertyInfo => new DataColumn(propertyInfo.Name, propertyInfo.PropertyType)))
             {
-                var dataColumn = new DataColumn(propertyInfo.Name, propertyInfo.PropertyType);
                 dataTableResult.Columns.Add(dataColumn);
             }
 
             foreach (var objInstance in iListToConvert)
             {
                 var dataRow = dataTableResult.NewRow();
-                foreach (var propertyInfo in PropertyInfos)
+                foreach (var propertyInfo in propertyInfos)
                     dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
                 dataTableResult.Rows.Add(dataRow);
             }
@@ -296,7 +291,7 @@ namespace EzPos.Service.Common
         public static BindingList<object> IListToBindingList(IList iListToConvert)
         {
             if (iListToConvert == null)
-                throw new ArgumentNullException("iListToConvert", "IListToConvert");
+                throw new ArgumentNullException("iListToConvert", Resources.MsgInvalidInput);
 
             var bindingList = new BindingList<object>();
             foreach (object objInstance in iListToConvert)
@@ -334,7 +329,7 @@ namespace EzPos.Service.Common
         //Exchange rate
         public ExchangeRate GetExchangeRate()
         {
-            IList exchangeRateList = _CommonDataAccess.GetExchangeRate();
+            IList exchangeRateList = _commonDataAccess.GetExchangeRate();
             if (exchangeRateList != null)
                 if (exchangeRateList.Count != 0)
                     return (ExchangeRate) exchangeRateList[0];
@@ -345,35 +340,26 @@ namespace EzPos.Service.Common
         //Integrated module
         public IList GetIntegratedModules()
         {
-            var integratedModuleList = _CommonDataAccess.GetIntegratedModules();
+            var integratedModuleList = _commonDataAccess.GetIntegratedModules();
             return integratedModuleList;
         }
 
         public static bool IsIntegratedModule(string moduleName)
         {
-            var integratedFlag = false;
-
             if (AppContext.IntegratedModuleList == null)
                 return false;
 
-            foreach (IntegratedModule integratedModule in AppContext.IntegratedModuleList)
-            {
-                if (!moduleName.Equals(integratedModule.ModuleName)) 
-                    continue;
-
-                integratedFlag = integratedModule.IsIntegrated;
-                break;
-            }
-
-            return integratedFlag;
+            return (from IntegratedModule integratedModule in AppContext.IntegratedModuleList
+                    where moduleName.Equals(integratedModule.ModuleName)
+                    select integratedModule.IsIntegrated).FirstOrDefault();
         }
 
         public virtual void InsertExchangeRate(ExchangeRate exchangeRate)
         {
             if (exchangeRate == null)
-                throw new ArgumentNullException("exchangeRate", "ExchangeRate");
+                throw new ArgumentNullException("exchangeRate", Resources.MsgInvalidExchangeRate);
 
-            _CommonDataAccess.InsertExchangeRate(exchangeRate);
+            _commonDataAccess.InsertExchangeRate(exchangeRate);
             StoreApplicationContext(AppContext.User, exchangeRate);
         }
 
@@ -391,6 +377,30 @@ namespace EzPos.Service.Common
             var streamWriter = File.AppendText(logFileInfo.FullName);
             streamWriter.WriteLine(logMsg);
             streamWriter.Close();
+        }
+
+        public static void DeleteFile(string directoryPath, string baseFileName, string fileExtension, bool temporayFileOnly)
+        {
+            if(string.IsNullOrEmpty(directoryPath) ||
+                string.IsNullOrEmpty(baseFileName) ||
+                string.IsNullOrEmpty(fileExtension))
+                return;
+            
+            var directoryInfo = new DirectoryInfo(directoryPath);  
+            if(!directoryInfo.Exists)
+                return;
+
+            var fileInfoList = directoryInfo.GetFiles(fileExtension);
+            foreach (var fileInfo in fileInfoList.Where(fileInfo => fileInfo.Exists).Where(fileInfo => fileInfo.Name.Contains(baseFileName)))
+            {
+                if(!temporayFileOnly)
+                    fileInfo.Delete();
+                else
+                {
+                    if(fileInfo.Name.Length > baseFileName.Length)
+                        fileInfo.Delete();
+                }
+            }
         }
     }
 }

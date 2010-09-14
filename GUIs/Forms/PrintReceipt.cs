@@ -9,88 +9,92 @@ namespace EzPos.GUIs.Forms
 {
     public class PrintReceipt
     {
-        private readonly PrintDocument printDocument = new PrintDocument();
-        private string _AmountPaid, _AmountReturn;
-        private string _AmountSold;
-        private string _AmountSubTotal;
-        private BindingList<SaleItem> _BindingListObj;
-        private string _Cashier;
-        private string _Counter;
-        private string _CustomerInfo;
-        private string _Discount;
-        private string _InvoiceNumber;
-        private string _PrintDate;
-        internal PrintPreviewDialog printPreviewDialog;
+        private readonly PrintDocument _printDocument = new PrintDocument();
+        private string _amountPaid, _amountReturn;
+        private string _amountSold;
+        private string _amountSubTotal;
+        private BindingList<SaleItem> _bindingListObj;
+        private string _cashier;
+        private string _counter;
+        private string _customerInfo;
+        private string _discount;
+        private string _invoiceNumber;
+        private string _printDate;
+        internal PrintPreviewDialog PrintPreviewDialog;
 
         public BindingList<SaleItem> BindingListObj
         {
-            set { _BindingListObj = value; }
+            set { _bindingListObj = value; }
         }
 
         public string InvoiceNumber
         {
-            set { _InvoiceNumber = value; }
+            set { _invoiceNumber = value; }
         }
 
         public string Cashier
         {
-            set { _Cashier = value; }
+            set { _cashier = value; }
         }
 
         public string PrintDate
         {
-            set { _PrintDate = value; }
+            set { _printDate = value; }
         }
 
         public string Counter
         {
-            set { _Counter = value; }
+            set { _counter = value; }
         }
 
         public string AmountSold
         {
-            set { _AmountSold = value; }
+            set { _amountSold = value; }
         }
 
         public string AmountPaid
         {
-            set { _AmountPaid = value; }
+            set { _amountPaid = value; }
         }
 
         public string AmountReturn
         {
-            set { _AmountReturn = value; }
+            set { _amountReturn = value; }
         }
 
         public string Discount
         {
-            set { _Discount = value; }
+            set { _discount = value; }
         }
 
         public string AmountSubTotal
         {
-            set { _AmountSubTotal = value; }
+            set { _amountSubTotal = value; }
         }
 
         public string CustomerInfo
         {
-            get { return _CustomerInfo; }
-            set { _CustomerInfo = value; }
+            get { return _customerInfo; }
+            set { _customerInfo = value; }
         }
 
         public void InializeReceiptPrinting()
         {
-            printPreviewDialog = new PrintPreviewDialog {UseAntiAlias = true};
-            printDocument.PrinterSettings.PrinterName = AppContext.Counter.ReceiptPrinter;
-            printDocument.DocumentName = AppContext.ShopName;
-            printDocument.PrintPage += printDocument_PrintPage;
+            PrintPreviewDialog = 
+                new PrintPreviewDialog
+                {
+                    UseAntiAlias = true
+                };
 
-            printPreviewDialog.Document = printDocument;
-            printDocument.Print();
-            printDocument.PrintPage -= printDocument_PrintPage;
+            _printDocument.PrinterSettings.PrinterName = AppContext.ReceiptPrinter;
+            _printDocument.DocumentName = AppContext.ShopName;
+            _printDocument.PrintPage += PrintDocumentPrintPage;
+            PrintPreviewDialog.Document = _printDocument;
+            PrintPreviewDialog.ShowDialog();
+            _printDocument.PrintPage -= PrintDocumentPrintPage;
         }
 
-        private void printDocument_PrintPage(object sender, PrintPageEventArgs e)
+        private void PrintDocumentPrintPage(object sender, PrintPageEventArgs e)
         {
             const int posX = 0;
             var posY = 0;
@@ -127,14 +131,14 @@ namespace EzPos.GUIs.Forms
 
             fontInUsed = new Font("Arial", 8, FontStyle.Bold);
             posY += 15 + Int32.Parse(Math.Round(e.Graphics.MeasureString(textToPrint, fontInUsed).Height).ToString());
-            textToPrint = "Customer: " + _CustomerInfo;
+            textToPrint = "Customer: " + _customerInfo;
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, posX, posY);
 
             posY += 5 + Int32.Parse(Math.Round(e.Graphics.MeasureString(textToPrint, fontInUsed).Height).ToString());
-            textToPrint = "Invoice nº: " + _InvoiceNumber;
+            textToPrint = "Invoice nº: " + _invoiceNumber;
             fontInUsed = new Font("Arial", 6, FontStyle.Regular);
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, posX, posY);
-            textToPrint = "Cashier: " + _Cashier;
+            textToPrint = "Cashier: " + _cashier;
             e.Graphics.DrawString(
                 textToPrint,
                 fontInUsed,
@@ -143,9 +147,9 @@ namespace EzPos.GUIs.Forms
                 posY);
 
             posY += Int32.Parse(Math.Round(e.Graphics.MeasureString(textToPrint, fontInUsed).Height).ToString());
-            textToPrint = "Date: " + _PrintDate;
+            textToPrint = "Date: " + _printDate;
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, posX, posY);
-            textToPrint = "Counter: " + _Counter;
+            textToPrint = "Counter: " + _counter;
             e.Graphics.DrawString(
                 textToPrint,
                 fontInUsed,
@@ -183,7 +187,7 @@ namespace EzPos.GUIs.Forms
 
             posY = 165;
             fontInUsed = new Font("Arial", 8, FontStyle.Regular);
-            foreach (var saleItem in _BindingListObj)
+            foreach (var saleItem in _bindingListObj)
             {
                 if (saleItem.ProductID == 0)
                     continue;
@@ -230,31 +234,31 @@ namespace EzPos.GUIs.Forms
             textToPrint = "SubTotal: ";
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   235 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY);
-            textToPrint = _AmountSubTotal;
+            textToPrint = _amountSubTotal;
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   283 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY);
             textToPrint = "Discount: ";
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   235 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 15);
-            textToPrint = _Discount;
+            textToPrint = _discount;
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   283 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 15);
             textToPrint = "Total: ";
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   235 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 30);
-            textToPrint = _AmountSold;
+            textToPrint = _amountSold;
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   283 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 30);
             textToPrint = "Cash: ";
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   235 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 45);
-            textToPrint = _AmountPaid;
+            textToPrint = _amountPaid;
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   283 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 45);
             textToPrint = "Change: ";
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   235 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 60);
-            textToPrint = _AmountReturn;
+            textToPrint = _amountReturn;
             e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black,
                                   283 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width, posY + 60);
 

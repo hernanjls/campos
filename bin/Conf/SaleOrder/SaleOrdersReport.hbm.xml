@@ -32,5 +32,7 @@
     <property name="ReportTypeStr" column="ReportTypeStr" />    
     <property name="DepositAmount" column="DepositAmount" type="float" />
     <property name="ProductCode" column="ProductCode" />
+    <property name="CategoryStr" column="CategoryStr" />
+    <property name="PurchaseUnitPrice" column="PurchaseUnitPrice" type="float" />
   </class>
 </hibernate-mapping>

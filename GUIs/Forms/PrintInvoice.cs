@@ -3,6 +3,7 @@ using System.Collections;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Properties;
 using Microsoft.Office.Interop.Excel;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
 
@@ -87,7 +88,7 @@ namespace EzPos.GUIs.Forms
                     false);
 
                 //Invoice content
-                var workSheet = (Worksheet)workBook.Worksheets["Invoice"];
+                var workSheet = (Worksheet)workBook.Worksheets[Resources.ConstSheetInvoice];
 
                 //Customer name
                 var rowIndex = 8;

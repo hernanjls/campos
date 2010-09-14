@@ -192,7 +192,7 @@ namespace EzPos.GUIs.Controls
             this.cmdSearchProduct.Text = "&Search";
             this.cmdSearchProduct.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cmdSearchProduct.UseVisualStyleBackColor = true;
-            this.cmdSearchProduct.Click += new System.EventHandler(this.cmdSearchProduct_Click);
+            this.cmdSearchProduct.Click += new System.EventHandler(this.CmdSearchProductClick);
             // 
             // lblExpenseType
             // 
@@ -241,9 +241,9 @@ namespace EzPos.GUIs.Controls
             this.btnDelete.Text = "លុបចោល";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.MouseLeave += new System.EventHandler(this.btnDelete_MouseLeave);
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            this.btnDelete.MouseEnter += new System.EventHandler(this.btnDelete_MouseEnter);
+            this.btnDelete.MouseLeave += new System.EventHandler(this.BtnDeleteMouseLeave);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDeleteClick);
+            this.btnDelete.MouseEnter += new System.EventHandler(this.BtnDeleteMouseEnter);
             // 
             // pnlBodyRight
             // 
@@ -272,9 +272,9 @@ namespace EzPos.GUIs.Controls
             this.btnNew.Text = "បង្កើតថ្មី";
             this.btnNew.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNew.UseVisualStyleBackColor = false;
-            this.btnNew.MouseLeave += new System.EventHandler(this.btnNew_MouseLeave);
+            this.btnNew.MouseLeave += new System.EventHandler(this.BtnNewMouseLeave);
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            this.btnNew.MouseEnter += new System.EventHandler(this.btnNew_MouseEnter);
+            this.btnNew.MouseEnter += new System.EventHandler(this.BtnNewMouseEnter);
             // 
             // cmbExpenseType
             // 

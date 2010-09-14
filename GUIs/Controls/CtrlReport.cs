@@ -1,19 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Windows.Forms;
-using EzPos.GUIs.DataSets;
-using EzPos.GUIs.Forms;
-using EzPos.GUIs.Reports;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using EzPos.Model;
-using EzPos.Properties;
 using EzPos.Service;
+using EzPos.GUIs.Forms;
+using EzPos.Properties;
+using EzPos.GUIs.Reports;
+using EzPos.GUIs.DataSets;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using EzPos.Service.Common;
+using Microsoft.Office.Interop.Excel;
+using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
+using System.Runtime.InteropServices;
 
 namespace EzPos.GUIs.Controls
 {
     public partial class CtrlReport : UserControl
     {
-        private DepositService DepositService;
+        private DepositService _depositService;
         public CtrlReport()
         {
             InitializeComponent();
@@ -257,14 +264,17 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
+                crvReport.BringToFront();
                 if (rdbSale.Checked)
                     RefreshReportSale();
                 else if (rdbDeposit.Checked)
                     RefreshReportDeposit(chbAllDeposit.Checked);
                 else if (rdbReturn.Checked)
                     RefreshReportReturn();
-                else
+                else if (rdbExpense.Checked)
                     RefreshDailyExpenseReport();
+                else
+                    RefreshIncomeStatementReport();
             }
             catch (Exception exception)
             {
@@ -294,11 +304,6 @@ namespace EzPos.GUIs.Controls
         {
             btnSearchSale.BackgroundImage = null;
         }
-
-        //private void btnDailyReport_Click(object sender, EventArgs e)
-        //{
-        //    refreshDailyExpenseReport();
-        //}
 
         private void RefreshDailyExpenseReport()
         {
@@ -342,27 +347,39 @@ namespace EzPos.GUIs.Controls
             crvReport.ReportSource = csrExpense;
         }
 
-        //private void btnDailyReport_MouseEnter(object sender, EventArgs e)
-        //{
-        //    btnDailyReport.BackgroundImage = Resources.background_9;
-        //}
-
-        //private void btnDailyReport_MouseLeave(object sender, EventArgs e)
-        //{
-        //    btnDailyReport.BackgroundImage = null;
-        //}
-
         private void CtrlReport_Load(object sender, EventArgs e)
         {
             if (_SaleOrderService == null)
                 _SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
-            if (DepositService == null)
-                DepositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
+            if (_depositService == null)
+                _depositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
             if (_ProductService == null)
                 _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
             if (_ExpenseService == null)
                 _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
-        }               
+
+            try
+            {
+                ThreadStart threadStart = RemoveTemporaryFiles;
+                var thread = new Thread(threadStart) { IsBackground = true };
+                thread.Start();
+            }
+            catch (Exception exception)
+            {
+                ExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+            }
+        }
+
+        private static void RemoveTemporaryFiles()
+        {
+            CommonService.DeleteFile(
+                System.Windows.Forms.Application.StartupPath,
+                Resources.ConstIncomeStatementExcelFile,
+                "*.xls*",
+                true);
+        }
 
         private void RefreshReportDeposit(bool allDeposit)
         {
@@ -400,7 +417,7 @@ namespace EzPos.GUIs.Controls
                     dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     " 23:59', 103)) "
                 };
-            var assessmentList = DepositService.GetDepositHistories(searchCriteria, false);
+            var assessmentList = _depositService.GetDepositHistories(searchCriteria, false);
 
             DataSet dtsModel = new DtsModels();
             var propertyInfos = typeof(DepositReport).GetProperties();
@@ -468,6 +485,298 @@ namespace EzPos.GUIs.Controls
             chbAllDeposit.Checked = false;
             if (chbShowQuantity.Checked)
                 chbShowBenefit.Checked = false;
+        }
+
+        private void RefreshIncomeStatementReport()
+        {
+            try
+            {
+                wbsReport.Navigate("about:blank");
+
+                if (!UserService.AllowToPerform(Resources.PermissionViewIncomeStatementReport))
+                {
+                    const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
+                    var detailMsg = Resources.MsgUserPermissionDeny;
+                    using (var frmMessageBox = new ExtendedMessageBox())
+                    {
+                        frmMessageBox.BriefMsgStr = briefMsg;
+                        frmMessageBox.DetailMsgStr = detailMsg;
+                        frmMessageBox.IsCanceledOnly = true;
+                        frmMessageBox.ShowDialog(this);
+                        return;
+                    }
+                }
+
+                int counter;
+                var startDate = dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo);
+                var endDate = dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo);
+
+                //Sales
+                var saleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
+                var searchCriteria =
+                    new List<string>
+                        {
+                            "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
+                            startDate +
+                            "', 103) AND CONVERT(DATETIME, '" +
+                            endDate + " 23:59', 103)"
+                        };
+
+                var saleOrderList = saleOrderService.GetSaleHistoriesOrderByProductCategory(searchCriteria);
+
+                var saleType = string.Empty;
+                var saleAmount = 0f;
+                var purchaseAmount = 0f;
+                var groupSaleList = new List<List<object>>();
+                foreach (var saleOrderReport in saleOrderList.Cast<SaleOrderReport>().Where(saleOrderReport => saleOrderReport != null))
+                {
+                    if (!saleOrderReport.CategoryStr.Equals(saleType))
+                    {
+                        List<object> groupExpense;
+                        if (groupSaleList.Count != 0)
+                        {
+                            counter = groupSaleList.Count;
+                            groupExpense = groupSaleList[counter - 1];
+
+                            groupExpense.Add(saleAmount);
+                            groupExpense.Add(purchaseAmount);
+
+                        }
+
+                        saleType = saleOrderReport.CategoryStr;
+
+                        groupExpense = new List<object> { saleType };
+                        groupSaleList.Add(groupExpense);
+
+                        saleAmount = 0f;
+                        purchaseAmount = 0f;
+                    }
+
+                    saleAmount += saleOrderReport.AmountSoldInt;
+                    saleAmount += (saleOrderReport.AmountSoldInt * saleOrderReport.ExchangeRate);
+                    purchaseAmount += saleOrderReport.PurchaseUnitPrice;
+                }
+
+                if (groupSaleList.Count != 0)
+                {
+                    counter = groupSaleList.Count;
+                    var groupExpense = groupSaleList[counter - 1];
+
+                    groupExpense.Add(saleAmount);
+                    groupExpense.Add(purchaseAmount);
+                }
+
+                //Expense
+                var expenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+                searchCriteria =
+                    new List<string>
+                    {
+                        "ExpenseDate BETWEEN CONVERT(DATETIME, '" +
+                        startDate +
+                        "', 103) AND CONVERT(DATETIME, '" +
+                        endDate +
+                        "', 103)"
+                    };
+                var expenseList = expenseService.GetExpensesOrderByType(searchCriteria);
+
+                var expenseType = string.Empty;
+                var expenseAmount = 0f;
+                var groupExpenseList = new List<List<object>>();
+                foreach (var expense in expenseList.Cast<Expense>().Where(expense => expense != null))
+                {
+                    if (!expense.ExpenseTypeStr.Equals(expenseType))
+                    {
+                        List<object> groupExpense;
+                        if (groupExpenseList.Count != 0)
+                        {
+                            counter = groupExpenseList.Count;
+                            groupExpense = groupExpenseList[counter - 1];
+
+                            groupExpense.Add(expenseAmount);
+                        }
+
+                        expenseType = expense.ExpenseTypeStr;
+
+                        groupExpense = new List<object> { expenseType };
+                        groupExpenseList.Add(groupExpense);
+
+                        expenseAmount = 0f;
+                    }
+
+                    expenseAmount += expense.ExpenseAmountInt;
+                    expenseAmount += (expense.ExpenseAmountRiel * expense.ExchangeRate);
+                }
+
+                if (groupExpenseList.Count != 0)
+                {
+                    counter = groupExpenseList.Count;
+                    var groupExpense = groupExpenseList[counter - 1];
+
+                    groupExpense.Add(expenseAmount);
+                }
+
+                //Write to Excel file
+                var templateIncomeStatementFileName =
+                    System.Windows.Forms.Application.StartupPath + @"\" +
+                    Resources.ConstIncomeStatementExcelFile;
+
+                var templateIncomeStatementFileInfo = new FileInfo(templateIncomeStatementFileName);
+                if (!templateIncomeStatementFileInfo.Exists)
+                {
+                    const string briefMsg = "អំពីប្រព័ន្ឋ";
+                    var detailMsg = Resources.MsgMissingIncomeStatement;
+                    using (var frmMessageBox = new ExtendedMessageBox())
+                    {
+                        frmMessageBox.BriefMsgStr = briefMsg;
+                        frmMessageBox.DetailMsgStr = detailMsg;
+                        frmMessageBox.IsCanceledOnly = true;
+                        frmMessageBox.ShowDialog(this);
+                        return;
+                    }
+                }
+
+                var temporaryIncomeStatementFileName =
+                    System.Windows.Forms.Application.StartupPath + @"\" +
+                    DateTime.Now.Ticks +
+                    Resources.ConstIncomeStatementExcelFile;
+                //var temporaryIncomeStatementFileName =
+                //    System.Windows.Forms.Application.StartupPath + @"\" +
+                //    Resources.ConstTemporaryIncomeStatementExcelFile;
+                //var temporaryIncomeStatementFileInfo = new FileInfo(temporaryIncomeStatementFileName);
+                //if(temporaryIncomeStatementFileInfo.Exists)
+                //{
+                //    temporaryIncomeStatementFileInfo.Delete();
+                //}
+
+                var invoicePeriode =
+                    startDate + " ដល់ " + endDate;
+
+                //Open workbook                
+                var excelApplication = new ExcelApplication();
+                var workBook = excelApplication.Workbooks.Open(
+                    templateIncomeStatementFileName,
+                    0,
+                    false,
+                    5,
+                    false,
+                    string.Empty,
+                    false,
+                    XlPlatform.xlWindows,
+                    string.Empty,
+                    true,
+                    false,
+                    0,
+                    true,
+                    false,
+                    false);
+                
+                //Invoice content
+                var workSheet = (Worksheet)workBook.Worksheets[Resources.ConstSheetIncomeStatement];
+
+                //Shop name
+                var rowIndex = 2;
+                var excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = "របាយការណ៏ហិរញ្ញវុត្ថុរបស់ក្រុមហ៊ុន  " + AppContext.ShopName;
+
+                //Period
+                rowIndex = 3;
+                excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = "ពី " + invoicePeriode;
+
+                //Income
+                rowIndex = 5;
+                counter = 0;
+                var totalPurchaseAmount = 0f;
+                foreach (var saleReport in groupSaleList.Where(saleReport => saleReport != null))
+                {
+                    excelRange = workSheet.get_Range("B" + rowIndex, "B" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = saleReport[0].ToString();
+
+                    excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = "…………………………………….";
+
+                    excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = "USD";
+
+                    excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = float.Parse(saleReport[1].ToString());
+                    totalPurchaseAmount = float.Parse(saleReport[2].ToString());
+
+                    rowIndex += 1;
+                    excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                    if (counter == (groupSaleList.Count - 1))
+                        continue;
+
+                    excelRange.EntireRow.Insert(XlInsertShiftDirection.xlShiftDown, 1);
+                    counter += 1;
+                }
+
+                //Purchase amount
+                rowIndex += 3;
+                excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = totalPurchaseAmount;
+
+                //Expense
+                rowIndex += 4;
+                counter = 0;
+                foreach (var expenseReport in groupExpenseList.Where(expenseReport => expenseReport != null))
+                {
+                    excelRange = workSheet.get_Range("B" + rowIndex, "B" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = expenseReport[0].ToString();
+
+                    excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = "…………………………………….";
+
+                    excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = "USD";
+
+                    excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = expenseReport[1].ToString();
+
+                    rowIndex += 1;
+                    excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                    if (counter == (groupExpenseList.Count - 1))
+                        continue;
+
+                    excelRange.EntireRow.Insert(XlInsertShiftDirection.xlShiftDown, 1);
+                    counter += 1;
+                }
+
+                excelRange = workSheet.get_Range("A1", "A1");
+                excelRange.Select();
+                
+                workBook.Close(
+                    true,
+                    temporaryIncomeStatementFileName,
+                    System.Reflection.Missing.Value);
+
+                excelApplication.Quit();
+
+                Marshal.ReleaseComObject(excelApplication);
+                GC.Collect(0, GCCollectionMode.Forced);
+                GC.WaitForPendingFinalizers();
+                
+                //Open report
+                wbsReport.BringToFront();
+                wbsReport.Navigate(temporaryIncomeStatementFileName);
+            } 
+            catch (Exception exception)
+            {
+                ExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+            }            
         }
     }
 }

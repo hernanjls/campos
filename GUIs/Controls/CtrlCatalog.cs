@@ -358,7 +358,7 @@ namespace EzPos.GUIs.Controls
         private void IListToBindingList(IList productList)
         {
             if (productList == null)
-                throw new ArgumentNullException("productList", "Product List");
+                throw new ArgumentNullException("productList", Resources.MsgInvalidProduct);
 
             if (ProductList == null)
                 return;
@@ -461,26 +461,28 @@ namespace EzPos.GUIs.Controls
                     }
                     dgvProduct.Refresh();
                 }
-                
-                var barCodePrintingTypeList =
-                    _CommonService.GetAppParametersByType(
-                        Int32.Parse(Resources.AppParamBarcodePrintingType, AppContext.CultureInfo));
 
-                var barCodePrintingType = string.Empty;
-                if (barCodePrintingTypeList != null)
-                {
-                    if(barCodePrintingTypeList.Count != 0)
-                    {
-                        var appParameter = (AppParameter) barCodePrintingTypeList[0];
-                        if (appParameter != null)
-                            barCodePrintingType = appParameter.ParameterValue;
-                    }
-                }
+                var barCodeTemplate = AppContext.BarCodeTemplate;
 
-                if (string.IsNullOrEmpty(barCodePrintingType))
-                    barCodePrintingType = Resources.ConstPrintTypeA4;
+                //var barCodePrintingTypeList =
+                //    _CommonService.GetAppParametersByType(
+                //        Int32.Parse(Resources.AppParamBarcodePrintingType, AppContext.CultureInfo));
 
-                PrintBarCode.InializePrinting(BarCodeList, barCodePrintingType);
+                //var barCodePrintingType = string.Empty;
+                //if (barCodePrintingTypeList != null)
+                //{
+                //    if(barCodePrintingTypeList.Count != 0)
+                //    {
+                //        var appParameter = (AppParameter) barCodePrintingTypeList[0];
+                //        if (appParameter != null)
+                //            barCodePrintingType = appParameter.ParameterValue;
+                //    }
+                //}
+
+                if (string.IsNullOrEmpty(barCodeTemplate))
+                    barCodeTemplate = Resources.ConstBarCodeTemplate1;
+
+                PrintBarCode.InializePrinting(BarCodeList, barCodeTemplate);
                 SetFocusToProductList();
             }
             catch (Exception exception)
@@ -703,7 +705,7 @@ namespace EzPos.GUIs.Controls
         private void UpdateSelectedProduct(Product curProduct, float preQtyInStock)
         {
             if (curProduct == null)
-                throw new ArgumentNullException("curProduct", "Current Product");
+                throw new ArgumentNullException("curProduct", Resources.MsgInvalidProduct);
 
             try
             {
