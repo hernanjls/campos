@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Resources;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
@@ -18,6 +19,24 @@ namespace EzPos
     [TestFixture]
     public class EzPosUnitTest
     {
+        [Test]
+        public void TestResizeImage()
+        {
+            var myBitmap = Image.FromFile(@"D:\DSC06857.JPG");
+            var myThumbnail = 
+                myBitmap.GetThumbnailImage(
+                    100, 
+                    100, 
+                    null, 
+                    new IntPtr());
+            myThumbnail.Save("test.jpg");
+        }
+
+        public bool ThumbnailCallback()
+        {
+            return false;
+        }
+
         [Test]
         public static void TestDeleteFile()
         {
