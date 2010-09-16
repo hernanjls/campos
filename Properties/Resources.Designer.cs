@@ -507,6 +507,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ចំនួនសរុបនៃផលិតផលដែលបានទិញ៖ .
+        /// </summary>
+        internal static string ConstPurchaseInfoPrefix {
+            get {
+                return ResourceManager.GetString("ConstPurchaseInfoPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Template 1.
         /// </summary>
         internal static string ConstReceiptTemplate1 {
@@ -530,6 +539,15 @@ namespace EzPos.Properties {
         internal static string ConstReceiptTemplate3 {
             get {
                 return ResourceManager.GetString("ConstReceiptTemplate3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ម្ដង​ទៀត.
+        /// </summary>
+        internal static string ConstRepeatSearch {
+            get {
+                return ResourceManager.GetString("ConstRepeatSearch", resourceCulture);
             }
         }
         
@@ -578,15 +596,6 @@ namespace EzPos.Properties {
             get {
                 object obj = ResourceManager.GetObject("exit32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ម្ដង​ទៀត.
-        /// </summary>
-        internal static string LblRepeatSearch {
-            get {
-                return ResourceManager.GetString("LblRepeatSearch", resourceCulture);
             }
         }
         

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using EzPos.GUI;
 using EzPos.GUIs.Forms;
@@ -438,12 +439,9 @@ namespace EzPos.GUIs.Controls
                 var saleItem = _saleItemBindingList[selectedIndex];
                 if (requestType == Resources.OperationRequestInsert)
                 {
-                    foreach (var product in _productList)
-                    {
-                        if ((product.ProductID == saleItem.ProductID) &&
-                            (product.QtyInStock == saleItem.QtySold))
-                            return;
-                    }
+                    if (_productList.Any(product => (product.ProductID == saleItem.ProductID) && (product.QtyInStock == saleItem.QtySold)))
+                        return;
+
                     saleItem.QtySold += 1;
                 }
                 else
@@ -1092,7 +1090,7 @@ namespace EzPos.GUIs.Controls
         private void SetPurchasedInfo(IFormattable totalQtyPurchased)
         {
             lblPurchaseInfo.Text =
-                "ចំនួនសរុបនៃផលិតផលដែលបានទិញ៖ " + totalQtyPurchased.ToString("N0", AppContext.CultureInfo);
+                Resources.ConstPurchaseInfoPrefix + totalQtyPurchased.ToString("N0", AppContext.CultureInfo);
         }
 
         private void IListToBindingList(IList saleItemList)
@@ -1253,11 +1251,8 @@ namespace EzPos.GUIs.Controls
                             folderBrowserDialog.SelectedPath,
                             "ProductList.xml");
 
-                        foreach (var saleItem in _saleItemBindingList)
+                        foreach (var saleItem in _saleItemBindingList.Where(saleItem => saleItem != null))
                         {
-                            if (saleItem == null)
-                                continue;
-
                             //Restore QtyInStock of product                            
                             saleItem.FKProduct.QtyInStock = float.Parse(saleItem.FKProduct.PublicQty);
                             //saleItem.QtySold = saleItem.FKProduct.QtyInStock;
@@ -1301,27 +1296,5 @@ namespace EzPos.GUIs.Controls
             btnValid.Enabled = true;
             btnValid.Text = enableStatus ? "បោះពុម្ភ" : "គិតលុយ";
         }
-
-        //private void ResetProductPrice()
-        //{
-        //    if (_ProductList == null)
-        //        return;
-
-        //    if(_ProductList.Count == 0)
-        //        return;
-
-        //    foreach(var product in _ProductList)
-        //    {
-        //        var publicUnitPriceOut =
-        //            product.UnitPriceIn +
-        //            ((product.UnitPriceIn * product.ExtraPercentage) / 100);
-
-        //        publicUnitPriceOut =
-        //            publicUnitPriceOut -
-        //            ((publicUnitPriceOut * product.DiscountPercentage) / 100);
-
-        //        product.UnitPriceOut = publicUnitPriceOut;
-        //    }            
-        //}
     }
 }

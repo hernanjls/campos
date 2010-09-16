@@ -574,7 +574,7 @@
   <data name="ConstBarCodeTemplate2" xml:space="preserve">
     <value>Template 2</value>
   </data>
-  <data name="LblRepeatSearch" xml:space="preserve">
+  <data name="ConstRepeatSearch" xml:space="preserve">
     <value>ម្ដង​ទៀត</value>
   </data>
   <data name="MsgInvalidDeposit" xml:space="preserve">
@@ -628,4 +628,7 @@
   <data name="ConstPrefixRiel" xml:space="preserve">
     <value>R </value>
   </data>
+	<data name="ConstPurchaseInfoPrefix">
+		<value><![CDATA[ចំនួនសរុបនៃផលិតផលដែលបានទិញ៖ ]]></value>
+	</data>
 </root>

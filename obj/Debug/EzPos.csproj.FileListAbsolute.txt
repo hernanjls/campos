@@ -62,7 +62,6 @@ D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\I
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\log4net.dll
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\Microsoft.Office.Interop.Excel.dll
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\NHibernate.dll
-D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\nunit.framework.dll
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\office.dll
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\Microsoft.Vbe.Interop.dll
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\nunit.framework.xml
