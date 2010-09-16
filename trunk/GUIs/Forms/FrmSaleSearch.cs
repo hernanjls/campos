@@ -56,7 +56,7 @@ namespace EzPos.GUIs.Forms
 
         private void BtnSearchClick(object sender, EventArgs e)
         {
-            if (btnSearch.Text == Resources.LblRepeatSearch)
+            if (btnSearch.Text == Resources.ConstRepeatSearch)
                 SetVisibleControls(true);
             else
             {
