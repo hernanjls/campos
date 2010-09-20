@@ -126,8 +126,8 @@ namespace EzPos.GUIs.Forms
             this.txtUPIn.TabIndex = 13;
             this.txtUPIn.Text = "0.00";
             this.txtUPIn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtUPIn.Leave += new System.EventHandler(this.txtUPIn_Leave);
-            this.txtUPIn.Enter += new System.EventHandler(this.txtUPIn_Enter);
+            this.txtUPIn.Leave += new System.EventHandler(this.TxtUpInLeave);
+            this.txtUPIn.Enter += new System.EventHandler(this.TxtUpInEnter);
             // 
             // lblUPOut
             // 
@@ -148,9 +148,9 @@ namespace EzPos.GUIs.Forms
             this.txtUPOut.TabIndex = 19;
             this.txtUPOut.Text = "0.00";
             this.txtUPOut.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtUPOut.Leave += new System.EventHandler(this.txtUPOut_Leave);
-            this.txtUPOut.Enter += new System.EventHandler(this.txtUPOut_Enter);
-            this.txtUPOut.Validating += new System.ComponentModel.CancelEventHandler(this.txtUPOut_Validating);
+            this.txtUPOut.Leave += new System.EventHandler(this.TxtUpOutLeave);
+            this.txtUPOut.Enter += new System.EventHandler(this.TxtUpOutEnter);
+            this.txtUPOut.Validating += new System.ComponentModel.CancelEventHandler(this.TxtUpOutValidating);
             // 
             // lblExtraPercentage
             // 
@@ -171,8 +171,8 @@ namespace EzPos.GUIs.Forms
             this.txtExtraPercentage.TabIndex = 15;
             this.txtExtraPercentage.Text = "0";
             this.txtExtraPercentage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtExtraPercentage.Leave += new System.EventHandler(this.txtExtraPercentage_Leave);
-            this.txtExtraPercentage.Enter += new System.EventHandler(this.txtExtraPercentage_Enter);
+            this.txtExtraPercentage.Leave += new System.EventHandler(this.TxtExtraPercentageLeave);
+            this.txtExtraPercentage.Enter += new System.EventHandler(this.TxtExtraPercentageEnter);
             // 
             // lblQtyInStock
             // 
@@ -193,8 +193,8 @@ namespace EzPos.GUIs.Forms
             this.txtQtyInStock.TabIndex = 23;
             this.txtQtyInStock.Text = "1";
             this.txtQtyInStock.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtQtyInStock.Leave += new System.EventHandler(this.txtQtyInStock_Leave);
-            this.txtQtyInStock.Enter += new System.EventHandler(this.txtQtyInStock_Enter);
+            this.txtQtyInStock.Leave += new System.EventHandler(this.TxtQtyInStockLeave);
+            this.txtQtyInStock.Enter += new System.EventHandler(this.TxtQtyInStockEnter);
             // 
             // lblDiscount
             // 
@@ -215,8 +215,8 @@ namespace EzPos.GUIs.Forms
             this.txtDiscount.TabIndex = 17;
             this.txtDiscount.Text = "0";
             this.txtDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtDiscount.Leave += new System.EventHandler(this.txtDiscount_Leave);
-            this.txtDiscount.Enter += new System.EventHandler(this.txtDiscount_Enter);
+            this.txtDiscount.Leave += new System.EventHandler(this.TxtDiscountLeave);
+            this.txtDiscount.Enter += new System.EventHandler(this.TxtDiscountEnter);
             // 
             // grbLine_1
             // 
@@ -275,8 +275,8 @@ namespace EzPos.GUIs.Forms
             this.txtForeignCode.Size = new System.Drawing.Size(230, 36);
             this.txtForeignCode.TabIndex = 1;
             this.txtForeignCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtForeignCode.Leave += new System.EventHandler(this.txtProductCode_Leave);
-            this.txtForeignCode.Enter += new System.EventHandler(this.txtProductCode_Enter);
+            this.txtForeignCode.Leave += new System.EventHandler(this.TxtProductCodeLeave);
+            this.txtForeignCode.Enter += new System.EventHandler(this.TxtProductCodeEnter);
             // 
             // lblProductCode
             // 
@@ -307,8 +307,8 @@ namespace EzPos.GUIs.Forms
             this.cmbSize.Name = "cmbSize";
             this.cmbSize.Size = new System.Drawing.Size(230, 36);
             this.cmbSize.TabIndex = 9;
-            this.cmbSize.Leave += new System.EventHandler(this.cmbSize_Leave);
-            this.cmbSize.Enter += new System.EventHandler(this.cmbSize_Enter);
+            this.cmbSize.Leave += new System.EventHandler(this.CmbSizeLeave);
+            this.cmbSize.Enter += new System.EventHandler(this.CmbSizeEnter);
             // 
             // lblQty
             // 
@@ -339,8 +339,8 @@ namespace EzPos.GUIs.Forms
             this.cmbColor.Name = "cmbColor";
             this.cmbColor.Size = new System.Drawing.Size(230, 36);
             this.cmbColor.TabIndex = 7;
-            this.cmbColor.Leave += new System.EventHandler(this.cmbColor_Leave);
-            this.cmbColor.Enter += new System.EventHandler(this.cmbColor_Enter);
+            this.cmbColor.Leave += new System.EventHandler(this.CmbColorLeave);
+            this.cmbColor.Enter += new System.EventHandler(this.CmbColorEnter);
             // 
             // cmbMark
             // 
@@ -351,8 +351,8 @@ namespace EzPos.GUIs.Forms
             this.cmbMark.Name = "cmbMark";
             this.cmbMark.Size = new System.Drawing.Size(230, 36);
             this.cmbMark.TabIndex = 5;
-            this.cmbMark.Leave += new System.EventHandler(this.cmbMark_Leave);
-            this.cmbMark.Enter += new System.EventHandler(this.cmbMark_Enter);
+            this.cmbMark.Leave += new System.EventHandler(this.CmbMarkLeave);
+            this.cmbMark.Enter += new System.EventHandler(this.CmbMarkEnter);
             // 
             // cmbCategory
             // 
@@ -364,8 +364,8 @@ namespace EzPos.GUIs.Forms
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(230, 36);
             this.cmbCategory.TabIndex = 3;
-            this.cmbCategory.Leave += new System.EventHandler(this.cmbCategory_Leave);
-            this.cmbCategory.Enter += new System.EventHandler(this.cmbCategory_Enter);
+            this.cmbCategory.Leave += new System.EventHandler(this.CmbCategoryLeave);
+            this.cmbCategory.Enter += new System.EventHandler(this.CmbCategoryEnter);
             // 
             // groupBox1
             // 
@@ -427,9 +427,9 @@ namespace EzPos.GUIs.Forms
             this.btnAdjustment.TabIndex = 0;
             this.btnAdjustment.Text = "ដកពីឃ្លាំង";
             this.btnAdjustment.UseVisualStyleBackColor = false;
-            this.btnAdjustment.MouseLeave += new System.EventHandler(this.btnAdjustment_MouseLeave);
-            this.btnAdjustment.Click += new System.EventHandler(this.btnAdjustment_Click);
-            this.btnAdjustment.MouseEnter += new System.EventHandler(this.btnAdjustment_MouseEnter);
+            this.btnAdjustment.MouseLeave += new System.EventHandler(this.BtnAdjustmentMouseLeave);
+            this.btnAdjustment.Click += new System.EventHandler(this.BtnAdjustmentClick);
+            this.btnAdjustment.MouseEnter += new System.EventHandler(this.BtnAdjustmentMouseEnter);
             // 
             // btnCancel
             // 
@@ -449,8 +449,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // btnSave
             // 
@@ -470,9 +470,9 @@ namespace EzPos.GUIs.Forms
             this.btnSave.Text = "យល់ព្រម";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            this.btnSave.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            this.btnSave.MouseLeave += new System.EventHandler(this.BtnSaveMouseLeave);
+            this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
+            this.btnSave.MouseEnter += new System.EventHandler(this.BtnSaveMouseEnter);
             // 
             // cmsCatalog
             // 
@@ -491,7 +491,7 @@ namespace EzPos.GUIs.Forms
             this.tsmIndividual.Name = "tsmIndividual";
             this.tsmIndividual.Size = new System.Drawing.Size(231, 30);
             this.tsmIndividual.Text = "ជ្រើសរើសម្ដងមួយ";
-            this.tsmIndividual.Click += new System.EventHandler(this.tsmIndividual_Click);
+            this.tsmIndividual.Click += new System.EventHandler(this.TsmIndividualClick);
             // 
             // tmsGroup
             // 
@@ -499,7 +499,7 @@ namespace EzPos.GUIs.Forms
             this.tmsGroup.Name = "tmsGroup";
             this.tmsGroup.Size = new System.Drawing.Size(231, 30);
             this.tmsGroup.Text = "ជ្រើសរើសមួយចំនួន";
-            this.tmsGroup.Click += new System.EventHandler(this.tmsGroup_Click);
+            this.tmsGroup.Click += new System.EventHandler(this.TmsGroupClick);
             // 
             // tsmAll
             // 
@@ -507,7 +507,7 @@ namespace EzPos.GUIs.Forms
             this.tsmAll.Name = "tsmAll";
             this.tsmAll.Size = new System.Drawing.Size(231, 30);
             this.tsmAll.Text = "ជ្រើសរើសម្ដងទាំងអស់";
-            this.tsmAll.Click += new System.EventHandler(this.tsmAll_Click);
+            this.tsmAll.Click += new System.EventHandler(this.TsmAllClick);
             // 
             // tsmImport
             // 
@@ -515,7 +515,7 @@ namespace EzPos.GUIs.Forms
             this.tsmImport.Name = "tsmImport";
             this.tsmImport.Size = new System.Drawing.Size(231, 30);
             this.tsmImport.Text = "នាំចូលមកពីឃ្លាំង";
-            this.tsmImport.Click += new System.EventHandler(this.tsmImport_Click);
+            this.tsmImport.Click += new System.EventHandler(this.TsmImportClick);
             // 
             // txtPhotoPath
             // 
@@ -536,7 +536,7 @@ namespace EzPos.GUIs.Forms
             this.ptbProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ptbProduct.TabIndex = 101;
             this.ptbProduct.TabStop = false;
-            this.ptbProduct.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ptbProduct_MouseClick);
+            this.ptbProduct.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PtbProductMouseClick);
             // 
             // cmbProduct
             // 
@@ -547,7 +547,7 @@ namespace EzPos.GUIs.Forms
             this.cmbProduct.Sorted = true;
             this.cmbProduct.TabIndex = 0;
             this.cmbProduct.Visible = false;
-            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.cmbProduct_SelectedIndexChanged);
+            this.cmbProduct.SelectedIndexChanged += new System.EventHandler(this.CmbProductSelectedIndexChanged);
             // 
             // FrmCatalog
             // 
