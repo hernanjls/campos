@@ -15,12 +15,12 @@ namespace EzPos.GUIs.Forms
     public partial class FrmCatalog : Form
     {
         private CommonService _CommonService;
-        private float _DefaultUnitPriceOut;
+        private float DefaultUnitPriceOut;
         private bool _IsFromSale;
-        private bool _IsModified;
+        private bool IsModified;
         private Product _Product;
         private ProductService _ProductService;
-        private BindingList<Product> _ProductList;
+        private BindingList<Product> ProductList;
 
         public FrmCatalog()
         {
@@ -51,7 +51,7 @@ namespace EzPos.GUIs.Forms
 
         private void SetModifydStatus(bool modifyStatus)
         {
-            _IsModified = modifyStatus;
+            IsModified = modifyStatus;
             btnSave.Enabled = modifyStatus;
         }
 
@@ -60,7 +60,7 @@ namespace EzPos.GUIs.Forms
             if (_IsFromSale)
                 return;
 
-            if ((DialogResult == DialogResult.Cancel) && (_IsModified))
+            if ((DialogResult == DialogResult.Cancel) && (IsModified))
             {
                 const string briefMsg = "អំពីការបោះបង់";
                 var detailMsg = Resources.MsgOperationRequestCancel;
@@ -76,7 +76,7 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (_IsModified) 
+            if (IsModified) 
                 return;
 
             DialogResult = DialogResult.Cancel;
@@ -97,68 +97,68 @@ namespace EzPos.GUIs.Forms
             SetModifydStatus(true);
         }
 
-        private void cmbCategory_Enter(object sender, EventArgs e)
+        private void CmbCategoryEnter(object sender, EventArgs e)
         {
             cmbCategory.SelectedIndexChanged += ModificationHandler;
             cmbCategory.TextChanged += ModificationHandler;
         }
 
-        private void cmbMark_Enter(object sender, EventArgs e)
+        private void CmbMarkEnter(object sender, EventArgs e)
         {
             cmbMark.SelectedIndexChanged += ModificationHandler;
             cmbMark.TextChanged += ModificationHandler;
         }
 
-        private void cmbColor_Enter(object sender, EventArgs e)
+        private void CmbColorEnter(object sender, EventArgs e)
         {
             cmbColor.SelectedIndexChanged += ModificationHandler;
             cmbColor.TextChanged += ModificationHandler;
         }
 
-        private void txtUPIn_Enter(object sender, EventArgs e)
+        private void TxtUpInEnter(object sender, EventArgs e)
         {
             txtUPIn.TextChanged += ModificationHandler;
         }
 
-        private void txtExtraPercentage_Enter(object sender, EventArgs e)
+        private void TxtExtraPercentageEnter(object sender, EventArgs e)
         {
             txtExtraPercentage.TextChanged += ModificationHandler;
         }
 
-        private void txtUPOut_Enter(object sender, EventArgs e)
+        private void TxtUpOutEnter(object sender, EventArgs e)
         {
             txtUPOut.TextChanged += ModificationHandler;
         }
 
-        private void txtDiscount_Enter(object sender, EventArgs e)
+        private void TxtDiscountEnter(object sender, EventArgs e)
         {
             txtDiscount.TextChanged += ModificationHandler;
         }
 
-        private void txtPhotoPath_TextChanged(object sender, EventArgs e)
+        private void TxtPhotoPathTextChanged(object sender, EventArgs e)
         {
             ModificationHandler(sender, e);
         }
 
-        private void cmbCategory_Leave(object sender, EventArgs e)
+        private void CmbCategoryLeave(object sender, EventArgs e)
         {
             cmbCategory.SelectedIndexChanged -= ModificationHandler;
             cmbCategory.TextChanged -= ModificationHandler;
         }
 
-        private void cmbMark_Leave(object sender, EventArgs e)
+        private void CmbMarkLeave(object sender, EventArgs e)
         {
             cmbMark.SelectedIndexChanged -= ModificationHandler;
             cmbMark.TextChanged -= ModificationHandler;
         }
 
-        private void cmbColor_Leave(object sender, EventArgs e)
+        private void CmbColorLeave(object sender, EventArgs e)
         {
             cmbColor.SelectedIndexChanged -= ModificationHandler;
             cmbColor.TextChanged -= ModificationHandler;
         }
 
-        private void txtUPIn_Leave(object sender, EventArgs e)
+        private void TxtUpInLeave(object sender, EventArgs e)
         {
             txtUPIn.TextChanged -= ModificationHandler;
             try
@@ -173,12 +173,12 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtExtraPercentage_Leave(object sender, EventArgs e)
+        private void TxtExtraPercentageLeave(object sender, EventArgs e)
         {
             txtExtraPercentage.TextChanged -= ModificationHandler;
         }
 
-        private void txtUPOut_Leave(object sender, EventArgs e)
+        private void TxtUpOutLeave(object sender, EventArgs e)
         {
             if (txtUPOut.Text.Length == 0)
                 txtUPOut.Text = "0.000";
@@ -186,7 +186,7 @@ namespace EzPos.GUIs.Forms
             txtUPOut.TextChanged -= ModificationHandler;
         }
 
-        private void txtDiscount_Leave(object sender, EventArgs e)
+        private void TxtDiscountLeave(object sender, EventArgs e)
         {
             if (txtDiscount.Text.Length == 0)
                 txtDiscount.Text = "0.000";
@@ -194,7 +194,7 @@ namespace EzPos.GUIs.Forms
             txtDiscount.TextChanged -= ModificationHandler;
         }
 
-        private void txtQtyInStock_Leave(object sender, EventArgs e)
+        private void TxtQtyInStockLeave(object sender, EventArgs e)
         {
             txtQtyInStock.TextChanged -= ModificationHandler;
         }
@@ -216,7 +216,7 @@ namespace EzPos.GUIs.Forms
             if (!UserService.AllowToPerform(Resources.PermissionModifyProductQuantity))
                 txtQtyInStock.Enabled = false;
 
-            _DefaultUnitPriceOut = 0;
+            DefaultUnitPriceOut = 0;
 
             var searchCriteria = 
                 new List<string>
@@ -262,8 +262,8 @@ namespace EzPos.GUIs.Forms
             _CommonService.PopAppParamExtendedCombobox(
                 ref cmbSize, objectList, int.Parse(Resources.AppParamSize), true);
 
-            _ProductList = new BindingList<Product>();
-            cmbProduct.DataSource = _ProductList;
+            ProductList = new BindingList<Product>();
+            cmbProduct.DataSource = ProductList;
             cmbProduct.DisplayMember = Product.CONST_FOREIGN_CODE;
             cmbProduct.ValueMember = Product.CONST_PRODUCT_ID;
             cmbProduct.SelectedIndex = -1;
@@ -276,7 +276,7 @@ namespace EzPos.GUIs.Forms
                 return;
             }
 
-            txtPhotoPath.TextChanged += txtPhotoPath_TextChanged;
+            txtPhotoPath.TextChanged += TxtPhotoPathTextChanged;
         }
 
         private void SetProductInfo(Product product)
@@ -294,7 +294,7 @@ namespace EzPos.GUIs.Forms
             txtExtraPercentage.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo);
             txtDiscount.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo);
             txtUPOut.Text = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
-            _DefaultUnitPriceOut = product.UnitPriceOut;
+            DefaultUnitPriceOut = product.UnitPriceOut;
             txtQtyInStock.Text = product.QtyInStock.ToString("N0", AppContext.CultureInfo);
             txtPhotoPath.Text = product.PhotoPath;
             if (product.PhotoPath == null)
@@ -324,7 +324,7 @@ namespace EzPos.GUIs.Forms
                                        _Product.ProductCode;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSaveClick(object sender, EventArgs e)
         {
             try
             {
@@ -390,14 +390,9 @@ namespace EzPos.GUIs.Forms
 
                 if (!_IsFromSale)
                 {
-                    if (_Product.ProductID != 0)
-                        _ProductService.ManageProduct(
-                            _Product,
-                            Resources.OperationRequestUpdate);
-                    else
-                        _ProductService.ManageProduct(
-                            _Product,
-                            Resources.OperationRequestInsert);
+                    _ProductService.ManageProduct(
+                        _Product,
+                        _Product.ProductID != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
                 }
 
                 DialogResult = DialogResult.OK;
@@ -428,7 +423,7 @@ namespace EzPos.GUIs.Forms
                 if (waitStatus)
                 {
                     unitPriceOut = float.Parse(txtUPOut.Text);
-                    discountPercentage = 100 - ((100*unitPriceOut)/_DefaultUnitPriceOut);
+                    discountPercentage = 100 - ((100*unitPriceOut)/DefaultUnitPriceOut);
                     discountPercentage = discountPercentage < 0 ? 0 : discountPercentage;
                     txtDiscount.Text = Math.Round(discountPercentage, 0).ToString("N", AppContext.CultureInfo);
                 }
@@ -441,8 +436,8 @@ namespace EzPos.GUIs.Forms
                     unitPriceOut = unitPriceIn + ((unitPriceIn*extraPercentage)/100);
                     unitPriceOut = unitPriceOut - ((unitPriceOut*discountPercentage)/100);
                     //txtUPOut.Text = Math.Round(unitPriceOut, 0).ToString("N", AppContext.CultureInfo);
-                    txtUPOut.Text = unitPriceOut.ToString("N", AppContext.CultureInfo);
-                    _DefaultUnitPriceOut = float.Parse(txtUPOut.Text);
+                    txtUPOut.Text = unitPriceOut.ToString("N3", AppContext.CultureInfo);
+                    DefaultUnitPriceOut = float.Parse(txtUPOut.Text);
                 }
             }
             catch (Exception exception)
@@ -453,12 +448,12 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtQtyInStock_Enter(object sender, EventArgs e)
+        private void TxtQtyInStockEnter(object sender, EventArgs e)
         {
             txtQtyInStock.TextChanged += ModificationHandler;
         }
 
-        private void ptbProduct_MouseClick(object sender, MouseEventArgs e)
+        private void PtbProductMouseClick(object sender, MouseEventArgs e)
         {
             if (_IsFromSale)
                 return;
@@ -524,37 +519,37 @@ namespace EzPos.GUIs.Forms
                     Int32.Parse(cmbSize.SelectedValue.ToString()),
                     cmbSize.Text);
 
-                _IsModified = true;
+                IsModified = true;
                 DialogResult = DialogResult.OK;
             }
         }
 
-        private void tsmIndividual_Click(object sender, EventArgs e)
+        private void TsmIndividualClick(object sender, EventArgs e)
         {
             ImportIndividualCatalog();
         }
 
-        private void tsmAll_Click(object sender, EventArgs e)
+        private void TsmAllClick(object sender, EventArgs e)
         {
             ImportAllCatalogs();
         }
 
-        private void btnSave_MouseEnter(object sender, EventArgs e)
+        private void BtnSaveMouseEnter(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSave_MouseLeave(object sender, EventArgs e)
+        private void BtnSaveMouseLeave(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_2;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
         }
@@ -570,7 +565,7 @@ namespace EzPos.GUIs.Forms
             btnAdjustment.Enabled = enableStatus;
         }
 
-        private void tmsGroup_Click(object sender, EventArgs e)
+        private void TmsGroupClick(object sender, EventArgs e)
         {
             using (var openFileDialog = new OpenFileDialog())
             {
@@ -606,12 +601,12 @@ namespace EzPos.GUIs.Forms
                     Int32.Parse(cmbSize.SelectedValue.ToString()),
                     cmbSize.Text);
 
-                _IsModified = true;
+                IsModified = true;
                 DialogResult = DialogResult.OK;
             }
         }
 
-        private void btnAdjustment_Click(object sender, EventArgs e)
+        private void BtnAdjustmentClick(object sender, EventArgs e)
         {
             if (_Product == null)
                 return;
@@ -651,33 +646,28 @@ namespace EzPos.GUIs.Forms
                         if (_ProductService == null)
                             _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                        IList listProduct2Export = new List<Product>();
-                        if (_Product != null)
-                            listProduct2Export.Add(_Product);
+                        IList listProduct2Export = new List<Product> {_Product};
 
                         _ProductService.ExportProductToXml(
                             listProduct2Export,
                             folderBrowserDialog.SelectedPath,
                             "ProductList.xml");
 
-                        if (_Product != null)
-                        {
-                            var productAdjustment = new ProductAdjustment
-                                                        {
-                                                            ProductID = _Product.ProductID,
-                                                            QtyInStock = _Product.QtyInStock,
-                                                            QtyAdjusted = ((-1)*_Product.QtyInStock),
-                                                            FKProduct = _Product
-                                                        };
+                        var productAdjustment = new ProductAdjustment
+                                                    {
+                                                        ProductID = _Product.ProductID,
+                                                        QtyInStock = _Product.QtyInStock,
+                                                        QtyAdjusted = ((-1)*_Product.QtyInStock),
+                                                        FKProduct = _Product
+                                                    };
 
-                            if (_ProductService == null)
-                                _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
-                            _ProductService.ProductAdjustmentManagement(
-                                Resources.OperationRequestInsert,
-                                productAdjustment);
-                        }
+                        if (_ProductService == null)
+                            _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                        _ProductService.ProductAdjustmentManagement(
+                            Resources.OperationRequestInsert,
+                            productAdjustment);
 
-                        _IsModified = true;
+                        IsModified = true;
                         DialogResult = DialogResult.OK;
                     }
                 }
@@ -690,34 +680,34 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void btnAdjustment_MouseEnter(object sender, EventArgs e)
+        private void BtnAdjustmentMouseEnter(object sender, EventArgs e)
         {
             btnAdjustment.BackgroundImage = Resources.background_9;
         }
 
-        private void btnAdjustment_MouseLeave(object sender, EventArgs e)
+        private void BtnAdjustmentMouseLeave(object sender, EventArgs e)
         {
             btnAdjustment.BackgroundImage = Resources.background_2;
         }
 
-        private void txtUPOut_Validating(object sender, CancelEventArgs e)
+        private void TxtUpOutValidating(object sender, CancelEventArgs e)
         {
-            _DefaultUnitPriceOut = float.Parse(txtUPOut.Text);
+            DefaultUnitPriceOut = float.Parse(txtUPOut.Text);
         }
 
-        private void cmbSize_Enter(object sender, EventArgs e)
+        private void CmbSizeEnter(object sender, EventArgs e)
         {
             cmbSize.SelectedIndexChanged += ModificationHandler;
             cmbSize.TextChanged += ModificationHandler;
         }
 
-        private void cmbSize_Leave(object sender, EventArgs e)
+        private void CmbSizeLeave(object sender, EventArgs e)
         {
             cmbSize.SelectedIndexChanged -= ModificationHandler;
             cmbSize.TextChanged -= ModificationHandler;
         }
 
-        private void tsmImport_Click(object sender, EventArgs e)
+        private void TsmImportClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionImportExportProduct))
             {
@@ -756,17 +746,17 @@ namespace EzPos.GUIs.Forms
                     folderBrowserDialog.SelectedPath,
                     "ProductList.xml");
 
-                _IsModified = true;
+                IsModified = true;
                 DialogResult = DialogResult.OK;
             }
         }
 
-        private void txtProductCode_Enter(object sender, EventArgs e)
+        private void TxtProductCodeEnter(object sender, EventArgs e)
         {
             txtForeignCode.TextChanged += ModificationHandler;
         }
 
-        private void txtProductCode_Leave(object sender, EventArgs e)
+        private void TxtProductCodeLeave(object sender, EventArgs e)
         {
             txtForeignCode.TextChanged -= ModificationHandler;
             string detailMsg;
@@ -784,7 +774,7 @@ namespace EzPos.GUIs.Forms
             DoProductFetching(txtForeignCode.Text, true);
         }
 
-        private void cmbProduct_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbProductSelectedIndexChanged(object sender, EventArgs e)
         {
             if ((String.IsNullOrEmpty(cmbProduct.DisplayMember)) ||
                 (String.IsNullOrEmpty(cmbProduct.ValueMember)) ||
@@ -846,7 +836,7 @@ namespace EzPos.GUIs.Forms
                 return;
 
             foreach (Product product in productList)
-                _ProductList.Add(product);
+                ProductList.Add(product);
 
             DoProductFetching(foreignCode, false);
         }

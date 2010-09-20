@@ -88,45 +88,15 @@ namespace EzPos
         [Test]
         public void TestPrintBarCode()
         {
-            var barCodeList = 
-                new List<BarCode>
-                {
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    //CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode(),
-                    CreateBarCode()
-                };
+            var barCodeList =
+                new List<BarCode>();
+            for(var counter = 0; counter < 36; counter++)
+            {
+                barCodeList.Add(CreateBarCode());
+            }
 
             //Print
-            PrintBarCode.InializePrinting(barCodeList, Resources.ConstBarCodeTemplate1);
+            PrintBarCode.InializePrinting(barCodeList, Resources.ConstBarCodeTemplate2);
 
             Assert.AreEqual(1, 1, "Test performed");
         }
