@@ -3,6 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzPos", "EzPos.csproj", "{B8EFF784-4821-428E-AFC6-E5E0F42E989A}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "brandselection", "..\installer\brandselection\brandselection.vdproj", "{1A76CED2-9907-4B0C-83BD-324E53E0CF34}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ecoelectric", "..\installer\ecoelectric\ecoelectric.vdproj", "{61B2C888-8A94-468E-A493-88E7DDCC286F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "macroelectric", "..\installer\macroelectric\macroelectric.vdproj", "{3AFDCACC-F857-4718-8ABB-53E60D058DAA}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "pickup", "..\installer\pickup\pickup.vdproj", "{8967659D-10B6-40A3-A22B-660CFEF8DEAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +27,38 @@ Global
 		{B8EFF784-4821-428E-AFC6-E5E0F42E989A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8EFF784-4821-428E-AFC6-E5E0F42E989A}.Release|x86.ActiveCfg = Release|x86
 		{B8EFF784-4821-428E-AFC6-E5E0F42E989A}.Release|x86.Build.0 = Release|x86
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Debug|Any CPU.ActiveCfg = Debug
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Debug|Any CPU.Build.0 = Debug
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Debug|x86.ActiveCfg = Debug
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Debug|x86.Build.0 = Debug
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Release|Any CPU.ActiveCfg = Release
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Release|Any CPU.Build.0 = Release
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Release|x86.ActiveCfg = Release
+		{1A76CED2-9907-4B0C-83BD-324E53E0CF34}.Release|x86.Build.0 = Release
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Debug|Any CPU.ActiveCfg = Debug
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Debug|Any CPU.Build.0 = Debug
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Debug|x86.ActiveCfg = Debug
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Debug|x86.Build.0 = Debug
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Release|Any CPU.ActiveCfg = Release
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Release|Any CPU.Build.0 = Release
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Release|x86.ActiveCfg = Release
+		{61B2C888-8A94-468E-A493-88E7DDCC286F}.Release|x86.Build.0 = Release
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Debug|Any CPU.ActiveCfg = Debug
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Debug|Any CPU.Build.0 = Debug
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Debug|x86.ActiveCfg = Debug
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Debug|x86.Build.0 = Debug
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Release|Any CPU.ActiveCfg = Release
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Release|Any CPU.Build.0 = Release
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Release|x86.ActiveCfg = Release
+		{3AFDCACC-F857-4718-8ABB-53E60D058DAA}.Release|x86.Build.0 = Release
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Debug|Any CPU.ActiveCfg = Debug
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Debug|Any CPU.Build.0 = Debug
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Debug|x86.ActiveCfg = Debug
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Debug|x86.Build.0 = Debug
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Release|Any CPU.ActiveCfg = Release
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Release|Any CPU.Build.0 = Release
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Release|x86.ActiveCfg = Release
+		{8967659D-10B6-40A3-A22B-660CFEF8DEAE}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

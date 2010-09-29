@@ -630,9 +630,12 @@ namespace EzPos.GUIs.Controls
             if (string.IsNullOrEmpty(receiptTemplate))
                 receiptTemplate = Resources.ConstReceiptTemplate1;
 
-            if(receiptTemplate.Equals(Resources.ConstBarCodeTemplate1))
+            if (receiptTemplate.Equals(Resources.ConstReceiptTemplate1))
             {
                 //Print
+                double amountSold = paidAmount - returnAmount;
+                //amountSold = amountSold/(1 - discountPercentage/100);
+
                 var printReceipt = new PrintReceipt
                 {
                     InvoiceNumber = invoiceNumber,
@@ -647,9 +650,7 @@ namespace EzPos.GUIs.Controls
                               ? string.Empty
                               : " | " + customer.PhoneNumber)),
                     AmountSold =
-                        (paidAmount - returnAmount).ToString("N",
-                                                                                       AppContext.
-                                                                                           CultureInfo),
+                        amountSold.ToString("N", AppContext.CultureInfo),
                     AmountPaid =
                         (paidAmount).ToString("N",
                                                            AppContext.

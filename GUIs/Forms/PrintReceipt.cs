@@ -90,7 +90,8 @@ namespace EzPos.GUIs.Forms
             _printDocument.DocumentName = AppContext.ShopName;
             _printDocument.PrintPage += PrintDocumentPrintPage;
             PrintPreviewDialog.Document = _printDocument;
-            PrintPreviewDialog.ShowDialog();
+            //PrintPreviewDialog.ShowDialog();
+            _printDocument.Print();
             _printDocument.PrintPage -= PrintDocumentPrintPage;
         }
 
@@ -195,7 +196,8 @@ namespace EzPos.GUIs.Forms
                 textToPrint = saleItem.ProductName;
                 e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, 0, posY);
                 //Qty
-                textToPrint = saleItem.QtySold.ToString("N2", AppContext.CultureInfo);
+                //textToPrint = saleItem.QtySold.ToString("N2", AppContext.CultureInfo);
+                textToPrint = saleItem.QtySold.ToString("N0", AppContext.CultureInfo);
                 e.Graphics.DrawString(
                     textToPrint,
                     fontInUsed,
@@ -203,7 +205,8 @@ namespace EzPos.GUIs.Forms
                     190 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width,
                     posY);
                 //UnitPrice
-                textToPrint = Math.Round(saleItem.UnitPriceOut, 2).ToString("N2", AppContext.CultureInfo);
+                //textToPrint = Math.Round(saleItem.UnitPriceOut, 2).ToString("N2", AppContext.CultureInfo);
+                textToPrint = Math.Round(saleItem.PublicUPOut, 2).ToString("N2", AppContext.CultureInfo);
                 e.Graphics.DrawString(
                     textToPrint,
                     fontInUsed,
@@ -211,7 +214,9 @@ namespace EzPos.GUIs.Forms
                     232 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width,
                     posY);
                 //SubTotal
-                textToPrint = Math.Round((saleItem.QtySold*saleItem.UnitPriceOut), 2).ToString("N2",
+                //textToPrint = Math.Round((saleItem.QtySold*saleItem.UnitPriceOut), 2).ToString("N2",
+                //                                                                               AppContext.CultureInfo);
+                textToPrint = Math.Round((saleItem.QtySold*saleItem.PublicUPOut), 2).ToString("N2",
                                                                                                AppContext.CultureInfo);
                 e.Graphics.DrawString(
                     textToPrint,

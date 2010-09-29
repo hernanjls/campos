@@ -128,7 +128,8 @@ namespace EzPos
                 {
                     BarCodeValue = "000001032",
                     DisplayStr = "Souvenir (Qx059)",
-                    AdditionalStr = "$ 138.00"
+                    AdditionalStr = "$ 138.00",
+                    UnitPrice = "$ 138.00"
                 };
             return barCode;
         }
