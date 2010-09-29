@@ -170,24 +170,18 @@ namespace EzPos.GUIs.Forms
                 StringHelper.Right("000" + DateTime.Now.Month, 3) + 
                 StringHelper.Right("000" + DateTime.Now.Year, 3);
 
-            //var posY = 25;
             int rowIndex = 0, colIndex = 0;
 
-            var fontBarCode = new Font("Free 3 of 9 Extended", 35, FontStyle.Regular);
-            var fontAscii = new Font("Arial", 8, FontStyle.Bold);
+            var fontBarCode = new Font("Free 3 of 9 Extended", 42, FontStyle.Regular);
             var solidBrush = new SolidBrush(Color.Black);
-            //var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 12;
 
             var leftMargin = e.MarginBounds.Left;
             var topMargin = e.MarginBounds.Top;
-            var rightMargin = e.MarginBounds.Right;
-            var medianPaper = e.MarginBounds.Width / 3;
-
             var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 3;
             var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 12;
 
             var posX = leftMargin - 70;
-            var posY = topMargin - 70;
+            var posY = topMargin - 80;
             while (_counter <= _barCodeList.Count - 1)
             {
                 if (rowIndex == 13)
@@ -200,29 +194,9 @@ namespace EzPos.GUIs.Forms
                 var printStr = "*" + barCode.BarCodeValue + "*";
                 var barcodeTextWidth = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Width, 0).ToString());
-                //var txtPosY =
-                //    5 + Int32.Parse(Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) / 2;
-
-                //posX += medianPaper * colIndex;
-
-                ////var pen = new Pen(solidBrush, 0.1f);
-                ////var rectangle =
-                ////    colIndex < 1 ?
-                ////    new Rectangle(
-                ////        posX,
-                ////        posY,
-                ////        medianPaper + 50,
-                ////        recHeight - 20) :
-                ////    new Rectangle(
-                ////        medianPaper + 100,
-                ////        posY,
-                ////        rightMargin - medianPaper - 50,
-                ////        recHeight - 20);
-
-                ////pen.Color = Color.White;
-                ////e.Graphics.DrawRectangle(pen, rectangle);
 
                 //Origin
+                var fontAscii = new Font("Arial", 10, FontStyle.Bold);
                 printStr = originStr;
                 e.Graphics.DrawString(
                     printStr,
@@ -247,80 +221,39 @@ namespace EzPos.GUIs.Forms
                     _strFormat);
 
                 //Product code
-                //if (colIndex == 0)
-                //{
                 printStr = barCode.BarCodeValue;
                 e.Graphics.DrawString(
                     printStr,
                     fontBarCode,
                     solidBrush,
-                    (posX + (recWidth * colIndex)) + ((barcodeTextWidth - recWidth) / 2),
-                    posY + (recHeight*rowIndex) + 40,
+                    (posX + (recWidth * colIndex)) + ((recWidth - barcodeTextWidth) / 2) - 5,
+                    posY + (recHeight*rowIndex) + 32,
                     _strFormat);
-                //}
 
-                //////Unit price
-                ////printStr = barCode.UnitPrice;
-                ////e.Graphics.DrawString(
-                ////    printStr,
-                ////    fontBarCode,
-                ////    solidBrush,
-                ////    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
-                ////    20 + posY + txtPosY,
-                ////    _strFormat);
+                //Unit price
+                fontAscii = new Font("Arial", 15, FontStyle.Bold);
+                printStr = barCode.UnitPrice;
+                e.Graphics.DrawString(
+                    printStr,
+                    fontAscii,
+                    solidBrush,
+                    posX + (recWidth * colIndex),
+                    posY + (recHeight * rowIndex) + 64,
+                    _strFormat);
 
-                //////Product code with prefix
-                ////printStr = prefixProductCode + barCode.BarCodeValue;
-                ////e.Graphics.DrawString(
-                ////    printStr,
-                ////    fontBarCode,
-                ////    solidBrush,
-                ////    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
-                ////    20 + posY + txtPosY,
-                ////    _strFormat);
+                //Product code with prefix
+                fontAscii = new Font("Arial", 8, FontStyle.Regular);
+                printStr = prefixProductCode + barCode.BarCodeValue;
+                displayTxtWidth = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontAscii).Width, 0).ToString());
 
-                ////e.Graphics.DrawString(
-                ////    printStr,
-                ////    fontBarCode,
-                ////    solidBrush,
-                ////    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
-                ////    20 + posY + txtPosY,
-                ////    StrFormat);
-
-                ////var fontDisplayName = new Font("Arial", 12, FontStyle.Bold);
-                ////printStr = barCode.BarCodeValue;
-                ////txtWidth = Int32.Parse(
-                ////    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
-                ////e.Graphics.DrawString(
-                ////    printStr,
-                ////    fontDisplayName,
-                ////    solidBrush,
-                ////    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
-                ////    posY + txtPosY + 60,
-                ////    StrFormat);
-
-                ////fontDisplayName = new Font("Arial", 15, FontStyle.Bold);
-                ////printStr = barCode.DisplayStr;
-                ////txtWidth = Int32.Parse(
-                ////    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
-                ////e.Graphics.DrawString(
-                ////    printStr,
-                ////    fontDisplayName,
-                ////    solidBrush,
-                ////    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
-                ////    posY + txtPosY + 95,
-                ////    StrFormat);
-
-                ////printStr = barCode.UnitPrice;
-                ////txtWidth = Int32.Parse(
-                ////    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
-                ////e.Graphics.DrawString(
-                ////    printStr,
-                ////    fontDisplayName,
-                ////    solidBrush,
-                ////    rectangle.Left + ((rectangle.Width - txtWidth) / 2),
-                ////    posY + txtPosY + 120,
-                ////    StrFormat);
+                e.Graphics.DrawString(
+                    printStr,
+                    fontAscii,
+                    solidBrush,
+                    posX + (recWidth * colIndex) + (recWidth - displayTxtWidth) - 60,
+                    posY + (recHeight * rowIndex) + 64,
+                    _strFormat);
 
                 if (colIndex < 2)
                     colIndex++;
@@ -329,7 +262,6 @@ namespace EzPos.GUIs.Forms
                     colIndex = 0;
                     posX = leftMargin - 70;
                     rowIndex++;
-                    //posY += (recHeight - 20);
                 }
 
                 _counter++;
@@ -399,7 +331,10 @@ namespace EzPos.GUIs.Forms
 
                 fontDisplayName = new Font("Arial", 13, FontStyle.Bold);
                 widthBarCode = ((2 * posX) + recWidth - widthBarCode) / 2 + widthBarCode;
-                printStr = "$" + barCode.DisplayStr;
+                //printStr = "$" + barCode.DisplayStr;
+                printStr = barCode.UnitPrice;
+                printStr = printStr.Replace(" ", "");
+                printStr = printStr.Replace(",", "");
                 var widthTxt = Int32.Parse(
                     Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
                 e.Graphics.DrawString(
