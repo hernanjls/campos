@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Reflection;
+using System.Linq;
 using Castle.Services.Transaction;
 using EzPos.DataAccess;
 using EzPos.Model;
@@ -18,16 +18,16 @@ namespace EzPos.Service
     [Transactional]
     public class ProductService
     {
-        private readonly ProductDataAccess _ProductDataAccess;
+        private readonly ProductDataAccess _productDataAccess;
 
         public ProductService(ProductDataAccess productDataAccess)
         {
-            _ProductDataAccess = productDataAccess;
+            _productDataAccess = productDataAccess;
         }
 
         public IList GetObjects()
         {
-            return _ProductDataAccess.GetProducts();
+            return _productDataAccess.GetProducts();
         }
 
         public IList GetObjects(IList searchCriteria)
@@ -35,17 +35,17 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", "Search Criteria");
 
-            return searchCriteria.Count == 0 ? GetObjects() : _ProductDataAccess.GetProducts(searchCriteria);
+            return searchCriteria.Count == 0 ? GetObjects() : _productDataAccess.GetProducts(searchCriteria);
         }
 
-        public IList GetObjectsByID(int productID)
+        public IList GetObjectsById(int productID)
         {
-            return _ProductDataAccess.GetProductByID(productID);
+            return _productDataAccess.GetProductByID(productID);
         }
 
         public IList GetAvailableProducts()
         {
-            return _ProductDataAccess.GetAvailableProducts();
+            return _productDataAccess.GetAvailableProducts();
         }
 
         public void ManageProduct(Product product, string requestStr)
@@ -75,7 +75,7 @@ namespace EzPos.Service
                 throw new ArgumentNullException("product", "Product");
 
             product.LastUpdate = DateTime.Now;
-            var existingProduct = _ProductDataAccess.GetProductByCode(product.ProductCode);
+            var existingProduct = _productDataAccess.GetProductByCode(product.ProductCode);
             if (existingProduct != null)
             {
                 product.ProductID = existingProduct.ProductID;
@@ -83,12 +83,12 @@ namespace EzPos.Service
                 product.QtyInStock += existingProduct.QtyInStock;
             }
 
-            _ProductDataAccess.InsertProduct(product);
+            _productDataAccess.InsertProduct(product);
             if (!string.IsNullOrEmpty(product.ProductCode)) 
                 return;
 
             product.ProductCode = StringHelper.Right("000000000" + product.ProductID, 9);
-            _ProductDataAccess.UpdateProduct(product);
+            _productDataAccess.UpdateProduct(product);
         }
 
         private void UpdateProduct(Product product)
@@ -96,12 +96,12 @@ namespace EzPos.Service
             if (product == null)
                 throw new ArgumentNullException("product", "Product");
 
-            _ProductDataAccess.UpdateProduct(product);
+            _productDataAccess.UpdateProduct(product);
         }
 
         public virtual void UpdateProduct(SaleItem saleItem)
         {
-            IList productList = _ProductDataAccess.GetProductByID(saleItem.ProductID);
+            var productList = _productDataAccess.GetProductByID(saleItem.ProductID);
             if (productList == null)
                 return;
 
@@ -114,7 +114,7 @@ namespace EzPos.Service
 
             product.QtyInStock -= saleItem.QtySold;
             product.QtySold += saleItem.QtySold;
-            _ProductDataAccess.UpdateProduct(product);
+            _productDataAccess.UpdateProduct(product);
         }
 
         private void DeleteProduct(Product product)
@@ -122,15 +122,15 @@ namespace EzPos.Service
             if (product == null)
                 throw new ArgumentNullException("product", "Product");
 
-            _ProductDataAccess.DeleteProduct(product);
+            _productDataAccess.DeleteProduct(product);
         }
 
         public IList GetCatalogs(bool instockOnly)
         {
             var productList = 
                 instockOnly ? 
-                _ProductDataAccess.GetAvailableProducts() : 
-                _ProductDataAccess.GetUnavailableProducts();
+                _productDataAccess.GetAvailableProducts() : 
+                _productDataAccess.GetUnavailableProducts();
 
             foreach (Product product in productList)
             {
@@ -151,19 +151,19 @@ namespace EzPos.Service
             IList productList;
             if (searchCriteria.Count == 0)
             {
-                productList = instockOnly ? _ProductDataAccess.GetAvailableProducts() : _ProductDataAccess.GetUnavailableProducts();
+                productList = instockOnly ? _productDataAccess.GetAvailableProducts() : _productDataAccess.GetUnavailableProducts();
             }
             else
             {
                 if (instockOnly)
                 {
                     searchCriteria.Add("QtyInStock > 0");
-                    productList = _ProductDataAccess.GetProducts(searchCriteria);
+                    productList = _productDataAccess.GetProducts(searchCriteria);
                 }
                 else
                 {
                     searchCriteria.Add("QtyInStock <= 0");
-                    productList = _ProductDataAccess.GetProducts(searchCriteria);
+                    productList = _productDataAccess.GetProducts(searchCriteria);
                 }
             }
 
@@ -216,7 +216,7 @@ namespace EzPos.Service
                 if ((fileExtension != ".BMP" && fileExtension != ".GIF") && fileExtension != ".JPG") 
                     continue;
 
-                var productList = _ProductDataAccess.GetProductByPhoto(
+                var productList = _productDataAccess.GetProductByPhoto(
                     fileInfo.FullName);
 
                 if (productList.Count != 0) 
@@ -281,11 +281,11 @@ namespace EzPos.Service
 
                 fileExtension = fileExtension.ToUpper();
                 if (fileExtension != ".BMP" &&
-                    fileInfo.Extension != ".GIF" &&
-                    fileInfo.Extension != ".JPG")
+                    fileExtension != ".GIF" &&
+                    fileExtension != ".JPG")
                     continue;
 
-                var productList = _ProductDataAccess.GetProductByPhoto(
+                var productList = _productDataAccess.GetProductByPhoto(
                     fileInfo.FullName);
 
                 if (productList.Count != 0) 
@@ -339,19 +339,19 @@ namespace EzPos.Service
             if (productAdjustmentList.Count == 0)
                 throw new ArgumentNullException("productAdjustmentList", "Product Adjustment");
 
-            foreach (SaleItem saleItem in productAdjustmentList)
+            foreach (
+                var productAdjustment 
+                in from SaleItem saleItem 
+                    in productAdjustmentList
+                    where saleItem != null
+                    select new ProductAdjustment
+                    {
+                        ProductID = saleItem.ProductID, 
+                        QtyInStock = saleItem.FKProduct.QtyInStock, 
+                        QtyAdjusted = ((-1)*saleItem.QtySold), 
+                        FKProduct = saleItem.FKProduct
+                    })
             {
-                if (saleItem == null)
-                    continue;
-
-                var productAdjustment = new ProductAdjustment
-                                            {
-                                                ProductID = saleItem.ProductID,
-                                                QtyInStock = saleItem.FKProduct.QtyInStock,
-                                                QtyAdjusted = ((-1)*saleItem.QtySold),
-                                                FKProduct = saleItem.FKProduct
-                                            };
-
                 ProductAdjustmentManagement(
                     requestStr, productAdjustment);
             }
@@ -362,7 +362,7 @@ namespace EzPos.Service
             if (productAdjustment == null)
                 throw new ArgumentNullException("productAdjustment", "Product adjustment");
 
-            _ProductDataAccess.InsertProductAdjustment(productAdjustment);
+            _productDataAccess.InsertProductAdjustment(productAdjustment);
         }
 
         public void ExportProductToXml(IList productList, string folderName, string fileName)
@@ -381,24 +381,21 @@ namespace EzPos.Service
 
             //Export data to XML file
             var dtProduct = new DataTable("Product");
-            PropertyInfo[] PropertyInfos = typeof (Product).GetProperties();
-            foreach (PropertyInfo propertyInfo in PropertyInfos)
+            var propertyInfos = typeof (Product).GetProperties();
+            foreach (var dataColumn in
+                propertyInfos.Select(propertyInfo => new DataColumn(propertyInfo.Name, propertyInfo.PropertyType)))
             {
-                var dataColumn = new DataColumn(propertyInfo.Name, propertyInfo.PropertyType);
                 dtProduct.Columns.Add(dataColumn);
             }
 
             var dsProduct = new DataSet("Products");
             dsProduct.Tables.Add(dtProduct);
-            foreach (object objInstance in productList)
+            foreach (var objInstance in productList)
             {
-                DataRow dataRow = dtProduct.NewRow();
-                foreach (PropertyInfo propertyInfo in PropertyInfos)
+                var dataRow = dtProduct.NewRow();
+                foreach (var propertyInfo in
+                    propertyInfos.Where(propertyInfo => !propertyInfo.Name.Equals("ProductID")).Where(propertyInfo => !propertyInfo.Name.Equals("ProductPic")))
                 {
-                    if (propertyInfo.Name.Equals("ProductID"))
-                        continue;
-                    if (propertyInfo.Name.Equals("ProductPic"))
-                        continue;
                     if (propertyInfo.Name.Equals("PhotoPath"))
                     {
                         if (string.IsNullOrEmpty(((Product)objInstance).PhotoPath))
@@ -465,10 +462,10 @@ namespace EzPos.Service
             //Import data from xml file
             IList productList = new List<Product>();
             var dtProduct = new DataTable("Product");
-            PropertyInfo[] PropertyInfos = typeof (Product).GetProperties();
-            foreach (PropertyInfo propertyInfo in PropertyInfos)
+            var propertyInfos = typeof (Product).GetProperties();
+            foreach (var dataColumn in
+                propertyInfos.Select(propertyInfo => new DataColumn(propertyInfo.Name, propertyInfo.PropertyType)))
             {
-                var dataColumn = new DataColumn(propertyInfo.Name, propertyInfo.PropertyType);
                 dtProduct.Columns.Add(dataColumn);
             }
 
@@ -482,13 +479,9 @@ namespace EzPos.Service
                     continue;
 
                 var product = new Product();
-                foreach (PropertyInfo propertyInfo in PropertyInfos)
+                foreach (var propertyInfo in
+                    propertyInfos.Where(propertyInfo => !propertyInfo.Name.Equals("ProductID")).Where(propertyInfo => !propertyInfo.Name.Equals("SkinStr")))
                 {
-                    if (propertyInfo.Name.Equals("ProductID"))
-                        continue;
-                    if (propertyInfo.Name.Equals("SkinStr"))
-                        continue;
-
                     if (dataRow[propertyInfo.Name] is DBNull)
                         propertyInfo.SetValue(
                             product,
@@ -509,7 +502,7 @@ namespace EzPos.Service
             //Import picture from source
             foreach (Product product in productList)
             {
-                string sourcePath =
+                var sourcePath =
                     folderName +
                     StringHelper.Right(
                         product.PhotoPath,
