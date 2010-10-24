@@ -509,7 +509,7 @@ namespace EzPos.GUIs.Controls
 
                 int counter;
                 var startDate = dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo);
-                var endDate = dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo);
+                var endDate = dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo);
 
                 //Sales
                 var saleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
@@ -532,29 +532,31 @@ namespace EzPos.GUIs.Controls
                 {
                     if (!saleOrderReport.CategoryStr.Equals(saleType))
                     {
-                        List<object> groupExpense;
+                        List<object> groupSale;
                         if (groupSaleList.Count != 0)
                         {
                             counter = groupSaleList.Count;
-                            groupExpense = groupSaleList[counter - 1];
+                            groupSale = groupSaleList[counter - 1];
 
-                            groupExpense.Add(saleAmount);
-                            groupExpense.Add(purchaseAmount);
+                            groupSale.Add(saleAmount);
+                            groupSale.Add(purchaseAmount);
 
                         }
 
                         saleType = saleOrderReport.CategoryStr;
 
-                        groupExpense = new List<object> { saleType };
-                        groupSaleList.Add(groupExpense);
+                        groupSale = new List<object> { saleType };
+                        groupSaleList.Add(groupSale);
 
                         saleAmount = 0f;
                         purchaseAmount = 0f;
                     }
 
                     saleAmount += saleOrderReport.AmountSoldInt;
-                    saleAmount += (saleOrderReport.AmountSoldInt * saleOrderReport.ExchangeRate);
-                    purchaseAmount += saleOrderReport.PurchaseUnitPrice;
+                    //saleAmount += (saleOrderReport.AmountSoldInt * saleOrderReport.ExchangeRate);
+                    saleAmount += (saleOrderReport.DepositAmount);
+                    //purchaseAmount += saleOrderReport.PurchaseUnitPrice;
+                    purchaseAmount += (saleOrderReport.QtySold * saleOrderReport.UnitPriceIn);
                 }
 
                 if (groupSaleList.Count != 0)
@@ -706,7 +708,7 @@ namespace EzPos.GUIs.Controls
                     excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
                     excelRange.Select();
                     excelRange.Value2 = float.Parse(saleReport[1].ToString());
-                    totalPurchaseAmount = float.Parse(saleReport[2].ToString());
+                    totalPurchaseAmount += float.Parse(saleReport[2].ToString());
 
                     rowIndex += 1;
                     excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
