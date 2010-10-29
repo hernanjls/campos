@@ -64,7 +64,6 @@ D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\M
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\NHibernate.dll
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\office.dll
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\Microsoft.Vbe.Interop.dll
-D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\nunit.framework.xml
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\office.xml
 D:\users\ysakal\private\point of sales\ezpos\application\source code\bin\Debug\Microsoft.Office.Interop.Excel.xml
 D:\users\ysakal\private\point of sales\ezpos\application\source code\obj\Debug\ResolveAssemblyReference.cache
