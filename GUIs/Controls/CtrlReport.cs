@@ -606,7 +606,7 @@ namespace EzPos.GUIs.Controls
                     }
 
                     expenseAmount += expense.ExpenseAmountInt;
-                    expenseAmount += (expense.ExpenseAmountRiel * expense.ExchangeRate);
+                    expenseAmount += (expense.ExpenseAmountRiel / expense.ExchangeRate);
                 }
 
                 if (groupExpenseList.Count != 0)
@@ -641,14 +641,6 @@ namespace EzPos.GUIs.Controls
                     System.Windows.Forms.Application.StartupPath + @"\" +
                     DateTime.Now.Ticks +
                     Resources.ConstIncomeStatementExcelFile;
-                //var temporaryIncomeStatementFileName =
-                //    System.Windows.Forms.Application.StartupPath + @"\" +
-                //    Resources.ConstTemporaryIncomeStatementExcelFile;
-                //var temporaryIncomeStatementFileInfo = new FileInfo(temporaryIncomeStatementFileName);
-                //if(temporaryIncomeStatementFileInfo.Exists)
-                //{
-                //    temporaryIncomeStatementFileInfo.Delete();
-                //}
 
                 var invoicePeriode =
                     startDate + " ដល់ " + endDate;

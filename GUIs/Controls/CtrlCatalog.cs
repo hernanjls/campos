@@ -19,10 +19,10 @@ namespace EzPos.GUIs.Controls
 {
     public partial class CtrlCatalog : UserControl
     {
-        private readonly List<BarCode> BarCodeList = new List<BarCode>();
-        private CommonService _CommonService;
-        private BindingList<Product> ProductList;
-        private ProductService _ProductService;
+        private readonly List<BarCode> _barCodeList = new List<BarCode>();
+        private CommonService _commonService;
+        private BindingList<Product> _productList;
+        private ProductService _productService;
 
         public CtrlCatalog()
         {
@@ -31,12 +31,12 @@ namespace EzPos.GUIs.Controls
 
         public ProductService ProductService
         {
-            set { _ProductService = value; }
+            set { _productService = value; }
         }
 
         public CommonService CommonService
         {
-            set { _CommonService = value; }
+            set { _commonService = value; }
         }
 
         private void UpdateControlContent()
@@ -58,28 +58,28 @@ namespace EzPos.GUIs.Controls
                         Resources.AppParamMark + "," +
                         Resources.AppParamColor + ")"
                     };
-                var objectList = _CommonService.GetAppParameters(searchCriteria);
+                var objectList = _commonService.GetAppParameters(searchCriteria);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbCategory,
                     objectList,
                     Int32.Parse(Resources.AppParamCategory, AppContext.CultureInfo),
                     false);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbMark,
                     objectList,
                     Int32.Parse(Resources.AppParamMark, AppContext.CultureInfo),
                     false);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbColor,
                     objectList,
                     Int32.Parse(Resources.AppParamColor, AppContext.CultureInfo),
                     false);
 
                 IListToBindingList(
-                    _ProductService.GetCatalogs(chbInstockOnly.Checked));
+                    _productService.GetCatalogs(chbInstockOnly.Checked));
             }
         }
 
@@ -87,11 +87,11 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
-                if (_ProductService == null)
-                    _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                if (_productService == null)
+                    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                if (_CommonService == null)
-                    _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                if (_commonService == null)
+                    _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
                 if (!UserService.AllowToPerform(Resources.PermissionViewAllProductInfo))
                 {
@@ -124,10 +124,10 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
-                if (ProductList == null)
-                    ProductList = new BindingList<Product>();
+                if (_productList == null)
+                    _productList = new BindingList<Product>();
 
-                dgvProduct.DataSource = ProductList;
+                dgvProduct.DataSource = _productList;
                 dgvProduct.Columns["PrintCheck"].DisplayIndex = 0;
                 dgvProduct.Columns["PublicQty"].DisplayIndex = 1;
                 dgvProduct.Columns["ProductPic"].DisplayIndex = 2;
@@ -170,13 +170,16 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
+                if (dgvProduct.CurrentRow == null)
+                    return;
+
                 using (var frmCatalog = new FrmCatalog())
                 {
                     float preQtyInStock = 0;
-                    if (ProductList.Count != 0)
-                        preQtyInStock = (ProductList[dgvProduct.CurrentRow.Index]).QtyInStock;
+                    if (_productList.Count != 0)
+                        preQtyInStock = (_productList[dgvProduct.CurrentRow.Index]).QtyInStock;
                     if (operationRequest.Equals(Resources.OperationRequestUpdate))
-                        frmCatalog.Product = ProductList[dgvProduct.CurrentRow.Index];
+                        frmCatalog.Product = _productList[dgvProduct.CurrentRow.Index];
 
                     if (frmCatalog.ShowDialog(this) == DialogResult.OK)
                     {
@@ -185,7 +188,7 @@ namespace EzPos.GUIs.Controls
                             if (frmCatalog.Product == null)
                             {
                                 IListToBindingList(
-                                    _ProductService.GetCatalogs(chbInstockOnly.Checked));
+                                    _productService.GetCatalogs(chbInstockOnly.Checked));
                             }
                             else
                             {
@@ -197,17 +200,17 @@ namespace EzPos.GUIs.Controls
 
                                     if (frmCatalog.Product.QtyInStock == 0)
                                     {
-                                        for (var counter = 0; counter < ProductList.Count; counter++)
+                                        for (var counter = 0; counter < _productList.Count; counter++)
                                         {
-                                            if (ProductList[counter].ProductID == frmCatalog.Product.ProductID)
-                                                ProductList.RemoveAt(counter);
+                                            if (_productList[counter].ProductID == frmCatalog.Product.ProductID)
+                                                _productList.RemoveAt(counter);
                                         }
                                     }
                                 }
                                 else
                                 {
                                     if (frmCatalog.Product.QtyInStock == 0)
-                                        ProductList.Add(frmCatalog.Product);
+                                        _productList.Add(frmCatalog.Product);
                                 }
                             }
                             dgvProduct.Refresh();
@@ -254,6 +257,9 @@ namespace EzPos.GUIs.Controls
 
         private void BtnDeleteClick(object sender, EventArgs e)
         {
+            if (dgvProduct.CurrentRow == null)
+                return;
+
             string briefMsg, detailMsg;
             if (!UserService.AllowToPerform(Resources.PermissionDeleteProduct))
             {
@@ -283,10 +289,10 @@ namespace EzPos.GUIs.Controls
 
             try
             {
-                _ProductService.ManageProduct(ProductList[dgvProduct.CurrentRow.Index],
+                _productService.ManageProduct(_productList[dgvProduct.CurrentRow.Index],
                                               Resources.OperationRequestDelete);
 
-                ProductList.RemoveAt(dgvProduct.CurrentRow.Index);
+                _productList.RemoveAt(dgvProduct.CurrentRow.Index);
                 DisplayPartialPicture(
                     dgvProduct.DisplayedRowCount(true),
                     dgvProduct.FirstDisplayedScrollingRowIndex + dgvProduct.DisplayedRowCount(true),
@@ -328,13 +334,13 @@ namespace EzPos.GUIs.Controls
                 if (txtProductCode.Text.Length != 0)
                 {
                     searchCriteria.Add(
-                        "(ProductCode LIKE '%" + txtProductCode.Text + "%') OR " +
-                        "(ForeignCode LIKE '%" + txtProductCode.Text + "%')");
+                        "((ProductCode LIKE '%" + txtProductCode.Text + "%') OR " +
+                        "(ForeignCode LIKE '%" + txtProductCode.Text + "%'))");
                 }
 
-                ProductList.Clear();
+                _productList.Clear();
                 IListToBindingList(
-                    _ProductService.GetCatalogs(searchCriteria, chbInstockOnly.Checked));
+                    _productService.GetCatalogs(searchCriteria, chbInstockOnly.Checked));
                 SetFocusToProductList();
             }
             catch (Exception exception)
@@ -360,15 +366,15 @@ namespace EzPos.GUIs.Controls
             if (productList == null)
                 throw new ArgumentNullException("productList", Resources.MsgInvalidProduct);
 
-            if (ProductList == null)
+            if (_productList == null)
                 return;
 
             try
             {
-                ProductList.Clear();
+                _productList.Clear();
                 foreach (Product product in productList)
                 {
-                    foreach (var barCode in BarCodeList)
+                    foreach (var barCode in _barCodeList)
                     {
                         if (product.ProductCode != barCode.BarCodeValue) 
                             continue;
@@ -377,7 +383,7 @@ namespace EzPos.GUIs.Controls
                         product.PublicQty = barCode.AdditionalStr;
                         break;
                     }
-                    ProductList.Add(product);
+                    _productList.Add(product);
                 }
 
                 DisplayPartialPicture(
@@ -428,8 +434,8 @@ namespace EzPos.GUIs.Controls
                 
                 if (rdbPrintAll.Checked)
                 {
-                    BarCodeList.Clear();
-                    foreach (var t in ProductList)
+                    _barCodeList.Clear();
+                    foreach (var t in _productList)
                     {
                         var product = t;
                         if(product == null)
@@ -450,7 +456,7 @@ namespace EzPos.GUIs.Controls
                             var foreignCode = product.ForeignCode;
                             if (!string.IsNullOrEmpty(foreignCode))
                                 barCode.DisplayStr += " (" + foreignCode + ")";
-                            BarCodeList.Add(barCode);
+                            _barCodeList.Add(barCode);
                         }
 
                         (t).PrintCheck = true;
@@ -482,7 +488,7 @@ namespace EzPos.GUIs.Controls
                 if (string.IsNullOrEmpty(barCodeTemplate))
                     barCodeTemplate = Resources.ConstBarCodeTemplate1;
 
-                PrintBarCode.InializePrinting(BarCodeList, barCodeTemplate);
+                PrintBarCode.InializePrinting(_barCodeList, barCodeTemplate);
                 SetFocusToProductList();
             }
             catch (Exception exception)
@@ -506,7 +512,7 @@ namespace EzPos.GUIs.Controls
 
         private void EnableActionButton()
         {
-            if (ProductList.Count == 0)
+            if (_productList.Count == 0)
             {
                 btnDelete.Enabled = false;
                 btnPrint.Enabled = false;
@@ -521,7 +527,7 @@ namespace EzPos.GUIs.Controls
 
         private void SetProductInfo()
         {
-            if ((ProductList.Count == 0) || (dgvProduct.CurrentRow == null))
+            if ((_productList.Count == 0) || (dgvProduct.CurrentRow == null))
             {
                 ptbProduct.Image = Resources.NoImage;
                 UPInLbl.Text = "$ 0.000";
@@ -531,7 +537,7 @@ namespace EzPos.GUIs.Controls
                 return;
             }
 
-            var product = ProductList[dgvProduct.CurrentRow.Index];
+            var product = _productList[dgvProduct.CurrentRow.Index];
             if (product == null)
                 return;
 
@@ -552,10 +558,10 @@ namespace EzPos.GUIs.Controls
             if (product == null)
                 return;
 
-            if (BarCodeList == null)
+            if (_barCodeList == null)
                 return;
 
-            foreach (var barCode in BarCodeList)
+            foreach (var barCode in _barCodeList)
             {
                 //if (barCode.BarCodeValue == product.ProductCode)
                 //    barCode.DisplayStr = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
@@ -574,14 +580,14 @@ namespace EzPos.GUIs.Controls
             var resultNum = 0;
             var totalProdNum = 0f;
             var totalPriceOut = 0f;
-            if (ProductList != null)
+            if (_productList != null)
             {
-                foreach (var product in ProductList)
+                foreach (var product in _productList)
                 {
                     totalProdNum += product.QtyInStock;
                     totalPriceOut += (product.QtyInStock * product.UnitPriceOut);
                 }
-                resultNum = ProductList.Count;
+                resultNum = _productList.Count;
             }
 
             var strResultInfo = string.Format(
@@ -659,24 +665,24 @@ namespace EzPos.GUIs.Controls
 
                     for (var counter = startIndex + numPicture; counter < stopIndex + numPicture; counter++)
                     {
-                        if (counter < ProductList.Count)
-                            ProductList[counter].ProductPic = null;
+                        if (counter < _productList.Count)
+                            _productList[counter].ProductPic = null;
                     }
 
                     for (var counter = startIndex; counter < startIndex + numPicture; counter++)
-                        SetProductPicture(ProductList[counter]);
+                        SetProductPicture(_productList[counter]);
                 }
                 else
                 {
                     for (var counter = startIndex; counter < stopIndex; counter++)
                     {
-                        ProductList[counter].ProductPic = null;
+                        _productList[counter].ProductPic = null;
                         if (counter >= numPicture)
                             break;
                     }
 
                     for (var counter = stopIndex; counter < stopIndex + numPicture; counter++)
-                        SetProductPicture(ProductList[counter]);
+                        SetProductPicture(_productList[counter]);
                 }
                 dgvProduct.Refresh();
             }
@@ -726,13 +732,13 @@ namespace EzPos.GUIs.Controls
                 if ((curProduct.QtyInStock - preQtyInStock) < 0)
                 {
                     isIncremented = false;
-                    for (var counter = 0; counter < BarCodeList.Count; counter++)
+                    for (var counter = 0; counter < _barCodeList.Count; counter++)
                     {
-                        if (curProduct.ProductCode != BarCodeList[counter].BarCodeValue) 
+                        if (curProduct.ProductCode != _barCodeList[counter].BarCodeValue) 
                             continue;
 
-                        if (BarCodeList.Count >= preQtyInStock)
-                            BarCodeList.RemoveAt(counter);
+                        if (_barCodeList.Count >= preQtyInStock)
+                            _barCodeList.RemoveAt(counter);
 
                         counter -= 1;
                         preQtyInStock -= 1;
@@ -758,7 +764,7 @@ namespace EzPos.GUIs.Controls
 
                         if (string.IsNullOrEmpty(curProduct.ForeignCode))
                             barCode.DisplayStr += " (" + curProduct.ForeignCode + ")";
-                        BarCodeList.Add(barCode);
+                        _barCodeList.Add(barCode);
                     }
                 }
 
@@ -771,15 +777,15 @@ namespace EzPos.GUIs.Controls
                         printedQty += (curProduct.QtyInStock - preQtyInStock);
                     else
                     {
-                        if (printedQty > BarCodeList.Count)
-                            printedQty = BarCodeList.Count;
+                        if (printedQty > _barCodeList.Count)
+                            printedQty = _barCodeList.Count;
                     }
 
                     curProduct.PublicQty =
                         printedQty + " / " + curProduct.QtyInStock;
                 }
 
-                rdbPrintSelected.Text = "កូដជ្រើសរើស (" + BarCodeList.Count.ToString(
+                rdbPrintSelected.Text = "កូដជ្រើសរើស (" + _barCodeList.Count.ToString(
                                                               "N0", AppContext.CultureInfo) + ")";
             }
             catch (Exception exception)
@@ -802,7 +808,7 @@ namespace EzPos.GUIs.Controls
                 return;
 
             var qtyInStock = Int32.Parse(dgvProduct.CurrentRow.Cells["QtyInStock"].Value.ToString());
-            if (!ProductList[dgvProduct.CurrentRow.Index].PrintCheck)
+            if (!_productList[dgvProduct.CurrentRow.Index].PrintCheck)
                 DoPreBarCodePrinting(
                     0,
                     qtyInStock,
@@ -831,7 +837,7 @@ namespace EzPos.GUIs.Controls
             if (e == null)
                 return;
 
-            if (ProductList.Count == 0)
+            if (_productList.Count == 0)
                 return;
 
             try
@@ -841,7 +847,7 @@ namespace EzPos.GUIs.Controls
                     if (dgvProduct.CurrentRow == null)
                         return;
 
-                    if (!ProductList[dgvProduct.CurrentRow.Index].PrintCheck)
+                    if (!_productList[dgvProduct.CurrentRow.Index].PrintCheck)
                     {
                         e.Handled = true;
                         return;
@@ -855,7 +861,7 @@ namespace EzPos.GUIs.Controls
                         return;
 
                     var printedQty = float.Parse(tmpQty.Split('/')[0]);
-                    var totalQty = ProductList[dgvProduct.CurrentRow.Index].QtyInStock;
+                    var totalQty = _productList[dgvProduct.CurrentRow.Index].QtyInStock;
                     int selectedIndex;
                     switch (e.KeyCode)
                     {
@@ -905,7 +911,7 @@ namespace EzPos.GUIs.Controls
                             break;
                         case Keys.Down:
                             selectedIndex = dgvProduct.SelectedRows[0].Index;
-                            if (selectedIndex < (ProductList.Count - 1))
+                            if (selectedIndex < (_productList.Count - 1))
                             {
                                 selectedIndex += 1;
                                 dgvProduct.Rows[selectedIndex].Selected = true;
@@ -944,29 +950,29 @@ namespace EzPos.GUIs.Controls
                     barCode =
                         new BarCode
                         {
-                            BarCodeValue = ProductList[dgvProduct.CurrentRow.Index].ProductCode,
+                            BarCodeValue = _productList[dgvProduct.CurrentRow.Index].ProductCode,
                             DisplayStr =
-                                ProductList[dgvProduct.CurrentRow.Index].CategoryStr,
+                                _productList[dgvProduct.CurrentRow.Index].CategoryStr,
                             AdditionalStr = (currentPrintedQty.ToString("N0") + " / " + totalQty.ToString("N0")),
-                            UnitPrice = "$ " + (ProductList[dgvProduct.CurrentRow.Index]).UnitPriceOut.ToString("N", AppContext.CultureInfo)
+                            UnitPrice = "$ " + (_productList[dgvProduct.CurrentRow.Index]).UnitPriceOut.ToString("N", AppContext.CultureInfo)
                         };
 
-                    var foreignCode = ProductList[dgvProduct.CurrentRow.Index].ForeignCode;
+                    var foreignCode = _productList[dgvProduct.CurrentRow.Index].ForeignCode;
                     if (!string.IsNullOrEmpty(foreignCode))
                         barCode.DisplayStr += " (" + foreignCode + ")";
 
-                    if (BarCodeList.IndexOf(barCode) == -1)
-                        BarCodeList.Add(barCode);
+                    if (_barCodeList.IndexOf(barCode) == -1)
+                        _barCodeList.Add(barCode);
                 }
 
                 var previousPrintedQty = currentPrintedQty - requestedQty;
-                var barCodeValue = ProductList[dgvProduct.CurrentRow.Index].ProductCode;
-                for (var counter = 0; (counter < BarCodeList.Count) && (previousPrintedQty != 0); counter++)
+                var barCodeValue = _productList[dgvProduct.CurrentRow.Index].ProductCode;
+                for (var counter = 0; (counter < _barCodeList.Count) && (previousPrintedQty != 0); counter++)
                 {
-                    if (barCodeValue != BarCodeList[counter].BarCodeValue)
+                    if (barCodeValue != _barCodeList[counter].BarCodeValue)
                         continue;
 
-                    BarCodeList[counter] = barCode;
+                    _barCodeList[counter] = barCode;
                     previousPrintedQty -= 1;
                 }
             }
@@ -974,38 +980,38 @@ namespace EzPos.GUIs.Controls
             {
                 currentPrintedQty -= requestedQty;
                 var tmpQty = requestedQty;
-                for (var counter = 0; counter < BarCodeList.Count; counter++)
+                for (var counter = 0; counter < _barCodeList.Count; counter++)
                 {
                     if (dgvProduct.CurrentRow.Cells["ProductCode"].Value.ToString() !=
-                        BarCodeList[counter].BarCodeValue) 
+                        _barCodeList[counter].BarCodeValue) 
                         continue;
                     if (tmpQty != 0)
                     {
-                        BarCodeList.RemoveAt(counter);
+                        _barCodeList.RemoveAt(counter);
                         tmpQty -= 1;
                         counter -= 1;
                     }
                     else if (currentPrintedQty != 0)
-                        BarCodeList[counter].AdditionalStr =
+                        _barCodeList[counter].AdditionalStr =
                             currentPrintedQty.ToString("N0") +
                             " / " +
                             totalQty.ToString("N0");
                     else
-                        BarCodeList[counter].AdditionalStr = string.Empty;
+                        _barCodeList[counter].AdditionalStr = string.Empty;
                 }
             }
 
             if (currentPrintedQty != 0)
-                ProductList[dgvProduct.CurrentRow.Index].PublicQty =
+                _productList[dgvProduct.CurrentRow.Index].PublicQty =
                     currentPrintedQty.ToString("N0") +
                     " / " +
                     totalQty.ToString("N0");
             else
-                ProductList[dgvProduct.CurrentRow.Index].PublicQty = string.Empty;
+                _productList[dgvProduct.CurrentRow.Index].PublicQty = string.Empty;
 
             if (setPrintingStatus)
-                ProductList[dgvProduct.CurrentRow.Index].PrintCheck = requestPrinting;
-            rdbPrintSelected.Text = "កូដជ្រើសរើស (" + BarCodeList.Count.ToString(
+                _productList[dgvProduct.CurrentRow.Index].PrintCheck = requestPrinting;
+            rdbPrintSelected.Text = "កូដជ្រើសរើស (" + _barCodeList.Count.ToString(
                                                           "N0", AppContext.CultureInfo) + ")";
             dgvProduct.Refresh();
         }
@@ -1031,7 +1037,7 @@ namespace EzPos.GUIs.Controls
                 //Generate product to print
                 var selectedProductList = new BindingList<Product>();
                 foreach (var product in
-                    ProductList.Where(product => product != null).Where(product => product.PrintCheck))
+                    _productList.Where(product => product != null).Where(product => product.PrintCheck))
                 {
                     selectedProductList.Add(product);
                 }

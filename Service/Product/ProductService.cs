@@ -33,14 +33,14 @@ namespace EzPos.Service
         public IList GetObjects(IList searchCriteria)
         {
             if (searchCriteria == null)
-                throw new ArgumentNullException("searchCriteria", "Search Criteria");
+                throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
             return searchCriteria.Count == 0 ? GetObjects() : _productDataAccess.GetProducts(searchCriteria);
         }
 
-        public IList GetObjectsById(int productID)
+        public IList GetObjectsById(int productId)
         {
-            return _productDataAccess.GetProductByID(productID);
+            return _productDataAccess.GetProductByID(productId);
         }
 
         public IList GetAvailableProducts()
@@ -51,10 +51,10 @@ namespace EzPos.Service
         public void ManageProduct(Product product, string requestStr)
         {
             if (requestStr == null)
-                throw new ArgumentNullException("requestStr", "RequestStr");
+                throw new ArgumentNullException("requestStr", Resources.MsgInvalidRequest);
 
             if (product == null)
-                throw new ArgumentNullException("product", "Product");
+                throw new ArgumentNullException("product", Resources.MsgInvalidProduct);
 
             if (requestStr == Resources.OperationRequestInsert)
                 InsertProduct(product);
@@ -72,7 +72,7 @@ namespace EzPos.Service
         private void InsertProduct(Product product)
         {
             if (product == null)
-                throw new ArgumentNullException("product", "Product");
+                throw new ArgumentNullException("product", Resources.MsgInvalidProduct);
 
             product.LastUpdate = DateTime.Now;
             var existingProduct = _productDataAccess.GetProductByCode(product.ProductCode);
@@ -94,7 +94,7 @@ namespace EzPos.Service
         private void UpdateProduct(Product product)
         {
             if (product == null)
-                throw new ArgumentNullException("product", "Product");
+                throw new ArgumentNullException("product", Resources.MsgInvalidProduct);
 
             _productDataAccess.UpdateProduct(product);
         }
@@ -120,7 +120,7 @@ namespace EzPos.Service
         private void DeleteProduct(Product product)
         {
             if (product == null)
-                throw new ArgumentNullException("product", "Product");
+                throw new ArgumentNullException("product", Resources.MsgInvalidProduct);
 
             _productDataAccess.DeleteProduct(product);
         }
@@ -146,7 +146,7 @@ namespace EzPos.Service
         public IList GetCatalogs(IList searchCriteria, bool instockOnly)
         {
             if (searchCriteria == null)
-                throw new ArgumentNullException("searchCriteria", "Search Criteria");
+                throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
             IList productList;
             if (searchCriteria.Count == 0)
@@ -182,13 +182,13 @@ namespace EzPos.Service
 
         public void ImportGroupCatalog(
             string folderPath,
-            int categoryID, string categoryStr,
-            int markID, string markStr,
-            int colorID, string colorStr,
-            int sizeID, string sizeStr)
+            int categoryId, string categoryStr,
+            int markId, string markStr,
+            int colorId, string colorStr,
+            int sizeId, string sizeStr)
         {
             if (String.IsNullOrEmpty(folderPath))
-                throw new ArgumentNullException("folderPath", "Folder path");
+                throw new ArgumentNullException("folderPath", Resources.MsgInvalidFolderPath);
 
             var directoryInfo = new DirectoryInfo(folderPath);
             if (!directoryInfo.Exists) 
@@ -197,13 +197,13 @@ namespace EzPos.Service
             foreach (var subDirectoryInfo in directoryInfo.GetDirectories())
                 ImportGroupCatalog(
                     subDirectoryInfo.FullName,
-                    categoryID,
+                    categoryId,
                     categoryStr,
-                    markID,
+                    markId,
                     markStr,
-                    colorID,
+                    colorId,
                     colorStr,
-                    sizeID,
+                    sizeId,
                     sizeStr);
 
             foreach (var fileInfo in directoryInfo.GetFiles())
@@ -226,13 +226,13 @@ namespace EzPos.Service
                     new Product
                     {
                         ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
-                        CategoryID = categoryID,
+                        CategoryID = categoryId,
                         CategoryStr = categoryStr,
-                        MarkID = markID,
+                        MarkID = markId,
                         MarkStr = markStr,
-                        ColorID = colorID,
+                        ColorID = colorId,
                         ColorStr = colorStr,
-                        SizeID = sizeID,
+                        SizeID = sizeId,
                         SizeStr = sizeStr,
                         PhotoPath = fileInfo.FullName,
                         QtyInStock = 1

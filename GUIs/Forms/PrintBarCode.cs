@@ -221,7 +221,7 @@ namespace EzPos.GUIs.Forms
                     _strFormat);
 
                 //Product code
-                printStr = barCode.BarCodeValue;
+                printStr = "*" + barCode.BarCodeValue + "*";
                 e.Graphics.DrawString(
                     printStr,
                     fontBarCode,
