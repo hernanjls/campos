@@ -141,7 +141,7 @@ namespace EzPos.GUIs.Forms
                 {
                     const string briefMsg = "អំពីពត៌មាន";
                     var detailMsg = Resources.MsgInvalidData;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -170,7 +170,7 @@ namespace EzPos.GUIs.Forms
                 {
                     const string briefMsg = "អំពីពត៌មាន";
                     var detailMsg = Resources.MsgInvalidData;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -220,7 +220,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -399,7 +399,7 @@ namespace EzPos.GUIs.Forms
             {
                 const string briefMsg = "អំពីការបោះបង់";
                 var detailMsg = Resources.MsgOperationRequestCancel;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;

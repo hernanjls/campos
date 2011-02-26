@@ -40,7 +40,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -64,7 +64,7 @@ namespace EzPos.GUIs.Controls
             {
                 briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -85,7 +85,7 @@ namespace EzPos.GUIs.Controls
             briefMsg = "អំពីការលុប";
             detailMsg = Resources.MsgOperationRequestDelete + "\n" +
                         dgvUser.CurrentRow.Cells["UserName"].Value + " ?";
-            using (var frmMessageBox = new ExtendedMessageBox())
+            using (var frmMessageBox = new FrmExtendedMessageBox())
             {
                 frmMessageBox.BriefMsgStr = briefMsg;
                 frmMessageBox.DetailMsgStr = detailMsg;
@@ -107,7 +107,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -133,7 +133,7 @@ namespace EzPos.GUIs.Controls
 
         private void dgvUser_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            ExtendedMessageBox.UnknownErrorMessage(
+            FrmExtendedMessageBox.UnknownErrorMessage(
                 Resources.MsgCaptionUnknownError,
                 e.Exception.Message);
         }
@@ -144,7 +144,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -176,7 +176,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -230,7 +230,7 @@ namespace EzPos.GUIs.Controls
                     }
                     catch (Exception exception)
                     {
-                        ExtendedMessageBox.UnknownErrorMessage(
+                        FrmExtendedMessageBox.UnknownErrorMessage(
                             Resources.MsgCaptionUnknownError,
                             exception.Message);
                     }

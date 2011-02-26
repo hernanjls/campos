@@ -88,6 +88,8 @@ namespace EzPos.Service
                 return;
 
             product.ProductCode = StringHelper.Right("000000000" + product.ProductID, 9);
+            if (string.IsNullOrEmpty(product.ForeignCode))
+                product.ForeignCode = product.ProductCode;
             _productDataAccess.UpdateProduct(product);
         }
 
@@ -246,10 +248,10 @@ namespace EzPos.Service
 
         public void ImportGroupCatalog(
             string[] fileNames,
-            int categoryID, string categoryStr,
-            int markID, string markStr,
-            int colorID, string colorStr,
-            int sizeID, string sizeStr)
+            int categoryId, string categoryStr,
+            int markId, string markStr,
+            int colorId, string colorStr,
+            int sizeId, string sizeStr)
         {
             if (fileNames.Length == 0)
                 return;
@@ -264,10 +266,10 @@ namespace EzPos.Service
                 {
                     ImportGroupCatalog(
                         fileName,
-                        categoryID, categoryStr,
-                        markID, markStr,
-                        colorID, colorStr,
-                        sizeID, sizeStr);
+                        categoryId, categoryStr,
+                        markId, markStr,
+                        colorId, colorStr,
+                        sizeId, sizeStr);
                     continue;
                 }
 
@@ -295,13 +297,13 @@ namespace EzPos.Service
                     new Product
                     {
                         ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
-                        CategoryID = categoryID,
+                        CategoryID = categoryId,
                         CategoryStr = categoryStr,
-                        MarkID = markID,
+                        MarkID = markId,
                         MarkStr = markStr,
-                        ColorID = colorID,
+                        ColorID = colorId,
                         ColorStr = colorStr,
-                        SizeID = sizeID,
+                        SizeID = sizeId,
                         SizeStr = sizeStr,
                         PhotoPath = fileInfo.FullName,
                         QtyInStock = 1

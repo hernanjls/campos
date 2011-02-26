@@ -39,7 +39,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -75,7 +75,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }

@@ -29,13 +29,13 @@ namespace EzPos.GUIs.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.btnProductAdjustment = new System.Windows.Forms.Button();
             this.grbInvoice = new System.Windows.Forms.GroupBox();
@@ -116,6 +116,7 @@ namespace EzPos.GUIs.Controls
             this.btnProductAdjustment.BackColor = System.Drawing.Color.Transparent;
             this.btnProductAdjustment.BackgroundImage = global::EzPos.Properties.Resources.background_2;
             this.btnProductAdjustment.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnProductAdjustment.Enabled = false;
             this.btnProductAdjustment.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnProductAdjustment.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProductAdjustment.ForeColor = System.Drawing.Color.White;
@@ -338,6 +339,7 @@ namespace EzPos.GUIs.Controls
             // 
             this.btnDeposit.BackColor = System.Drawing.Color.Transparent;
             this.btnDeposit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDeposit.Enabled = false;
             this.btnDeposit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDeposit.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeposit.ForeColor = System.Drawing.Color.White;
@@ -376,6 +378,7 @@ namespace EzPos.GUIs.Controls
             // 
             this.btnValid.BackColor = System.Drawing.Color.Transparent;
             this.btnValid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnValid.Enabled = false;
             this.btnValid.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnValid.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValid.ForeColor = System.Drawing.Color.White;
@@ -395,6 +398,7 @@ namespace EzPos.GUIs.Controls
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Transparent;
             this.btnCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCancel.Enabled = false;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCancel.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
@@ -432,14 +436,14 @@ namespace EzPos.GUIs.Controls
             this.dgvSaleItem.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvSaleItem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvSaleItem.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InfoText;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSaleItem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.InfoText;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSaleItem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvSaleItem.ColumnHeadersHeight = 40;
             this.dgvSaleItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvSaleItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -505,9 +509,9 @@ namespace EzPos.GUIs.Controls
             // 
             this.ProductNameCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ProductNameCol.DataPropertyName = "ProductName";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ProductNameCol.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ProductNameCol.DefaultCellStyle = dataGridViewCellStyle9;
             this.ProductNameCol.HeaderText = "ឈ្មោះ";
             this.ProductNameCol.Name = "ProductNameCol";
             this.ProductNameCol.ReadOnly = true;
@@ -529,8 +533,8 @@ namespace EzPos.GUIs.Controls
             // 
             this.QtySold.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.QtySold.DataPropertyName = "QtySold";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.QtySold.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.QtySold.DefaultCellStyle = dataGridViewCellStyle10;
             this.QtySold.HeaderText = "ចំនួន";
             this.QtySold.Name = "QtySold";
             this.QtySold.ReadOnly = true;
@@ -541,9 +545,9 @@ namespace EzPos.GUIs.Controls
             // 
             this.UnitPriceOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.UnitPriceOut.DataPropertyName = "UnitPriceOut";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "C2";
-            this.UnitPriceOut.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "C2";
+            this.UnitPriceOut.DefaultCellStyle = dataGridViewCellStyle11;
             this.UnitPriceOut.HeaderText = "តំលៃ";
             this.UnitPriceOut.Name = "UnitPriceOut";
             this.UnitPriceOut.ReadOnly = true;
@@ -555,8 +559,8 @@ namespace EzPos.GUIs.Controls
             // 
             this.Discount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Discount.DataPropertyName = "Discount";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Discount.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Discount.DefaultCellStyle = dataGridViewCellStyle12;
             this.Discount.HeaderText = "%";
             this.Discount.Name = "Discount";
             this.Discount.ReadOnly = true;
@@ -567,10 +571,10 @@ namespace EzPos.GUIs.Controls
             // 
             this.PublicUPOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.PublicUPOut.DataPropertyName = "PublicUPOut";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "C2";
-            dataGridViewCellStyle6.NullValue = null;
-            this.PublicUPOut.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle13.Format = "C2";
+            dataGridViewCellStyle13.NullValue = null;
+            this.PublicUPOut.DefaultCellStyle = dataGridViewCellStyle13;
             this.PublicUPOut.HeaderText = "តំលៃលក់";
             this.PublicUPOut.Name = "PublicUPOut";
             this.PublicUPOut.ReadOnly = true;
@@ -581,10 +585,10 @@ namespace EzPos.GUIs.Controls
             // 
             this.SubTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.SubTotal.DataPropertyName = "SubTotal";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "C2";
-            dataGridViewCellStyle7.NullValue = null;
-            this.SubTotal.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle14.Format = "C2";
+            dataGridViewCellStyle14.NullValue = null;
+            this.SubTotal.DefaultCellStyle = dataGridViewCellStyle14;
             this.SubTotal.HeaderText = "សរុប";
             this.SubTotal.Name = "SubTotal";
             this.SubTotal.ReadOnly = true;

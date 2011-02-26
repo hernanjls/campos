@@ -34,7 +34,19 @@ namespace EzPos.GUIs.Forms
                 PrintDocument.PrinterSettings.PrinterName = AppContext.Counter.BarCodePrinter;
 
             PrintDocument.BeginPrint += PrintDocBeginPrint;
-            if (Resources.ConstBarCodeTemplate3.Equals(_printType))
+            if (Resources.ConstBarCodeTemplate5.Equals(_printType))
+            {
+                PrintDocument.PrintPage += BarcodeSample5_PrintPage;
+                printPreviewDialog.ShowDialog();
+                PrintDocument.PrintPage -= BarcodeSample5_PrintPage;
+            }
+            else if (Resources.ConstBarCodeTemplate4.Equals(_printType))
+            {
+                PrintDocument.PrintPage += BarcodeSample4_PrintPage;
+                printPreviewDialog.ShowDialog();
+                PrintDocument.PrintPage -= BarcodeSample4_PrintPage;
+            }
+            else if (Resources.ConstBarCodeTemplate3.Equals(_printType))
             {
                 PrintDocument.PrintPage += BarcodeSample3_PrintPage;
                 printPreviewDialog.ShowDialog();
@@ -172,19 +184,21 @@ namespace EzPos.GUIs.Forms
 
             int rowIndex = 0, colIndex = 0;
 
-            var fontBarCode = new Font("Free 3 of 9 Extended", 42, FontStyle.Regular);
+            var fontBarCode = new Font("Free 3 of 9 Extended", 38, FontStyle.Regular);
             var solidBrush = new SolidBrush(Color.Black);
 
             var leftMargin = e.MarginBounds.Left;
             var topMargin = e.MarginBounds.Top;
             var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 3;
-            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 12;
+            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 11;
 
             var posX = leftMargin - 70;
             var posY = topMargin - 80;
+            var extraY = 0;
+            var extraX = 0;
             while (_counter <= _barCodeList.Count - 1)
             {
-                if (rowIndex == 13)
+                if (rowIndex == 12)
                 {
                     e.HasMorePages = true;
                     return;
@@ -202,8 +216,8 @@ namespace EzPos.GUIs.Forms
                     printStr,
                     fontAscii,
                     solidBrush,
-                    posX + (recWidth * colIndex),
-                    posY + (recHeight * rowIndex),
+                    posX + (recWidth * colIndex) + extraX - 10,
+                    posY + (recHeight * rowIndex) + extraY,
                     _strFormat);
 
                 //Date
@@ -216,8 +230,8 @@ namespace EzPos.GUIs.Forms
                     printStr,
                     fontAscii,
                     solidBrush,
-                    posX + (recWidth * colIndex) + (recWidth - displayTxtWidth) - 60,
-                    posY + (recHeight * rowIndex),
+                    posX + (recWidth * colIndex) + (recWidth - displayTxtWidth) - 60 + extraX,
+                    posY + (recHeight * rowIndex) + extraY,
                     _strFormat);
 
                 //Product code
@@ -226,8 +240,8 @@ namespace EzPos.GUIs.Forms
                     printStr,
                     fontBarCode,
                     solidBrush,
-                    (posX + (recWidth * colIndex)) + ((recWidth - barcodeTextWidth) / 2) - 5,
-                    posY + (recHeight*rowIndex) + 32,
+                    (posX + (recWidth * colIndex)) + ((recWidth - barcodeTextWidth) / 2) - 20 + extraX - 10,
+                    posY + (recHeight * rowIndex) + 32 + extraY,
                     _strFormat);
 
                 //Unit price
@@ -237,8 +251,8 @@ namespace EzPos.GUIs.Forms
                     printStr,
                     fontAscii,
                     solidBrush,
-                    posX + (recWidth * colIndex),
-                    posY + (recHeight * rowIndex) + 64,
+                    posX + (recWidth * colIndex) + extraX - 10,
+                    posY + (recHeight * rowIndex) + 64 + extraY,
                     _strFormat);
 
                 //Product code with prefix
@@ -251,17 +265,22 @@ namespace EzPos.GUIs.Forms
                     printStr,
                     fontAscii,
                     solidBrush,
-                    posX + (recWidth * colIndex) + (recWidth - displayTxtWidth) - 60,
-                    posY + (recHeight * rowIndex) + 64,
+                    posX + (recWidth * colIndex) + (recWidth - displayTxtWidth) - 60 + extraX,
+                    posY + (recHeight * rowIndex) + 64 + extraY,
                     _strFormat);
 
                 if (colIndex < 2)
+                {
                     colIndex++;
+                    extraX -= 10;
+                }
                 else
                 {
                     colIndex = 0;
                     posX = leftMargin - 70;
                     rowIndex++;
+                    extraY -= 15;
+                    extraX = 0;
                 }
 
                 _counter++;
@@ -354,6 +373,210 @@ namespace EzPos.GUIs.Forms
                 {
                     colIndex = 0;
                     posX = 12;
+                    rowIndex++;
+                    if (rowIndex == 2)
+                        posY -= 10;
+                    if (rowIndex == 5)
+                        posY -= 10;
+
+                    posY += recHeight;
+                }
+
+                _counter++;
+            }
+            e.HasMorePages = false;
+        }
+
+        private static void BarcodeSample4_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            int posX = 20, posY = 20;
+            int rowIndex = 0, colIndex = 0;
+
+            var fontBarCode = new Font("Free 3 of 9 Extended", 24, FontStyle.Regular);
+            var solidBrush = new SolidBrush(Color.Black);
+            var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 5;
+            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 12;
+            var extraX = -10;
+
+            while (_counter <= _barCodeList.Count - 1)
+            {
+                var fontDisplayName = new Font("Arial", 8, FontStyle.Regular);
+                if (rowIndex == 12)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
+
+                var barCode = _barCodeList[_counter];
+                var printStr = "*" + barCode.BarCodeValue + "*";
+                var widthBarCode = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Width, 0).ToString());
+                var txtPosY = 
+                    5 + 
+                    Int32.Parse(Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) / 2;
+
+                printStr =
+                    StringHelper.Right("000" + DateTime.Today.Day, 3) +
+                    StringHelper.Right("000" + DateTime.Today.Month, 3) +
+                    StringHelper.Right("000" + DateTime.Today.Year, 3);
+
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    ((2 * posX) + recWidth - widthBarCode) / 2 + 2 + extraX,
+                    posY,
+                    _strFormat);
+
+                float xValue = ((2 * posX) + recWidth - widthBarCode) / 2 + 0;
+                printStr = "*" + barCode.BarCodeValue + "*";
+                e.Graphics.DrawString(
+                    printStr,
+                    fontBarCode,
+                    solidBrush,
+                    xValue + extraX,
+                    5 + posY + txtPosY,
+                    _strFormat);
+
+                fontDisplayName = new Font("Arial", 8, FontStyle.Regular);
+                printStr = barCode.BarCodeValue;
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    ((2 * posX) + recWidth - widthBarCode) / 2 + 2 + extraX,
+                    posY + txtPosY + 30,
+                    _strFormat);
+
+                fontDisplayName = new Font("Arial", 8, FontStyle.Regular);
+                widthBarCode = ((2 * posX) + recWidth - widthBarCode) / 2 + widthBarCode;
+                //printStr = "$" + barCode.DisplayStr;
+                printStr = barCode.UnitPrice;
+                printStr = printStr.Replace(" ", "");
+                printStr = printStr.Replace(",", "");
+                var widthTxt = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    widthBarCode - widthTxt - 8 + extraX,
+                    posY + txtPosY + 30,
+                    _strFormat);
+
+                if (colIndex < 4)
+                {
+                    colIndex++;
+                    posX += recWidth - 4;
+                    extraX -= 5;
+                }
+                else
+                {
+                    extraX = -10;
+                    colIndex = 0;
+                    posX = 20;
+                    rowIndex++;
+                    if (rowIndex == 2)
+                        posY -= 10;
+                    if (rowIndex == 5)
+                        posY -= 10;
+
+                    posY += recHeight;
+                }
+
+                _counter++;
+            }
+            e.HasMorePages = false;
+        }
+
+        private static void BarcodeSample5_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            int posX = 20, posY = 20;
+            int rowIndex = 0, colIndex = 0;
+
+            var fontBarCode = new Font("Free 3 of 9 Extended", 24, FontStyle.Regular);
+            var solidBrush = new SolidBrush(Color.Black);
+            var recWidth = (e.MarginBounds.Left + e.MarginBounds.Right) / 5;
+            var recHeight = (e.MarginBounds.Top + e.MarginBounds.Bottom) / 12;
+            var extraX = -10;
+
+            while (_counter <= _barCodeList.Count - 1)
+            {
+                if (rowIndex == 12)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
+
+                var barCode = _barCodeList[_counter];
+                var printStr = "*" + barCode.BarCodeValue + "*";
+                var widthBarCode = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Width, 0).ToString());
+                var txtPosY =
+                    5 +
+                    Int32.Parse(Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) / 2;
+
+                var fontDisplayName = new Font("Arial", 6, FontStyle.Regular);
+                //printStr =
+                //    StringHelper.Right("000" + DateTime.Today.Day, 3) +
+                //    StringHelper.Right("000" + DateTime.Today.Month, 3) +
+                //    StringHelper.Right("000" + DateTime.Today.Year, 3);
+                printStr = barCode.Description;
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    ((2 * posX) + recWidth - widthBarCode) / 2 + 2 + extraX,
+                    posY,
+                    _strFormat);
+
+                float xValue = ((2 * posX) + recWidth - widthBarCode) / 2 + 0;
+                printStr = "*" + barCode.BarCodeValue + "*";
+                e.Graphics.DrawString(
+                    printStr,
+                    fontBarCode,
+                    solidBrush,
+                    xValue + extraX,
+                    5 + posY + txtPosY,
+                    _strFormat);
+
+                fontDisplayName = new Font("Arial", 8, FontStyle.Regular);
+                printStr = barCode.BarCodeValue;
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    ((2 * posX) + recWidth - widthBarCode) / 2 + 2 + extraX,
+                    posY + txtPosY + 30,
+                    _strFormat);
+
+                fontDisplayName = new Font("Arial", 8, FontStyle.Regular);
+                widthBarCode = ((2 * posX) + recWidth - widthBarCode) / 2 + widthBarCode;
+                //printStr = "$" + barCode.DisplayStr;
+                printStr = barCode.UnitPrice;
+                printStr = printStr.Replace(" ", "");
+                printStr = printStr.Replace(",", "");
+                var widthTxt = Int32.Parse(
+                    Math.Round(e.Graphics.MeasureString(printStr, fontDisplayName).Width, 0).ToString());
+                e.Graphics.DrawString(
+                    printStr,
+                    fontDisplayName,
+                    solidBrush,
+                    widthBarCode - widthTxt - 8 + extraX,
+                    posY + txtPosY + 30,
+                    _strFormat);
+
+                if (colIndex < 4)
+                {
+                    colIndex++;
+                    posX += recWidth - 4;
+                    extraX -= 5;
+                }
+                else
+                {
+                    extraX = -10;
+                    colIndex = 0;
+                    posX = 20;
                     rowIndex++;
                     if (rowIndex == 2)
                         posY -= 10;

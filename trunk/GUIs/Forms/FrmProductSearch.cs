@@ -14,10 +14,10 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmProductSearch : Form
     {
-        private CommonService _CommonService;
-        private ProductService _ProductService;
-        private BindingList<Product> _ProductList;
-        private string _CodeProduct;
+        private CommonService _commonService;
+        private ProductService _productService;
+        private BindingList<Product> _productList;
+        private string _codeProduct;
 
         public FrmProductSearch()
         {
@@ -26,17 +26,17 @@ namespace EzPos.GUIs.Forms
 
         public CommonService CommonService
         {
-            set { _CommonService = value; }
+            set { _commonService = value; }
         }
 
         public ProductService ProductService
         {
-            set { _ProductService = value; }
+            set { _productService = value; }
         }
 
         public string CodeProduct
         {
-            set { _CodeProduct = value; }
+            set { _codeProduct = value; }
         }
 
         public Product Product { get; private set; }
@@ -45,7 +45,7 @@ namespace EzPos.GUIs.Forms
         {
             if(string.IsNullOrEmpty(txtProductCode.Text))
             {
-                _ProductList.Clear();
+                _productList.Clear();
                 return;
             }
 
@@ -57,66 +57,66 @@ namespace EzPos.GUIs.Forms
                     "(ForeignCode LIKE '%" + txtProductCode.Text + "%')");
             }
 
-            if (_ProductService == null)
-                _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+            if (_productService == null)
+                _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-            _ProductList.Clear();
+            _productList.Clear();
             IListToBindingList(
-                _ProductService.GetCatalogs(searchCriteria, true));
+                _productService.GetCatalogs(searchCriteria, true));
         }
 
         private void FrmProduct_Load(object sender, EventArgs e)
         {
             try
             {
-                if (_ProductService == null)
-                    _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                if (_productService == null)
+                    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                if (_CommonService == null)
-                    _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                if (_commonService == null)
+                    _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
                 InitializeProductList();
 
-                if (!string.IsNullOrEmpty(_CodeProduct))
+                if (!string.IsNullOrEmpty(_codeProduct))
                 {
-                    txtProductCode.Text = _CodeProduct;
+                    txtProductCode.Text = _codeProduct;
                     ProductFetching();
                 }
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
         }
 
-        private void btnSave_MouseEnter(object sender, EventArgs e)
+        private void BtnSaveMouseEnter(object sender, EventArgs e)
         {
             btnValidate.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSave_MouseLeave(object sender, EventArgs e)
+        private void BtnSaveMouseLeave(object sender, EventArgs e)
         {
             btnValidate.BackgroundImage = Resources.background_2;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
         }
 
-        private void txtProductCode_Enter(object sender, EventArgs e)
+        private void TxtProductCodeEnter(object sender, EventArgs e)
         {
             //txtProductCode.TextChanged += ProductFetching;
         }
 
-        private void txtProductCode_Leave(object sender, EventArgs e)
+        private void TxtProductCodeLeave(object sender, EventArgs e)
         {
             //txtProductCode.TextChanged -= ProductFetching;
         }
@@ -125,10 +125,10 @@ namespace EzPos.GUIs.Forms
         {
             try
             {
-                if (_ProductList == null)
-                    _ProductList = new BindingList<Product>();
+                if (_productList == null)
+                    _productList = new BindingList<Product>();
 
-                dgvProduct.DataSource = _ProductList;
+                dgvProduct.DataSource = _productList;
                 dgvProduct.Columns["PrintCheck"].DisplayIndex = 0;
                 dgvProduct.Columns["PublicQty"].DisplayIndex = 1;
                 dgvProduct.Columns["ProductPic"].DisplayIndex = 2;
@@ -138,7 +138,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -149,7 +149,7 @@ namespace EzPos.GUIs.Forms
             if (productList == null)
                 throw new ArgumentNullException("productList", "Product List");
 
-            if (_ProductList == null)
+            if (_productList == null)
             {
                 btnValidate.Enabled = false;
                 return;
@@ -157,24 +157,24 @@ namespace EzPos.GUIs.Forms
 
             try
             {
-                _ProductList.Clear();
+                _productList.Clear();
                 foreach (Product product in productList)
                 {
                     SetProductPicture(product);
-                    _ProductList.Add(product);
+                    _productList.Add(product);
                 }
 
-                btnValidate.Enabled = _ProductList.Count != 0;                
+                btnValidate.Enabled = _productList.Count != 0;                
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
         }
 
-        private void txtProductCode_KeyDown(object sender, KeyEventArgs e)
+        private void TxtProductCodeKeyDown(object sender, KeyEventArgs e)
         {
             if (e == null)
                 return;
@@ -184,19 +184,19 @@ namespace EzPos.GUIs.Forms
                 switch (e.KeyCode)
                 {
                     case Keys.Up:
-                        if (_ProductList.Count == 0)
+                        if (_productList.Count == 0)
                             return;
                         UpdateSelectedIndex(dgvProduct.SelectedRows[0].Index - 1);
                         break;
                     case Keys.Down:
-                        if (_ProductList.Count == 0)
+                        if (_productList.Count == 0)
                             return;
                         UpdateSelectedIndex(dgvProduct.SelectedRows[0].Index + 1);
                         break;
                     case Keys.Return:
-                        if (!txtProductCode.Text.Equals(_CodeProduct))
+                        if (!txtProductCode.Text.Equals(_codeProduct))
                         {
-                            _CodeProduct = txtProductCode.Text;
+                            _codeProduct = txtProductCode.Text;
                             ProductFetching();
                             return;
                         }
@@ -212,7 +212,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -220,18 +220,18 @@ namespace EzPos.GUIs.Forms
 
         private void UpdateSelectedIndex(int selectedIndex)
         {
-            if (_ProductList != null)
+            if (_productList != null)
             {
                 if (selectedIndex < 0)
                 {
-                    if (_ProductList.Count == 1)
+                    if (_productList.Count == 1)
                     {
                         return;
                     }
                     selectedIndex = 0;
                 }
 
-                if (selectedIndex == _ProductList.Count)
+                if (selectedIndex == _productList.Count)
                     return;
             }
 
@@ -246,9 +246,9 @@ namespace EzPos.GUIs.Forms
                 if (selectedIndex >=
                     (dgvProduct.DisplayedRowCount(true) + dgvProduct.FirstDisplayedScrollingRowIndex - 1))
                 {
-                    if (_ProductList != null)
+                    if (_productList != null)
                         if ((selectedIndex - dgvProduct.DisplayedRowCount(true) + 2) >=
-                            _ProductList.Count)
+                            _productList.Count)
                             return;
 
                     dgvProduct.FirstDisplayedScrollingRowIndex =
@@ -257,15 +257,15 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void dgvProduct_SelectionChanged(object sender, EventArgs e)
+        private void DgvProductSelectionChanged(object sender, EventArgs e)
         {
-            if ((_ProductList.Count == 0) || (dgvProduct.CurrentRow == null))
+            if ((_productList.Count == 0) || (dgvProduct.CurrentRow == null))
             {
                 Product = null;
                 return;
             }            
 
-            Product = _ProductList[dgvProduct.SelectedRows[0].Index];
+            Product = _productList[dgvProduct.SelectedRows[0].Index];
         }
 
         private static void SetProductPicture(Product product)

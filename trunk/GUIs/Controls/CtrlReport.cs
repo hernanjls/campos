@@ -49,7 +49,7 @@ namespace EzPos.GUIs.Controls
                 {
                     const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                     var detailMsg = Resources.MsgUserPermissionDeny;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -65,7 +65,7 @@ namespace EzPos.GUIs.Controls
                 {
                     const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                     var detailMsg = Resources.MsgUserPermissionDeny;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -124,7 +124,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -172,7 +172,7 @@ namespace EzPos.GUIs.Controls
                     {
                         const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                         var detailMsg = Resources.MsgUserPermissionDeny;
-                        using (var frmMessageBox = new ExtendedMessageBox())
+                        using (var frmMessageBox = new FrmExtendedMessageBox())
                         {
                             frmMessageBox.BriefMsgStr = briefMsg;
                             frmMessageBox.DetailMsgStr = detailMsg;
@@ -188,7 +188,7 @@ namespace EzPos.GUIs.Controls
                     {
                         const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                         var detailMsg = Resources.MsgUserPermissionDeny;
-                        using (var frmMessageBox = new ExtendedMessageBox())
+                        using (var frmMessageBox = new FrmExtendedMessageBox())
                         {
                             frmMessageBox.BriefMsgStr = briefMsg;
                             frmMessageBox.DetailMsgStr = detailMsg;
@@ -204,7 +204,7 @@ namespace EzPos.GUIs.Controls
                     {
                         const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                         var detailMsg = Resources.MsgUserPermissionDeny;
-                        using (var frmMessageBox = new ExtendedMessageBox())
+                        using (var frmMessageBox = new FrmExtendedMessageBox())
                         {
                             frmMessageBox.BriefMsgStr = briefMsg;
                             frmMessageBox.DetailMsgStr = detailMsg;
@@ -249,7 +249,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -278,7 +278,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
                 throw;
@@ -311,7 +311,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -366,7 +366,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -387,7 +387,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -497,7 +497,7 @@ namespace EzPos.GUIs.Controls
                 {
                     const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                     var detailMsg = Resources.MsgUserPermissionDeny;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -627,7 +627,7 @@ namespace EzPos.GUIs.Controls
                 {
                     const string briefMsg = "អំពីប្រព័ន្ឋ";
                     var detailMsg = Resources.MsgMissingIncomeStatement;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -668,10 +668,15 @@ namespace EzPos.GUIs.Controls
                 var workSheet = (Worksheet)workBook.Worksheets[Resources.ConstSheetIncomeStatement];
 
                 //Shop name
-                var rowIndex = 2;
+                var rowIndex = 1;
                 var excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
                 excelRange.Select();
-                excelRange.Value2 = "របាយការណ៏ហិរញ្ញវុត្ថុរបស់ក្រុមហ៊ុន  " + AppContext.ShopName;
+                excelRange.Value2 = "របាយការណ៏ហិរញ្ញវុត្ថុរបស់ក្រុមហ៊ុន  " + AppContext.ShopNameLocal;
+                
+                rowIndex = 2;
+                excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = "Financial Statement of " + AppContext.ShopName;
 
                 //Period
                 rowIndex = 3;
@@ -767,7 +772,7 @@ namespace EzPos.GUIs.Controls
             } 
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }            

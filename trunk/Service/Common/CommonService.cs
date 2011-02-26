@@ -191,7 +191,10 @@ namespace EzPos.Service.Common
                 if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamServerPhotoPath))
                     AppContext.ServerPhotoPath = appParameter.ParameterLabel;
                 else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamShopName))
+                {
+                    AppContext.ShopNameLocal = appParameter.ParameterValue;
                     AppContext.ShopName = appParameter.ParameterLabel;
+                }
                 else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamShopAddress))
                     AppContext.ShopAddress = appParameter.ParameterLabel;
                 else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamShopContact))

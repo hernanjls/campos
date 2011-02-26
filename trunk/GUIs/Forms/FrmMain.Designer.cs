@@ -1,4 +1,6 @@
 
+using EzPos.GUIs.Components;
+
 namespace EzPos.GUIs.Forms
 {
     partial class FrmMain
@@ -41,16 +43,16 @@ namespace EzPos.GUIs.Forms
             this.lblProductName = new System.Windows.Forms.Label();
             this.pnlSepartorTop = new System.Windows.Forms.Panel();
             this.pnlFooter = new System.Windows.Forms.Panel();
-            this.btnSupplier = new System.Windows.Forms.Button();
-            this.btnExpense = new System.Windows.Forms.Button();
-            this.btnReport = new System.Windows.Forms.Button();
-            this.btnConfiguration = new System.Windows.Forms.Button();
-            this.btnDiscountCard = new System.Windows.Forms.Button();
-            this.btnCustomer = new System.Windows.Forms.Button();
-            this.btnQuit = new System.Windows.Forms.Button();
-            this.btnUser = new System.Windows.Forms.Button();
-            this.btnProduct = new System.Windows.Forms.Button();
-            this.btnSaleOrder = new System.Windows.Forms.Button();
+            this.btnSupplier = new ExtendedButton();
+            this.btnExpense = new ExtendedButton();
+            this.btnReport = new ExtendedButton();
+            this.btnConfiguration = new ExtendedButton();
+            this.btnDiscountCard = new ExtendedButton();
+            this.btnCustomer = new ExtendedButton();
+            this.btnQuit = new ExtendedButton();
+            this.btnUser = new ExtendedButton();
+            this.btnProduct = new ExtendedButton();
+            this.btnSaleOrder = new ExtendedButton();
             this.pnlBody = new System.Windows.Forms.Panel();
             this.tmrRefresh = new System.Windows.Forms.Timer(this.components);
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,7 +103,7 @@ namespace EzPos.GUIs.Forms
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(508, 81);
             this.lblProductName.TabIndex = 0;
-            this.lblProductName.Text = "Brand Selection";
+            this.lblProductName.Text = "EzPos";
             // 
             // pnlSepartorTop
             // 
@@ -151,9 +153,7 @@ namespace EzPos.GUIs.Forms
             this.btnSupplier.Text = "Supplier";
             this.btnSupplier.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSupplier.UseVisualStyleBackColor = true;
-            this.btnSupplier.MouseLeave += new System.EventHandler(this.btnSupplier_MouseLeave);
-            this.btnSupplier.Click += new System.EventHandler(this.btnSupplier_Click);
-            this.btnSupplier.MouseEnter += new System.EventHandler(this.btnSupplier_MouseEnter);
+            this.btnSupplier.Click += new System.EventHandler(this.BtnSupplierClick);
             // 
             // btnExpense
             // 
@@ -171,9 +171,7 @@ namespace EzPos.GUIs.Forms
             this.btnExpense.Text = "Expense";
             this.btnExpense.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnExpense.UseVisualStyleBackColor = true;
-            this.btnExpense.MouseLeave += new System.EventHandler(this.btnExpense_MouseLeave);
-            this.btnExpense.Click += new System.EventHandler(this.btnExpense_Click);
-            this.btnExpense.MouseEnter += new System.EventHandler(this.btnExpense_MouseEnter);
+            this.btnExpense.Click += new System.EventHandler(this.BtnExpenseClick);
             // 
             // btnReport
             // 
@@ -191,9 +189,7 @@ namespace EzPos.GUIs.Forms
             this.btnReport.Text = "Report";
             this.btnReport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnReport.UseVisualStyleBackColor = true;
-            this.btnReport.MouseLeave += new System.EventHandler(this.btnReport_MouseLeave);
-            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
-            this.btnReport.MouseEnter += new System.EventHandler(this.btnReport_MouseEnter);
+            this.btnReport.Click += new System.EventHandler(this.BtnReportClick);
             // 
             // btnConfiguration
             // 
@@ -212,9 +208,7 @@ namespace EzPos.GUIs.Forms
             this.btnConfiguration.Text = "Config";
             this.btnConfiguration.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnConfiguration.UseVisualStyleBackColor = true;
-            this.btnConfiguration.MouseLeave += new System.EventHandler(this.btnConfiguration_MouseLeave);
-            this.btnConfiguration.Click += new System.EventHandler(this.btnConfiguration_Click);
-            this.btnConfiguration.MouseEnter += new System.EventHandler(this.btnConfiguration_MouseEnter);
+            this.btnConfiguration.Click += new System.EventHandler(this.BtnConfigurationClick);
             // 
             // btnDiscountCard
             // 
@@ -233,9 +227,7 @@ namespace EzPos.GUIs.Forms
             this.btnDiscountCard.Text = "Card";
             this.btnDiscountCard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDiscountCard.UseVisualStyleBackColor = true;
-            this.btnDiscountCard.MouseLeave += new System.EventHandler(this.btnDiscountCard_MouseLeave);
-            this.btnDiscountCard.Click += new System.EventHandler(this.btnDiscountCard_Click);
-            this.btnDiscountCard.MouseEnter += new System.EventHandler(this.btnDiscountCard_MouseEnter);
+            this.btnDiscountCard.Click += new System.EventHandler(this.BtnDiscountCardClick);
             // 
             // btnCustomer
             // 
@@ -254,9 +246,7 @@ namespace EzPos.GUIs.Forms
             this.btnCustomer.Text = "Cust.";
             this.btnCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCustomer.UseVisualStyleBackColor = true;
-            this.btnCustomer.MouseLeave += new System.EventHandler(this.btnCustomer_MouseLeave);
-            this.btnCustomer.Click += new System.EventHandler(this.btnCustomer_Click);
-            this.btnCustomer.MouseEnter += new System.EventHandler(this.btnCustomer_MouseEnter);
+            this.btnCustomer.Click += new System.EventHandler(this.BtnCustomerClick);
             // 
             // btnQuit
             // 
@@ -277,7 +267,7 @@ namespace EzPos.GUIs.Forms
             this.btnQuit.Text = "Quit";
             this.btnQuit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            this.btnQuit.Click += new System.EventHandler(this.BtnQuitClick);
             // 
             // btnUser
             // 
@@ -296,9 +286,7 @@ namespace EzPos.GUIs.Forms
             this.btnUser.Text = "User";
             this.btnUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnUser.UseVisualStyleBackColor = true;
-            this.btnUser.MouseLeave += new System.EventHandler(this.btnUser_MouseLeave);
-            this.btnUser.Click += new System.EventHandler(this.btnUser_Click);
-            this.btnUser.MouseEnter += new System.EventHandler(this.btnUser_MouseEnter);
+            this.btnUser.Click += new System.EventHandler(this.BtnUserClick);
             // 
             // btnProduct
             // 
@@ -317,9 +305,7 @@ namespace EzPos.GUIs.Forms
             this.btnProduct.Text = "Prod.";
             this.btnProduct.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnProduct.UseVisualStyleBackColor = true;
-            this.btnProduct.MouseLeave += new System.EventHandler(this.btnProduct_MouseLeave);
-            this.btnProduct.Click += new System.EventHandler(this.btnProduct_Click);
-            this.btnProduct.MouseEnter += new System.EventHandler(this.btnProduct_MouseEnter);
+            this.btnProduct.Click += new System.EventHandler(this.BtnProductClick);
             // 
             // btnSaleOrder
             // 
@@ -338,9 +324,7 @@ namespace EzPos.GUIs.Forms
             this.btnSaleOrder.Text = "Sale";
             this.btnSaleOrder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSaleOrder.UseVisualStyleBackColor = true;
-            this.btnSaleOrder.MouseLeave += new System.EventHandler(this.btnSaleOrder_MouseLeave);
-            this.btnSaleOrder.Click += new System.EventHandler(this.btnSaleOrder_Click);
-            this.btnSaleOrder.MouseEnter += new System.EventHandler(this.btnSaleOrder_MouseEnter);
+            this.btnSaleOrder.Click += new System.EventHandler(this.BtnSaleOrderClick);
             // 
             // pnlBody
             // 
@@ -355,7 +339,7 @@ namespace EzPos.GUIs.Forms
             // 
             this.tmrRefresh.Enabled = true;
             this.tmrRefresh.Interval = 1000;
-            this.tmrRefresh.Tick += new System.EventHandler(this.tmrRefresh_Tick);
+            this.tmrRefresh.Tick += new System.EventHandler(this.TmrRefreshTick);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -461,7 +445,7 @@ namespace EzPos.GUIs.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = ".: Brand Selection :.";
+            this.Text = ".: EzPos :.";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.pnlHeader.ResumeLayout(false);
@@ -477,13 +461,13 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.Panel pnlSepartorTop;
         private System.Windows.Forms.Panel pnlFooter;
         private System.Windows.Forms.Panel pnlBody;
-        public System.Windows.Forms.Button btnConfiguration;
-        public System.Windows.Forms.Button btnDiscountCard;
-        public System.Windows.Forms.Button btnCustomer;
-        private System.Windows.Forms.Button btnQuit;
-        public System.Windows.Forms.Button btnUser;
-        public System.Windows.Forms.Button btnProduct;
-        public System.Windows.Forms.Button btnSaleOrder;
+        public ExtendedButton btnConfiguration;
+        public ExtendedButton btnDiscountCard;
+        public ExtendedButton btnCustomer;
+        private ExtendedButton btnQuit;
+        public ExtendedButton btnUser;
+        public ExtendedButton btnProduct;
+        public ExtendedButton btnSaleOrder;
         private System.Windows.Forms.Timer tmrRefresh;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -494,10 +478,10 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        public System.Windows.Forms.Button btnReport;
-        public System.Windows.Forms.Button btnExpense;
+        public ExtendedButton btnReport;
+        public ExtendedButton btnExpense;
         private System.Windows.Forms.Label lblProductName;
         private System.Windows.Forms.Label lblDateInfo;
-        public System.Windows.Forms.Button btnSupplier;
+        public ExtendedButton btnSupplier;
     }
 }

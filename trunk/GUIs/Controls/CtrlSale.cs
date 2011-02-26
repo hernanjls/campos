@@ -90,11 +90,11 @@ namespace EzPos.GUIs.Controls
                 ScanFocusHandler();
 
                 _depositEnabled = CommonService.IsIntegratedModule(Resources.ModDeposit);
-                btnDeposit.Enabled = _depositEnabled;
+                _saleItemBindingList.ListChanged += SaleItemBindingListChanged;
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -151,7 +151,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -393,8 +393,8 @@ namespace EzPos.GUIs.Controls
                         UpdateSelectedIndex(dgvSaleItem.SelectedRows[0].Index + 1);
                         break;
                     case Keys.Return:
-                        if (!btnValid.Enabled)
-                            return;
+                        //if (!btnValid.Enabled)
+                        //    return;
 
                         DoProductFetching(txtHidden.Text, true);
                         break;
@@ -407,20 +407,88 @@ namespace EzPos.GUIs.Controls
                                 var product = frmProductList.Product;
                                 if(product != null)
                                 {
-                                    _productList.Add(product);
-                                    DoProductFetching(product.ProductCode, true);
+                                    if (product.QtyInStock != 0)
+                                    {
+                                        _productList.Add(product);
+                                        DoProductFetching(product.ProductCode, true);
+                                    }
+                                    else
+                                    {
+                                        txtHidden.Text = string.Empty;
+                                        const string briefMsg = "អំពីផលិតផល";
+                                        var detailMsg = Resources.MsgOperationRequestProductNotFound;
+                                        using (var frmMessageBox = new FrmExtendedMessageBox())
+                                        {
+                                            frmMessageBox.BriefMsgStr = briefMsg;
+                                            frmMessageBox.DetailMsgStr = detailMsg;
+                                            frmMessageBox.IsCanceledOnly = true;
+                                            frmMessageBox.ShowDialog(this);
+                                        }                                        
+                                    }
                                 }
                             }
                             Visible = true;
                         }
-                        break;                        
+                        break;
+                    case Keys.F2:
+                        if(dgvSaleItem.CurrentRow == null)
+                            return;
+
+                        var selectedIndex =
+                            dgvSaleItem.SelectedRows[0].Index;
+                        var saleItem = _saleItemBindingList[selectedIndex];
+                        if (saleItem == null)
+                            return;
+                        
+                        Visible = false;
+                        using (var frmSaleQty = new FrmSaleQty())
+                        {
+                            frmSaleQty.SaleItem = saleItem;
+                            if (frmSaleQty.ShowDialog(this) == DialogResult.OK)
+                            {
+                                saleItem = frmSaleQty.SaleItem;
+                                _saleItemBindingList[selectedIndex] = saleItem;
+
+                                var product = saleItem.FKProduct;
+                                saleItem.Discount = product.DiscountPercentage;
+
+                                var publicUnitPriceOut =
+                                    product.UnitPriceIn + ((product.UnitPriceIn * product.ExtraPercentage) / 100);
+
+                                publicUnitPriceOut =
+                                    publicUnitPriceOut -
+                                    ((publicUnitPriceOut * product.DiscountPercentage) / 100);
+
+                                if (publicUnitPriceOut == product.UnitPriceIn)
+                                    publicUnitPriceOut = product.UnitPriceOut;
+
+                                publicUnitPriceOut =
+                                    float.Parse(
+                                        publicUnitPriceOut.ToString("N", AppContext.CultureInfo),
+                                        AppContext.CultureInfo);
+                                saleItem.PublicUPOut = publicUnitPriceOut;
+                                saleItem.UnitPriceOut =
+                                    product.UnitPriceIn +
+                                    ((product.UnitPriceIn * product.ExtraPercentage) / 100);
+                                saleItem.UnitPriceOut =
+                                    float.Parse(
+                                        saleItem.UnitPriceOut.ToString("N", AppContext.CultureInfo),
+                                        AppContext.CultureInfo);
+                                saleItem.SubTotal = saleItem.QtySold * publicUnitPriceOut;
+                                dgvSaleItem.Refresh();
+                                CalculateSale();
+                            }
+
+                            Visible = true;
+                        }
+                        break;
                     default:
                         break;
                 }
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -459,11 +527,13 @@ namespace EzPos.GUIs.Controls
         {
             _saleOrder = null;
             _saleItemBindingList.Clear();
+            _returnEnabled = false;
+
             ResetProductInfo();
 //            ResetProductPrice();
             ResetCustomerInfo();
-            DoActivateControls(true);
-            ReturnHandler(_returnEnabled = false);
+            //DoActivateControls(true);
+            //ReturnHandler(_returnEnabled = false);
             ScanFocusHandler();
         }
 
@@ -519,7 +589,7 @@ namespace EzPos.GUIs.Controls
 
         private void DgvSaleItemDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            ExtendedMessageBox.UnknownErrorMessage(
+            FrmExtendedMessageBox.UnknownErrorMessage(
                 Resources.MsgCaptionUnknownError,
                 e.Exception.Message);
         }
@@ -537,7 +607,19 @@ namespace EzPos.GUIs.Controls
 
             try
             {
-                if (!_returnEnabled)
+                if ((_returnEnabled) || (btnValid.Text.Equals(Resources.ConstSalePrint)))
+                {
+                    InvoicePrinting(
+                        _saleOrder.FKCustomer,
+                        _saleOrder.SaleOrderNumber,
+                        (DateTime)_saleOrder.SaleOrderDate,
+                        _saleOrder.Discount,
+                        0,
+                        _saleOrder.AmountPaidInt,
+                        0,
+                        false);                                        
+                }
+                else
                 {
                     Visible = false;
                     using (var frmPayment = new FrmPayment())
@@ -589,22 +671,10 @@ namespace EzPos.GUIs.Controls
                         Visible = true;
                     }                
                 }
-                else
-                {
-                    InvoicePrinting(
-                        _saleOrder.FKCustomer,
-                        _saleOrder.SaleOrderNumber,
-                        (DateTime)_saleOrder.SaleOrderDate,
-                        _saleOrder.Discount,
-                        0,
-                        _saleOrder.AmountPaidInt,
-                        0,
-                        false);                    
-                }
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -715,7 +785,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -783,7 +853,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -854,15 +924,26 @@ namespace EzPos.GUIs.Controls
                     using (var frmSaleSearch = new FrmSaleSearch())
                     {
                         if (frmSaleSearch.ShowDialog(this) == DialogResult.OK)
-                        {
-                            var searchCriteria = new List<string> { "SaleOrderNumber|" + frmSaleSearch.SearchSoNumber };
+                        {                            
+                            var saleOrderNumber = frmSaleSearch.SearchSoNumber;
+                            var indexOf = saleOrderNumber.IndexOf(" (");
+                            if(indexOf > 0)
+                                saleOrderNumber = StringHelper.Left(saleOrderNumber, indexOf);
+
+                            var searchCriteria = new List<string> { "SaleOrderNumber|" + saleOrderNumber };
                             var saleOrderList = _saleOrderService.GetSaleOrders(searchCriteria);
                             if (saleOrderList.Count == 0)
+                            {
+                                Visible = true;
                                 return;
+                            }
 
                             _saleOrder = (SaleOrder)saleOrderList[0];
                             if (_saleOrder == null)
+                            {
+                                Visible = true;
                                 return;
+                            }
 
                             dgvSaleItem.SelectionChanged += DgvSaleItemSelectionChanged;
                             IListToBindingList(
@@ -889,7 +970,7 @@ namespace EzPos.GUIs.Controls
                     {
                         briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                         detailMsg = Resources.MsgUserPermissionDeny;
-                        using (var frmMessageBox = new ExtendedMessageBox())
+                        using (var frmMessageBox = new FrmExtendedMessageBox())
                         {
                             frmMessageBox.BriefMsgStr = briefMsg;
                             frmMessageBox.DetailMsgStr = detailMsg;
@@ -907,7 +988,7 @@ namespace EzPos.GUIs.Controls
 
                     briefMsg = "អំពីការសង";
                     detailMsg = "សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​បញ្ជាក់​ពី​ការ​ប្រគល់​សង​។";
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -941,7 +1022,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }                
@@ -1065,7 +1146,7 @@ namespace EzPos.GUIs.Controls
                 txtHidden.Text = string.Empty;
                 const string briefMsg = "អំពីផលិតផល";
                 var detailMsg = Resources.MsgOperationRequestProductNotFound;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -1083,9 +1164,11 @@ namespace EzPos.GUIs.Controls
 
         private void DoActivateControls(bool isActivated)
         {
-            btnValid.Enabled = isActivated;
-            btnProductAdjustment.Enabled = isActivated;
-            btnDeposit.Enabled = isActivated && _depositEnabled;
+            btnValid.Text = !isActivated ? Resources.ConstSalePrint : Resources.ConstSalePay;
+
+            //btnValid.Enabled = isActivated;
+            //btnProductAdjustment.Enabled = isActivated;
+            //btnDeposit.Enabled = isActivated && _depositEnabled;
         }
 
         private void SetPurchasedInfo(IFormattable totalQtyPurchased)
@@ -1115,7 +1198,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -1200,7 +1283,7 @@ namespace EzPos.GUIs.Controls
             {
                 briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -1218,7 +1301,7 @@ namespace EzPos.GUIs.Controls
 
             briefMsg = "អំពីការសង";
             detailMsg = "សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​បញ្ជាក់​ពី​ការ​ដកចេញពីឃ្លាំង​។";
-            using (var frmMessageBox = new ExtendedMessageBox())
+            using (var frmMessageBox = new FrmExtendedMessageBox())
             {
                 frmMessageBox.BriefMsgStr = briefMsg;
                 frmMessageBox.DetailMsgStr = detailMsg;
@@ -1274,7 +1357,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -1293,9 +1376,32 @@ namespace EzPos.GUIs.Controls
 
         private void ReturnHandler(bool enableStatus)
         {
-            btnSearchSaleOrder.Text = enableStatus ? "សង" : "ស្វែងរក";
-            btnValid.Enabled = true;
-            btnValid.Text = enableStatus ? "បោះពុម្ភ" : "គិតលុយ";
+            btnSearchSaleOrder.Text = enableStatus ? Resources.ConstSaleReturn : Resources.ConstSaleSearch;
+            btnValid.Text = !enableStatus ? Resources.ConstSalePay : Resources.ConstSalePrint;
+
+            btnProductAdjustment.Enabled = !enableStatus;
+            btnDeposit.Enabled = !enableStatus;
+            btnSearchSaleOrder.Enabled = enableStatus;
+        }
+
+        private void SaleItemBindingListChanged(object sender, ListChangedEventArgs e)
+        {
+            var isEnabled = _saleItemBindingList.Count != 0;
+
+            if (_returnEnabled && isEnabled)
+                return;
+
+            btnProductAdjustment.Enabled = isEnabled;
+            btnValid.Enabled = isEnabled;
+            btnDeposit.Enabled = isEnabled && _depositEnabled;
+            btnCancel.Enabled = isEnabled;
+            btnSearchSaleOrder.Enabled = !isEnabled;
+
+            if (isEnabled) 
+                return;
+
+            _returnEnabled = false;
+            btnSearchSaleOrder.Text = Resources.ConstSaleSearch;
         }
     }
 }
