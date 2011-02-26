@@ -107,7 +107,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -115,7 +115,7 @@ namespace EzPos.GUIs.Controls
 
         private void DgvProductDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            ExtendedMessageBox.UnknownErrorMessage(
+            FrmExtendedMessageBox.UnknownErrorMessage(
                 Resources.MsgCaptionUnknownError,
                 e.Exception.Message);
         }
@@ -137,7 +137,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -154,7 +154,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -221,7 +221,7 @@ namespace EzPos.GUIs.Controls
                         }
                         catch (Exception exception)
                         {
-                            ExtendedMessageBox.UnknownErrorMessage(
+                            FrmExtendedMessageBox.UnknownErrorMessage(
                                 Resources.MsgCaptionUnknownError,
                                 exception.Message);
                         }
@@ -230,7 +230,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -242,7 +242,7 @@ namespace EzPos.GUIs.Controls
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -265,7 +265,7 @@ namespace EzPos.GUIs.Controls
             {
                 briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -279,7 +279,7 @@ namespace EzPos.GUIs.Controls
             briefMsg = "អំពីការលុប";
             detailMsg = Resources.MsgOperationRequestDelete + "\n" +
                         dgvProduct.CurrentRow.Cells["DisplayName"].Value + " ?";
-            using (var frmMessageBox = new ExtendedMessageBox())
+            using (var frmMessageBox = new FrmExtendedMessageBox())
             {
                 frmMessageBox.BriefMsgStr = briefMsg;
                 frmMessageBox.DetailMsgStr = detailMsg;
@@ -306,7 +306,7 @@ namespace EzPos.GUIs.Controls
             {
                 briefMsg = "អំពីការលុប";
                 detailMsg = Resources.MsgUnknownError;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -345,7 +345,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -397,7 +397,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -416,7 +416,7 @@ namespace EzPos.GUIs.Controls
                 {
                     const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                     var detailMsg = Resources.MsgUserPermissionDeny;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -450,7 +450,8 @@ namespace EzPos.GUIs.Controls
                                         BarCodeValue = product.ProductCode,
                                         DisplayStr = product.CategoryStr,
                                         AdditionalStr = (product.QtyInStock.ToString("N0") + " / " + product.QtyInStock.ToString("N0")),
-                                        UnitPrice = "$ " + (t).UnitPriceOut.ToString("N", AppContext.CultureInfo)
+                                        UnitPrice = "$ " + (t).UnitPriceOut.ToString("N", AppContext.CultureInfo),
+                                        Description = product.ProductName + @" \ " + product.SizeStr
                                     };
 
                             var foreignCode = product.ForeignCode;
@@ -493,7 +494,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -688,7 +689,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -790,7 +791,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -925,7 +926,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -1024,7 +1025,7 @@ namespace EzPos.GUIs.Controls
                 {
                     const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                     var detailMsg = Resources.MsgUserPermissionDeny;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -1047,7 +1048,7 @@ namespace EzPos.GUIs.Controls
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }

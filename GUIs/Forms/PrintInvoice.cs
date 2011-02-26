@@ -6,6 +6,7 @@ using EzPos.Model;
 using EzPos.Properties;
 using Microsoft.Office.Interop.Excel;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
+using System.Linq;
 
 namespace EzPos.GUIs.Forms
 {
@@ -66,7 +67,7 @@ namespace EzPos.GUIs.Forms
             if (string.IsNullOrEmpty(printerName))
                 throw new ArgumentNullException("printerName", string.Empty);
 
-            var excelApplication = new ExcelApplication();
+            var excelApplication = new ExcelApplication {Visible = false};
             try
             {
                 //Open workbook
@@ -115,34 +116,45 @@ namespace EzPos.GUIs.Forms
                 //Invoice item
                 rowIndex += 4;
                 var totalAmount = 0f;
-                foreach (SaleItem saleItem in invoiceItemList)
+                var counter = 1;
+                foreach (var saleItem in invoiceItemList.Cast<SaleItem>().Where(saleItem => saleItem != null).Where(saleItem => saleItem.ProductID != 0))
                 {
-                    if(saleItem == null)    
-                        continue;
+                    var tmpRowIndex = rowIndex;
+                    if(counter > 15)
+                    {
+                        tmpRowIndex -= 1;
+                        excelRange = workSheet.get_Range("A" + tmpRowIndex + ":A" + tmpRowIndex, Type.Missing).EntireRow;
+                        excelRange.Insert(XlInsertShiftDirection.xlShiftDown, Type.Missing);
 
-                    if(saleItem.ProductID == 0)
-                        continue;
+                        //rowIndex += 1;
+                        excelRange = workSheet.get_Range("B" + tmpRowIndex + ":H" + tmpRowIndex, Type.Missing);
+                        excelRange.MergeCells = true;
+
+                        excelRange = workSheet.get_Range("A" + tmpRowIndex, "A" + tmpRowIndex);
+                        excelRange.Select();
+                        excelRange.Value2 = counter - 1;
+                    }
 
                     //Product
                     var productName = saleItem.ProductName;
                     if (saleItem.FKProduct != null)
                         productName += " (" + saleItem.FKProduct.ForeignCode + ")";
-                    excelRange = workSheet.get_Range("B" + rowIndex, "B" + rowIndex);
+                    excelRange = workSheet.get_Range("B" + tmpRowIndex, "B" + tmpRowIndex);
                     excelRange.Select();
                     excelRange.Value2 = productName;
 
                     //Quantity
-                    excelRange = workSheet.get_Range("I" + rowIndex, "I" + rowIndex);
+                    excelRange = workSheet.get_Range("I" + tmpRowIndex, "I" + tmpRowIndex);
                     excelRange.Select();
                     excelRange.Value2 = saleItem.QtySold;
 
                     //Unit price out
-                    excelRange = workSheet.get_Range("J" + rowIndex, "J" + rowIndex);
+                    excelRange = workSheet.get_Range("J" + tmpRowIndex, "J" + tmpRowIndex);
                     excelRange.Select();
                     excelRange.Value2 = saleItem.UnitPriceOut;
 
                     //Discount                    
-                    excelRange = workSheet.get_Range("K" + rowIndex, "K" + rowIndex);
+                    excelRange = workSheet.get_Range("K" + tmpRowIndex, "K" + tmpRowIndex);
                     excelRange.Select();
                     excelRange.Value2 = saleItem.Discount / 100;
 
@@ -155,16 +167,25 @@ namespace EzPos.GUIs.Forms
                         unitPriceOut -
                         ((unitPriceOut * saleItem.Discount) / 100);
                     subTotal *= saleItem.QtySold;
-                    excelRange = workSheet.get_Range("L" + rowIndex, "L" + rowIndex);
+                    excelRange = workSheet.get_Range("L" + tmpRowIndex, "L" + tmpRowIndex);
                     excelRange.Select();
                     excelRange.Value2 = subTotal;
 
                     totalAmount += subTotal;
                     rowIndex += 1;
+                    counter += 1;
                 }
                 
+                if(counter > 15)
+                {
+                    excelRange = workSheet.get_Range("A" + (rowIndex - 1), "A" + (rowIndex - 1));
+                    excelRange.Select();
+                    excelRange.Value2 = counter - 1;
+                }
+                else
+                    rowIndex = 28;
+
                 //Total amount
-                rowIndex = 28;
                 excelRange = workSheet.get_Range("J" + rowIndex, "J" + rowIndex);
                 excelRange.Select();
                 excelRange.Value2 = totalAmount;
@@ -223,7 +244,6 @@ namespace EzPos.GUIs.Forms
                     false,
                     false,
                     string.Empty);
-                //excelApplication.Visible = true;
                 //workBook.PrintPreview(true);
 
                 //Close workbook

@@ -21,21 +21,25 @@ namespace EzPos.GUIs.Components
         protected override void OnMouseEnter(EventArgs e)
         {
             SetCustomizedBehavior();
+            base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
             RemoveCustomizedBehavior();
+            base.OnMouseLeave(e);
         }
 
         protected override void OnGotFocus(EventArgs e)
         {
             SetCustomizedBehavior();
+            base.OnGotFocus(e);
         }
 
         protected override void OnLostFocus(EventArgs e)
         {
             RemoveCustomizedBehavior();
+            base.OnLostFocus(e);
         }
 
         private void SetCustomizedBehavior()

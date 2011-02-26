@@ -159,7 +159,7 @@ namespace EzPos.GUIs.Forms
             this.dgvProduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProduct.Size = new System.Drawing.Size(647, 321);
             this.dgvProduct.TabIndex = 12;
-            this.dgvProduct.SelectionChanged += new System.EventHandler(this.dgvProduct_SelectionChanged);
+            this.dgvProduct.SelectionChanged += new System.EventHandler(this.DgvProductSelectionChanged);
             // 
             // PrintCheck
             // 
@@ -459,9 +459,9 @@ namespace EzPos.GUIs.Forms
             this.txtProductCode.Size = new System.Drawing.Size(230, 36);
             this.txtProductCode.TabIndex = 1;
             this.txtProductCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtProductCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtProductCode_KeyDown);
-            this.txtProductCode.Leave += new System.EventHandler(this.txtProductCode_Leave);
-            this.txtProductCode.Enter += new System.EventHandler(this.txtProductCode_Enter);
+            this.txtProductCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtProductCodeKeyDown);
+            this.txtProductCode.Leave += new System.EventHandler(this.TxtProductCodeLeave);
+            this.txtProductCode.Enter += new System.EventHandler(this.TxtProductCodeEnter);
             // 
             // lblProductCode
             // 
@@ -535,8 +535,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // btnValidate
             // 
@@ -557,8 +557,8 @@ namespace EzPos.GUIs.Forms
             this.btnValidate.Text = "យល់ព្រម";
             this.btnValidate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnValidate.UseVisualStyleBackColor = false;
-            this.btnValidate.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
-            this.btnValidate.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            this.btnValidate.MouseLeave += new System.EventHandler(this.BtnSaveMouseLeave);
+            this.btnValidate.MouseEnter += new System.EventHandler(this.BtnSaveMouseEnter);
             // 
             // FrmProductSearch
             // 

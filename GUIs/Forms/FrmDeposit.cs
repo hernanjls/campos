@@ -45,7 +45,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -73,7 +73,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }            
@@ -107,7 +107,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -126,7 +126,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -246,7 +246,7 @@ namespace EzPos.GUIs.Forms
                 var detailMsg = Resources.MsgUserPermissionDeny;
                 if (!UserService.AllowToPerform(Resources.PermissionEditDeposit))
                 {
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -262,7 +262,7 @@ namespace EzPos.GUIs.Forms
 
                 briefMsg = "អំពីការប្រគល់របស់";
                 detailMsg = Resources.MsgConfirmDeliverProduct;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -307,7 +307,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(Resources.MsgCaptionUnknownError, exception.Message);
+                FrmExtendedMessageBox.UnknownErrorMessage(Resources.MsgCaptionUnknownError, exception.Message);
             }
         }
 
@@ -317,7 +317,7 @@ namespace EzPos.GUIs.Forms
             var detailMsg = Resources.MsgUserPermissionDeny;
             if (!UserService.AllowToPerform(Resources.PermissionCancelDeposit))
             {
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -351,7 +351,7 @@ namespace EzPos.GUIs.Forms
 
             briefMsg = "អំពីការបោះបង់";
             detailMsg = "សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​បញ្ជាក់​ពី​ការ​ប្រគល់​សង​។";
-            using (var frmMessageBox = new ExtendedMessageBox())
+            using (var frmMessageBox = new FrmExtendedMessageBox())
             {
                 frmMessageBox.BriefMsgStr = briefMsg;
                 frmMessageBox.DetailMsgStr = detailMsg;

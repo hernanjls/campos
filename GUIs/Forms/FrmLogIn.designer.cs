@@ -38,8 +38,8 @@ namespace EzPos.GUIs.Forms
             this.pnlTop = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
             this.pnlFooter = new System.Windows.Forms.Panel();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnLogIn = new System.Windows.Forms.Button();
+            this.btnCancel = new EzPos.GUIs.Components.ExtendedButton();
+            this.btnLogIn = new EzPos.GUIs.Components.ExtendedButton();
             this.pnlBody.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.pnlFooter.SuspendLayout();
@@ -172,8 +172,6 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
             // 
             // btnLogIn
             // 
@@ -192,9 +190,7 @@ namespace EzPos.GUIs.Forms
             this.btnLogIn.Text = "យល់ព្រម";
             this.btnLogIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnLogIn.UseVisualStyleBackColor = false;
-            this.btnLogIn.MouseLeave += new System.EventHandler(this.btnLogIn_MouseLeave);
-            this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
-            this.btnLogIn.MouseEnter += new System.EventHandler(this.btnLogIn_MouseEnter);
+            this.btnLogIn.Click += new System.EventHandler(this.BtnLogInClick);
             // 
             // FrmLogIn
             // 
@@ -231,8 +227,8 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Label lblLogIn;
         private System.Windows.Forms.Label lblInfo;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnLogIn;
+        private EzPos.GUIs.Components.ExtendedButton btnCancel;
+        private EzPos.GUIs.Components.ExtendedButton btnLogIn;
         private System.Windows.Forms.Label lblHeader;
     }
 }

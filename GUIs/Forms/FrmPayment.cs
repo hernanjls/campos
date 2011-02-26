@@ -59,7 +59,7 @@ namespace EzPos.GUIs.Forms
                 {
                     const string briefMsg = "អំពីអតិថិជន";
                     const string detailMsg = "ការ​គិត​លុយ​ពុំ​អាច​ប្រព្រឹត្ត​ទៅ​ដោយ​គ្មាន​អតិថិជន​ឡើយ ។";
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -101,7 +101,7 @@ namespace EzPos.GUIs.Forms
                             {
                                 const string briefMsg = "អំពីការប្រគល់ប្រាក់";
                                 const string detailMsg = "ទឹក​ប្រាក់​ដែល​អ្នក​បាន​បញ្ចូល​ពុំ​ទាន់​គ្រប់​គ្រាន់​ទេ ។";
-                                using (var frmMessageBox = new ExtendedMessageBox())
+                                using (var frmMessageBox = new FrmExtendedMessageBox())
                                 {
                                     frmMessageBox.BriefMsgStr = briefMsg;
                                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -117,7 +117,7 @@ namespace EzPos.GUIs.Forms
                         {
                             const string briefMsg = "អំពីការប្រគល់ប្រាក់";
                             var detailMsg = Resources.MsgConfirmCreditPayment;
-                            using (var frmMessageBox = new ExtendedMessageBox())
+                            using (var frmMessageBox = new FrmExtendedMessageBox())
                             {
                                 frmMessageBox.BriefMsgStr = briefMsg;
                                 frmMessageBox.DetailMsgStr = detailMsg;
@@ -135,7 +135,7 @@ namespace EzPos.GUIs.Forms
                 {
                     const string briefMsg = "អំពីការប្រគល់ប្រាក់";
                     var detailMsg = Resources.MsgInvalidDepositPayment;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -153,7 +153,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -226,7 +226,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -271,7 +271,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -396,7 +396,7 @@ namespace EzPos.GUIs.Forms
             {
                 const string briefMsg = "អំពីសិទ្ឋប្រើប្រាស់";
                 const string detailMsg = "អ្នក​ពុំ​មាន​សិទ្ឋ​គ្រប់​គ្រាន់​សំរាប់​ការ​ស្នើរ​សុំ​នេះ​ឡើយ ។";
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -422,7 +422,7 @@ namespace EzPos.GUIs.Forms
                     }
                     catch (Exception exception)
                     {
-                        ExtendedMessageBox.UnknownErrorMessage(
+                        FrmExtendedMessageBox.UnknownErrorMessage(
                             Resources.MsgCaptionUnknownError,
                             exception.Message);
                     }
@@ -447,7 +447,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -572,7 +572,7 @@ namespace EzPos.GUIs.Forms
 
                     const string briefMsg = "អំពីអតិថិជន";
                     var detailMsg = Resources.MsgOperationRequestCustomerNotFound;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -676,7 +676,7 @@ namespace EzPos.GUIs.Forms
                     customer.CustomerName);
             }
 
-            using (var frmMessageBox = new ExtendedMessageBox())
+            using (var frmMessageBox = new FrmExtendedMessageBox())
             {
                 frmMessageBox.BriefMsgStr = briefMsgStr;
                 frmMessageBox.DetailMsgStr = detailMsgStr;
@@ -819,7 +819,7 @@ namespace EzPos.GUIs.Forms
                     }
                     catch (Exception exception)
                     {
-                        ExtendedMessageBox.UnknownErrorMessage(
+                        FrmExtendedMessageBox.UnknownErrorMessage(
                             Resources.MsgCaptionUnknownError,
                             exception.Message);
                     }

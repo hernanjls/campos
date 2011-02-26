@@ -253,6 +253,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DtsModels.xsd</DependentUpon>
     </Compile>
+    <Compile Include="GUIs\Forms\FrmSaleQty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIs\Forms\FrmSaleQty.Designer.cs">
+      <DependentUpon>FrmSaleQty.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUIs\Forms\FrmProductSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -345,11 +351,11 @@
     <Compile Include="GUIs\Forms\FrmThank.Designer.cs">
       <DependentUpon>FrmThank.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUIs\Forms\ExtendedMessageBox.cs">
+    <Compile Include="GUIs\Forms\FrmExtendedMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUIs\Forms\ExtendedMessageBox.Designer.cs">
-      <DependentUpon>ExtendedMessageBox.cs</DependentUpon>
+    <Compile Include="GUIs\Forms\FrmExtendedMessageBox.Designer.cs">
+      <DependentUpon>FrmExtendedMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="GUIs\Forms\FrmSaleSearch.cs">
       <SubType>Form</SubType>
@@ -467,6 +473,10 @@
       <DependentUpon>CtrlAppParam.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUIs\Forms\FrmSaleQty.resx">
+      <DependentUpon>FrmSaleQty.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUIs\Forms\FrmProductSearch.resx">
       <DependentUpon>FrmProductSearch.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -527,9 +537,9 @@
       <DependentUpon>FrmThank.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUIs\Forms\ExtendedMessageBox.resx">
+    <EmbeddedResource Include="GUIs\Forms\FrmExtendedMessageBox.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>ExtendedMessageBox.cs</DependentUpon>
+      <DependentUpon>FrmExtendedMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUIs\Forms\FrmSaleSearch.resx">
       <DependentUpon>FrmSaleSearch.cs</DependentUpon>

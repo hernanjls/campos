@@ -1,4 +1,4 @@
-﻿using ExtendedComboBox = EzPos.GUIs.Components.ExtendedComboBox;
+﻿using EzPos.GUIs.Components;
 
 namespace EzPos.GUIs.Forms
 {
@@ -59,9 +59,9 @@ namespace EzPos.GUIs.Forms
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblProductName = new System.Windows.Forms.Label();
             this.pnlFooter = new System.Windows.Forms.Panel();
-            this.btnAdjustment = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnAdjustment = new ExtendedButton();
+            this.btnCancel = new ExtendedButton();
+            this.btnSave = new ExtendedButton();
             this.cmsCatalog = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmIndividual = new System.Windows.Forms.ToolStripMenuItem();
             this.tmsGroup = new System.Windows.Forms.ToolStripMenuItem();
@@ -427,9 +427,7 @@ namespace EzPos.GUIs.Forms
             this.btnAdjustment.TabIndex = 0;
             this.btnAdjustment.Text = "ដកពីឃ្លាំង";
             this.btnAdjustment.UseVisualStyleBackColor = false;
-            this.btnAdjustment.MouseLeave += new System.EventHandler(this.BtnAdjustmentMouseLeave);
             this.btnAdjustment.Click += new System.EventHandler(this.BtnAdjustmentClick);
-            this.btnAdjustment.MouseEnter += new System.EventHandler(this.BtnAdjustmentMouseEnter);
             // 
             // btnCancel
             // 
@@ -449,8 +447,6 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // btnSave
             // 
@@ -470,9 +466,7 @@ namespace EzPos.GUIs.Forms
             this.btnSave.Text = "យល់ព្រម";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.MouseLeave += new System.EventHandler(this.BtnSaveMouseLeave);
             this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
-            this.btnSave.MouseEnter += new System.EventHandler(this.BtnSaveMouseEnter);
             // 
             // cmsCatalog
             // 
@@ -600,14 +594,14 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Panel pnlFooter;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnSave;
+        private ExtendedButton btnCancel;
+        private ExtendedButton btnSave;
         private System.Windows.Forms.ContextMenuStrip cmsCatalog;
         private System.Windows.Forms.ToolStripMenuItem tsmIndividual;
         private System.Windows.Forms.ToolStripMenuItem tsmAll;
         private System.Windows.Forms.Label lblProductName;
         private System.Windows.Forms.ToolStripMenuItem tmsGroup;
-        private System.Windows.Forms.Button btnAdjustment;
+        private ExtendedButton btnAdjustment;
         private System.Windows.Forms.Label lblSize;
         private ExtendedComboBox cmbSize;
         private System.Windows.Forms.ToolStripMenuItem tsmImport;

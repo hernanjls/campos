@@ -14,13 +14,13 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmCatalog : Form
     {
-        private CommonService _CommonService;
-        private float DefaultUnitPriceOut;
-        private bool _IsFromSale;
-        private bool IsModified;
-        private Product _Product;
-        private ProductService _ProductService;
-        private BindingList<Product> ProductList;
+        private CommonService _commonService;
+        private float _defaultUnitPriceOut;
+        private bool _isFromSale;
+        private bool _isModified;
+        private Product _product;
+        private ProductService _productService;
+        private BindingList<Product> _productList;
 
         public FrmCatalog()
         {
@@ -29,42 +29,42 @@ namespace EzPos.GUIs.Forms
 
         public CommonService CommonService
         {
-            set { _CommonService = value; }
+            set { _commonService = value; }
         }
 
         public ProductService ProductService
         {
-            set { _ProductService = value; }
+            set { _productService = value; }
         }
 
         public Product Product
         {
-            get { return _Product; }
-            set { _Product = value; }
+            get { return _product; }
+            set { _product = value; }
         }
 
         public bool IsFromSale
         {
-            get { return _IsFromSale; }
-            set { _IsFromSale = value; }
+            get { return _isFromSale; }
+            set { _isFromSale = value; }
         }
 
         private void SetModifydStatus(bool modifyStatus)
         {
-            IsModified = modifyStatus;
+            _isModified = modifyStatus;
             btnSave.Enabled = modifyStatus;
         }
 
         private void FrmProductAdvance_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_IsFromSale)
+            if (_isFromSale)
                 return;
 
-            if ((DialogResult == DialogResult.Cancel) && (IsModified))
+            if ((DialogResult == DialogResult.Cancel) && (_isModified))
             {
                 const string briefMsg = "អំពីការបោះបង់";
                 var detailMsg = Resources.MsgOperationRequestCancel;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -76,7 +76,7 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (IsModified) 
+            if (_isModified) 
                 return;
 
             DialogResult = DialogResult.Cancel;
@@ -167,7 +167,7 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -201,11 +201,11 @@ namespace EzPos.GUIs.Forms
 
         private void FrmProduct_Load(object sender, EventArgs e)
         {
-            if (_ProductService == null)
-                _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+            if (_productService == null)
+                _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-            if (_CommonService == null)
-                _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+            if (_commonService == null)
+                _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
             if (!UserService.AllowToPerform(Resources.PermissionViewAllProductInfo))
             {
@@ -216,7 +216,7 @@ namespace EzPos.GUIs.Forms
             if (!UserService.AllowToPerform(Resources.PermissionModifyProductQuantity))
                 txtQtyInStock.Enabled = false;
 
-            DefaultUnitPriceOut = 0;
+            _defaultUnitPriceOut = 0;
 
             var searchCriteria = 
                 new List<string>
@@ -228,9 +228,9 @@ namespace EzPos.GUIs.Forms
                     Resources.AppParamColor + ", " +
                     Resources.AppParamSize + ")"
                 };
-            var objectList = _CommonService.GetAppParameters(searchCriteria);
+            var objectList = _commonService.GetAppParameters(searchCriteria);
             var productCodeLengthList = 
-                _CommonService.GetAppParametersByType(
+                _commonService.GetAppParametersByType(
                     objectList, 
                     Int32.Parse(Resources.AppParamProductCodeLength));
             if (productCodeLengthList.Count != 0)
@@ -249,28 +249,28 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            _CommonService.PopAppParamExtendedCombobox(
+            _commonService.PopAppParamExtendedCombobox(
                 ref cmbCategory, objectList, int.Parse(Resources.AppParamCategory), true);
             cmbCategory.SelectedValue = 364;
 
-            _CommonService.PopAppParamExtendedCombobox(
+            _commonService.PopAppParamExtendedCombobox(
                 ref cmbMark, objectList, int.Parse(Resources.AppParamMark), true);
 
-            _CommonService.PopAppParamExtendedCombobox(
+            _commonService.PopAppParamExtendedCombobox(
                 ref cmbColor, objectList, int.Parse(Resources.AppParamColor), true);
 
-            _CommonService.PopAppParamExtendedCombobox(
+            _commonService.PopAppParamExtendedCombobox(
                 ref cmbSize, objectList, int.Parse(Resources.AppParamSize), true);
 
-            ProductList = new BindingList<Product>();
-            cmbProduct.DataSource = ProductList;
+            _productList = new BindingList<Product>();
+            cmbProduct.DataSource = _productList;
             cmbProduct.DisplayMember = Product.CONST_FOREIGN_CODE;
             cmbProduct.ValueMember = Product.CONST_PRODUCT_ID;
             cmbProduct.SelectedIndex = -1;
 
-            SetProductInfo(_Product);
+            SetProductInfo(_product);
 
-            if (_IsFromSale)
+            if (_isFromSale)
             {
                 SetEnableToComponents(false);
                 return;
@@ -294,7 +294,7 @@ namespace EzPos.GUIs.Forms
             txtExtraPercentage.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo);
             txtDiscount.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo);
             txtUPOut.Text = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
-            DefaultUnitPriceOut = product.UnitPriceOut;
+            _defaultUnitPriceOut = product.UnitPriceOut;
             txtQtyInStock.Text = product.QtyInStock.ToString("N0", AppContext.CultureInfo);
             txtPhotoPath.Text = product.PhotoPath;
             if (product.PhotoPath == null)
@@ -316,12 +316,13 @@ namespace EzPos.GUIs.Forms
                 cmbCategory.Text + @" \ " +
                 cmbMark.Text;
 
-            if (_Product == null) 
+            if (_product == null) 
                 return;
 
-            if (!String.IsNullOrEmpty(_Product.ProductCode))
-                lblProductName.Text += "\r" +
-                                       _Product.ProductCode;
+            if (!String.IsNullOrEmpty(_product.ProductCode))
+                lblProductName.Text += 
+                    "\r" +
+                    _product.ProductCode;
         }
 
         private void BtnSaveClick(object sender, EventArgs e)
@@ -333,7 +334,7 @@ namespace EzPos.GUIs.Forms
                 {
                     const string briefMsg = "អំពីពត៌មាន";
                     var detailMsg = Resources.MsgInvalidData;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -343,63 +344,63 @@ namespace EzPos.GUIs.Forms
                     }
                 }
 
-                if (_Product == null)
-                    _Product = new Product();
+                if (_product == null)
+                    _product = new Product();
 
-                _Product.CategoryID = int.Parse(cmbCategory.SelectedValue.ToString());
-                _Product.CategoryStr = cmbCategory.Text;
-                _Product.MarkID = int.Parse(cmbMark.SelectedValue.ToString());
-                _Product.MarkStr = cmbMark.Text;
-                _Product.ColorID = int.Parse(cmbColor.SelectedValue.ToString());
-                _Product.ColorStr = cmbColor.Text;
-                _Product.SizeID = Int32.Parse(cmbSize.SelectedValue.ToString());
-                _Product.SizeStr = cmbSize.Text;
-                _Product.ProductName = _Product.CategoryStr + " \\ " + _Product.MarkStr + " \\ " + _Product.ColorStr;
-                _Product.UnitPriceIn = float.Parse(txtUPIn.Text);
-                _Product.ExtraPercentage = float.Parse(txtExtraPercentage.Text);
-                _Product.UnitPriceOut = float.Parse(txtUPOut.Text);
-                _Product.DiscountPercentage = float.Parse(txtDiscount.Text);
-                _Product.QtyInStock = float.Parse(txtQtyInStock.Text);
-                _Product.ForeignCode = txtForeignCode.Text;
+                _product.CategoryID = int.Parse(cmbCategory.SelectedValue.ToString());
+                _product.CategoryStr = cmbCategory.Text;
+                _product.MarkID = int.Parse(cmbMark.SelectedValue.ToString());
+                _product.MarkStr = cmbMark.Text;
+                _product.ColorID = int.Parse(cmbColor.SelectedValue.ToString());
+                _product.ColorStr = cmbColor.Text;
+                _product.SizeID = Int32.Parse(cmbSize.SelectedValue.ToString());
+                _product.SizeStr = cmbSize.Text;
+                _product.ProductName = _product.CategoryStr + " \\ " + _product.MarkStr + " \\ " + _product.ColorStr;
+                _product.UnitPriceIn = float.Parse(txtUPIn.Text);
+                _product.ExtraPercentage = float.Parse(txtExtraPercentage.Text);
+                _product.UnitPriceOut = float.Parse(txtUPOut.Text);
+                _product.DiscountPercentage = float.Parse(txtDiscount.Text);
+                _product.QtyInStock = float.Parse(txtQtyInStock.Text);
+                _product.ForeignCode = txtForeignCode.Text;
                 if (txtPhotoPath.Text.Length == 0)
                 {
-                    _Product.PhotoPath = _Product.PhotoPath;
-                    _Product.ProductPic = Resources.NoImage;
+                    _product.PhotoPath = _product.PhotoPath;
+                    _product.ProductPic = Resources.NoImage;
                 }
                 else
                 {
                     var fileInfo = new FileInfo(txtPhotoPath.Text);
                     if (fileInfo.Exists)
                     {
-                        _Product.PhotoPath = txtPhotoPath.Text;
-                        _Product.ProductPic = Image.FromFile(_Product.PhotoPath);
+                        _product.PhotoPath = txtPhotoPath.Text;
+                        _product.ProductPic = Image.FromFile(_product.PhotoPath);
                     }
                     else
-                        _Product.ProductPic = Resources.NoImage;
+                        _product.ProductPic = Resources.NoImage;
                 }
 
-                if (_ProductService == null)
-                    _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                if (_productService == null)
+                    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                _Product.Description = string.Empty;
-                _Product.DisplayName = _Product.ProductName + "\r" +
-                                       "Size: " + _Product.SizeStr + "\r" +
-                                       "Code: " + _Product.ProductCode;
-                if (!string.IsNullOrEmpty(_Product.ForeignCode))
-                    _Product.DisplayName += " (" + _Product.ForeignCode + ")";
+                _product.Description = string.Empty;
+                _product.DisplayName = _product.ProductName + "\r" +
+                                       "Size: " + _product.SizeStr + "\r" +
+                                       "Code: " + _product.ProductCode;
+                if (!string.IsNullOrEmpty(_product.ForeignCode))
+                    _product.DisplayName += " (" + _product.ForeignCode + ")";
 
-                if (!_IsFromSale)
+                if (!_isFromSale)
                 {
-                    _ProductService.ManageProduct(
-                        _Product,
-                        _Product.ProductID != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
+                    _productService.ManageProduct(
+                        _product,
+                        _product.ProductID != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
                 }
 
                 DialogResult = DialogResult.OK;
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -423,7 +424,7 @@ namespace EzPos.GUIs.Forms
                 if (waitStatus)
                 {
                     unitPriceOut = float.Parse(txtUPOut.Text);
-                    discountPercentage = 100 - ((100*unitPriceOut)/DefaultUnitPriceOut);
+                    discountPercentage = 100 - ((100*unitPriceOut)/_defaultUnitPriceOut);
                     discountPercentage = discountPercentage < 0 ? 0 : discountPercentage;
                     txtDiscount.Text = Math.Round(discountPercentage, 0).ToString("N", AppContext.CultureInfo);
                 }
@@ -437,12 +438,12 @@ namespace EzPos.GUIs.Forms
                     unitPriceOut = unitPriceOut - ((unitPriceOut*discountPercentage)/100);
                     //txtUPOut.Text = Math.Round(unitPriceOut, 0).ToString("N", AppContext.CultureInfo);
                     txtUPOut.Text = unitPriceOut.ToString("N3", AppContext.CultureInfo);
-                    DefaultUnitPriceOut = float.Parse(txtUPOut.Text);
+                    _defaultUnitPriceOut = float.Parse(txtUPOut.Text);
                 }
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -455,7 +456,7 @@ namespace EzPos.GUIs.Forms
 
         private void PtbProductMouseClick(object sender, MouseEventArgs e)
         {
-            if (_IsFromSale)
+            if (_isFromSale)
                 return;
 
             if (e == null)
@@ -467,7 +468,7 @@ namespace EzPos.GUIs.Forms
                     ImportIndividualCatalog();
                     break;
                 case MouseButtons.Right:
-                    if (_Product == null)
+                    if (_product == null)
                         cmsCatalog.Show(ptbProduct, e.X, e.Y);
                     break;
             }
@@ -497,7 +498,7 @@ namespace EzPos.GUIs.Forms
 
                 const string briefMsg = "អំពីការលុប";
                 var detailMsg = Resources.MsgOperationImportGroupCatalog;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -505,10 +506,10 @@ namespace EzPos.GUIs.Forms
                         return;
                 }
 
-                if (_ProductService == null)
-                    _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                if (_productService == null)
+                    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                _ProductService.ImportGroupCatalog(
+                _productService.ImportGroupCatalog(
                     folderBrowserDialog.SelectedPath,
                     Int32.Parse(cmbCategory.SelectedValue.ToString()),
                     cmbCategory.Text,
@@ -519,7 +520,7 @@ namespace EzPos.GUIs.Forms
                     Int32.Parse(cmbSize.SelectedValue.ToString()),
                     cmbSize.Text);
 
-                IsModified = true;
+                _isModified = true;
                 DialogResult = DialogResult.OK;
             }
         }
@@ -532,26 +533,6 @@ namespace EzPos.GUIs.Forms
         private void TsmAllClick(object sender, EventArgs e)
         {
             ImportAllCatalogs();
-        }
-
-        private void BtnSaveMouseEnter(object sender, EventArgs e)
-        {
-            btnSave.BackgroundImage = Resources.background_9;
-        }
-
-        private void BtnSaveMouseLeave(object sender, EventArgs e)
-        {
-            btnSave.BackgroundImage = Resources.background_2;
-        }
-
-        private void BtnCancelMouseEnter(object sender, EventArgs e)
-        {
-            btnCancel.BackgroundImage = Resources.background_9;
-        }
-
-        private void BtnCancelMouseLeave(object sender, EventArgs e)
-        {
-            btnCancel.BackgroundImage = Resources.background_2;
         }
 
         private void SetEnableToComponents(bool enableStatus)
@@ -579,7 +560,7 @@ namespace EzPos.GUIs.Forms
 
                 const string briefMsg = "អំពីការបង្កើតផលិតផល";
                 var detailMsg = Resources.MsgOperationImportGroupCatalog;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -587,10 +568,10 @@ namespace EzPos.GUIs.Forms
                         return;
                 }
 
-                if (_ProductService == null)
-                    _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                if (_productService == null)
+                    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                _ProductService.ImportGroupCatalog(
+                _productService.ImportGroupCatalog(
                     openFileDialog.FileNames,
                     Int32.Parse(cmbCategory.SelectedValue.ToString()),
                     cmbCategory.Text,
@@ -601,14 +582,14 @@ namespace EzPos.GUIs.Forms
                     Int32.Parse(cmbSize.SelectedValue.ToString()),
                     cmbSize.Text);
 
-                IsModified = true;
+                _isModified = true;
                 DialogResult = DialogResult.OK;
             }
         }
 
         private void BtnAdjustmentClick(object sender, EventArgs e)
         {
-            if (_Product == null)
+            if (_product == null)
                 return;
 
             try
@@ -618,7 +599,7 @@ namespace EzPos.GUIs.Forms
                 {
                     briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                     detailMsg = Resources.MsgUserPermissionDeny;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -630,7 +611,7 @@ namespace EzPos.GUIs.Forms
 
                 briefMsg = "អំពីការសង";
                 detailMsg = "សូម​មេត្តា​ចុច​លើ​ប៊ូតុង យល់​ព្រម ដើម្បី​បញ្ជាក់​ពី​ការ​ដកចេញពីឃ្លាំង​។";
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -643,56 +624,46 @@ namespace EzPos.GUIs.Forms
                     folderBrowserDialog.ShowNewFolderButton = false;
                     if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                     {
-                        if (_ProductService == null)
-                            _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                        if (_productService == null)
+                            _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                        IList listProduct2Export = new List<Product> {_Product};
+                        IList listProduct2Export = new List<Product> {_product};
 
-                        _ProductService.ExportProductToXml(
+                        _productService.ExportProductToXml(
                             listProduct2Export,
                             folderBrowserDialog.SelectedPath,
                             "ProductList.xml");
 
                         var productAdjustment = new ProductAdjustment
                                                     {
-                                                        ProductID = _Product.ProductID,
-                                                        QtyInStock = _Product.QtyInStock,
-                                                        QtyAdjusted = ((-1)*_Product.QtyInStock),
-                                                        FKProduct = _Product
+                                                        ProductID = _product.ProductID,
+                                                        QtyInStock = _product.QtyInStock,
+                                                        QtyAdjusted = ((-1)*_product.QtyInStock),
+                                                        FKProduct = _product
                                                     };
 
-                        if (_ProductService == null)
-                            _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
-                        _ProductService.ProductAdjustmentManagement(
+                        if (_productService == null)
+                            _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                        _productService.ProductAdjustmentManagement(
                             Resources.OperationRequestInsert,
                             productAdjustment);
 
-                        IsModified = true;
+                        _isModified = true;
                         DialogResult = DialogResult.OK;
                     }
                 }
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
         }
 
-        private void BtnAdjustmentMouseEnter(object sender, EventArgs e)
-        {
-            btnAdjustment.BackgroundImage = Resources.background_9;
-        }
-
-        private void BtnAdjustmentMouseLeave(object sender, EventArgs e)
-        {
-            btnAdjustment.BackgroundImage = Resources.background_2;
-        }
-
         private void TxtUpOutValidating(object sender, CancelEventArgs e)
         {
-            DefaultUnitPriceOut = float.Parse(txtUPOut.Text);
+            _defaultUnitPriceOut = float.Parse(txtUPOut.Text);
         }
 
         private void CmbSizeEnter(object sender, EventArgs e)
@@ -713,7 +684,7 @@ namespace EzPos.GUIs.Forms
             {
                 const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
                 var detailMsg = Resources.MsgUserPermissionDeny;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -731,7 +702,7 @@ namespace EzPos.GUIs.Forms
 
                 const string briefMsg = "អំពីការលុប";
                 var detailMsg = Resources.MsgOperationImportGroupCatalog;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -739,14 +710,14 @@ namespace EzPos.GUIs.Forms
                         return;
                 }
 
-                if (_ProductService == null)
-                    _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                if (_productService == null)
+                    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                _ProductService.ImportProductFromXml(
+                _productService.ImportProductFromXml(
                     folderBrowserDialog.SelectedPath,
                     "ProductList.xml");
 
-                IsModified = true;
+                _isModified = true;
                 DialogResult = DialogResult.OK;
             }
         }
@@ -760,10 +731,10 @@ namespace EzPos.GUIs.Forms
         {
             txtForeignCode.TextChanged -= ModificationHandler;
             string detailMsg;
-            if (!_ProductService.IsValidatedProductCode(txtForeignCode.Text, out detailMsg))
+            if (!_productService.IsValidatedProductCode(txtForeignCode.Text, out detailMsg))
             {
                 const string briefMsg = "អំពីពត៌មាន";
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -789,7 +760,7 @@ namespace EzPos.GUIs.Forms
 
                 const string briefMsg = "អំពីពត៌មាន";
                 var detailMsg = Resources.MsgConfirmEditExistingProduct;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -800,12 +771,12 @@ namespace EzPos.GUIs.Forms
                     }
                 }
 
-                _Product = product;
-                SetProductInfo(_Product);
+                _product = product;
+                SetProductInfo(_product);
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
@@ -829,14 +800,14 @@ namespace EzPos.GUIs.Forms
                 {
                     "ForeignCode|" + foreignCode,
                     "QtyInStock > 0",
-                    "ProductID <> " + (_Product == null ? 0 : _Product.ProductID)
+                    "ProductID <> " + (_product == null ? 0 : _product.ProductID)
                 };
-            var productList = _ProductService.GetObjects(strCriteria);
+            var productList = _productService.GetObjects(strCriteria);
             if (productList.Count == 0) 
                 return;
 
             foreach (Product product in productList)
-                ProductList.Add(product);
+                _productList.Add(product);
 
             DoProductFetching(foreignCode, false);
         }

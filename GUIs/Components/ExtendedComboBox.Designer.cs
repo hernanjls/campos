@@ -46,7 +46,7 @@ namespace EzPos.GUIs.Components
             int selectedIndex = FindString(Text);
             if (selectedIndex == -1)
             {
-                ExtendedMessageBox.ErrorMessage(Resources.MsgItemNotInList);
+                FrmExtendedMessageBox.ErrorMessage(Resources.MsgItemNotInList);
                 Text = string.Empty;
             }
             SelectedIndex = selectedIndex;

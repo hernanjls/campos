@@ -637,4 +637,22 @@
   <data name="MsgInvalidRequest" xml:space="preserve">
     <value>Invalid request.</value>
   </data>
+  <data name="ConstSalePay" xml:space="preserve">
+    <value>គិតលុយ</value>
+  </data>
+  <data name="ConstSalePrint" xml:space="preserve">
+    <value>បោះពុម្ភ</value>
+  </data>
+  <data name="ConstSaleReturn" xml:space="preserve">
+    <value>សង</value>
+  </data>
+  <data name="ConstSaleSearch" xml:space="preserve">
+    <value>ស្វែងរក</value>
+  </data>
+  <data name="ConstBarCodeTemplate4" xml:space="preserve">
+    <value>Template 4</value>
+  </data>
+  <data name="ConstBarCodeTemplate5" xml:space="preserve">
+    <value>Template 5</value>
+  </data>
 </root>

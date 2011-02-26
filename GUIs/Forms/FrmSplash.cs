@@ -101,7 +101,7 @@ namespace EzPos.GUIs.Forms
                     {
                         const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
                         var detailMsg = Resources.MsgCounterNotInitialize;
-                        using (var frmMessageBox = new ExtendedMessageBox())
+                        using (var frmMessageBox = new FrmExtendedMessageBox())
                         {
                             frmMessageBox.BriefMsgStr = briefMsg;
                             frmMessageBox.DetailMsgStr = detailMsg;
@@ -154,7 +154,7 @@ namespace EzPos.GUIs.Forms
             {
                 const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
                 var detailMsg = Resources.MsgConnectionLost;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;
@@ -182,7 +182,7 @@ namespace EzPos.GUIs.Forms
             {
                 const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
                 var detailMsg = Resources.MsgConnectionLost;
-                using (var frmMessageBox = new ExtendedMessageBox())
+                using (var frmMessageBox = new FrmExtendedMessageBox())
                 {
                     frmMessageBox.BriefMsgStr = briefMsg;
                     frmMessageBox.DetailMsgStr = detailMsg;

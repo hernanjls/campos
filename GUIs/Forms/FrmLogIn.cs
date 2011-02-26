@@ -8,8 +8,7 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmLogIn : Form
     {
-        private User _User;
-        private UserService _UserService;
+        private UserService _userService;
 
         public FrmLogIn()
         {
@@ -18,25 +17,22 @@ namespace EzPos.GUIs.Forms
 
         public UserService UserService
         {
-            set { _UserService = value; }
+            set { _userService = value; }
         }
 
-        public User User
-        {
-            get { return _User; }
-        }
+        public User User { get; private set; }
 
         private void FrmLogIn_Load(object sender, EventArgs e)
         {
-            if (_UserService == null)
-                _UserService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
+            if (_userService == null)
+                _userService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
         }
 
         private void ShowErrorMessage()
         {
             const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
             var detailMsg = Resources.MsgOperationRequestLogInFail;
-            using (var frmMessageBox = new ExtendedMessageBox())
+            using (var frmMessageBox = new FrmExtendedMessageBox())
             {
                 frmMessageBox.BriefMsgStr = briefMsg;
                 frmMessageBox.DetailMsgStr = detailMsg;
@@ -45,7 +41,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void btnLogIn_Click(object sender, EventArgs e)
+        private void BtnLogInClick(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtLogIn.Text) || string.IsNullOrEmpty(txtPwd.Text))
             {
@@ -55,12 +51,12 @@ namespace EzPos.GUIs.Forms
 
             try
             {
-                _User = _UserService.GetUser(txtLogIn.Text, txtPwd.Text);
-                if (_User == null)
+                User = _userService.GetUser(txtLogIn.Text, txtPwd.Text);
+                if (User == null)
                 {
                     const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
                     var detailMsg = Resources.MsgOperationRequestLogInFail;
-                    using (var frmMessageBox = new ExtendedMessageBox())
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
                     {
                         frmMessageBox.BriefMsgStr = briefMsg;
                         frmMessageBox.DetailMsgStr = detailMsg;
@@ -74,30 +70,10 @@ namespace EzPos.GUIs.Forms
             }
             catch (Exception exception)
             {
-                ExtendedMessageBox.UnknownErrorMessage(
+                FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
-        }
-
-        private void btnLogIn_MouseEnter(object sender, EventArgs e)
-        {
-            btnLogIn.BackgroundImage = Resources.background_9;
-        }
-
-        private void btnLogIn_MouseLeave(object sender, EventArgs e)
-        {
-            btnLogIn.BackgroundImage = Resources.background_2;
-        }
-
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
-        {
-            btnCancel.BackgroundImage = Resources.background_9;
-        }
-
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
-        {
-            btnCancel.BackgroundImage = Resources.background_2;
         }
     }
 }

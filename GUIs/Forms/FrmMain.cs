@@ -1,7 +1,8 @@
 using System;
-using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using EzPos.GUIs.Components;
 using EzPos.GUIs.Controls;
 using EzPos.Model;
 using EzPos.Properties;
@@ -12,14 +13,14 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmMain : Form
     {
-        private CommonService _CommonService;
-        private CustomerService _CustomerService;
-        private SupplierService _SupplierService;
-        private ExpenseService _ExpenseService;
-        private ProductService _ProductService;
-        private SaleOrderService _SaleOrderService;
-        private UserControl _UserControl;
-        private UserService _UserService;
+        private CommonService _commonService;
+        private CustomerService _customerService;
+        private SupplierService _supplierService;
+        private ExpenseService _expenseService;
+        private ProductService _productService;
+        private SaleOrderService _saleOrderService;
+        private UserControl _userControl;
+        private UserService _userService;
 
         public FrmMain()
         {
@@ -28,37 +29,37 @@ namespace EzPos.GUIs.Forms
 
         public CommonService CommonService
         {
-            set { _CommonService = value; }
+            set { _commonService = value; }
         }
 
         public SaleOrderService SaleOrderService
         {
-            set { _SaleOrderService = value; }
+            set { _saleOrderService = value; }
         }
 
         public ProductService ProductService
         {
-            set { _ProductService = value; }
+            set { _productService = value; }
         }
 
         public CustomerService CustomerService
         {
-            set { _CustomerService = value; }
+            set { _customerService = value; }
         }
 
         public SupplierService SupplierService
         {
-            set { _SupplierService = value; }
+            set { _supplierService = value; }
         }
 
         public ExpenseService ExpenseService
         {
-            set { _ExpenseService = value; }
+            set { _expenseService = value; }
         }
 
         public UserService UserService
         {
-            set { _UserService = value; }
+            set { _userService = value; }
         }
 
         private static void SynchronizePicture()
@@ -87,49 +88,49 @@ namespace EzPos.GUIs.Forms
             UpdateDateInfo();
             if (UserService.AllowToPerform(Resources.PermissionSaleOrder))
             {
-                btnSaleOrder_Click(sender, e);
+                BtnSaleOrderClick(sender, e);
                 return;
             }
 
             if (UserService.AllowToPerform(Resources.PermissionProduct))
             {
-                btnProduct_Click(sender, e);
+                BtnProductClick(sender, e);
                 return;
             }
 
             if (UserService.AllowToPerform(Resources.PermissionCustomer))
             {
-                btnCustomer_Click(sender, e);
+                BtnCustomerClick(sender, e);
                 return;
             }
 
             if (UserService.AllowToPerform(Resources.PermissionCard))
             {
-                btnDiscountCard_Click(sender, e);
+                BtnDiscountCardClick(sender, e);
                 return;
             }
 
             if (UserService.AllowToPerform(Resources.PermissionExpense))
             {
-                btnExpense_Click(sender, e);
+                BtnExpenseClick(sender, e);
                 return;
             }
 
             if (UserService.AllowToPerform(Resources.PermissionReport))
             {
-                btnReport_Click(sender, e);
+                BtnReportClick(sender, e);
                 return;
             }
 
             if (UserService.AllowToPerform(Resources.PermissionUser))
             {
-                btnUser_Click(sender, e);
+                BtnUserClick(sender, e);
                 return;
             }
 
             if (UserService.AllowToPerform(Resources.PermissionConfig))
             {
-                btnConfiguration_Click(sender, e);
+                BtnConfigurationClick(sender, e);
                 return;
             }
         }
@@ -142,17 +143,17 @@ namespace EzPos.GUIs.Forms
                 "\n" + AppContext.User.LogInName;
         }
 
-        private void tmrRefresh_Tick(object sender, EventArgs e)
+        private void TmrRefreshTick(object sender, EventArgs e)
         {
             UpdateDateInfo();
         }
 
-        private void btnQuit_Click(object sender, EventArgs e)
+        private void BtnQuitClick(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void btnSaleOrder_Click(object sender, EventArgs e)
+        private void BtnSaleOrderClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionSaleOrder))
                 return;
@@ -162,15 +163,15 @@ namespace EzPos.GUIs.Forms
             var ctrlSale = 
                 new CtrlSale
                 {
-                    ProductService = _ProductService,
-                    SaleOrderService = _SaleOrderService,
-                    CustomerService = _CustomerService
+                    ProductService = _productService,
+                    SaleOrderService = _saleOrderService,
+                    CustomerService = _customerService
                 };
 
             InsertBodyControl(ctrlSale);
         }
 
-        private void btnProduct_Click(object sender, EventArgs e)
+        private void BtnProductClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionProduct))
                 return;
@@ -180,8 +181,8 @@ namespace EzPos.GUIs.Forms
             var ctrlCatalog = 
                 new CtrlCatalog
                 {
-                    ProductService = _ProductService, 
-                    CommonService = _CommonService
+                    ProductService = _productService, 
+                    CommonService = _commonService
                 };
 
             InsertBodyControl(ctrlCatalog);
@@ -189,14 +190,11 @@ namespace EzPos.GUIs.Forms
 
         private void SetDisableToButton(string btnName)
         {
-            foreach (Control button in pnlFooter.Controls)
+            foreach (var button in from Control button in pnlFooter.Controls
+                                       where button.GetType() == typeof (ExtendedButton)
+                                       where button.Name != "btnQuit"
+                                       select button)
             {
-                if (button.GetType() != typeof (Button)) 
-                    continue;
-
-                if (button.Name == "btnQuit")
-                    continue;
-
                 button.Enabled = button.Name != btnName;
             }
         }
@@ -205,25 +203,26 @@ namespace EzPos.GUIs.Forms
         {
             foreach (UserControl userControl in pnlBody.Controls)
                 userControl.Dispose();
-            _UserControl = usrControl;
-            _UserControl.AutoScaleMode = AutoScaleMode.Dpi;
-            _UserControl.Dock = DockStyle.Fill;
-            pnlBody.Controls.Add(_UserControl);
+
+            _userControl = usrControl;
+            _userControl.AutoScaleMode = AutoScaleMode.Dpi;
+            _userControl.Dock = DockStyle.Fill;
+            pnlBody.Controls.Add(_userControl);
         }
 
-        private void btnCustomer_Click(object sender, EventArgs e)
+        private void BtnCustomerClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionCustomer))
                 return;
 
             SetDisableToButton("btnCustomer");
 
-            var ctrlCustomer = new CtrlCustomer {CustomerService = _CustomerService, CommonService = _CommonService};
+            var ctrlCustomer = new CtrlCustomer {CustomerService = _customerService, CommonService = _commonService};
 
             InsertBodyControl(ctrlCustomer);
         }
 
-        private void btnDiscountCard_Click(object sender, EventArgs e)
+        private void BtnDiscountCardClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionCard))
                 return;
@@ -233,14 +232,14 @@ namespace EzPos.GUIs.Forms
             var ctrlDiscountCard = 
                 new CtrlDiscountCard
                 {
-                    CustomerService = _CustomerService,
-                    CommonService = _CommonService
+                    CustomerService = _customerService,
+                    CommonService = _commonService
                 };
 
             InsertBodyControl(ctrlDiscountCard);
         }
 
-        private void btnConfiguration_Click(object sender, EventArgs e)
+        private void BtnConfigurationClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionConfig))
                 return;
@@ -248,7 +247,7 @@ namespace EzPos.GUIs.Forms
             InsertBodyControl(new CtrlAppParam());
         }
 
-        private void btnReport_Click(object sender, EventArgs e)
+        private void BtnReportClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionReport))
                 return;
@@ -256,24 +255,23 @@ namespace EzPos.GUIs.Forms
             SetDisableToButton("btnReport");
 
             var ctrlReport = new CtrlReport();
-            //var ctrlReport = new CtrlReportTest();
 
             InsertBodyControl(ctrlReport);
         }
 
-        private void btnUser_Click(object sender, EventArgs e)
+        private void BtnUserClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionUser))
                 return;
 
             SetDisableToButton("btnUser");
 
-            var ctrlUser = new CtrlUser {CommonService = _CommonService, UserService = _UserService};
+            var ctrlUser = new CtrlUser {CommonService = _commonService, UserService = _userService};
 
             InsertBodyControl(ctrlUser);
         }
 
-        private void btnExpense_Click(object sender, EventArgs e)
+        private void BtnExpenseClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionExpense))
                 return;
@@ -283,99 +281,14 @@ namespace EzPos.GUIs.Forms
             var ctrlExpense = 
                 new CtrlExpense
                 {
-                    CommonService = _CommonService, 
-                    ExpenseService = _ExpenseService
+                    CommonService = _commonService, 
+                    ExpenseService = _expenseService
                 };
 
             InsertBodyControl(ctrlExpense);
         }
 
-        private void btnSaleOrder_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnSaleOrder, Resources.background_9);
-        }
-
-        private void btnProduct_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnProduct, Resources.background_9);
-        }
-
-        private void btnUser_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnUser, Resources.background_9);
-        }
-
-        private void btnCustomer_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnCustomer, Resources.background_9);
-        }
-
-        private void btnDiscountCard_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnDiscountCard, Resources.background_9);
-        }
-
-        private void btnConfiguration_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnConfiguration, Resources.background_9);
-        }
-
-        private void btnReport_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnReport, Resources.background_9);
-        }
-
-        private void btnExpense_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnExpense, Resources.background_9);
-        }
-
-        private void btnSaleOrder_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnSaleOrder, Resources.background_2);
-        }
-
-        private void btnProduct_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnProduct, Resources.background_2);
-        }
-
-        private void btnUser_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnUser, Resources.background_2);
-        }
-
-        private void btnCustomer_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnCustomer, Resources.background_2);
-        }
-
-        private void btnDiscountCard_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnDiscountCard, Resources.background_2);
-        }
-
-        private void btnConfiguration_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnConfiguration, Resources.background_2);
-        }
-
-        private void btnReport_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnReport, Resources.background_2);
-        }
-
-        private void btnExpense_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnExpense, Resources.background_2);
-        }
-
-        private static void SetBackGroundImage(Control button, Image backgroundImage)
-        {
-            button.BackgroundImage = backgroundImage;
-        }
-
-        private void btnSupplier_Click(object sender, EventArgs e)
+        private void BtnSupplierClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionSupplier))
                 return;
@@ -385,21 +298,11 @@ namespace EzPos.GUIs.Forms
             var ctrlSupplier = 
                 new CtrlSupplier
                 {
-                    SupplierService = _SupplierService,
-                    CommonService = _CommonService
+                    SupplierService = _supplierService,
+                    CommonService = _commonService
                 };
 
             InsertBodyControl(ctrlSupplier);
-        }
-
-        private void btnSupplier_MouseEnter(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnSupplier, Resources.background_9);
-        }
-
-        private void btnSupplier_MouseLeave(object sender, EventArgs e)
-        {
-            SetBackGroundImage(btnSupplier, Resources.background_2);
         }
     }
 }
