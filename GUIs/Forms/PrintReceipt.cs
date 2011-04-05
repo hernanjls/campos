@@ -90,8 +90,8 @@ namespace EzPos.GUIs.Forms
             _printDocument.DocumentName = AppContext.ShopName;
             _printDocument.PrintPage += PrintDocumentPrintPage;
             PrintPreviewDialog.Document = _printDocument;
-            //PrintPreviewDialog.ShowDialog();
-            _printDocument.Print();
+            PrintPreviewDialog.ShowDialog();
+            //_printDocument.Print();
             _printDocument.PrintPage -= PrintDocumentPrintPage;
         }
 
@@ -102,7 +102,18 @@ namespace EzPos.GUIs.Forms
 
             var textToPrint = AppContext.ShopName;
             var fontInUsed = new Font("Candara", 15, FontStyle.Bold);
+            //var fontInUsed = new Font("Candara", 50, FontStyle.Bold);
 
+            //TextRenderer.DrawText(
+            //    e.Graphics,
+            //    textToPrint,
+            //    fontInUsed,
+            //    new Point(10, 200),
+            //    SystemColors.WindowText,
+            //    Color.Transparent,
+            //    TextFormatFlags.Default);
+
+            //fontInUsed = new Font("Candara", 15, FontStyle.Bold);
             posY += Int32.Parse(Math.Round(e.Graphics.MeasureString(textToPrint, fontInUsed).Height).ToString()) - 10;
             e.Graphics.DrawString(
                 textToPrint,
