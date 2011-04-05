@@ -1,6 +1,6 @@
 ﻿namespace EzPos.GUIs.Forms
 {
-    partial class ExtendedMessageBox
+    partial class FrmExtendedMessageBox
     {
         /// <summary>
         /// Required designer variable.
@@ -86,8 +86,8 @@
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // btnAccept
             // 
@@ -107,8 +107,8 @@
             this.btnAccept.Text = "យល់ព្រម";
             this.btnAccept.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAccept.UseVisualStyleBackColor = false;
-            this.btnAccept.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
-            this.btnAccept.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            this.btnAccept.MouseLeave += new System.EventHandler(this.BtnSaveMouseLeave);
+            this.btnAccept.MouseEnter += new System.EventHandler(this.BtnSaveMouseEnter);
             // 
             // txtDetailMsg
             // 
@@ -143,7 +143,7 @@
             this.Controls.Add(this.pnlMessage);
             this.Controls.Add(this.pnlImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "ExtendedMessageBox";
+            this.Name = "FrmExtendedMessageBox";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "   .: Information :.";
             this.Load += new System.EventHandler(this.FrmMessageBox_Load);
