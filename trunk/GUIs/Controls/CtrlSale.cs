@@ -957,8 +957,23 @@ namespace EzPos.GUIs.Controls
                                 _saleOrder.AmountPaidInt,
                                 _saleOrder.AmountPaidRiel,
                                 _saleOrder.AmountReturnInt);
-                            DoActivateControls(false);
-                            ReturnHandler(_returnEnabled = true);
+
+                            //If invoice has already been voided
+                            searchCriteria = new List<string>();
+                            searchCriteria.Add(
+                                "ReferenceNum|" + _saleOrder.SaleOrderNumber);
+                            saleOrderList = _saleOrderService.GetSaleOrders(searchCriteria);
+
+                            if (saleOrderList.Count != 0)
+                            {
+                                _returnEnabled = false;
+                                SaleItemBindingListChanged(null, null);
+                            }
+                            else
+                            {
+                                DoActivateControls(false);
+                                ReturnHandler(_returnEnabled = true);
+                            }
                         }
                         Visible = true;
                     }
@@ -1165,10 +1180,6 @@ namespace EzPos.GUIs.Controls
         private void DoActivateControls(bool isActivated)
         {
             btnValid.Text = !isActivated ? Resources.ConstSalePrint : Resources.ConstSalePay;
-
-            //btnValid.Enabled = isActivated;
-            //btnProductAdjustment.Enabled = isActivated;
-            //btnDeposit.Enabled = isActivated && _depositEnabled;
         }
 
         private void SetPurchasedInfo(IFormattable totalQtyPurchased)
@@ -1387,6 +1398,8 @@ namespace EzPos.GUIs.Controls
         private void SaleItemBindingListChanged(object sender, ListChangedEventArgs e)
         {
             var isEnabled = _saleItemBindingList.Count != 0;
+            if (sender == null)
+                isEnabled = false;
 
             if (_returnEnabled && isEnabled)
                 return;
