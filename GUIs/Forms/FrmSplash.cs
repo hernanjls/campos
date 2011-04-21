@@ -5,6 +5,7 @@ using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using System.Globalization;
 
 namespace EzPos.GUIs.Forms
 {
@@ -150,7 +151,7 @@ namespace EzPos.GUIs.Forms
                     }
                 }
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
                 var detailMsg = Resources.MsgConnectionLost;
