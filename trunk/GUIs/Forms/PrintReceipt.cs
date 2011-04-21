@@ -102,18 +102,6 @@ namespace EzPos.GUIs.Forms
 
             var textToPrint = AppContext.ShopName;
             var fontInUsed = new Font("Candara", 15, FontStyle.Bold);
-            //var fontInUsed = new Font("Candara", 50, FontStyle.Bold);
-
-            //TextRenderer.DrawText(
-            //    e.Graphics,
-            //    textToPrint,
-            //    fontInUsed,
-            //    new Point(10, 200),
-            //    SystemColors.WindowText,
-            //    Color.Transparent,
-            //    TextFormatFlags.Default);
-
-            //fontInUsed = new Font("Candara", 15, FontStyle.Bold);
             posY += Int32.Parse(Math.Round(e.Graphics.MeasureString(textToPrint, fontInUsed).Height).ToString()) - 10;
             e.Graphics.DrawString(
                 textToPrint,
@@ -204,8 +192,21 @@ namespace EzPos.GUIs.Forms
                 if (saleItem.ProductID == 0)
                     continue;
                 //Name
-                textToPrint = saleItem.ProductName;
-                e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, 0, posY);
+                //textToPrint = saleItem.ProductName;
+                //e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, 0, posY);
+
+                fontInUsed = new Font("Khmer OS Regular", 60, FontStyle.Bold);
+                textToPrint = "ផលិតផល​របស់​ហាង​អ៊ីហ្សីប៉ូស​";
+                TextRenderer.DrawText(
+                    e.Graphics,
+                    textToPrint,
+                    fontInUsed,
+                    new Point(0, (posY * 6) - 10),
+                    SystemColors.WindowText,
+                    Color.Transparent,
+                    TextFormatFlags.Default);
+
+                fontInUsed = new Font("Arial", 8, FontStyle.Regular);
                 //Qty
                 //textToPrint = saleItem.QtySold.ToString("N2", AppContext.CultureInfo);
                 textToPrint = saleItem.QtySold.ToString("N0", AppContext.CultureInfo);
@@ -216,7 +217,6 @@ namespace EzPos.GUIs.Forms
                     190 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width,
                     posY);
                 //UnitPrice
-                //textToPrint = Math.Round(saleItem.UnitPriceOut, 2).ToString("N2", AppContext.CultureInfo);
                 textToPrint = Math.Round(saleItem.PublicUPOut, 2).ToString("N2", AppContext.CultureInfo);
                 e.Graphics.DrawString(
                     textToPrint,
@@ -225,8 +225,6 @@ namespace EzPos.GUIs.Forms
                     232 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width,
                     posY);
                 //SubTotal
-                //textToPrint = Math.Round((saleItem.QtySold*saleItem.UnitPriceOut), 2).ToString("N2",
-                //                                                                               AppContext.CultureInfo);
                 textToPrint = Math.Round((saleItem.QtySold*saleItem.PublicUPOut), 2).ToString("N2",
                                                                                                AppContext.CultureInfo);
                 e.Graphics.DrawString(

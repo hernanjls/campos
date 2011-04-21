@@ -290,6 +290,7 @@ namespace EzPos.GUIs.Forms
             cmbMark.SelectedValue = product.MarkID;
             cmbColor.SelectedValue = product.ColorID;
             cmbSize.SelectedValue = product.SizeID;
+            txtDescription.Text = product.Description;
             txtUPIn.Text = product.UnitPriceIn.ToString("N3", AppContext.CultureInfo);
             txtExtraPercentage.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo);
             txtDiscount.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo);
@@ -362,6 +363,7 @@ namespace EzPos.GUIs.Forms
                 _product.DiscountPercentage = float.Parse(txtDiscount.Text);
                 _product.QtyInStock = float.Parse(txtQtyInStock.Text);
                 _product.ForeignCode = txtForeignCode.Text;
+                _product.Description = txtDescription.Text;
                 if (txtPhotoPath.Text.Length == 0)
                 {
                     _product.PhotoPath = _product.PhotoPath;
@@ -382,7 +384,7 @@ namespace EzPos.GUIs.Forms
                 if (_productService == null)
                     _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                _product.Description = string.Empty;
+                //_product.Description = string.Empty;
                 _product.DisplayName = _product.ProductName + "\r" +
                                        "Size: " + _product.SizeStr + "\r" +
                                        "Code: " + _product.ProductCode;
@@ -810,6 +812,33 @@ namespace EzPos.GUIs.Forms
                 _productList.Add(product);
 
             DoProductFetching(foreignCode, false);
+        }
+
+        private void txtDescription_Enter(object sender, EventArgs e)
+        {
+            txtDescription.TextChanged += ModificationHandler;
+
+            try
+            {
+                InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("km-KH"));
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("ca"));
+                }
+                catch (Exception)
+                {
+                    InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en"));
+                }
+            }
+        }
+
+        private void txtDescription_Leave(object sender, EventArgs e)
+        {
+            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en"));
+            txtDescription.TextChanged -= ModificationHandler;
         }
     }
 }

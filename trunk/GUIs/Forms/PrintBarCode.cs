@@ -516,11 +516,8 @@ namespace EzPos.GUIs.Forms
                     5 +
                     Int32.Parse(Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) / 2;
 
-                var fontDisplayName = new Font("Arial", 6, FontStyle.Regular);
-                //printStr =
-                //    StringHelper.Right("000" + DateTime.Today.Day, 3) +
-                //    StringHelper.Right("000" + DateTime.Today.Month, 3) +
-                //    StringHelper.Right("000" + DateTime.Today.Year, 3);
+                //var fontDisplayName = new Font("Arial", 6, FontStyle.Regular);
+                var fontDisplayName = new Font("Khmer OS", 6, FontStyle.Regular);
                 printStr = barCode.Description;
                 e.Graphics.DrawString(
                     printStr,
@@ -529,6 +526,15 @@ namespace EzPos.GUIs.Forms
                     ((2 * posX) + recWidth - widthBarCode) / 2 + 2 + extraX,
                     posY,
                     _strFormat);
+
+                //TextRenderer.DrawText(
+                //                    e.Graphics,
+                //                    printStr,
+                //                    fontDisplayName,
+                //                    new Point(((2 * posX) + recWidth - widthBarCode) / 2 + 2 + extraX, posY),
+                //                    SystemColors.WindowText,
+                //                    Color.Transparent,
+                //                    TextFormatFlags.Default);
 
                 float xValue = ((2 * posX) + recWidth - widthBarCode) / 2 + 0;
                 printStr = "*" + barCode.BarCodeValue + "*";
@@ -602,7 +608,6 @@ namespace EzPos.GUIs.Forms
                         LineAlignment = StringAlignment.Center,
                         Trimming = StringTrimming.EllipsisCharacter
                     };
-
                 _counter = 0;
             }
             catch (Exception ex)
