@@ -609,6 +609,15 @@ namespace EzPos.GUIs.Controls
             {
                 if ((_returnEnabled) || (btnValid.Text.Equals(Resources.ConstSalePrint)))
                 {
+                    //InvoicePrinting(
+                    //    _saleOrder.FKCustomer,
+                    //    _saleOrder.SaleOrderNumber,
+                    //    (DateTime)_saleOrder.SaleOrderDate,
+                    //    _saleOrder.Discount,
+                    //    0,
+                    //    _saleOrder.AmountPaidInt,
+                    //    0,
+                    //    false);                                        
                     InvoicePrinting(
                         _saleOrder.FKCustomer,
                         _saleOrder.SaleOrderNumber,
@@ -616,7 +625,7 @@ namespace EzPos.GUIs.Controls
                         _saleOrder.Discount,
                         0,
                         _saleOrder.AmountPaidInt,
-                        0,
+                        _saleOrder.AmountReturnInt,
                         false);                                        
                 }
                 else
@@ -740,7 +749,11 @@ namespace EzPos.GUIs.Controls
                     BindingListObj = _saleItemBindingList
                 };
 
-                printReceipt.InializeReceiptPrinting();                
+                //printReceipt.InializeReceiptPrinting();                
+                var fileName = Resources.ConstReceiptExcelFile;
+                printReceipt.PrintReceiptHandler(
+                    Application.StartupPath + @"\" + fileName,
+                    string.Empty);                
             }
             else
             {
@@ -959,9 +972,7 @@ namespace EzPos.GUIs.Controls
                                 _saleOrder.AmountReturnInt);
 
                             //If invoice has already been voided
-                            searchCriteria = new List<string>();
-                            searchCriteria.Add(
-                                "ReferenceNum|" + _saleOrder.SaleOrderNumber);
+                            searchCriteria = new List<string> {"ReferenceNum|" + _saleOrder.SaleOrderNumber};
                             saleOrderList = _saleOrderService.GetSaleOrders(searchCriteria);
 
                             if (saleOrderList.Count != 0)
