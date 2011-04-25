@@ -75,6 +75,10 @@ namespace EzPos.GUIs.Controls
                 if (!UserService.AllowToPerform(Resources.PermissionProductAdjustment))
                     btnProductAdjustment.Visible = false;
 
+                //if (!UserService.AllowToPerform(Resources.PermissionViewSalesResultInfo))
+                //{
+                   // lblResultInfo.Visible = false;
+                //}
                 //Initialization
                 _productList = new BindingList<Product>();
                 cmbProduct.DataSource = _productList;

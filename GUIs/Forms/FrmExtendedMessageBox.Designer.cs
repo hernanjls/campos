@@ -132,7 +132,7 @@
             this.lblBriefMsg.TabIndex = 51;
             this.lblBriefMsg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ExtendedMessageBox
+            // FrmExtendedMessageBox
             // 
             this.AcceptButton = this.btnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

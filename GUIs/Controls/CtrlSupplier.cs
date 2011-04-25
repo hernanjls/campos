@@ -41,7 +41,10 @@ namespace EzPos.GUIs.Controls
                     _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
                 if (_SupplierService == null)
                     _SupplierService = ServiceFactory.GenerateServiceInstance().GenerateSupplierService();
-
+                if (!UserService.AllowToPerform(Resources.PermissionViewSuppResultInfo))
+                {
+                    lblResultInfo.Visible = false;
+                }
                 InitialSupplierList();
 
                 ThreadStart threadStart = UpdateControlContent;

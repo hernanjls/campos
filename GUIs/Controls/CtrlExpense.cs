@@ -111,9 +111,14 @@ namespace EzPos.GUIs.Controls
                 _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
             if (_ExpenseService == null)
                 _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
-
+            
             try
             {
+                if (!UserService.AllowToPerform(Resources.PermissionViewExpResultInfo))
+                {
+                    lblResultInfo.Visible = false;
+                }
+
                 InitializeExpenseList();
 
                 ThreadStart threadStart = UpdateControlContent;

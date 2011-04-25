@@ -655,10 +655,22 @@
   <data name="ConstBarCodeTemplate5" xml:space="preserve">
     <value>Template 5</value>
   </data>
-  <data name="ConstReceiptExcelFile" xml:space="preserve">
-    <value>receipt.xlsx</value>
+  <data name="PermissionByDatesReport" xml:space="preserve">
+    <value>59</value>
   </data>
-  <data name="ConstSheetReceipt" xml:space="preserve">
-    <value>Receipt</value>
+  <data name="PermissionViewCartResultInfo" xml:space="preserve">
+    <value>55</value>
+  </data>
+  <data name="PermissionViewCustResultInfo" xml:space="preserve">
+    <value>58</value>
+  </data>
+  <data name="PermissionViewExpResultInfo" xml:space="preserve">
+    <value>57</value>
+  </data>
+  <data name="PermissionViewProdResultInfo" xml:space="preserve">
+    <value>54</value>
+  </data>
+  <data name="PermissionViewSuppResultInfo" xml:space="preserve">
+    <value>56</value>
   </data>
 </root>
