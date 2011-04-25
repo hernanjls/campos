@@ -39,6 +39,10 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
+                if (!UserService.AllowToPerform(Resources.PermissionViewCustResultInfo))
+                {
+                    lblResultInfo.Visible = false;
+                }
                 if (_CustomerService == null)
                     _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
                 if (_CommonService == null)

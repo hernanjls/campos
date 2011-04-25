@@ -98,7 +98,11 @@ namespace EzPos.GUIs.Controls
                     UPInLbl.Visible = false;
                     extraPercentageLbl.Visible = false;
                 }
-
+                if (!UserService.AllowToPerform(Resources.PermissionViewProdResultInfo))
+                {
+                    lblResultInfo.Visible = false;
+                    //extraPercentageLbl.Visible = false;
+                }
                 InitializeProductList();
 
                 ThreadStart threadStart = UpdateControlContent;
@@ -1142,5 +1146,10 @@ namespace EzPos.GUIs.Controls
         private delegate void SafeCrossCallBackDelegate();
 
         #endregion
+
+        private void lblResultInfo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

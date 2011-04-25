@@ -42,8 +42,13 @@ namespace EzPos.GUIs.Controls
             if (_CustomerService == null)
                 _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
 
+
             try
             {
+                if (!UserService.AllowToPerform(Resources.PermissionViewCartResultInfo))
+                {
+                    lblResultInfo.Visible = false;
+                }
                 if (_CustomerService == null)
                     _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
 

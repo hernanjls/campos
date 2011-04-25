@@ -264,6 +264,20 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
+                if (!UserService.AllowToPerform(Resources.PermissionByDatesReport))
+                    if (!((dtpStartDate.Value == DateTime.Today) && (dtpStartDate.Value == DateTime.Today)))
+                    {
+                        const string briefMsg = "សិទ្ធមើល របាយការណ៏តាមថ្ងៃ";
+                        var detailMsg = Resources.MsgUserPermissionDeny;
+                        using (var frmMessageBox = new FrmExtendedMessageBox())
+                        {
+                            frmMessageBox.BriefMsgStr = briefMsg;
+                            frmMessageBox.DetailMsgStr = detailMsg;
+                            frmMessageBox.IsCanceledOnly = true;
+                            frmMessageBox.ShowDialog(this);
+                            return;
+                        }
+                    }
                 crvReport.BringToFront();
                 if (rdbSale.Checked)
                     RefreshReportSale();

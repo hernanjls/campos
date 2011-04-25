@@ -421,6 +421,7 @@ namespace EzPos.GUIs.Controls
             this.lblResultInfo.Name = "lblResultInfo";
             this.lblResultInfo.Size = new System.Drawing.Size(768, 30);
             this.lblResultInfo.TabIndex = 12;
+            this.lblResultInfo.Click += new System.EventHandler(this.lblResultInfo_Click);
             // 
             // chbInstockOnly
             // 
@@ -589,33 +590,33 @@ namespace EzPos.GUIs.Controls
             this.dgvProduct.ColumnHeadersHeight = 40;
             this.dgvProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvProduct.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-                                                                                               this.PrintCheck,
-                                                                                               this.PublicQty,
-                                                                                               this.ProductPic,
-                                                                                               this.DisplayName,
-                                                                                               this.Description,
-                                                                                               this.QtyInStock,
-                                                                                               this.UnitPriceOut,
-                                                                                               this.DiscountPercentage,
-                                                                                               this.ProductID,
-                                                                                               this.PhotoPath,
-                                                                                               this.UnitPriceIn,
-                                                                                               this.CategoryID,
-                                                                                               this.CategoryStr,
-                                                                                               this.MarkID,
-                                                                                               this.MarkStr,
-                                                                                               this.ColorID,
-                                                                                               this.ColorStr,
-                                                                                               this.SkinID,
-                                                                                               this.SkinStr,
-                                                                                               this.SizeID,
-                                                                                               this.SizeStr,
-                                                                                               this.ProductNameCol,
-                                                                                               this.ProductCode,
-                                                                                               this.QtySold,
-                                                                                               this.ExtraPercentage,
-                                                                                               this.LastUpdate,
-                                                                                               this.ForeignCode});
+            this.PrintCheck,
+            this.PublicQty,
+            this.ProductPic,
+            this.DisplayName,
+            this.Description,
+            this.QtyInStock,
+            this.UnitPriceOut,
+            this.DiscountPercentage,
+            this.ProductID,
+            this.PhotoPath,
+            this.UnitPriceIn,
+            this.CategoryID,
+            this.CategoryStr,
+            this.MarkID,
+            this.MarkStr,
+            this.ColorID,
+            this.ColorStr,
+            this.SkinID,
+            this.SkinStr,
+            this.SizeID,
+            this.SizeStr,
+            this.ProductNameCol,
+            this.ProductCode,
+            this.QtySold,
+            this.ExtraPercentage,
+            this.LastUpdate,
+            this.ForeignCode});
             this.dgvProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProduct.EnableHeadersVisualStyles = false;
             this.dgvProduct.GridColor = System.Drawing.Color.White;
