@@ -534,7 +534,7 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to receipt.xlsx.
+        ///   Looks up a localized string similar to d:\\report.
         /// </summary>
         internal static string ConstReceiptExcelFile {
             get {
@@ -642,7 +642,7 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Receipt.
+        ///   Looks up a localized string similar to 2.
         /// </summary>
         internal static string ConstSheetReceipt {
             get {
@@ -1634,6 +1634,15 @@ namespace EzPos.Properties {
         internal static string PermissionViewSuppResultInfo {
             get {
                 return ResourceManager.GetString("PermissionViewSuppResultInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 60.
+        /// </summary>
+        internal static string PermissionViewUserResultInfo {
+            get {
+                return ResourceManager.GetString("PermissionViewUserResultInfo", resourceCulture);
             }
         }
         
