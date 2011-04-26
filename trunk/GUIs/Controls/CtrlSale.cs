@@ -757,7 +757,7 @@ namespace EzPos.GUIs.Controls
                 var fileName = Resources.ConstReceiptExcelFile;
                 printReceipt.PrintReceiptHandler(
                     Application.StartupPath + @"\" + fileName,
-                    string.Empty);                
+                    string.Empty);              
             }
             else
             {
