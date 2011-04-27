@@ -266,7 +266,7 @@ namespace EzPos.GUIs.Controls
             {
                 if (!UserService.AllowToPerform(Resources.PermissionByDatesReport))
                 {
-                    if (!((dtpStartDate.Value == DateTime.Today) && (dtpStartDate.Value == DateTime.Today)))
+                    if ((!dtpStartDate.Value.Date.Equals(DateTime.Today)) || (!dtpStopDate.Value.Date.Equals(DateTime.Today)))
                     {
                         const string briefMsg = "សិទ្ធមើល របាយការណ៏តាមថ្ងៃ";
                         var detailMsg = Resources.MsgUserPermissionDeny;
