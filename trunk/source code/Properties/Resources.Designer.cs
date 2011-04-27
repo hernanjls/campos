@@ -444,6 +444,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to barcode.xlsx.
+        /// </summary>
+        internal static string ConstBarcodeExcelFile {
+            get {
+                return ResourceManager.GetString("ConstBarcodeExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Template 1.
         /// </summary>
         internal static string ConstBarCodeTemplate1 {
@@ -534,7 +543,7 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to d:\\report.
+        ///   Looks up a localized string similar to receipt.xlsx.
         /// </summary>
         internal static string ConstReceiptExcelFile {
             get {
@@ -624,6 +633,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        internal static string ConstSheetBarcode {
+            get {
+                return ResourceManager.GetString("ConstSheetBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Income Statement.
         /// </summary>
         internal static string ConstSheetIncomeStatement {
@@ -642,7 +660,7 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.
+        ///   Looks up a localized string similar to Receipt.
         /// </summary>
         internal static string ConstSheetReceipt {
             get {
@@ -1634,15 +1652,6 @@ namespace EzPos.Properties {
         internal static string PermissionViewSuppResultInfo {
             get {
                 return ResourceManager.GetString("PermissionViewSuppResultInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 60.
-        /// </summary>
-        internal static string PermissionViewUserResultInfo {
-            get {
-                return ResourceManager.GetString("PermissionViewUserResultInfo", resourceCulture);
             }
         }
         

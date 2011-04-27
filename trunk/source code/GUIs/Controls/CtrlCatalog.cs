@@ -494,6 +494,13 @@ namespace EzPos.GUIs.Controls
                     barCodeTemplate = Resources.ConstBarCodeTemplate1;
 
                 PrintBarCode.InializePrinting(_barCodeList, barCodeTemplate);
+                //var fileName = Resources.ConstBarcodeExcelFile;
+                //var printBarCode = new PrintBarCode();
+                //printBarCode.PrintBarcodeHandler(
+                //    Application.StartupPath + @"\" + fileName,
+                //    string.Empty,
+                //    _barCodeList);
+
                 SetFocusToProductList();
             }
             catch (Exception exception)
@@ -1146,10 +1153,5 @@ namespace EzPos.GUIs.Controls
         private delegate void SafeCrossCallBackDelegate();
 
         #endregion
-
-        private void lblResultInfo_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

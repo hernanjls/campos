@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Windows.Forms;
 using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Utility;
+using Microsoft.Office.Interop.Excel;
+using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
+using Font = System.Drawing.Font;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace EzPos.GUIs.Forms
 {
@@ -516,8 +521,8 @@ namespace EzPos.GUIs.Forms
                     5 +
                     Int32.Parse(Math.Round(e.Graphics.MeasureString(printStr, fontBarCode).Height, 0).ToString()) / 2;
 
-                //var fontDisplayName = new Font("Arial", 6, FontStyle.Regular);
-                var fontDisplayName = new Font("Khmer OS", 6, FontStyle.Regular);
+                var fontDisplayName = new Font("Arial", 6, FontStyle.Regular);
+                //var fontDisplayName = new Font("Khmer OS", 6, FontStyle.Regular);
                 printStr = barCode.Description;
                 e.Graphics.DrawString(
                     printStr,
@@ -618,6 +623,122 @@ namespace EzPos.GUIs.Forms
                     MessageBoxButtons.OK, 
                     MessageBoxIcon.Error);
             }
+        }
+
+        public void PrintBarcodeHandler(
+            string fileName, 
+            string protectedPassword,
+            IEnumerable<BarCode> barCodeList)
+        {
+            var excelApplication = new ExcelApplication{ Visible = true };
+            try
+            {
+                //Open workbook
+                var workBook = excelApplication.Workbooks.Open(
+                    fileName,
+                    0,
+                    false,
+                    5,
+                    protectedPassword,
+                    string.Empty,
+                    false,
+                    XlPlatform.xlWindows,
+                    string.Empty,
+                    true,
+                    false,
+                    0,
+                    true,
+                    false,
+                    false);
+
+                //Invoice content
+                var workSheet = (Worksheet)workBook.Worksheets[Resources.ConstSheetBarcode];
+
+                var rowIndex = 1;
+                var counter = 0;
+                foreach (var barCode in barCodeList.Where(barCode => barCode != null))
+                {                    
+                    //Top left
+                    var columName = ((char) (65 + (counter * 3))).ToString();
+                    var excelRange = workSheet.get_Range(columName + rowIndex, columName + rowIndex);                    
+                    excelRange.Select();
+                    excelRange.HorizontalAlignment = XlHAlign.xlHAlignLeft;
+                    excelRange.Value2 = barCode.Description;
+
+                    //Top right
+                    columName = ((char)(65 + (counter * 3) + 2)).ToString();
+                    excelRange = workSheet.get_Range(columName + rowIndex, columName + rowIndex);
+                    excelRange.Select();
+                    excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                    excelRange.Value2 = string.Empty;
+
+                    //Barcode
+                    //columName = ((char)(65 + (counter * 3))).ToString();
+                    excelRange = workSheet.get_Range(
+                        ((char)(65 + (counter * 3))).ToString() + (rowIndex + 1),
+                        ((char)(65 + (counter * 3) + 2)).ToString() + (rowIndex + 1));
+                    excelRange.Select();
+                    excelRange.Font.Name = "Free 3 of 9 Extended";
+                    excelRange.Font.Size = 24;
+                    excelRange.Merge(true);
+                    excelRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
+                    excelRange.Value2 = "*" + barCode.BarCodeValue + "*"; 
+
+                    //Bottom left
+                    columName = ((char)(65 + (counter * 3))).ToString();
+                    excelRange = workSheet.get_Range(columName + (rowIndex + 2), columName + (rowIndex + 2));
+                    excelRange.Select();
+                    excelRange.HorizontalAlignment = XlHAlign.xlHAlignLeft;
+                    excelRange.Value2 = "'" + barCode.BarCodeValue;
+
+                    //Bottom right
+                    columName = ((char)(65 + (counter * 3) + 2)).ToString();
+                    var unitPrice = barCode.UnitPrice;
+                    unitPrice = unitPrice.Replace(" ", "");
+                    unitPrice = unitPrice.Replace(",", "");
+
+                    excelRange = workSheet.get_Range(columName + (rowIndex + 2), columName + (rowIndex + 2));
+                    excelRange.Select();
+                    excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                    excelRange.Value2 = unitPrice;
+
+                    counter += 1;
+                    if (counter >= 5)
+                    {
+                        counter = 0;
+                        rowIndex += 3;
+                    }
+
+                    //Print workbook
+                    //workBook.PrintOut(
+                    //    1,
+                    //    1,
+                    //    1,
+                    //    false,
+                    //    AppContext.BarcodePrinter,
+                    //    false,
+                    //    false,
+                    //    string.Empty);
+                    //workBook.PrintPreview(true);
+
+                    //Close workbook
+                    //workBook.Close(
+                    //    false,
+                    //    fileName,
+                    //    0); 
+
+                    excelRange = workSheet.get_Range("A1", "A1");
+                    excelRange.Select();
+                }
+            }
+            catch(Exception)
+            {
+                excelApplication.Workbooks.Close();
+            }
+            //finally
+            //{
+            //    excelApplication.Workbooks.Close();
+            //}            
         }
     }
 }

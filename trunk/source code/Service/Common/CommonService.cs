@@ -316,15 +316,15 @@ namespace EzPos.Service.Common
                     DoSynchronizePhoto(remoteDirectoryInfo.FullName, localDirectoryInfo.FullName);
                 }
 
-                foreach (FileInfo remoteFileInfo in directoryInfo.GetFiles())
+                foreach (var remoteFileInfo in directoryInfo.GetFiles())
                 {
-                    if (remoteFileInfo.Exists)
-                    {
-                        var localFileInfo =
-                            new FileInfo(destinationPath + @"\" + remoteFileInfo.Name);
-                        if (!localFileInfo.Exists)
-                            remoteFileInfo.CopyTo(localFileInfo.FullName);
-                    }
+                    if (!remoteFileInfo.Exists) 
+                        continue;
+
+                    var localFileInfo =
+                        new FileInfo(destinationPath + @"\" + remoteFileInfo.Name);
+                    if (!localFileInfo.Exists)
+                        remoteFileInfo.CopyTo(localFileInfo.FullName);
                 }
             }
         }
@@ -332,7 +332,7 @@ namespace EzPos.Service.Common
         //Exchange rate
         public ExchangeRate GetExchangeRate()
         {
-            IList exchangeRateList = _commonDataAccess.GetExchangeRate();
+            var exchangeRateList = _commonDataAccess.GetExchangeRate();
             if (exchangeRateList != null)
                 if (exchangeRateList.Count != 0)
                     return (ExchangeRate) exchangeRateList[0];
@@ -404,6 +404,6 @@ namespace EzPos.Service.Common
                         fileInfo.Delete();
                 }
             }
-        }
+        }        
     }
 }

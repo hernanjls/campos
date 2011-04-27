@@ -38,5 +38,7 @@ namespace EzPos.Model
         public static string IssueReceipt { get; set; }
 
         public static string ReceiptPrinter { get; set; }
+
+        public static string BarcodePrinter { get; set; }
     }
 }

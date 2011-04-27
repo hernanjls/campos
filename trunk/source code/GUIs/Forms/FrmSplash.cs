@@ -5,20 +5,19 @@ using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
-using System.Globalization;
 
 namespace EzPos.GUIs.Forms
 {
     public partial class FrmSplash : Form
     {
         public static ApplicationContext ApplicationContext;
-        private CommonService CommonService;
-        private CustomerService CustomerService;
-        private SupplierService SupplierService;
-        private ExpenseService ExpenseService;
-        private ProductService ProductService;
-        private SaleOrderService SaleOrderService;
-        private UserService UserService;
+        private CommonService _commonService;
+        private CustomerService _customerService;
+        private SupplierService _supplierService;
+        private ExpenseService _expenseService;
+        private ProductService _productService;
+        private SaleOrderService _saleOrderService;
+        private UserService _userService;
 
         public FrmSplash()
         {
@@ -75,28 +74,28 @@ namespace EzPos.GUIs.Forms
 
                     //Loading Service
                     pgbService.Value += 15;
-                    CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                    _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
                     pgbService.Value += 15;
-                    SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
+                    _saleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
                     pgbService.Value += 15;
-                    ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
+                    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
                     pgbService.Value += 15;
-                    CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
+                    _customerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
                     pgbService.Value += 15;
-                    SupplierService = ServiceFactory.GenerateServiceInstance().GenerateSupplierService();
+                    _supplierService = ServiceFactory.GenerateServiceInstance().GenerateSupplierService();
                     pgbService.Value += 15;
-                    ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+                    _expenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
                     pgbService.Value += 10;
-                    UserService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
+                    _userService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
 
                     //Connecting to database                    
                     pgbGlobalConfig.Value += 50;
-                    CommonService.InitializeGlobalConfiguration();
+                    _commonService.InitializeGlobalConfiguration();
                     pgbGlobalConfig.Value += 50;
 
                     //Initializing workspace
                     pgbInitialization.Value += 30;
-                    CommonService.InitializeWorkSpace();
+                    _commonService.InitializeWorkSpace();
                     pgbInitialization.Value += 30;
                     if (AppContext.Counter == null)
                     {
@@ -120,7 +119,7 @@ namespace EzPos.GUIs.Forms
 
                     using (var frmLogIn = new FrmLogIn())
                     {
-                        frmLogIn.UserService = UserService;
+                        frmLogIn.UserService = _userService;
                         if (frmLogIn.ShowDialog(this) == DialogResult.OK)
                         {
                             Visible = true;
@@ -128,18 +127,18 @@ namespace EzPos.GUIs.Forms
                             var frmMain = new FrmMain();
                             ApplicationContext.MainForm = frmMain;
 
-                            frmMain.CommonService = CommonService;
-                            frmMain.SaleOrderService = SaleOrderService;
-                            frmMain.ProductService = ProductService;
-                            frmMain.CustomerService = CustomerService;
-                            frmMain.SupplierService = SupplierService;
-                            frmMain.ExpenseService = ExpenseService;
-                            frmMain.UserService = UserService;
+                            frmMain.CommonService = _commonService;
+                            frmMain.SaleOrderService = _saleOrderService;
+                            frmMain.ProductService = _productService;
+                            frmMain.CustomerService = _customerService;
+                            frmMain.SupplierService = _supplierService;
+                            frmMain.ExpenseService = _expenseService;
+                            frmMain.UserService = _userService;
 
-                            CommonService.InitializeCustomizedConfiguration(frmLogIn.User);
+                            _commonService.InitializeCustomizedConfiguration(frmLogIn.User);
                             pgbCustomizedConfig.Value += 20;
 
-                            CommonService.InsertOperationLog(
+                            _commonService.InsertOperationLog(
                                 AppContext.User.UserID,
                                 int.Parse(Resources.OperationLogIn));
 
@@ -193,13 +192,13 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private static void PreLoadCrystalReport()
-        {
-            //var csrEmpty = new CsrEmpty();
-            ////csrEmpty.SetDataSource(null);
-            //var crvReport = new CrystalReportViewer();
-            //crvReport.ReportSource = csrEmpty;            
-        }
+        //private static void PreLoadCrystalReport()
+        //{
+        //    //var csrEmpty = new CsrEmpty();
+        //    ////csrEmpty.SetDataSource(null);
+        //    //var crvReport = new CrystalReportViewer();
+        //    //crvReport.ReportSource = csrEmpty;            
+        //}
 
         #region Nested type: SafeCrossCallBackDelegate
 
