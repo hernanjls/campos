@@ -11,7 +11,8 @@
         }
     }
 }
-namespace EzPos.DtsModelsTableAdapters {
+namespace EzPos.GUIs.DataSets.DtsModelsTableAdapters
+{
     
     
     public partial class Function1TableAdapter {
