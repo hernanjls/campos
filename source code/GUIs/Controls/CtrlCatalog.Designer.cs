@@ -421,7 +421,6 @@ namespace EzPos.GUIs.Controls
             this.lblResultInfo.Name = "lblResultInfo";
             this.lblResultInfo.Size = new System.Drawing.Size(768, 30);
             this.lblResultInfo.TabIndex = 12;
-            this.lblResultInfo.Click += new System.EventHandler(this.lblResultInfo_Click);
             // 
             // chbInstockOnly
             // 

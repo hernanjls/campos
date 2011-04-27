@@ -266,8 +266,7 @@ namespace EzPos.GUIs.Controls
             {
                 if (!UserService.AllowToPerform(Resources.PermissionByDatesReport))
                 {
-                    if (!((dtpStartDate.Value.Date == DateTime.Today.Date)
-                        && (dtpStopDate.Value.Date == DateTime.Today.Date)))
+                    if (!((dtpStartDate.Value == DateTime.Today) && (dtpStartDate.Value == DateTime.Today)))
                     {
                         const string briefMsg = "សិទ្ធមើល របាយការណ៏តាមថ្ងៃ";
                         var detailMsg = Resources.MsgUserPermissionDeny;
@@ -279,8 +278,9 @@ namespace EzPos.GUIs.Controls
                             frmMessageBox.ShowDialog(this);
                             return;
                         }
-                    }
+                    }                    
                 }
+
                 crvReport.BringToFront();
                 if (rdbSale.Checked)
                     RefreshReportSale();

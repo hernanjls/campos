@@ -753,11 +753,11 @@ namespace EzPos.GUIs.Controls
                     BindingListObj = _saleItemBindingList
                 };
 
-                //printReceipt.InializeReceiptPrinting();                
-                var fileName = Resources.ConstReceiptExcelFile;
-                printReceipt.PrintReceiptHandler(
-                    Application.StartupPath + @"\" + fileName,
-                    string.Empty);              
+                printReceipt.InializeReceiptPrinting();                
+                //var fileName = Resources.ConstReceiptExcelFile;
+                //printReceipt.PrintReceiptHandler(
+                //    Application.StartupPath + @"\" + fileName,
+                //    string.Empty);                
             }
             else
             {
