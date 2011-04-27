@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EZPOSInstaller", "EZPOSInstaller.vdproj", "{651CBA02-F931-4F29-AC5C-3090D0B7CBAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{651CBA02-F931-4F29-AC5C-3090D0B7CBAE}.Debug|Default.ActiveCfg = Debug
+		{651CBA02-F931-4F29-AC5C-3090D0B7CBAE}.Debug|Default.Build.0 = Debug
+		{651CBA02-F931-4F29-AC5C-3090D0B7CBAE}.Release|Default.ActiveCfg = Release
+		{651CBA02-F931-4F29-AC5C-3090D0B7CBAE}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
