@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using EzPos.DataAccess;
 using EzPos.Model;
 using EzPos.Properties;
@@ -9,36 +10,36 @@ namespace EzPos.Service
 {
     public class DepositService
     {
-        private readonly DepositDataAccess _DepositDataAccess;
+        private readonly DepositDataAccess _depositDataAccess;
 
         public DepositService(DepositDataAccess depositDataAccess)
         {
-            _DepositDataAccess = depositDataAccess;
+            _depositDataAccess = depositDataAccess;
         }
 
         public virtual IList GetDeposits(IList searchCriteria)
         {
             if (searchCriteria == null)
-                throw new ArgumentNullException("searchCriteria", "Search Criteria");
+                throw new ArgumentNullException("searchCriteria", Resources.ConstSearchCriteria);
 
-            return _DepositDataAccess.GetDeposits(searchCriteria);
+            return _depositDataAccess.GetDeposits(searchCriteria);
         }
 
         public virtual void UpdateDeposit(Deposit deposit)
         {
-            _DepositDataAccess.UpdateDeposit(deposit);
+            _depositDataAccess.UpdateDeposit(deposit);
         }
 
         public virtual void InsertDeposit(Deposit deposit)
         {
             if (deposit == null)
-                throw new ArgumentNullException("deposit", "Deposit");
+                throw new ArgumentNullException("deposit", Resources.ConstDeposit);
 
             deposit.UpdateDate = DateTime.Now;
-            _DepositDataAccess.InsertDeposit(deposit);
+            _depositDataAccess.InsertDeposit(deposit);
             deposit.DepositNumber = "D-00" + deposit.DepositId;
 
-            _DepositDataAccess.UpdateDeposit(deposit);
+            _depositDataAccess.UpdateDeposit(deposit);
 
             var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
             var payment = 
@@ -63,7 +64,7 @@ namespace EzPos.Service
             bool isReturned)
         {
             if (depositItemList == null)
-                throw new ArgumentNullException("depositItemList", "Deposit item");
+                throw new ArgumentNullException("depositItemList", Resources.ConstDepositItem);
 
             var factor = 1;
             if (isReturned)
@@ -128,7 +129,7 @@ namespace EzPos.Service
                         continue;
 
                     depositItem.DepositId = deposit.DepositId;
-                    _DepositDataAccess.InsertDepositItem(depositItem);
+                    _depositDataAccess.InsertDepositItem(depositItem);
                 }
             }
             return deposit;
@@ -136,7 +137,7 @@ namespace EzPos.Service
 
         public virtual IList GetDepositItems(int depositId)
         {
-            return _DepositDataAccess.GetDepositItems(depositId);
+            return _depositDataAccess.GetDepositItems(depositId);
         }
 
         public IList GetDepositItems(IList saleItemList)
@@ -171,7 +172,7 @@ namespace EzPos.Service
         public IList GetDepositHistories(IList searchCriteria, bool headerOnly)
         {
             var depositReportList = new List<DepositReport>();
-            var depositList = _DepositDataAccess.GetDepositHistories(searchCriteria);
+            var depositList = _depositDataAccess.GetDepositHistories(searchCriteria);
             var depositId = 0;
             foreach (Object[] anObject in depositList)
             {
@@ -182,7 +183,7 @@ namespace EzPos.Service
                 var customer = anObject[1] as Customer;
                 var user = anObject[2] as User;
                 var depositItem = anObject[3] as DepositItem;
-                var product = anObject[4] as Product;
+                var product = anObject[4] as Model.Product;
 
                 if ((deposit == null) || (customer == null) || (user == null))
                     continue;
@@ -245,67 +246,12 @@ namespace EzPos.Service
 
         public IList GetSaleHistories(IList depositReportList)
         {
-            var saleOrderReportList = new List<SaleOrderReport>();
-            foreach (DepositReport depositReport in depositReportList)
-            {
-                if(depositReport == null)
-                    continue;
-
-                var saleOrderReport = new SaleOrderReport();
-                saleOrderReport.AmountPaidInt = depositReport.AmountPaidInt;
-                saleOrderReport.AmountPaidRiel = depositReport.AmountPaidRiel;
-                saleOrderReport.AmountReturnInt = depositReport.AmountReturnInt;
-                saleOrderReport.AmountReturnRiel = depositReport.AmountReturnRiel;
-                saleOrderReport.AmountSoldInt = depositReport.AmountSoldInt;
-                saleOrderReport.CardNumber = depositReport.CardNumber;
-                saleOrderReport.CashierName = depositReport.CashierName;
-                //saleOrderReport.CustomerID = depositReport.C
-                saleOrderReport.CustomerName = depositReport.CustomerName;
-                //saleOrderReport.DepositAmount = 0;
-                saleOrderReport.Discount = depositReport.Discount;
-                //saleOrderReport.DiscountTypeID = depositReport.D
-                saleOrderReport.ExchangeRate = depositReport.ExchangeRate;
-                saleOrderReport.ProductID = depositReport.ProductId;
-                saleOrderReport.ProductName = depositReport.ProductName;
-                saleOrderReport.QtySold = depositReport.QtySold;
-                saleOrderReport.ReferenceNum = depositReport.ReferenceNum;
-                //saleOrderReport.ReportHeader = 
-                //saleOrderReport.ReportID = depositReport.
-                //saleOrderReport.ReportTypeStr = 
-                saleOrderReport.SaleItemID = depositReport.DepositItemId;
-                saleOrderReport.SaleOrderDate = (DateTime)depositReport.DepositDate;
-                saleOrderReport.SaleOrderNumber = depositReport.DepositNumber;
-                saleOrderReport.SalesOrderId = depositReport.DepositId;
-                saleOrderReport.SubTotal = depositReport.SubTotal;
-                saleOrderReport.TotalDiscount = depositReport.TotalDiscount;
-                saleOrderReport.UnitPriceIn = depositReport.UnitPriceIn;
-                saleOrderReport.UnitPriceOut = depositReport.UnitPriceOut;
-
-                //if (saleItem.FKProduct != null)
-                //{
-                //    if (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode))
-                //    {
-                //        var productCode =
-                //            !string.IsNullOrEmpty(depositReport..ForeignCode) ?
-                //            saleItem.FKProduct.ForeignCode :
-                //            string.Empty;
-                //        productCode = productCode.Replace(",", string.Empty);
-                //        productCode = productCode.Replace(" ", string.Empty);
-                //        saleOrderReport.ProductCode =
-                //            productCode +
-                //            " (" +
-                //            (string.IsNullOrEmpty(saleItem.FKProduct.ProductCode) ?
-                //            saleItem.FKProduct.ProductCode :
-                //            string.Empty) +
-                //            ")";
-                //        saleOrderReport.ProductName = depositReport.ProductName + " (" + productCode + ")";
-                //    }
-                //}
-
-                saleOrderReportList.Add(saleOrderReport);
-            }
-
-            return saleOrderReportList;
+            return (from DepositReport depositReport in depositReportList
+                    where depositReport != null
+                    select new SaleOrderReport
+                               {
+                                   AmountPaidInt = depositReport.AmountPaidInt, AmountPaidRiel = depositReport.AmountPaidRiel, AmountReturnInt = depositReport.AmountReturnInt, AmountReturnRiel = depositReport.AmountReturnRiel, AmountSoldInt = depositReport.AmountSoldInt, CardNumber = depositReport.CardNumber, CashierName = depositReport.CashierName, CustomerName = depositReport.CustomerName, Discount = depositReport.Discount, ExchangeRate = depositReport.ExchangeRate, ProductID = depositReport.ProductId, ProductName = depositReport.ProductName, QtySold = depositReport.QtySold, ReferenceNum = depositReport.ReferenceNum, SaleItemID = depositReport.DepositItemId, SaleOrderDate = (DateTime) depositReport.DepositDate, SaleOrderNumber = depositReport.DepositNumber, SalesOrderId = depositReport.DepositId, SubTotal = depositReport.SubTotal, TotalDiscount = depositReport.TotalDiscount, UnitPriceIn = depositReport.UnitPriceIn, UnitPriceOut = depositReport.UnitPriceOut
+                               }).ToList();
         }
     }
 }

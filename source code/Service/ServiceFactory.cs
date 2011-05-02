@@ -2,6 +2,7 @@ using System;
 using System.Configuration;
 using EzPos.Service.Common;
 using EzPos.Service.Payment;
+using EzPos.Service.Product;
 
 namespace EzPos.Service
 {

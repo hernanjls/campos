@@ -18,7 +18,34 @@ namespace EzPos.Model
 
         public string ProductName { get; set; }
 
-        public string Description { get; set; }
+        //private string _description;
+
+        public string Description
+        {
+            get;
+            set;
+            //get
+            //{
+            //    if(string.IsNullOrEmpty(_description))
+            //    {
+            //        var displayName =
+            //            ProductName + "\r" +
+            //            "Size: " + SizeStr + "\r" +
+            //            "Code: " + ProductCode;
+
+            //        if (!string.IsNullOrEmpty(ForeignCode))
+            //            displayName += " (" + ForeignCode + ")";
+
+            //        return displayName;
+            //    }
+
+            //    return _description; 
+            //}
+            //set
+            //{
+            //    _description = value;
+            //}
+        }
 
         public int CategoryID { get; set; }
 
@@ -54,7 +81,27 @@ namespace EzPos.Model
 
         public float QtySold { get; set; }
 
-        public string DisplayName { get; set; }
+        private string _displayName;
+        public string DisplayName
+        {
+            get
+            {
+                _displayName = string.IsNullOrEmpty(Description) ? ProductName : Description;
+                _displayName =
+                    _displayName + "\r" +
+                    "Size: " + SizeStr + "\r" +
+                    "Code: " + ProductCode;
+
+                if (!string.IsNullOrEmpty(ForeignCode))
+                    _displayName += " (" + ForeignCode + ")";
+
+                return _displayName;
+            }
+            set
+            {
+                _displayName = value;
+            }
+        }
 
         public object ProductPic { get; set; }
 

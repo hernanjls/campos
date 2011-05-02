@@ -5,6 +5,7 @@ using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Product;
 
 namespace EzPos.GUIs.Forms
 {

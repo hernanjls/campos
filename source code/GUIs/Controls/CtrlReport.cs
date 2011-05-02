@@ -12,6 +12,7 @@ using EzPos.GUIs.DataSets;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using EzPos.Service.Common;
+using EzPos.Service.Product;
 using Microsoft.Office.Interop.Excel;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
 using System.Runtime.InteropServices;

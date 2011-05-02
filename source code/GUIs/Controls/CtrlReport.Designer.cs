@@ -1,5 +1,6 @@
 ﻿
 using EzPos.Service;
+using EzPos.Service.Product;
 
 namespace EzPos.GUIs.Controls
 {
