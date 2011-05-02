@@ -95,8 +95,8 @@ namespace EzPos.GUIs.Forms
             _printDocument.DocumentName = AppContext.ShopName;
             _printDocument.PrintPage += PrintDocumentPrintPage;
             PrintPreviewDialog.Document = _printDocument;
-            PrintPreviewDialog.ShowDialog();
-            //_printDocument.Print();
+            //PrintPreviewDialog.ShowDialog();
+            _printDocument.Print();
             _printDocument.PrintPage -= PrintDocumentPrintPage;
         }
 
@@ -195,19 +195,28 @@ namespace EzPos.GUIs.Forms
             foreach (var saleItem in _bindingListObj.Where(saleItem => saleItem.ProductID != 0))
             {
                 //Name
-                //textToPrint = saleItem.ProductName;
-                //e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, 0, posY);
-
-                fontInUsed = new Font("Khmer OS Regular", 60, FontStyle.Bold);
-                textToPrint = "ផលិតផល​របស់​ហាង​អ៊ីហ្សីប៉ូស​";
-                TextRenderer.DrawText(
-                    e.Graphics,
-                    textToPrint,
-                    fontInUsed,
-                    new Point(0, (posY * 6) - 10),
-                    SystemColors.WindowText,
-                    Color.Transparent,
-                    TextFormatFlags.Default);
+                fontInUsed = new Font("Khmer OS Regular", 20, FontStyle.Bold);
+                textToPrint = saleItem.FKProduct.Description;
+                if (string.IsNullOrEmpty(textToPrint))
+                {
+                    textToPrint = saleItem.ProductName;
+                    fontInUsed = new Font("Arial", 8, FontStyle.Regular);
+                    e.Graphics.DrawString(textToPrint, fontInUsed, Brushes.Black, 0, posY);
+                }   
+                else
+                {
+                    var localPosY = posY * 1.77;
+                    localPosY = Math.Round(localPosY, 0);
+                    localPosY += 2;
+                    TextRenderer.DrawText(
+                        e.Graphics,
+                        textToPrint,
+                        fontInUsed,
+                        new Point(0, Int32.Parse(localPosY.ToString())),
+                        SystemColors.WindowText,
+                        Color.Transparent,
+                        TextFormatFlags.Default);                    
+                }
 
                 fontInUsed = new Font("Arial", 8, FontStyle.Regular);
                 //Qty

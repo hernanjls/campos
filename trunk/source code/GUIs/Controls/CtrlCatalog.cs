@@ -13,6 +13,7 @@ using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Product;
 using EzPos.Utility;
 
 namespace EzPos.GUIs.Controls
@@ -365,7 +366,7 @@ namespace EzPos.GUIs.Controls
             SetFocusToProductList();
         }
 
-        private void IListToBindingList(IList productList)
+        private void IListToBindingList(IEnumerable productList)
         {
             if (productList == null)
                 throw new ArgumentNullException("productList", Resources.MsgInvalidProduct);
@@ -376,13 +377,11 @@ namespace EzPos.GUIs.Controls
             try
             {
                 _productList.Clear();
-                foreach (Product product in productList)
+                foreach (var product in productList.Cast<Product>().Where(product => product != null))
                 {
-                    foreach (var barCode in _barCodeList)
+                    var localProduct = product;
+                    foreach (var barCode in _barCodeList.Where(barCode => localProduct.ProductCode == barCode.BarCodeValue))
                     {
-                        if (product.ProductCode != barCode.BarCodeValue) 
-                            continue;
-
                         product.PrintCheck = true;
                         product.PublicQty = barCode.AdditionalStr;
                         break;
@@ -493,13 +492,17 @@ namespace EzPos.GUIs.Controls
                 if (string.IsNullOrEmpty(barCodeTemplate))
                     barCodeTemplate = Resources.ConstBarCodeTemplate1;
 
-                PrintBarCode.InializePrinting(_barCodeList, barCodeTemplate);
-                //var fileName = Resources.ConstBarcodeExcelFile;
-                //var printBarCode = new PrintBarCode();
-                //printBarCode.PrintBarcodeHandler(
-                //    Application.StartupPath + @"\" + fileName,
-                //    string.Empty,
-                //    _barCodeList);
+                if (!Resources.ConstBarCodeTemplate6.Equals(barCodeTemplate))
+                    PrintBarCode.InializePrinting(_barCodeList, barCodeTemplate);
+                else
+                {
+                    var fileName = Resources.ConstBarcodeExcelFile;
+                    var printBarCode = new PrintBarCode();
+                    printBarCode.PrintBarcodeHandler(
+                        Application.StartupPath + @"\" + fileName,
+                        string.Empty,
+                        _barCodeList);
+                }
 
                 SetFocusToProductList();
             }
@@ -542,10 +545,10 @@ namespace EzPos.GUIs.Controls
             if ((_productList.Count == 0) || (dgvProduct.CurrentRow == null))
             {
                 ptbProduct.Image = Resources.NoImage;
-                UPInLbl.Text = "$ 0.000";
-                extraPercentageLbl.Text = "0 %";
-                discountLbl.Text = "0 %";
-                UPOutLbl.Text = "$ 0.000";
+                UPInLbl.Text = Resources.ConstAmountZeroDollarThreeDigits;
+                extraPercentageLbl.Text = Resources.ConstZeroPercent;
+                discountLbl.Text = Resources.ConstZeroPercent;
+                UPOutLbl.Text = Resources.ConstAmountZeroDollarThreeDigits;
                 return;
             }
 
@@ -557,10 +560,10 @@ namespace EzPos.GUIs.Controls
                 ptbProduct.Image = Resources.NoImage;
             else
                 ptbProduct.ImageLocation = product.PhotoPath;
-            UPInLbl.Text = "$ " + product.UnitPriceIn.ToString("N3", AppContext.CultureInfo);
-            extraPercentageLbl.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo) + " %";
-            discountLbl.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo) + " %";
-            UPOutLbl.Text = "$ " + product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
+            UPInLbl.Text = Resources.ConstPrefixDollar + product.UnitPriceIn.ToString("N3", AppContext.CultureInfo);
+            extraPercentageLbl.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo) + Resources.ConstSuffixPercentage;
+            discountLbl.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo) + Resources.ConstSuffixPercentage;
+            UPOutLbl.Text = Resources.ConstPrefixDollar + product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
 
             UpdatePrintProduct(product);
         }

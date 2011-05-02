@@ -12,6 +12,7 @@ using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Product;
 using EzPos.Utility;
 
 namespace EzPos.GUIs.Controls
@@ -184,11 +185,13 @@ namespace EzPos.GUIs.Controls
                 new SaleItem
                 {
                     ProductName = product.ProductName,
-                    ProductDisplayName = 
-                        (product.ProductName + "\r" + product.ProductCode),
                     ProductID = product.ProductID,
                     QtySold = qtySold,
-                    UnitPriceIn = product.UnitPriceIn
+                    UnitPriceIn = product.UnitPriceIn,
+                    ProductDisplayName = 
+                        string.IsNullOrEmpty(product.Description) ? 
+                        product.ProductName + "\r" + product.ProductCode : 
+                        product.Description + "\r" + product.ProductCode
                 };
 
             if (!string.IsNullOrEmpty(product.ForeignCode))
@@ -536,7 +539,7 @@ namespace EzPos.GUIs.Controls
             ResetProductInfo();
 //            ResetProductPrice();
             ResetCustomerInfo();
-            //DoActivateControls(true);
+            DoActivateControls(true);
             //ReturnHandler(_returnEnabled = false);
             ScanFocusHandler();
         }

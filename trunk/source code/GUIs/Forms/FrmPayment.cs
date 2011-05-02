@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using EzPos.Model;
@@ -14,10 +15,10 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmPayment : Form
     {
-        private BindingList<Customer> CustomerList;
-        private BindingList<DiscountCard> DiscountCardList;
-        private IList DiscountTypeList;
-        private float ExchangeRate;
+        private BindingList<Customer> _customerList;
+        private BindingList<DiscountCard> _discountCardList;
+        private IList _discountTypeList;
+        private float _exchangeRate;
 
         public FrmPayment()
         {
@@ -194,19 +195,19 @@ namespace EzPos.GUIs.Forms
                 thread.Start();
 
                 if (AppContext.ExchangeRate != null)
-                    ExchangeRate = AppContext.ExchangeRate.ExchangeValue;
+                    _exchangeRate = AppContext.ExchangeRate.ExchangeValue;
 
-                DiscountCardList = new BindingList<DiscountCard>();
-                cmbDiscountCard.DataSource = DiscountCardList;
+                _discountCardList = new BindingList<DiscountCard>();
+                cmbDiscountCard.DataSource = _discountCardList;
                 cmbDiscountCard.DisplayMember = DiscountCard.CONST_DISCOUNT_CARD_NUMBER;
                 cmbDiscountCard.ValueMember = DiscountCard.CONST_DISCOUNT_CARD_ID;
 
-                CustomerList = new BindingList<Customer>();
-                lsbCustomer.DataSource = CustomerList;
+                _customerList = new BindingList<Customer>();
+                lsbCustomer.DataSource = _customerList;
                 lsbCustomer.DisplayMember = Customer.CONST_CUSTOMER_DISPLAY_NAME;
                 lsbCustomer.ValueMember = Customer.CONST_CUSTOMER_ID;
 
-                txtExchangeRate.Text = ExchangeRate.ToString("N", AppContext.CultureInfo);
+                txtExchangeRate.Text = _exchangeRate.ToString("N", AppContext.CultureInfo);
                 txtCurrentSaleAmount.Text = _TotalAmountInt.ToString("N", AppContext.CultureInfo);
                 CalculateDiscount();
 
@@ -218,7 +219,7 @@ namespace EzPos.GUIs.Forms
                     IList searchCriteria = new List<string> {"CustomerName|Retail customer"};
                     var customerList = _CustomerService.GetCustomers(searchCriteria);
                     foreach (Customer customer in customerList)
-                        CustomerList.Add(customer);
+                        _customerList.Add(customer);
                     //txtSearch.Enabled = false;
                     //lsbCustomer.Enabled = false;
                     //btnNew.Enabled = false;
@@ -263,9 +264,9 @@ namespace EzPos.GUIs.Forms
                 AmountPaidInt = float.Parse(txtAmountPaidUsd.Text);
                 AmountPaidRiel = float.Parse(txtAmountPaidRiel.Text);
 
-                AmountPaidInt += float.Parse(txtAmountPaidRiel.Text)/ExchangeRate;
+                AmountPaidInt += float.Parse(txtAmountPaidRiel.Text)/_exchangeRate;
                 txtAmountReturnUsd.Text = (AmountPaidInt - amountToPay).ToString("N", AppContext.CultureInfo);
-                txtAmountReturnRiel.Text = ((AmountPaidInt - amountToPay)*ExchangeRate).ToString("N",
+                txtAmountReturnRiel.Text = ((AmountPaidInt - amountToPay)*_exchangeRate).ToString("N",
                                                                                                    AppContext.
                                                                                                        CultureInfo);
             }
@@ -302,11 +303,11 @@ namespace EzPos.GUIs.Forms
                 "ទឹកប្រាក់បានទិញ: $" + Customer.PurchasedAmount.ToString("N", AppContext.CultureInfo) + "\n";
             lblCustomerInfo.Text = strCustomerInfo;
 
-            if (DiscountCardList == null)
+            if (_discountCardList == null)
                 return;
-            for (var counter = 0; counter < DiscountCardList.Count; counter++)
+            for (var counter = 0; counter < _discountCardList.Count; counter++)
             {
-                if (Customer.CustomerID != (DiscountCardList[counter]).CustomerID) 
+                if (Customer.CustomerID != (_discountCardList[counter]).CustomerID) 
                     continue;
 
                 cmbDiscountCard.SelectedIndex = counter;
@@ -355,20 +356,20 @@ namespace EzPos.GUIs.Forms
             else
                 totalAmountPurchase = Customer.PurchasedAmount + _TotalAmountInt;
 
-            if (DiscountTypeList == null)
+            if (_discountTypeList == null)
             {
                 CalculateSale("0 %", 0);
                 return;
             }
 
-            if (DiscountTypeList.Count == 0)
+            if (_discountTypeList.Count == 0)
             {
                 CalculateSale("0 %", 0);
                 return;
             }
 
             float discountPercentage = 0;
-            foreach (AppParameter appParameter in DiscountTypeList)
+            foreach (AppParameter appParameter in _discountTypeList)
             {
                 if (appParameter == null) 
                     continue;
@@ -413,9 +414,9 @@ namespace EzPos.GUIs.Forms
                 {
                     try
                     {
-                        CustomerList.Add(frmCustomer.Customer);
+                        _customerList.Add(frmCustomer.Customer);
                         if (frmCustomer.Customer.FKDiscountCard != null)
-                            DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
+                            _discountCardList.Add(frmCustomer.Customer.FKDiscountCard);
 
                         lsbCustomer.SelectedIndex = -1;
                         lsbCustomer.SelectedIndex = lsbCustomer.FindStringExact(frmCustomer.Customer.CustomerName);
@@ -519,14 +520,14 @@ namespace EzPos.GUIs.Forms
                 selectedIndex = lsbCustomer.FindString(givenParam);
                 if (selectedIndex == -1)
                 {
-                    foreach (var customer in CustomerList)
+                    foreach (var customer in _customerList)
                     {
                         if ((customer.CustomerName.ToUpper() != givenParam.ToUpper()) &&
                             (customer.PhoneNumber != givenParam) &&
                             (customer.LocalName != givenParam)) 
                             continue;
 
-                        lsbCustomer.SelectedIndex = CustomerList.IndexOf(customer);
+                        lsbCustomer.SelectedIndex = _customerList.IndexOf(customer);
                         break;
                     }
                 }
@@ -555,12 +556,12 @@ namespace EzPos.GUIs.Forms
                 {
                     foreach (Customer customer in customerList)
                     {
-                        CustomerList.Add(customer);
+                        _customerList.Add(customer);
 
                         var discountCardList =
                             _CustomerService.GetDiscountCardsByCustomer(customer.CustomerID);
                         foreach (DiscountCard discountCard in discountCardList)
-                            DiscountCardList.Add(discountCard);
+                            _discountCardList.Add(discountCard);
                     }
 
                     DoCustomerFetching(givenParam, false);
@@ -610,11 +611,9 @@ namespace EzPos.GUIs.Forms
             }
 
             var counter = -1;
-            foreach (AppParameter appParameter in dCardTypeList)
+            foreach (var appParameter in
+                dCardTypeList.Cast<AppParameter>().Where(appParameter => (!string.IsNullOrEmpty(appParameter.ParameterCode)) && (Customer.PurchasedAmount >= float.Parse(appParameter.ParameterCode, AppContext.CultureInfo))))
             {
-                if (Customer.PurchasedAmount < float.Parse(appParameter.ParameterCode, AppContext.CultureInfo))
-                    continue;
-
                 if (counter == -1)
                     counter = dCardTypeList.IndexOf(appParameter);
                 else if (
@@ -713,7 +712,7 @@ namespace EzPos.GUIs.Forms
 
             txtTotalAmountUsd.Text = currentAmount.ToString("N", AppContext.CultureInfo);
             txtTotalAmountRiel.Text =
-                (ExchangeRate*currentAmount).ToString("N", AppContext.CultureInfo);
+                (_exchangeRate*currentAmount).ToString("N", AppContext.CultureInfo);
             if (Customer == null) 
                 return;
 
@@ -734,12 +733,12 @@ namespace EzPos.GUIs.Forms
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                DiscountTypeList = _CommonService.GetAppParametersByTypeSortByValue(
+                _discountTypeList = _CommonService.GetAppParametersByTypeSortByValue(
                     Int32.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo));
 
-                if (DiscountTypeList.Count != 0)
+                if (_discountTypeList.Count != 0)
                 {
-                    cmbDCountType.DataSource = DiscountTypeList;
+                    cmbDCountType.DataSource = _discountTypeList;
                     cmbDCountType.DisplayMember = AppParameter.CONST_PARAMETER_VALUE;
                     cmbDCountType.ValueMember = AppParameter.CONST_PARAMETER_VALUE;
 
@@ -802,16 +801,16 @@ namespace EzPos.GUIs.Forms
                     {
                         //Remove existing discount card of selected customer
                         if (discountCard != null)
-                            DiscountCardList.Remove(discountCard);
+                            _discountCardList.Remove(discountCard);
                         //Add new discount card of selected customer
                         if (frmCustomer.Customer.FKDiscountCard != null)
-                            DiscountCardList.Add(frmCustomer.Customer.FKDiscountCard);
+                            _discountCardList.Add(frmCustomer.Customer.FKDiscountCard);
 
                         //Customer
                         if (operationStr.Equals(Resources.OperationRequestInsert))
-                            CustomerList.Add(frmCustomer.Customer);
+                            _customerList.Add(frmCustomer.Customer);
                         else
-                            CustomerList[CustomerList.IndexOf(lsbCustomer.SelectedItem as Customer)] =
+                            _customerList[_customerList.IndexOf(lsbCustomer.SelectedItem as Customer)] =
                                 frmCustomer.Customer;
 
                         lsbCustomer.SelectedIndex = -1;

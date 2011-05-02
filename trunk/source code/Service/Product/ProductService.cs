@@ -10,7 +10,7 @@ using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Utility;
 
-namespace EzPos.Service
+namespace EzPos.Service.Product
 {
     /// <summary>
     /// Summary description for ProductService.
@@ -48,7 +48,7 @@ namespace EzPos.Service
             return _productDataAccess.GetAvailableProducts();
         }
 
-        public void ManageProduct(Product product, string requestStr)
+        public void ManageProduct(Model.Product product, string requestStr)
         {
             if (requestStr == null)
                 throw new ArgumentNullException("requestStr", Resources.MsgInvalidRequest);
@@ -69,7 +69,7 @@ namespace EzPos.Service
                 DeleteProduct(product);
         }
 
-        private void InsertProduct(Product product)
+        private void InsertProduct(Model.Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product", Resources.MsgInvalidProduct);
@@ -93,7 +93,7 @@ namespace EzPos.Service
             _productDataAccess.UpdateProduct(product);
         }
 
-        private void UpdateProduct(Product product)
+        private void UpdateProduct(Model.Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product", Resources.MsgInvalidProduct);
@@ -110,7 +110,7 @@ namespace EzPos.Service
             if (productList.Count == 0)
                 return;
 
-            var product = productList[0] as Product;
+            var product = productList[0] as Model.Product;
             if (product == null)
                 return;
 
@@ -119,7 +119,7 @@ namespace EzPos.Service
             _productDataAccess.UpdateProduct(product);
         }
 
-        private void DeleteProduct(Product product)
+        private void DeleteProduct(Model.Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product", Resources.MsgInvalidProduct);
@@ -134,14 +134,14 @@ namespace EzPos.Service
                 _productDataAccess.GetAvailableProducts() : 
                 _productDataAccess.GetUnavailableProducts();
 
-            foreach (Product product in productList)
-            {
-                product.DisplayName = product.ProductName + "\r" +
-                                      "Size: " + product.SizeStr + "\r" +
-                                      "Code: " + product.ProductCode;
-                if (!string.IsNullOrEmpty(product.ForeignCode))
-                    product.DisplayName += " (" + product.ForeignCode + ")";
-            }
+            //foreach (Model.Product product in productList)
+            //{
+            //    product.DisplayName = product.ProductName + "\r" +
+            //                          "Size: " + product.SizeStr + "\r" +
+            //                          "Code: " + product.ProductCode;
+            //    if (!string.IsNullOrEmpty(product.ForeignCode))
+            //        product.DisplayName += " (" + product.ForeignCode + ")";
+            //}
             return productList;
         }
 
@@ -169,16 +169,16 @@ namespace EzPos.Service
                 }
             }
 
-            foreach (Product product in productList)
-            {
-                product.DisplayName +=
-                    product.ProductName + "\r" +
-                    "Size: " + product.SizeStr + "\r" +
-                    "Code: " + product.ProductCode;
+            //foreach (Model.Product product in productList)
+            //{
+            //    product.DisplayName +=
+            //        product.ProductName + "\r" +
+            //        "Size: " + product.SizeStr + "\r" +
+            //        "Code: " + product.ProductCode;
 
-                if (!string.IsNullOrEmpty(product.ForeignCode))
-                    product.DisplayName += " (" + product.ForeignCode + ")";
-            }
+            //    if (!string.IsNullOrEmpty(product.ForeignCode))
+            //        product.DisplayName += " (" + product.ForeignCode + ")";
+            //}
             return productList;
         }
 
@@ -225,7 +225,7 @@ namespace EzPos.Service
                     continue;
 
                 var product = 
-                    new Product
+                    new Model.Product
                     {
                         ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
                         CategoryID = categoryId,
@@ -294,7 +294,7 @@ namespace EzPos.Service
                     continue;
 
                 var product = 
-                    new Product
+                    new Model.Product
                     {
                         ProductName = (categoryStr + " \\ " + markStr + " \\ " + colorStr),
                         CategoryID = categoryId,
@@ -318,10 +318,10 @@ namespace EzPos.Service
         public virtual void ProductAdjustmentManagement(string requestStr, ProductAdjustment productAdjustment)
         {
             if (string.IsNullOrEmpty(requestStr))
-                throw new ArgumentNullException("requestStr", "Request operation");
+                throw new ArgumentNullException("requestStr", Resources.ConstRequestOperation);
 
             if (productAdjustment == null)
-                throw new ArgumentNullException("productAdjustment", "Product Adjustment");
+                throw new ArgumentNullException("productAdjustment", Resources.ConstProductAdjustment);
 
             if (requestStr.Equals(Resources.OperationRequestInsert))
                 InsertProductAdjustment(productAdjustment);
@@ -333,13 +333,13 @@ namespace EzPos.Service
         public virtual void ProductAdjustmentManagement(string requestStr, IList productAdjustmentList)
         {
             if (string.IsNullOrEmpty(requestStr))
-                throw new ArgumentNullException("requestStr", "Request operation");
+                throw new ArgumentNullException("requestStr", Resources.ConstRequestOperation);
 
             if (productAdjustmentList == null)
-                throw new ArgumentNullException("productAdjustmentList", "Product Adjustment");
+                throw new ArgumentNullException("productAdjustmentList", Resources.ConstProductAdjustment);
 
             if (productAdjustmentList.Count == 0)
-                throw new ArgumentNullException("productAdjustmentList", "Product Adjustment");
+                throw new ArgumentNullException("productAdjustmentList", Resources.ConstProductAdjustment);
 
             foreach (
                 var productAdjustment 
@@ -362,7 +362,7 @@ namespace EzPos.Service
         private void InsertProductAdjustment(ProductAdjustment productAdjustment)
         {
             if (productAdjustment == null)
-                throw new ArgumentNullException("productAdjustment", "Product adjustment");
+                throw new ArgumentNullException("productAdjustment", Resources.ConstProductAdjustment);
 
             _productDataAccess.InsertProductAdjustment(productAdjustment);
         }
@@ -370,20 +370,20 @@ namespace EzPos.Service
         public void ExportProductToXml(IList productList, string folderName, string fileName)
         {
             if (productList == null)
-                throw new ArgumentNullException("productList", "Product list");
+                throw new ArgumentNullException("productList", Resources.ConstProductList);
 
             if (productList.Count == 0)
-                throw new ArgumentNullException("productList", "Product list");
+                throw new ArgumentNullException("productList", Resources.ConstProductList);
 
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName", "File name");
+                throw new ArgumentNullException("fileName", Resources.ConstFileName);
 
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("folderName", "Folder name");
+                throw new ArgumentNullException("folderName", Resources.ConstFolderName);
 
             //Export data to XML file
             var dtProduct = new DataTable("Product");
-            var propertyInfos = typeof (Product).GetProperties();
+            var propertyInfos = typeof (Model.Product).GetProperties();
             foreach (var dataColumn in
                 propertyInfos.Select(propertyInfo => new DataColumn(propertyInfo.Name, propertyInfo.PropertyType)))
             {
@@ -400,13 +400,13 @@ namespace EzPos.Service
                 {
                     if (propertyInfo.Name.Equals("PhotoPath"))
                     {
-                        if (string.IsNullOrEmpty(((Product)objInstance).PhotoPath))
+                        if (string.IsNullOrEmpty(((Model.Product)objInstance).PhotoPath))
                             continue;
 
                         dataRow[propertyInfo.Name] =
                             StringHelper.Right(
-                                ((Product) objInstance).PhotoPath,
-                                ((Product) objInstance).PhotoPath.Length -
+                                ((Model.Product) objInstance).PhotoPath,
+                                ((Model.Product) objInstance).PhotoPath.Length -
                                 AppContext.Counter.ProductPhotoLocalPath.Length);
                         continue;
                     }
@@ -417,7 +417,7 @@ namespace EzPos.Service
             dsProduct.WriteXml(folderName + @"\" + fileName);
 
             //Export picture to destination
-            foreach (Product product in productList)
+            foreach (Model.Product product in productList)
             {
                 if(string.IsNullOrEmpty(product.PhotoPath))
                     continue;
@@ -452,19 +452,19 @@ namespace EzPos.Service
         public void ImportProductFromXml(string folderName, string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName", "File name");
+                throw new ArgumentNullException("fileName", Resources.ConstFileName);
 
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("folderName", "Folder name");
+                throw new ArgumentNullException("folderName", Resources.ConstFolderName);
 
             var fileInfo = new FileInfo(folderName + @"\" + fileName);
             if (!fileInfo.Exists)
                 return;
 
             //Import data from xml file
-            IList productList = new List<Product>();
+            IList productList = new List<Model.Product>();
             var dtProduct = new DataTable("Product");
-            var propertyInfos = typeof (Product).GetProperties();
+            var propertyInfos = typeof (Model.Product).GetProperties();
             foreach (var dataColumn in
                 propertyInfos.Select(propertyInfo => new DataColumn(propertyInfo.Name, propertyInfo.PropertyType)))
             {
@@ -480,7 +480,7 @@ namespace EzPos.Service
                 if (dataRow == null)
                     continue;
 
-                var product = new Product();
+                var product = new Model.Product();
                 foreach (var propertyInfo in
                     propertyInfos.Where(propertyInfo => !propertyInfo.Name.Equals("ProductID")).Where(propertyInfo => !propertyInfo.Name.Equals("SkinStr")))
                 {
@@ -502,7 +502,7 @@ namespace EzPos.Service
             }
 
             //Import picture from source
-            foreach (Product product in productList)
+            foreach (Model.Product product in productList)
             {
                 var sourcePath =
                     folderName +

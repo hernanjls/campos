@@ -8,6 +8,7 @@ using EzPos.Service;
 using EzPos.Service.Common;
 using EzPos.Service.Payment;
 using EzPos.DataAccess.Payments;
+using EzPos.Service.Product;
 
 // Copyright 2004-2005 Castle Project - http://www.castleproject.org/
 // 
