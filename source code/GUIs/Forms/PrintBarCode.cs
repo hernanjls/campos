@@ -679,7 +679,7 @@ namespace EzPos.GUIs.Forms
                         ((char)(65 + (counter * 3) + 2)).ToString() + (rowIndex + 1));
                     excelRange.Select();
                     excelRange.Font.Name = "Free 3 of 9 Extended";
-                    excelRange.Font.Size = 24;
+                    excelRange.Font.Size = 20;
                     excelRange.Merge(true);
                     excelRange.HorizontalAlignment = XlHAlign.xlHAlignCenter;
                     excelRange.Value2 = "*" + barCode.BarCodeValue + "*"; 
