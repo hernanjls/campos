@@ -1754,6 +1754,15 @@ namespace EzPos.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to 60.
+        /// </summary>
+        internal static string PermissionViewUserResultInfo {
+            get {
+                return ResourceManager.GetString("PermissionViewUserResultInfo", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap pnlBodyRight {
             get {
                 object obj = ResourceManager.GetObject("pnlBodyRight", resourceCulture);
