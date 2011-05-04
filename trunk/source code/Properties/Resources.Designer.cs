@@ -435,6 +435,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstAmountZeroDollarThreeDigits {
+            get {
+                return ResourceManager.GetString("ConstAmountZeroDollarThreeDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to R 0.00.
         /// </summary>
         internal static string ConstAmountZeroRiel {
@@ -498,11 +507,56 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstBarCodeTemplate6 {
+            get {
+                return ResourceManager.GetString("ConstBarCodeTemplate6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstDeposit {
+            get {
+                return ResourceManager.GetString("ConstDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to invoice-deposit.xlsx.
         /// </summary>
         internal static string ConstDepositExcelFile {
             get {
                 return ResourceManager.GetString("ConstDepositExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstDepositItem {
+            get {
+                return ResourceManager.GetString("ConstDepositItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstFileName {
+            get {
+                return ResourceManager.GetString("ConstFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstFolderName {
+            get {
+                return ResourceManager.GetString("ConstFolderName", resourceCulture);
             }
         }
         
@@ -530,6 +584,24 @@ namespace EzPos.Properties {
         internal static string ConstPrefixRiel {
             get {
                 return ResourceManager.GetString("ConstPrefixRiel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstProductAdjustment {
+            get {
+                return ResourceManager.GetString("ConstProductAdjustment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstProductList {
+            get {
+                return ResourceManager.GetString("ConstProductList", resourceCulture);
             }
         }
         
@@ -579,6 +651,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstRequestOperation {
+            get {
+                return ResourceManager.GetString("ConstRequestOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to invoice-sale.xlsx.
         /// </summary>
         internal static string ConstSaleExcelFile {
@@ -624,6 +705,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstSearchCriteria {
+            get {
+                return ResourceManager.GetString("ConstSearchCriteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Barcode.
         /// </summary>
         internal static string ConstSheetBarcode {
@@ -656,6 +746,24 @@ namespace EzPos.Properties {
         internal static string ConstSheetReceipt {
             get {
                 return ResourceManager.GetString("ConstSheetReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstSuffixPercentage {
+            get {
+                return ResourceManager.GetString("ConstSuffixPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConstZeroPercent {
+            get {
+                return ResourceManager.GetString("ConstZeroPercent", resourceCulture);
             }
         }
         

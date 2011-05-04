@@ -685,4 +685,40 @@
   <data name="PermissionViewUserResultInfo" xml:space="preserve">
     <value>60</value>
   </data>
+  <data name="ConstAmountZeroDollarThreeDigits" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstBarCodeTemplate6" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstDeposit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstDepositItem" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstFileName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstFolderName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstProductAdjustment" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstProductList" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstRequestOperation" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstSearchCriteria" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstSuffixPercentage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ConstZeroPercent" xml:space="preserve">
+    <value />
+  </data>
 </root>
