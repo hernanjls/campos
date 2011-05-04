@@ -122,8 +122,9 @@ namespace EzPos.GUIs.Controls
                 _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
             if (!UserService.AllowToPerform(Resources.PermissionViewUserResultInfo))
+            {
                 lblResultInfo.Visible = false;
-
+            }
             InitializeUserList();
 
             ThreadStart threadStart = UpdateControlContent;
