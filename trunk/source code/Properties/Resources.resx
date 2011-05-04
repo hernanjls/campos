@@ -718,4 +718,7 @@
   <data name="ConstZeroPercent" xml:space="preserve">
     <value>0 %</value>
   </data>
+  <data name="PermissionViewUserResultInfo" xml:space="preserve">
+    <value>60</value>
+  </data>
 </root>
