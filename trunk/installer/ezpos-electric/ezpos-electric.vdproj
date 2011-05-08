@@ -45,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_17D0E116211D441D89E3F07DA4B8199C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_241485D2B407D768A5AFB5BECF1B37B9"
         "OwnerKey" = "8:_5A72C6526D216731133559A699BEF43F"
         "MsmSig" = "8:_UNDEFINED"
@@ -196,6 +202,12 @@
         "Entry"
         {
         "MsmKey" = "8:_6734875B0AA64DEFAB0608A9B570A1EA"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_717DB519252341F6A2285E0A66496E9E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -705,6 +717,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_17D0E116211D441D89E3F07DA4B8199C"
+            {
+            "SourcePath" = "8:..\\output\\barcode.xlsx"
+            "TargetName" = "8:barcode.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_886E1BF37C85481BB816F0043E999BE2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_241485D2B407D768A5AFB5BECF1B37B9"
             {
             "AssemblyRegister" = "3:1"
@@ -1086,6 +1118,26 @@
             {
             "SourcePath" = "8:..\\output\\invoice-deposit.xlsx"
             "TargetName" = "8:invoice-deposit.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_886E1BF37C85481BB816F0043E999BE2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_717DB519252341F6A2285E0A66496E9E"
+            {
+            "SourcePath" = "8:..\\output\\receipt.xlsx"
+            "TargetName" = "8:receipt.xlsx"
             "Tag" = "8:"
             "Folder" = "8:_886E1BF37C85481BB816F0043E999BE2"
             "Condition" = "8:"
