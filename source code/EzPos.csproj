@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B8EFF784-4821-428E-AFC6-E5E0F42E989A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -433,6 +433,7 @@
     <Compile Include="Model\SaleOrder\SaleOrder.cs" />
     <Compile Include="Model\SaleOrder\SaleItemBindingList.cs" />
     <Compile Include="Model\SaleOrder\SaleOrderReport.cs" />
+    <Compile Include="Model\Table\Table.cs" />
     <Compile Include="Model\User\User.cs" />
     <Compile Include="Model\User\Permission.cs" />
     <Compile Include="Model\User\UserPermission.cs" />

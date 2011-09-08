@@ -40,5 +40,7 @@ namespace EzPos.Model
         public static string ReceiptPrinter { get; set; }
 
         public static string BarcodePrinter { get; set; }
+
+        public static string ApplicationType { get; set; }
     }
 }

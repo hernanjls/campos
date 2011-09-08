@@ -12,12 +12,12 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmDeposit : Form
     {
-        private CommonService _CommonService;
-        private DepositService _DepositService;
-        private SaleOrderService _SaleOrderService;
-        private BindingList<Deposit> _DepositList;
-        private IList _DepositItemList;
-        private Deposit _Deposit;
+        private CommonService _commonService;
+        private DepositService _depositService;
+        private SaleOrderService _saleOrderService;
+        private BindingList<Deposit> _depositList;
+        private IList _depositItemList;
+        private Deposit _deposit;
 
         public FrmDeposit()
         {
@@ -30,14 +30,14 @@ namespace EzPos.GUIs.Forms
         {
             try
             {
-                if (_CommonService == null)
-                    _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                if (_commonService == null)
+                    _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
-                if (_DepositService == null)
-                    _DepositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
+                if (_depositService == null)
+                    _depositService = ServiceFactory.GenerateServiceInstance().GenerateDepositService();
 
-                if (_SaleOrderService == null)
-                    _SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
+                if (_saleOrderService == null)
+                    _saleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
 
                 InitializeDepositList();
 
@@ -64,11 +64,11 @@ namespace EzPos.GUIs.Forms
                     };
 
                 IListToBindingList(
-                    _DepositService.GetDeposits(searchCriteria));
+                    _depositService.GetDeposits(searchCriteria));
 
                 var searchInfo = String.Format(
                     "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
-                    _DepositList.Count);
+                    _depositList.Count);
                 lblSearchInfo.Text = searchInfo;
             }
             catch (Exception exception)
@@ -79,12 +79,12 @@ namespace EzPos.GUIs.Forms
             }            
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
         }
@@ -93,10 +93,10 @@ namespace EzPos.GUIs.Forms
         {
             try
             {
-                if (_DepositList == null)
-                    _DepositList = new BindingList<Deposit>();
+                if (_depositList == null)
+                    _depositList = new BindingList<Deposit>();
 
-                dgvDeposit.DataSource = _DepositList;
+                dgvDeposit.DataSource = _depositList;
 
                 dgvDeposit.Columns["DepositNumber"].DisplayIndex = 0;
                 dgvDeposit.Columns["DepositDate"].DisplayIndex = 1;
@@ -116,13 +116,13 @@ namespace EzPos.GUIs.Forms
         private void IListToBindingList(IList depositList)
         {
             if (depositList == null)
-                throw new ArgumentNullException("depositList", "Deposit");
+                throw new ArgumentNullException("depositList", Resources.MsgEmptyBindingList);
 
             try
             {
-                _DepositList.Clear();
+                _depositList.Clear();
                 foreach (Deposit deposit in depositList)
-                    _DepositList.Add(deposit);
+                    _depositList.Add(deposit);
             }
             catch (Exception exception)
             {
@@ -132,7 +132,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void dgvSearchResult_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvSearchResultCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //if (e == null)
             //    return;
@@ -161,56 +161,56 @@ namespace EzPos.GUIs.Forms
             //}
         }
 
-        private void btnPrint_Click(object sender, EventArgs e)
+        private void BtnPrintClick(object sender, EventArgs e)
         {
-            if (_DepositList == null)
+            if (_depositList == null)
                 return;
 
-            if (_DepositList.Count == 0)
+            if (_depositList.Count == 0)
                 return;
 
             if (dgvDeposit.CurrentRow == null)
                 return;
 
-            _Deposit = _DepositList[dgvDeposit.CurrentRow.Index];
-            if (_Deposit == null)
+            _deposit = _depositList[dgvDeposit.CurrentRow.Index];
+            if (_deposit == null)
                 return;
 
-            _DepositItemList = _DepositService.GetDepositItems(_Deposit.DepositId);
-            var saleItemList = _SaleOrderService.GetSaleItems(_DepositItemList);
+            _depositItemList = _depositService.GetDepositItems(_deposit.DepositId);
+            var saleItemList = _saleOrderService.GetSaleItems(_depositItemList);
 
             var printInvoice = new PrintInvoice();
             printInvoice.ExcelInvoicePrintingHandler(
                 AppContext.Counter.ReceiptPrinter,
                 Application.StartupPath + @"\" + Resources.ConstDepositExcelFile,
                 string.Empty,
-                _Deposit.FKCustomer.CustomerName,
-                _Deposit.FKCustomer.CustomerName,
-                _Deposit.DepositNumber,
-                (DateTime)_Deposit.DepositDate,
-                _Deposit.Discount,
-                _Deposit.AmountPaidInt,
+                _deposit.FKCustomer.CustomerName,
+                _deposit.FKCustomer.CustomerName,
+                _deposit.DepositNumber,
+                (DateTime)_deposit.DepositDate,
+                _deposit.Discount,
+                _deposit.AmountPaidInt,
                 0,
                 saleItemList,
                 true);
         }
 
-        private void btnPrint_MouseEnter(object sender, EventArgs e)
+        private void BtnPrintMouseEnter(object sender, EventArgs e)
         {
             btnPrint.BackgroundImage = Resources.background_9;
         }
 
-        private void btnPrint_MouseLeave(object sender, EventArgs e)
+        private void BtnPrintMouseLeave(object sender, EventArgs e)
         {
             btnPrint.BackgroundImage = Resources.background_2;
         }
 
-        private void btnDetailDeposit_MouseEnter(object sender, EventArgs e)
+        private void BtnDetailDepositMouseEnter(object sender, EventArgs e)
         {
             btnCancelDeposit.BackgroundImage = Resources.background_9;
         }
 
-        private void btnDetailDeposit_MouseLeave(object sender, EventArgs e)
+        private void BtnDetailDepositMouseLeave(object sender, EventArgs e)
         {
             btnCancelDeposit.BackgroundImage = Resources.background_2;
         }
@@ -229,17 +229,17 @@ namespace EzPos.GUIs.Forms
         {
             try
             {
-                if (_DepositList == null)
+                if (_depositList == null)
                     return;
 
-                if (_DepositList.Count == 0)
+                if (_depositList.Count == 0)
                     return;
 
                 if (dgvDeposit.CurrentRow == null)
                     return;
 
-                _Deposit = _DepositList[dgvDeposit.CurrentRow.Index];
-                if (_Deposit == null)
+                _deposit = _depositList[dgvDeposit.CurrentRow.Index];
+                if (_deposit == null)
                     return;
 
                 var briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
@@ -256,7 +256,7 @@ namespace EzPos.GUIs.Forms
                     }
                 }
 
-                var saleOrder = _SaleOrderService.GetSaleOrder(_Deposit);
+                var saleOrder = _saleOrderService.GetSaleOrder(_deposit);
                 if (saleOrder == null)
                     return;
 
@@ -270,10 +270,10 @@ namespace EzPos.GUIs.Forms
                         return;
                 }
 
-                _DepositItemList = _DepositService.GetDepositItems(_Deposit.DepositId);
-                var saleItemList = _SaleOrderService.GetSaleItems(_DepositItemList);
+                _depositItemList = _depositService.GetDepositItems(_deposit.DepositId);
+                var saleItemList = _saleOrderService.GetSaleItems(_depositItemList);
 
-                _SaleOrderService.RecordSaleOrder(
+                _saleOrderService.RecordSaleOrder(
                     saleItemList,
                     saleOrder.AmountSoldInt,
                     saleOrder.AmountSoldInt - saleOrder.AmountPaidInt,
@@ -281,25 +281,25 @@ namespace EzPos.GUIs.Forms
                     0,
                     saleOrder.FKCustomer,
                     false,
-                    _Deposit.DepositNumber,
+                    _deposit.DepositNumber,
                     saleOrder.Discount,
-                    _Deposit.AmountPaidInt,
+                    _deposit.AmountPaidInt,
                     true);
 
-                _Deposit.AmountPaidInt += (_Deposit.AmountSoldInt - _Deposit.AmountPaidInt);
-                _Deposit.AmountReturnInt = 0f;
-                _Deposit.AmountReturnRiel = 0f;
-                _Deposit.UpdateDate = DateTime.Now;                
-                _DepositService.UpdateDeposit(_Deposit);
+                _deposit.AmountPaidInt += (_deposit.AmountSoldInt - _deposit.AmountPaidInt);
+                _deposit.AmountReturnInt = 0f;
+                _deposit.AmountReturnRiel = 0f;
+                _deposit.UpdateDate = DateTime.Now;                
+                _depositService.UpdateDeposit(_deposit);
 
                 var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
                 var payment =
                     new Model.Payments.Payment
                     {
-                        PaymentDate = _Deposit.DepositDate,
-                        PaymentAmount = _Deposit.AmountPaidInt,
-                        SalesOrderId = _Deposit.DepositId,
-                        CashierId = _Deposit.CashierId
+                        PaymentDate = _deposit.DepositDate,
+                        PaymentAmount = _deposit.AmountPaidInt,
+                        SalesOrderId = _deposit.DepositId,
+                        CashierId = _deposit.CashierId
                     };
                 paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
 
@@ -311,7 +311,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void btnCancelDeposit_Click(object sender, EventArgs e)
+        private void BtnCancelDepositClick(object sender, EventArgs e)
         {
             var briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
             var detailMsg = Resources.MsgUserPermissionDeny;
@@ -327,24 +327,24 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (_DepositList == null)
+            if (_depositList == null)
                 return;
 
-            if (_DepositList.Count == 0)
+            if (_depositList.Count == 0)
                 return;
 
             if (dgvDeposit.CurrentRow == null)
                 return;
 
-            _Deposit = _DepositList[dgvDeposit.CurrentRow.Index];
-            if (_Deposit == null)
+            _deposit = _depositList[dgvDeposit.CurrentRow.Index];
+            if (_deposit == null)
                 return;
 
-            _DepositItemList = new List<DepositItem>();
+            _depositItemList = new List<DepositItem>();
             //_DepositService.GetDepositItems(_Deposit.DepositId);
 
-            if (_Deposit == null)
-                return;
+            //if (_Deposit == null)
+            //    return;
 
             //if (_DepositItemList.Count == 0)
             //    return;
@@ -359,25 +359,25 @@ namespace EzPos.GUIs.Forms
                     return;
             }
 
-            _Deposit.DepositDate = DateTime.Now;
-            _Deposit = _DepositService.RecordDeposit(
-                _DepositItemList,
-                _Deposit.AmountSoldInt,
-                _Deposit.AmountPaidInt,
+            _deposit.DepositDate = DateTime.Now;
+            _deposit = _depositService.RecordDeposit(
+                _depositItemList,
+                _deposit.AmountSoldInt,
+                _deposit.AmountPaidInt,
                 0,
-                _Deposit.FKCustomer,
-                _Deposit.DepositNumber,
-                _Deposit.Discount,
+                _deposit.FKCustomer,
+                _deposit.DepositNumber,
+                _deposit.Discount,
                 true);
 
             var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
             var payment =
                 new Model.Payments.Payment
                 {
-                    PaymentDate = _Deposit.DepositDate,
-                    PaymentAmount = _Deposit.AmountPaidInt,
-                    SalesOrderId = _Deposit.DepositId,
-                    CashierId = _Deposit.CashierId
+                    PaymentDate = _deposit.DepositDate,
+                    PaymentAmount = _deposit.AmountPaidInt,
+                    SalesOrderId = _deposit.DepositId,
+                    CashierId = _deposit.CashierId
                 };
             paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using EzPos.DataAccess;
 using EzPos.Model;
 using EzPos.Properties;
@@ -9,16 +10,16 @@ namespace EzPos.Service
 {
     public class SaleOrderService
     {
-        private readonly SaleOrderDataAccess SaleOrderDataAccess;
+        private readonly SaleOrderDataAccess _saleOrderDataAccess;
 
         public SaleOrderService(SaleOrderDataAccess saleOrderDataAccess)
         {
-            SaleOrderDataAccess = saleOrderDataAccess;
+            _saleOrderDataAccess = saleOrderDataAccess;
         }
 
         public virtual IList GetSaleOrders()
         {
-            return SaleOrderDataAccess.GetSaleOrders();
+            return _saleOrderDataAccess.GetSaleOrders();
         }
 
         public virtual IList GetSaleOrders(IList searchCriteria)
@@ -26,7 +27,7 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
-            return SaleOrderDataAccess.GetSaleOrders(searchCriteria);
+            return _saleOrderDataAccess.GetSaleOrders(searchCriteria);
         }
 
         public virtual SaleOrder GetSaleOrder(Deposit deposit)
@@ -63,7 +64,7 @@ namespace EzPos.Service
 
         public virtual void UpdateSaleOrder(SaleOrder saleOrder)
         {
-            SaleOrderDataAccess.UpdateSaleOrder(saleOrder);
+            _saleOrderDataAccess.UpdateSaleOrder(saleOrder);
         }
 
         public virtual void InsertSaleOrder(SaleOrder saleOrder)
@@ -71,10 +72,10 @@ namespace EzPos.Service
             if (saleOrder == null)
                 throw new ArgumentNullException("saleOrder", Resources.MsgInvalidSaleOrder);
 
-            SaleOrderDataAccess.InsertSaleOrder(saleOrder);
+            _saleOrderDataAccess.InsertSaleOrder(saleOrder);
             saleOrder.SaleOrderNumber = "S-00" + saleOrder.SaleOrderId;
 
-            SaleOrderDataAccess.UpdateSaleOrder(saleOrder);
+            _saleOrderDataAccess.UpdateSaleOrder(saleOrder);
 
             //var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
             //var payment = 
@@ -170,11 +171,8 @@ namespace EzPos.Service
             //Sale item      
             var productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
             var isAllowed = true;
-            foreach (SaleItem saleItem in saleItemList)
+            foreach (var saleItem in saleItemList.Cast<SaleItem>().Where(saleItem => saleItem.ProductID != 0))
             {
-                if (saleItem.ProductID == 0)
-                    continue;
-
                 if (isReturned)
                     saleItem.QtySold *= factor;
 
@@ -184,19 +182,19 @@ namespace EzPos.Service
 
                 //SaleItem
                 saleItem.SaleOrderID = saleOrder.SaleOrderId;
-                SaleOrderDataAccess.InsertSaleItem(saleItem);
+                _saleOrderDataAccess.InsertSaleItem(saleItem);
 
                 var saleOrderReport = 
                     new SaleOrderReport
-                    {
-                        SalesOrderId = saleOrder.SaleOrderId,
-                        SaleOrderNumber = saleOrder.SaleOrderNumber,
-                        SaleOrderDate = ((DateTime) saleOrder.SaleOrderDate),
-                        CustomerID = customer.CustomerID,
-                        CustomerName = customer.CustomerName,
-                        CashierName = AppContext.User.LogInName,
-                        ExchangeRate = saleOrder.ExchangeRate
-                    };
+                        {
+                            SalesOrderId = saleOrder.SaleOrderId,
+                            SaleOrderNumber = saleOrder.SaleOrderNumber,
+                            SaleOrderDate = ((DateTime) saleOrder.SaleOrderDate),
+                            CustomerID = customer.CustomerID,
+                            CustomerName = customer.CustomerName,
+                            CashierName = AppContext.User.LogInName,
+                            ExchangeRate = saleOrder.ExchangeRate
+                        };
 
                 if (isAllowed)
                 {
@@ -224,16 +222,16 @@ namespace EzPos.Service
                     {
                         var productCode = 
                             !string.IsNullOrEmpty(saleItem.FKProduct.ForeignCode) ?
-                            saleItem.FKProduct.ForeignCode :
-                            string.Empty;
+                                                                                      saleItem.FKProduct.ForeignCode :
+                                                                                                                         string.Empty;
                         productCode = productCode.Replace(",", string.Empty);
                         productCode = productCode.Replace(" ", string.Empty);
                         saleOrderReport.ProductCode =
                             productCode + 
                             " (" + 
                             (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode) ? 
-                            saleItem.FKProduct.ProductCode : 
-                            string.Empty) + 
+                                                                                       saleItem.FKProduct.ProductCode : 
+                                                                                                                          string.Empty) + 
                             ")";
                         saleOrderReport.ProductName = saleItem.ProductName + " (" + productCode + ")";                        
                     }
@@ -248,7 +246,7 @@ namespace EzPos.Service
                 saleOrderReport.UnitPriceOut = saleItem.PublicUPOut;
                 saleOrderReport.SubTotal = saleItem.PublicUPOut * saleItem.QtySold;
 
-                SaleOrderDataAccess.InsertSaleOrderReport(saleOrderReport);
+                _saleOrderDataAccess.InsertSaleOrderReport(saleOrderReport);
                 isAllowed = false;
             }
             return saleOrder;
@@ -256,7 +254,7 @@ namespace EzPos.Service
 
         public virtual IList GetSaleItems(int saleOrderId)
         {
-            return SaleOrderDataAccess.GetSaleItems(saleOrderId);
+            return _saleOrderDataAccess.GetSaleItems(saleOrderId);
         }
 
         public virtual IList GetSaleItems(IList depositItemList)
@@ -300,7 +298,7 @@ namespace EzPos.Service
 
         public virtual IList GetSaleItems()
         {
-            return SaleOrderDataAccess.GetSaleItems();
+            return _saleOrderDataAccess.GetSaleItems();
         }
 
         public virtual IList GetSaleHistories(IList searchCriteria)
@@ -308,7 +306,7 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
-            var saleOrderReportList = SaleOrderDataAccess.GetSaleHistories(searchCriteria);
+            var saleOrderReportList = _saleOrderDataAccess.GetSaleHistories(searchCriteria);
             foreach (SaleOrderReport saleOrderReport in saleOrderReportList)
             {
                 if (!string.IsNullOrEmpty(saleOrderReport.ReferenceNum))
@@ -326,7 +324,7 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
 
-            var saleOrderReportList = SaleOrderDataAccess.GetSaleHistoriesOrderByProductCategory(searchCriteria);
+            var saleOrderReportList = _saleOrderDataAccess.GetSaleHistoriesOrderByProductCategory(searchCriteria);
             foreach (SaleOrderReport saleOrderReport in saleOrderReportList)
             {
                 if (!string.IsNullOrEmpty(saleOrderReport.ReferenceNum))

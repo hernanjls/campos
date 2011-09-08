@@ -3,10 +3,6 @@ namespace EzPos.GUIs.Forms
 {
     partial class FrmLogIn
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private readonly System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -29,6 +25,7 @@ namespace EzPos.GUIs.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnlBody = new System.Windows.Forms.Panel();
             this.txtPwd = new System.Windows.Forms.TextBox();
             this.txtLogIn = new System.Windows.Forms.TextBox();
@@ -38,8 +35,8 @@ namespace EzPos.GUIs.Forms
             this.pnlTop = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
             this.pnlFooter = new System.Windows.Forms.Panel();
-            this.btnCancel = new EzPos.GUIs.Components.ExtendedButton();
-            this.btnLogIn = new EzPos.GUIs.Components.ExtendedButton();
+            this.btnCancel = new EzPos.GUIs.Components.ExtendedButton(this.components);
+            this.btnLogIn = new EzPos.GUIs.Components.ExtendedButton(this.components);
             this.pnlBody.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.pnlFooter.SuspendLayout();
@@ -194,6 +191,7 @@ namespace EzPos.GUIs.Forms
             // 
             // FrmLogIn
             // 
+            this.AcceptButton = this.btnLogIn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -230,5 +228,6 @@ namespace EzPos.GUIs.Forms
         private EzPos.GUIs.Components.ExtendedButton btnCancel;
         private EzPos.GUIs.Components.ExtendedButton btnLogIn;
         private System.Windows.Forms.Label lblHeader;
+        private System.ComponentModel.IContainer components;
     }
 }

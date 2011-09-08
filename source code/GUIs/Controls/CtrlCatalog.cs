@@ -715,20 +715,6 @@ namespace EzPos.GUIs.Controls
 
             var fileInfo = new FileInfo(product.PhotoPath);
             product.ProductPic = fileInfo.Exists ? new Bitmap(product.PhotoPath) : Resources.NoImage;
-
-            //var fileInfo = new FileInfo(product.PhotoPath);
-            //if (!fileInfo.Exists) 
-            //    return;
-
-            //var productPicture = Image.FromFile(product.PhotoPath);
-            //var thumbnailPicture =
-            //    productPicture.GetThumbnailImage(
-            //        100,
-            //        100,
-            //        null,
-            //        new IntPtr());
-
-            //product.ProductPic = thumbnailPicture;
         }
 
         private void UpdateSelectedProduct(Product curProduct, float preQtyInStock)

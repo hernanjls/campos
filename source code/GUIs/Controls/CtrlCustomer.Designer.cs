@@ -161,9 +161,9 @@ namespace EzPos.GUIs.Controls
             this.dgvCustomer.Size = new System.Drawing.Size(822, 469);
             this.dgvCustomer.TabIndex = 1;
             this.dgvCustomer.VirtualMode = true;
-            this.dgvCustomer.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomer_CellDoubleClick);
-            this.dgvCustomer.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvCustomer_DataError);
-            this.dgvCustomer.SelectionChanged += new System.EventHandler(this.dgvCustomer_SelectionChanged);
+            this.dgvCustomer.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCustomerCellDoubleClick);
+            this.dgvCustomer.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DgvCustomerDataError);
+            this.dgvCustomer.SelectionChanged += new System.EventHandler(this.DgvCustomerSelectionChanged);
             // 
             // pnlBodyRight
             // 
@@ -199,9 +199,9 @@ namespace EzPos.GUIs.Controls
             this.btnOutstandingInvoice.Text = "ប្រាក់កក់";
             this.btnOutstandingInvoice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnOutstandingInvoice.UseVisualStyleBackColor = false;
-            this.btnOutstandingInvoice.MouseLeave += new System.EventHandler(this.btnOutstandingInvoice_MouseLeave);
-            this.btnOutstandingInvoice.Click += new System.EventHandler(this.btnOutstandingInvoice_Click);
-            this.btnOutstandingInvoice.MouseEnter += new System.EventHandler(this.btnOutstandingInvoice_MouseEnter);
+            this.btnOutstandingInvoice.MouseLeave += new System.EventHandler(this.BtnOutstandingInvoiceMouseLeave);
+            this.btnOutstandingInvoice.Click += new System.EventHandler(this.BtnOutstandingInvoiceClick);
+            this.btnOutstandingInvoice.MouseEnter += new System.EventHandler(this.BtnOutstandingInvoiceMouseEnter);
             // 
             // lblAmount
             // 
@@ -322,9 +322,9 @@ namespace EzPos.GUIs.Controls
             this.btnDelete.Text = "លុបចោល";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.MouseLeave += new System.EventHandler(this.btnDelete_MouseLeave);
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            this.btnDelete.MouseEnter += new System.EventHandler(this.btnDelete_MouseEnter);
+            this.btnDelete.MouseLeave += new System.EventHandler(this.BtnDeleteMouseLeave);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDeleteClick);
+            this.btnDelete.MouseEnter += new System.EventHandler(this.BtnDeleteMouseEnter);
             // 
             // btnNew
             // 
@@ -342,9 +342,9 @@ namespace EzPos.GUIs.Controls
             this.btnNew.Text = "បង្កើតថ្មី";
             this.btnNew.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNew.UseVisualStyleBackColor = false;
-            this.btnNew.MouseLeave += new System.EventHandler(this.btnNew_MouseLeave);
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
-            this.btnNew.MouseEnter += new System.EventHandler(this.btnNew_MouseEnter);
+            this.btnNew.MouseLeave += new System.EventHandler(this.BtnNewMouseLeave);
+            this.btnNew.Click += new System.EventHandler(this.BtnNewClick);
+            this.btnNew.MouseEnter += new System.EventHandler(this.BtnNewMouseEnter);
             // 
             // pnlBodySearch
             // 
@@ -463,7 +463,7 @@ namespace EzPos.GUIs.Controls
             this.btnReset.Text = "&Reset";
             this.btnReset.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnReset.Click += new System.EventHandler(this.BtnResetClick);
             // 
             // btnSearch
             // 
@@ -477,7 +477,7 @@ namespace EzPos.GUIs.Controls
             this.btnSearch.Text = "&Search";
             this.btnSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            this.btnSearch.Click += new System.EventHandler(this.BtnSearchClick);
             // 
             // cmbDCardType
             // 

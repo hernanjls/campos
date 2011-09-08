@@ -116,8 +116,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.TabIndex = 47;
             this.btnCancel.Text = "បិទ";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // pnlFooter
             // 
@@ -167,9 +167,9 @@ namespace EzPos.GUIs.Forms
             this.btnCancelDeposit.TabIndex = 49;
             this.btnCancelDeposit.Text = "បោះបង់";
             this.btnCancelDeposit.UseVisualStyleBackColor = false;
-            this.btnCancelDeposit.MouseLeave += new System.EventHandler(this.btnDetailDeposit_MouseLeave);
-            this.btnCancelDeposit.Click += new System.EventHandler(this.btnCancelDeposit_Click);
-            this.btnCancelDeposit.MouseEnter += new System.EventHandler(this.btnDetailDeposit_MouseEnter);
+            this.btnCancelDeposit.MouseLeave += new System.EventHandler(this.BtnDetailDepositMouseLeave);
+            this.btnCancelDeposit.Click += new System.EventHandler(this.BtnCancelDepositClick);
+            this.btnCancelDeposit.MouseEnter += new System.EventHandler(this.BtnDetailDepositMouseEnter);
             // 
             // btnPrint
             // 
@@ -188,9 +188,9 @@ namespace EzPos.GUIs.Forms
             this.btnPrint.Text = "បោះពុម្ភ";
             this.btnPrint.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnPrint.UseVisualStyleBackColor = false;
-            this.btnPrint.MouseLeave += new System.EventHandler(this.btnPrint_MouseLeave);
-            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
-            this.btnPrint.MouseEnter += new System.EventHandler(this.btnPrint_MouseEnter);
+            this.btnPrint.MouseLeave += new System.EventHandler(this.BtnPrintMouseLeave);
+            this.btnPrint.Click += new System.EventHandler(this.BtnPrintClick);
+            this.btnPrint.MouseEnter += new System.EventHandler(this.BtnPrintMouseEnter);
             // 
             // pnlBody
             // 
@@ -271,7 +271,7 @@ namespace EzPos.GUIs.Forms
             this.dgvDeposit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDeposit.Size = new System.Drawing.Size(657, 359);
             this.dgvDeposit.TabIndex = 3;
-            this.dgvDeposit.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSearchResult_CellDoubleClick);
+            this.dgvDeposit.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSearchResultCellDoubleClick);
             // 
             // DepositId
             // 
