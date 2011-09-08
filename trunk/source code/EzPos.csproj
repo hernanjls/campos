@@ -433,7 +433,6 @@
     <Compile Include="Model\SaleOrder\SaleOrder.cs" />
     <Compile Include="Model\SaleOrder\SaleItemBindingList.cs" />
     <Compile Include="Model\SaleOrder\SaleOrderReport.cs" />
-    <Compile Include="Model\Table\Table.cs" />
     <Compile Include="Model\User\User.cs" />
     <Compile Include="Model\User\Permission.cs" />
     <Compile Include="Model\User\UserPermission.cs" />
