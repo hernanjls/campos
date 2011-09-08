@@ -11,7 +11,7 @@ namespace EzPos.GUIs.Forms
 {
     public partial class FrmCustomer : Form
     {
-        private bool IsModified;
+        private bool _isModified;
 
         public FrmCustomer()
         {
@@ -38,13 +38,13 @@ namespace EzPos.GUIs.Forms
 
         private void SetModifydStatus(bool modifyStatus)
         {
-            IsModified = modifyStatus;
+            _isModified = modifyStatus;
             btnSave.Enabled = modifyStatus;
         }
 
         private void FrmCustomerAdvance_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((DialogResult == DialogResult.Cancel) && (IsModified))
+            if ((DialogResult == DialogResult.Cancel) && (_isModified))
             {
                 const string briefMsg = "អំពីការបោះបង់";
                 var detailMsg = Resources.MsgOperationRequestCancel;
@@ -60,7 +60,7 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (!IsModified)
+            if (!_isModified)
             {
                 DialogResult = DialogResult.Cancel;
                 return;
@@ -267,7 +267,11 @@ namespace EzPos.GUIs.Forms
             {
                 discountCard = (DiscountCard) objList[0];
                 if (discountCard != null)
-                    currentCardLbl.Text = discountCard.CardNumber + " (" + discountCard.DiscountCardTypeStr + ")";
+                    currentCardLbl.Text =
+                        string.Format("{0} {1}{2}", 
+                        discountCard.CardNumber, 
+                        Resources.ConstOpenBracket,
+                        Resources.ConstCloseBracket);
             }
 
             txtLocalName.Text = _Customer.LocalName;

@@ -193,7 +193,7 @@ namespace EzPos.GUIs.Controls
                         product.ProductName + "\r" + product.ProductCode : 
                         product.Description + "\r" + product.ProductCode
                 };
-
+            
             if (!string.IsNullOrEmpty(product.ForeignCode))
                 saleItem.ProductDisplayName += " (" + product.ForeignCode + ")";
 
@@ -330,7 +330,7 @@ namespace EzPos.GUIs.Controls
                 tmpTotalAmountInt -= ((tmpTotalAmountInt*_saleOrder.Discount)/100);
                 lblFinalAmount.Text = Resources.ConstPrefixDollar + tmpTotalAmountInt.ToString("N", AppContext.CultureInfo);
                 lblAmountPaid.Text = Resources.ConstPrefixDollar + tmpTotalAmountInt.ToString("N", AppContext.CultureInfo);
-                lblAmountReturn.Text = Resources.ConstAmountZeroDollar;
+                lblAmountReturn.Text = Resources.ConstAmountZeroDollarTwoDigits;
             }
             SetPurchasedInfo(totalPurchasedQty);
         }
@@ -551,11 +551,11 @@ namespace EzPos.GUIs.Controls
             lblPrice.Text = string.Empty;
             lblReference.Text = string.Empty;
             ptbDisplay.Image = null;
-            lblTotalAmountInt.Text = Resources.ConstAmountZeroDollar;
-            lblTotalAmountNat.Text = Resources.ConstAmountZeroRiel;
-            lblFinalAmount.Text = Resources.ConstAmountZeroDollar;
-            lblAmountPaid.Text = Resources.ConstAmountZeroDollar;
-            lblAmountReturn.Text = Resources.ConstAmountZeroDollar;
+            lblTotalAmountInt.Text = Resources.ConstAmountZeroDollarTwoDigits;
+            lblTotalAmountNat.Text = Resources.ConstAmountZeroRielTwoDigits;
+            lblFinalAmount.Text = Resources.ConstAmountZeroDollarTwoDigits;
+            lblAmountPaid.Text = Resources.ConstAmountZeroDollarTwoDigits;
+            lblAmountReturn.Text = Resources.ConstAmountZeroDollarTwoDigits;
             SetPurchasedInfo(0);
         }
 
@@ -978,20 +978,20 @@ namespace EzPos.GUIs.Controls
                                 _saleOrder.AmountPaidRiel,
                                 _saleOrder.AmountReturnInt);
 
-                            //If invoice has already been voided
-                            searchCriteria = new List<string> {"ReferenceNum|" + _saleOrder.SaleOrderNumber};
-                            saleOrderList = _saleOrderService.GetSaleOrders(searchCriteria);
+                            ////If invoice has already been voided
+                            //searchCriteria = new List<string> {"ReferenceNum|" + _saleOrder.SaleOrderNumber};
+                            //saleOrderList = _saleOrderService.GetSaleOrders(searchCriteria);
 
-                            if (saleOrderList.Count != 0)
-                            {
-                                _returnEnabled = false;
-                                SaleItemBindingListChanged(null, null);
-                            }
-                            else
-                            {
+                            //if (saleOrderList.Count != 0)
+                            //{
+                            //    _returnEnabled = false;
+                            //    SaleItemBindingListChanged(null, null);
+                            //}
+                            //else
+                            //{
                                 DoActivateControls(false);
                                 ReturnHandler(_returnEnabled = true);
-                            }
+                            //}
                         }
                         Visible = true;
                     }
@@ -1140,12 +1140,7 @@ namespace EzPos.GUIs.Controls
                     "' OR ForeignCode = '" + productCode + "')",
                     "QtyInStock > 0"
                 };
-                //new List<string>
-                //{
-                //    "(ProductCode LIKE '%" + productCode + "%') OR " + 
-                //    "(ForeignCode LIKE '%" + productCode + "%')",
-                //    "QtyInStock > 0"
-                //};
+
             var productList = _productService.GetObjects(strCriteria);
             if (productList.Count != 0)
             {
@@ -1279,8 +1274,7 @@ namespace EzPos.GUIs.Controls
                     saleItem.PublicUPOut = publicUnitPriceOut;
                     //saleItem.UnitPriceOut = product.UnitPriceOut;
                     saleItem.UnitPriceOut = 
-                        product.UnitPriceIn + 
-                        ((product.UnitPriceIn * product.ExtraPercentage) / 100);
+                        product.UnitPriceIn + ((product.UnitPriceIn * product.ExtraPercentage) / 100);
                     saleItem.UnitPriceOut =
                         float.Parse(
                             saleItem.UnitPriceOut.ToString("N", AppContext.CultureInfo),

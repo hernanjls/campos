@@ -183,6 +183,7 @@ namespace EzPos.Service.Common
                     Resources.AppParamIssueReceipt + ", " +
                     Resources.AppParamReceiptTemplate + ", " +
                     Resources.AppParamReceiptPrinter + ", " +
+                    Resources.AppParamApplicationType + ", " +
                     Resources.AppParamReceiptFooter + ")"
                 };
             var appParameterList = GetAppParameters(searchCriteria);
@@ -209,6 +210,8 @@ namespace EzPos.Service.Common
                     AppContext.IssueReceipt = appParameter.ParameterLabel;
                 else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamReceiptPrinter))
                     AppContext.ReceiptPrinter = appParameter.ParameterLabel;
+                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamApplicationType))
+                    AppContext.ApplicationType = appParameter.ParameterLabel;
             }
         }
 
@@ -221,9 +224,9 @@ namespace EzPos.Service.Common
         public void InitializeCustomizedConfiguration(User usrObj)
         {
             AppContext.User = usrObj;
-            UserService userService =
+            var userService =
                 ServiceFactory.GenerateServiceInstance().GenerateUserService();
-            IList userPermissionList = userService.GetPermissionsByUser(usrObj.UserID);
+            var userPermissionList = userService.GetPermissionsByUser(usrObj.UserID);
             if (userPermissionList == null)
                 return;
             AppContext.UserPermissionList = userPermissionList;
@@ -297,7 +300,7 @@ namespace EzPos.Service.Common
                 throw new ArgumentNullException("iListToConvert", Resources.MsgInvalidInput);
 
             var bindingList = new BindingList<object>();
-            foreach (object objInstance in iListToConvert)
+            foreach (var objInstance in iListToConvert)
                 bindingList.Add(objInstance);
             return bindingList;
         }
@@ -305,27 +308,27 @@ namespace EzPos.Service.Common
         public static void DoSynchronizePhoto(string sourcePath, string destinationPath)
         {
             var directoryInfo = new DirectoryInfo(sourcePath);
-            if (directoryInfo.Exists)
+            if (!directoryInfo.Exists) 
+                return;
+
+            foreach (var remoteDirectoryInfo in directoryInfo.GetDirectories())
             {
-                foreach (DirectoryInfo remoteDirectoryInfo in directoryInfo.GetDirectories())
-                {
-                    var localDirectoryInfo =
-                        new DirectoryInfo(destinationPath + @"\" + remoteDirectoryInfo.Name);
-                    if (!localDirectoryInfo.Exists)
-                        localDirectoryInfo.Create();
-                    DoSynchronizePhoto(remoteDirectoryInfo.FullName, localDirectoryInfo.FullName);
-                }
+                var localDirectoryInfo =
+                    new DirectoryInfo(destinationPath + @"\" + remoteDirectoryInfo.Name);
+                if (!localDirectoryInfo.Exists)
+                    localDirectoryInfo.Create();
+                DoSynchronizePhoto(remoteDirectoryInfo.FullName, localDirectoryInfo.FullName);
+            }
 
-                foreach (var remoteFileInfo in directoryInfo.GetFiles())
-                {
-                    if (!remoteFileInfo.Exists) 
-                        continue;
+            foreach (var remoteFileInfo in directoryInfo.GetFiles())
+            {
+                if (!remoteFileInfo.Exists) 
+                    continue;
 
-                    var localFileInfo =
-                        new FileInfo(destinationPath + @"\" + remoteFileInfo.Name);
-                    if (!localFileInfo.Exists)
-                        remoteFileInfo.CopyTo(localFileInfo.FullName);
-                }
+                var localFileInfo =
+                    new FileInfo(destinationPath + @"\" + remoteFileInfo.Name);
+                if (!localFileInfo.Exists)
+                    remoteFileInfo.CopyTo(localFileInfo.FullName);
             }
         }
 

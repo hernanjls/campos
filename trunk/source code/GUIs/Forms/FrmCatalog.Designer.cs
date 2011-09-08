@@ -279,8 +279,8 @@ namespace EzPos.GUIs.Forms
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(230, 86);
             this.txtDescription.TabIndex = 11;
-            this.txtDescription.Leave += new System.EventHandler(this.txtDescription_Leave);
-            this.txtDescription.Enter += new System.EventHandler(this.txtDescription_Enter);
+            this.txtDescription.Leave += new System.EventHandler(this.TxtDescriptionLeave);
+            this.txtDescription.Enter += new System.EventHandler(this.TxtDescriptionEnter);
             // 
             // label1
             // 

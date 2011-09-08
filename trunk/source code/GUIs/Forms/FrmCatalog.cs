@@ -182,7 +182,7 @@ namespace EzPos.GUIs.Forms
         private void TxtUpOutLeave(object sender, EventArgs e)
         {
             if (txtUPOut.Text.Length == 0)
-                txtUPOut.Text = "0.000";
+                txtUPOut.Text = Resources.ConstAmountZeroThreeDigits;
 
             txtUPOut.TextChanged -= ModificationHandler;
         }
@@ -190,7 +190,7 @@ namespace EzPos.GUIs.Forms
         private void TxtDiscountLeave(object sender, EventArgs e)
         {
             if (txtDiscount.Text.Length == 0)
-                txtDiscount.Text = "0.000";
+                txtDiscount.Text = Resources.ConstAmountZeroThreeDigits;
 
             txtDiscount.TextChanged -= ModificationHandler;
         }
@@ -286,7 +286,7 @@ namespace EzPos.GUIs.Forms
                 return;
 
             txtForeignCode.Text = product.ForeignCode;
-            lblProductName.Text = product.ProductName + "\r" + product.ProductCode;
+            lblProductName.Text = product.ProductName + Resources.ConstTextBreak + product.ProductCode;
             cmbCategory.SelectedValue = product.CategoryID;
             cmbMark.SelectedValue = product.MarkID;
             cmbColor.SelectedValue = product.ColorID;
@@ -322,8 +322,8 @@ namespace EzPos.GUIs.Forms
                 return;
 
             if (!String.IsNullOrEmpty(_product.ProductCode))
-                lblProductName.Text += 
-                    "\r" +
+                lblProductName.Text +=
+                    Resources.ConstTextBreak +
                     _product.ProductCode;
         }
 
@@ -414,13 +414,13 @@ namespace EzPos.GUIs.Forms
             try
             {
                 if (string.IsNullOrEmpty(txtUPIn.Text))
-                    txtUPIn.Text = "0.000";
+                    txtUPIn.Text = Resources.ConstAmountZeroThreeDigits;
                 if (string.IsNullOrEmpty(txtExtraPercentage.Text))
-                    txtExtraPercentage.Text = "0";
+                    txtExtraPercentage.Text = Resources.ConstAmountZeroOneDigit;
                 if (string.IsNullOrEmpty(txtDiscount.Text))
-                    txtDiscount.Text = "0";
+                    txtDiscount.Text = Resources.ConstAmountZeroOneDigit;
                 if (string.IsNullOrEmpty(txtUPOut.Text))
-                    txtUPOut.Text = "0.000";
+                    txtUPOut.Text = Resources.ConstAmountZeroThreeDigits;
 
                 float discountPercentage;
                 float unitPriceOut;
@@ -481,7 +481,7 @@ namespace EzPos.GUIs.Forms
         {
             using (var openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "All Pictures|*.bmp;*.gif;*.jpg|Bitmaps|*.bmp|GIFs|*.gif|JPEGs|*.jpg";
+                openFileDialog.Filter = Resources.ConstSupportedImageExtension;
                 openFileDialog.Multiselect = false;
                 if (openFileDialog.ShowDialog() != DialogResult.OK) 
                     return;
@@ -553,7 +553,7 @@ namespace EzPos.GUIs.Forms
         {
             using (var openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "All Pictures|*.bmp;*.gif;*.jpg|Bitmaps|*.bmp|GIFs|*.gif|JPEGs|*.jpg";
+                openFileDialog.Filter = Resources.ConstSupportedImageExtension;
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() != DialogResult.OK) 
                     return;
@@ -815,7 +815,7 @@ namespace EzPos.GUIs.Forms
             DoProductFetching(foreignCode, false);
         }
 
-        private void txtDescription_Enter(object sender, EventArgs e)
+        private void TxtDescriptionEnter(object sender, EventArgs e)
         {
             txtDescription.TextChanged += ModificationHandler;
 
@@ -836,7 +836,7 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtDescription_Leave(object sender, EventArgs e)
+        private void TxtDescriptionLeave(object sender, EventArgs e)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en"));
             txtDescription.TextChanged -= ModificationHandler;

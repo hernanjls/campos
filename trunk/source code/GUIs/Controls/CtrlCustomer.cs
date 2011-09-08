@@ -16,9 +16,9 @@ namespace EzPos.GUIs.Controls
 {
     public partial class CtrlCustomer : UserControl
     {
-        private CommonService _CommonService;
-        private BindingList<Customer> _CustomerList;
-        private CustomerService _CustomerService;
+        private CommonService _commonService;
+        private BindingList<Customer> _customerList;
+        private CustomerService _customerService;
 
         public CtrlCustomer()
         {
@@ -27,12 +27,12 @@ namespace EzPos.GUIs.Controls
 
         public CustomerService CustomerService
         {
-            set { _CustomerService = value; }
+            set { _customerService = value; }
         }
 
         public CommonService CommonService
         {
-            set { _CommonService = value; }
+            set { _commonService = value; }
         }
 
         private void CtrlCustomer_Load(object sender, EventArgs e)
@@ -43,10 +43,10 @@ namespace EzPos.GUIs.Controls
                 {
                     lblResultInfo.Visible = false;
                 }
-                if (_CustomerService == null)
-                    _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
-                if (_CommonService == null)
-                    _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                if (_customerService == null)
+                    _customerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
+                if (_commonService == null)
+                    _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
                 InitializeCustomerList();
 
@@ -54,14 +54,14 @@ namespace EzPos.GUIs.Controls
                 var thread = new Thread(threadStart) {IsBackground = true};
                 thread.Start();
 
-                var discountCardList = _CustomerService.GetUsedDiscountCards();
+                var discountCardList = _customerService.GetUsedDiscountCards();
                 cmbDiscountCard.CustomizedDataBinding(
                     discountCardList,
                     DiscountCard.CONST_DISCOUNT_CARD_NUMBER,
                     DiscountCard.CONST_CUSTOMER_ID,
                     false);
 
-                IListToBindingList(_CustomerService.GetCustomers());
+                IListToBindingList(_customerService.GetCustomers());
                 dgvCustomer.Refresh();
             }
             catch (Exception exception)
@@ -74,10 +74,10 @@ namespace EzPos.GUIs.Controls
 
         private void InitializeCustomerList()
         {
-            if (_CustomerList == null)
-                _CustomerList = new BindingList<Customer>();
+            if (_customerList == null)
+                _customerList = new BindingList<Customer>();
 
-            dgvCustomer.DataSource = _CustomerList;
+            dgvCustomer.DataSource = _customerList;
             dgvCustomer.Columns["CustomerName"].DisplayIndex = 0;
             dgvCustomer.Columns["GenderID"].DisplayIndex = 1;
             dgvCustomer.Columns["PhoneNumber"].DisplayIndex = 2;
@@ -90,10 +90,10 @@ namespace EzPos.GUIs.Controls
             if (customerList == null)
                 throw new ArgumentNullException("customerList", "customerList");
 
-            if (_CustomerList == null)
+            if (_customerList == null)
                 return;
 
-            _CustomerList.Clear();
+            _customerList.Clear();
             foreach (Customer customer in customerList)
             {
                 if (cmbDiscountCard.Items.Count != 0)
@@ -107,21 +107,21 @@ namespace EzPos.GUIs.Controls
                         customer.DiscountPercentage = discountCard.DiscountPercentage;
                     }
                 }
-                _CustomerList.Add(customer);
+                _customerList.Add(customer);
             }
 
             UpdateResultInfo();
             EnableActionButton();
         }
 
-        private void dgvCustomer_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void DgvCustomerDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             FrmExtendedMessageBox.UnknownErrorMessage(
                 Resources.MsgCaptionUnknownError,
                 e.Exception.Message);
         }
 
-        private void dgvCustomer_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvCustomerCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionEditCustomer))
             {
@@ -144,12 +144,12 @@ namespace EzPos.GUIs.Controls
         {
             using (var frmCustomer = new FrmCustomer())
             {
-                frmCustomer.CommonService = _CommonService;
-                frmCustomer.CustomerService = _CustomerService;
+                frmCustomer.CommonService = _commonService;
+                frmCustomer.CustomerService = _customerService;
 
                 if (operationRequest.Equals(Resources.OperationRequestUpdate))
                     if (dgvCustomer.CurrentRow != null)
-                        frmCustomer.Customer = _CustomerList[dgvCustomer.CurrentRow.Index];
+                        frmCustomer.Customer = _customerList[dgvCustomer.CurrentRow.Index];
 
                 if (frmCustomer.ShowDialog(this) == DialogResult.OK)
                 {
@@ -160,7 +160,7 @@ namespace EzPos.GUIs.Controls
                         thread.Start();
 
                         if (operationRequest.Equals(Resources.OperationRequestInsert))
-                            _CustomerList.Add(frmCustomer.Customer);
+                            _customerList.Add(frmCustomer.Customer);
 
                         dgvCustomer.Refresh();
                         SetCustomerInfo();
@@ -179,7 +179,7 @@ namespace EzPos.GUIs.Controls
             SetFocusToCustomerList();
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
+        private void BtnNewClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionAddCustomer))
             {
@@ -198,7 +198,7 @@ namespace EzPos.GUIs.Controls
             CustomerManagement(Resources.OperationRequestInsert);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDeleteClick(object sender, EventArgs e)
         {
             string briefMsg, detailMsg;
 
@@ -232,15 +232,15 @@ namespace EzPos.GUIs.Controls
 
             try
             {
-                _CustomerService.CustomerManagement(
-                    _CustomerList[dgvCustomer.CurrentRow.Index],
+                _customerService.CustomerManagement(
+                    _customerList[dgvCustomer.CurrentRow.Index],
                     Resources.OperationRequestDelete);
 
                 ThreadStart threadStart = UpdateControlContent;
                 var thread = new Thread(threadStart);
                 thread.Start();
 
-                _CustomerList.RemoveAt(dgvCustomer.CurrentRow.Index);
+                _customerList.RemoveAt(dgvCustomer.CurrentRow.Index);
                 dgvCustomer.Refresh();
 
                 UpdateResultInfo();
@@ -254,14 +254,14 @@ namespace EzPos.GUIs.Controls
             }
         }
 
-        private void dgvCustomer_SelectionChanged(object sender, EventArgs e)
+        private void DgvCustomerSelectionChanged(object sender, EventArgs e)
         {
             SetCustomerInfo();
         }
 
         private void SetCustomerInfo()
         {
-            if ((_CustomerList.Count == 0) || (dgvCustomer.CurrentRow == null))
+            if ((_customerList.Count == 0) || (dgvCustomer.CurrentRow == null))
             {
                 addressLbl.Text = string.Empty;
                 purchaseAmountLbl.Text = "$ 0.00";
@@ -269,7 +269,7 @@ namespace EzPos.GUIs.Controls
                 return;
             }
 
-            var customer = _CustomerList[dgvCustomer.CurrentRow.Index];
+            var customer = _customerList[dgvCustomer.CurrentRow.Index];
             addressLbl.Text = customer.Address;
             purchaseAmountLbl.Text = "$ " + customer.PurchasedAmount.ToString("N", AppContext.CultureInfo);
             debtAmountLbl.Text = "$ " + customer.DebtAmount.ToString("N", AppContext.CultureInfo);
@@ -287,12 +287,9 @@ namespace EzPos.GUIs.Controls
             {
                 var searchCriteria = new List<string> {"ParameterTypeID IN (20)"};
 
-                var objList = _CommonService.GetAppParameters(searchCriteria);
+                var objList = _commonService.GetAppParameters(searchCriteria);
 
-                //_CommonService.PopAppParamExtendedCombobox(
-                //    ref cmbGender, objList, int.Parse(Resources.AppParamGender, AppContext.CultureInfo), false);
-
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbDCardType, objList, int.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo), false);
             }
         }
@@ -305,11 +302,11 @@ namespace EzPos.GUIs.Controls
 
         private void EnableActionButton()
         {
-            btnDelete.Enabled = _CustomerList.Count != 0;
+            btnDelete.Enabled = _customerList.Count != 0;
             SetFocusToCustomerList();
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
+        private void BtnResetClick(object sender, EventArgs e)
         {
             txtCustomerName.Text = string.Empty;
             txtPhoneNumber.Text = string.Empty;
@@ -317,10 +314,10 @@ namespace EzPos.GUIs.Controls
             txtCardNum.Text = string.Empty;
             cmbDCardType.SelectedIndex = -1;
 
-            btnSearch_Click(sender, e);
+            BtnSearchClick(sender, e);
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void BtnSearchClick(object sender, EventArgs e)
         {
             try
             {
@@ -346,7 +343,7 @@ namespace EzPos.GUIs.Controls
                         cmbDCardType.SelectedValue + ")");
 
                 IListToBindingList(
-                    _CustomerService.GetCustomers(searchCriteria));
+                    _customerService.GetCustomers(searchCriteria));
                 dgvCustomer.Refresh();
             }
             catch (ADOException exception)
@@ -360,8 +357,8 @@ namespace EzPos.GUIs.Controls
         private void UpdateResultInfo()
         {
             var resultNum = 0;
-            if (_CustomerList != null)
-                resultNum = _CustomerList.Count;
+            if (_customerList != null)
+                resultNum = _customerList.Count;
 
             var strResultInfo = string.Format(
                 "ការសែ្វងរករបស់អ្នកផ្តល់លទ្ឋផលចំនួន {0}",
@@ -369,22 +366,22 @@ namespace EzPos.GUIs.Controls
             lblResultInfo.Text = strResultInfo;
         }
 
-        private void btnNew_MouseEnter(object sender, EventArgs e)
+        private void BtnNewMouseEnter(object sender, EventArgs e)
         {
             btnNew.BackgroundImage = Resources.background_9;
         }
 
-        private void btnDelete_MouseEnter(object sender, EventArgs e)
+        private void BtnDeleteMouseEnter(object sender, EventArgs e)
         {
             btnDelete.BackgroundImage = Resources.background_9;
         }
 
-        private void btnDelete_MouseLeave(object sender, EventArgs e)
+        private void BtnDeleteMouseLeave(object sender, EventArgs e)
         {
             btnDelete.BackgroundImage = null;
         }
 
-        private void btnNew_MouseLeave(object sender, EventArgs e)
+        private void BtnNewMouseLeave(object sender, EventArgs e)
         {
             btnNew.BackgroundImage = null;
         }
@@ -395,7 +392,7 @@ namespace EzPos.GUIs.Controls
 
         #endregion
 
-        private void btnOutstandingInvoice_Click(object sender, EventArgs e)
+        private void BtnOutstandingInvoiceClick(object sender, EventArgs e)
         {
             Visible = false;
             using (var frmOutstandingInvoice = new FrmDeposit())
@@ -403,7 +400,7 @@ namespace EzPos.GUIs.Controls
                 if(dgvCustomer.CurrentRow == null)
                     return;
 
-                frmOutstandingInvoice.CustomerId = _CustomerList[dgvCustomer.CurrentRow.Index].CustomerID;
+                frmOutstandingInvoice.CustomerId = _customerList[dgvCustomer.CurrentRow.Index].CustomerID;
                 if (frmOutstandingInvoice.ShowDialog(this) == DialogResult.OK)
                 {
                     try
@@ -420,12 +417,12 @@ namespace EzPos.GUIs.Controls
             }
         }
 
-        private void btnOutstandingInvoice_MouseEnter(object sender, EventArgs e)
+        private void BtnOutstandingInvoiceMouseEnter(object sender, EventArgs e)
         {
             btnOutstandingInvoice.BackgroundImage = Resources.background_9;
         }
 
-        private void btnOutstandingInvoice_MouseLeave(object sender, EventArgs e)
+        private void BtnOutstandingInvoiceMouseLeave(object sender, EventArgs e)
         {
             btnOutstandingInvoice.BackgroundImage = null;
         }
