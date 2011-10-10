@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using EzPos.DataAccess;
+using EzPos.DataAccess.SaleOrder;
 using EzPos.Model;
 using EzPos.Properties;
 
-namespace EzPos.Service
+namespace EzPos.Service.SaleOrder
 {
     public class SaleOrderService
     {
@@ -30,13 +30,13 @@ namespace EzPos.Service
             return _saleOrderDataAccess.GetSaleOrders(searchCriteria);
         }
 
-        public virtual SaleOrder GetSaleOrder(Deposit deposit)
+        public virtual Model.SaleOrder GetSaleOrder(Deposit deposit)
         {
             if (deposit == null)
                 throw new ArgumentNullException("deposit", Resources.MsgInvalidDeposit);
 
             var saleOrder = 
-                new SaleOrder
+                new Model.SaleOrder
                 {
                     AmountPaidInt = deposit.AmountPaidInt,
                     AmountPaidRiel = deposit.AmountPaidRiel,
@@ -62,12 +62,12 @@ namespace EzPos.Service
             return saleOrder;
         }
 
-        public virtual void UpdateSaleOrder(SaleOrder saleOrder)
+        public virtual void UpdateSaleOrder(Model.SaleOrder saleOrder)
         {
             _saleOrderDataAccess.UpdateSaleOrder(saleOrder);
         }
 
-        public virtual void InsertSaleOrder(SaleOrder saleOrder)
+        public virtual void InsertSaleOrder(Model.SaleOrder saleOrder)
         {
             if (saleOrder == null)
                 throw new ArgumentNullException("saleOrder", Resources.MsgInvalidSaleOrder);
@@ -76,20 +76,9 @@ namespace EzPos.Service
             saleOrder.SaleOrderNumber = "S-00" + saleOrder.SaleOrderId;
 
             _saleOrderDataAccess.UpdateSaleOrder(saleOrder);
-
-            //var paymentService = ServiceFactory.GenerateServiceInstance().GeneratePaymentService();
-            //var payment = 
-            //    new Model.Payments.Payment
-            //    {
-            //        PaymentDate = saleOrder.SaleOrderDate,
-            //        PaymentAmount = saleOrder.AmountPaidInt,
-            //        SalesOrderId = saleOrder.SaleOrderId,
-            //        CashierId = saleOrder.CashierId
-            //    };
-            //paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
         }
 
-        public virtual SaleOrder RecordSaleOrder(
+        public virtual Model.SaleOrder RecordSaleOrder(
             IList saleItemList,
             float totalAmountInt,
             float totalAmountPaidInt,
@@ -111,7 +100,7 @@ namespace EzPos.Service
 
             //SaleOrder
             var saleOrder = 
-                new SaleOrder
+                new Model.SaleOrder
                 {
                     SaleOrderDate = DateTime.Now,
                     SaleOrderTypeID = (isReturned ? 1 : 0),
@@ -176,8 +165,7 @@ namespace EzPos.Service
                 if (isReturned)
                     saleItem.QtySold *= factor;
 
-                //Product                    
-                //productService.UpdateProduct(saleItem, isReturned);
+                //Product                                    
                 productService.UpdateProduct(saleItem);
 
                 //SaleItem

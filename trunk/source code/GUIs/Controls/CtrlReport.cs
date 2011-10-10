@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using EzPos.Service.Common;
 using EzPos.Service.Product;
+using EzPos.Service.SaleOrder;
 using Microsoft.Office.Interop.Excel;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
 using System.Runtime.InteropServices;

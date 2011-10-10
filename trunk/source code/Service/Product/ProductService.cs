@@ -5,7 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using Castle.Services.Transaction;
-using EzPos.DataAccess;
+using EzPos.DataAccess.Product;
 using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Utility;
@@ -40,7 +40,7 @@ namespace EzPos.Service.Product
 
         public IList GetObjectsById(int productId)
         {
-            return _productDataAccess.GetProductByID(productId);
+            return _productDataAccess.GetProductById(productId);
         }
 
         public IList GetAvailableProducts()
@@ -103,7 +103,7 @@ namespace EzPos.Service.Product
 
         public virtual void UpdateProduct(SaleItem saleItem)
         {
-            var productList = _productDataAccess.GetProductByID(saleItem.ProductID);
+            var productList = _productDataAccess.GetProductById(saleItem.ProductID);
             if (productList == null)
                 return;
 
@@ -527,7 +527,7 @@ namespace EzPos.Service.Product
             }
         }
 
-        public bool IsValidatedProductCode(string productCode, out string errorMsg)
+        public bool IsValidatedProductCode(int productId, string productCode, out string errorMsg)
         {
             errorMsg = string.Empty;
             if (string.IsNullOrEmpty(productCode))

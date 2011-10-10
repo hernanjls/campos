@@ -4,7 +4,7 @@ using EzPos.Model;
 using EzPos.Utility;
 using NHibernate.Expression;
 
-namespace EzPos.DataAccess
+namespace EzPos.DataAccess.SaleOrder
 {
     public class SaleOrderDataAccess : BaseDataAccess
     {
@@ -13,11 +13,11 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(SaleOrder.CONST_SALE_ORDER_ID),
-                    Order.Asc(SaleOrder.CONST_SALE_ORDER_NUMBER)
+                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_ID),
+                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_NUMBER)
                 };
 
-            return SelectObjects(typeof (SaleOrder), orderList).List();
+            return SelectObjects(typeof (Model.SaleOrder), orderList).List();
         }
 
         public virtual IList GetSaleOrders(IList searchCriteria)
@@ -41,19 +41,19 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(SaleOrder.CONST_SALE_ORDER_DATE),
-                    Order.Asc(SaleOrder.CONST_SALE_ORDER_NUMBER)
+                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_DATE),
+                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_NUMBER)
                 };
 
-            return SelectObjects(typeof (SaleOrder), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.SaleOrder), criterionList, orderList).List();
         }
 
-        public virtual void UpdateSaleOrder(SaleOrder saleOrder)
+        public virtual void UpdateSaleOrder(Model.SaleOrder saleOrder)
         {
             UpdateObject(saleOrder);
         }
 
-        public virtual void InsertSaleOrder(SaleOrder saleOrder)
+        public virtual void InsertSaleOrder(Model.SaleOrder saleOrder)
         {
             InsertObject(saleOrder);
         }

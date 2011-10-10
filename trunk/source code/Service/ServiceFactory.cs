@@ -3,71 +3,70 @@ using System.Configuration;
 using EzPos.Service.Common;
 using EzPos.Service.Payment;
 using EzPos.Service.Product;
+using EzPos.Service.SaleOrder;
 
 namespace EzPos.Service
 {
     public class ServiceFactory
     {
-        private static readonly String APP_XML_CONFIG = ConfigurationManager.AppSettings["ServiceHibernatePath"];
-        private static ApplicationContainer _ApplicationContainer;
-        private static ServiceFactory _ServiceInstance;
+        private static readonly String AppXmlConfig = ConfigurationManager.AppSettings["ServiceHibernatePath"];
+        private static ApplicationContainer _applicationContainer;
+        private static ServiceFactory _serviceInstance;
 
         private ServiceFactory()
         {
-            if (_ApplicationContainer == null)
-                _ApplicationContainer = new ApplicationContainer(APP_XML_CONFIG);
+            if (_applicationContainer == null)
+                _applicationContainer = new ApplicationContainer(AppXmlConfig);
         }
 
         public static ServiceFactory GenerateServiceInstance()
         {
-            if (_ServiceInstance == null)
-                _ServiceInstance = new ServiceFactory();
-            return _ServiceInstance;
+            return _serviceInstance ?? (_serviceInstance = new ServiceFactory());
         }
 
         public ProductService GenerateProductService()
         {
-            return (ProductService) _ApplicationContainer[typeof (ProductService)];
+            return (ProductService) _applicationContainer[typeof (ProductService)];
         }
 
         public CustomerService GenerateCustomerService()
         {
-            return (CustomerService) _ApplicationContainer[typeof (CustomerService)];
+            return (CustomerService) _applicationContainer[typeof (CustomerService)];
         }
 
         public SaleOrderService GenerateSaleOrderService()
         {
-            return (SaleOrderService) _ApplicationContainer[typeof (SaleOrderService)];
+            return (SaleOrderService) _applicationContainer[typeof (SaleOrderService)];
         }
 
         public DepositService GenerateDepositService()
         {
-            return (DepositService)_ApplicationContainer[typeof(DepositService)];
+            return (DepositService)_applicationContainer[typeof(DepositService)];
         }
 
         public PaymentService GeneratePaymentService()
         {
-            return (PaymentService)_ApplicationContainer[typeof(PaymentService)];
+            return (PaymentService)_applicationContainer[typeof(PaymentService)];
         }
 
         public UserService GenerateUserService()
         {
-            return (UserService) _ApplicationContainer[typeof (UserService)];
+            return (UserService) _applicationContainer[typeof (UserService)];
         }
 
         public SupplierService GenerateSupplierService()
         {
-            return (SupplierService) _ApplicationContainer[typeof(SupplierService)];
+            return (SupplierService) _applicationContainer[typeof(SupplierService)];
         }
 
         public CommonService GenerateCommonService()
         {
-            return (CommonService) _ApplicationContainer[typeof (CommonService)];
+            return (CommonService) _applicationContainer[typeof (CommonService)];
         }
 
         public ExpenseService GenerateExpenseService()
         {
-            return (ExpenseService) _ApplicationContainer[typeof (ExpenseService)];
+            return (ExpenseService) _applicationContainer[typeof (ExpenseService)];
         }
     }
 }

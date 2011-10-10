@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Castle.Services.Transaction;
 using EzPos.DataAccess;
+using EzPos.DataAccess.Customer;
 using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Utility;

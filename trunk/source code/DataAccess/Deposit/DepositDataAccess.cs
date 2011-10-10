@@ -113,10 +113,10 @@ namespace EzPos.DataAccess
 
             var typeList = new Type[5];
             typeList[0] = typeof(Deposit);
-            typeList[1] = typeof(Customer);
+            typeList[1] = typeof(Model.Customer);
             typeList[2] = typeof(User);
             typeList[3] = typeof(DepositItem);
-            typeList[4] = typeof(Product);
+            typeList[4] = typeof(Model.Product);
 
             return SelectObjects(qryStr, aliasList, typeList);
         }
