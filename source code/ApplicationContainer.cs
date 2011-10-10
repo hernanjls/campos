@@ -4,11 +4,15 @@ using Castle.Facilities.NHibernateIntegration;
 using Castle.MicroKernel;
 using Castle.Windsor;
 using EzPos.DataAccess;
+using EzPos.DataAccess.Customer;
+using EzPos.DataAccess.Product;
+using EzPos.DataAccess.SaleOrder;
 using EzPos.Service;
 using EzPos.Service.Common;
 using EzPos.Service.Payment;
 using EzPos.DataAccess.Payments;
 using EzPos.Service.Product;
+using EzPos.Service.SaleOrder;
 
 // Copyright 2004-2005 Castle Project - http://www.castleproject.org/
 // 

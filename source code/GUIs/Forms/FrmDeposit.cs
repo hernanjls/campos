@@ -7,6 +7,7 @@ using EzPos.Model;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.SaleOrder;
 
 namespace EzPos.GUIs.Forms
 {

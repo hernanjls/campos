@@ -734,7 +734,7 @@ namespace EzPos.GUIs.Forms
         {
             txtForeignCode.TextChanged -= ModificationHandler;
             string detailMsg;
-            if (!_productService.IsValidatedProductCode(txtForeignCode.Text, out detailMsg))
+            if (!_productService.IsValidatedProductCode(_product.ProductID, txtForeignCode.Text, out detailMsg))
             {
                 const string briefMsg = "អំពីពត៌មាន";
                 using (var frmMessageBox = new FrmExtendedMessageBox())
@@ -745,6 +745,7 @@ namespace EzPos.GUIs.Forms
                     return;
                 }
             }
+
             DoProductFetching(txtForeignCode.Text, true);
         }
 
@@ -798,14 +799,14 @@ namespace EzPos.GUIs.Forms
             if ((selectedIndex != -1) || (!isAllowed)) 
                 return;
 
-            var strCriteria = 
+            var searchCriteria = 
                 new List<string>
                 {
                     "ForeignCode|" + foreignCode,
-                    "QtyInStock > 0",
+                    //"QtyInStock > 0",
                     "ProductID <> " + (_product == null ? 0 : _product.ProductID)
                 };
-            var productList = _productService.GetObjects(strCriteria);
+            var productList = _productService.GetObjects(searchCriteria);
             if (productList.Count == 0) 
                 return;
 

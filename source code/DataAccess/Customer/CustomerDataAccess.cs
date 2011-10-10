@@ -4,7 +4,7 @@ using EzPos.Model;
 using EzPos.Utility;
 using NHibernate.Expression;
 
-namespace EzPos.DataAccess
+namespace EzPos.DataAccess.Customer
 {
     /// <summary>
     /// Summary description for CustomerDataAccess.
@@ -13,12 +13,14 @@ namespace EzPos.DataAccess
     {
         public virtual IList GetCustomers()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(Customer.CONST_CUSTOMER_NAME));
-            orderList.Add(Order.Desc(Customer.CONST_CUSTOMER_ID));
+            var orderList = new Collection<Order>
+                                {
+                                    Order.Asc(Model.Customer.CONST_CUSTOMER_NAME),
+                                    Order.Desc(Model.Customer.CONST_CUSTOMER_ID)
+                                };
 
             return SelectObjects(
-                typeof (Customer), orderList).List();
+                typeof (Model.Customer), orderList).List();
         }
 
         public virtual IList GetCustomers(IList searchCriteria)
@@ -39,48 +41,50 @@ namespace EzPos.DataAccess
                 }
             }
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(Customer.CONST_CUSTOMER_NAME));
-            orderList.Add(Order.Desc(Customer.CONST_CUSTOMER_ID));
+            var orderList = new Collection<Order>
+                                {
+                                    Order.Asc(Model.Customer.CONST_CUSTOMER_NAME),
+                                    Order.Desc(Model.Customer.CONST_CUSTOMER_ID)
+                                };
 
             return SelectObjects(
-                typeof (Customer), criterionList, orderList).List();
+                typeof (Model.Customer), criterionList, orderList).List();
         }
 
-        public virtual void InsertCustomer(Customer customer)
+        public virtual void InsertCustomer(Model.Customer customer)
         {
             InsertObject(customer);
         }
 
-        public virtual void UpdateCustomer(Customer customer)
+        public virtual void UpdateCustomer(Model.Customer customer)
         {
             UpdateObject(customer);
         }
 
-        public virtual void DeleteCustomer(Customer customer)
+        public virtual void DeleteCustomer(Model.Customer customer)
         {
             DeleteObject(customer);
         }
 
-        public virtual SaleOrder GetASaleOrder(int customerId)
+        public virtual Model.SaleOrder GetASaleOrder(int customerId)
         {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("CustomerId", customerId));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("CustomerId", customerId)};
 
-            return (SaleOrder) SelectObjects(
-                                   typeof (SaleOrder),
+            return (Model.SaleOrder)SelectObjects(
+                                   typeof(Model.SaleOrder),
                                    criterionList).UniqueResult();
         }
 
         //Discount card
         public virtual IList GetDiscountCardsByCustomer(int customerId)
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(DiscountCard.CONST_CUSTOMER_ID));
-            orderList.Add(Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_ID));
+            var orderList = new Collection<Order>
+                                {
+                                    Order.Asc(DiscountCard.CONST_CUSTOMER_ID),
+                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                };
 
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("CustomerID", customerId));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("CustomerID", customerId)};
 
             return SelectObjects(
                 typeof (DiscountCard),
@@ -89,9 +93,11 @@ namespace EzPos.DataAccess
 
         public virtual IList GetDiscountCards()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER));
-            orderList.Add(Order.Desc(DiscountCard.CONST_DISCOUNT_CARD_ID));
+            var orderList = new Collection<Order>
+                                {
+                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER),
+                                    Order.Desc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                };
 
             return SelectObjects(
                 typeof (DiscountCard), orderList).List();
@@ -114,21 +120,24 @@ namespace EzPos.DataAccess
                 }
             }
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER));
-            orderList.Add(Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_ID));
+            var orderList = new Collection<Order>
+                                {
+                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER),
+                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                };
 
             return SelectObjects(typeof (DiscountCard), criterionList, orderList).List();
         }
 
         public virtual IList GetUsedDiscountCards()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER));
-            orderList.Add(Order.Desc(DiscountCard.CONST_DISCOUNT_CARD_ID));
+            var orderList = new Collection<Order>
+                                {
+                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER),
+                                    Order.Desc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                };
 
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Gt("CustomerID", "0"));
+            var criterionList = new Collection<ICriterion> {Expression.Gt("CustomerID", "0")};
 
             return SelectObjects(
                 typeof (DiscountCard), criterionList, orderList).List();

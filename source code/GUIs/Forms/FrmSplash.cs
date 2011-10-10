@@ -6,6 +6,7 @@ using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
 using EzPos.Service.Product;
+using EzPos.Service.SaleOrder;
 
 namespace EzPos.GUIs.Forms
 {

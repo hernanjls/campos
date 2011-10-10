@@ -13,6 +13,7 @@ using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
 using EzPos.Service.Product;
+using EzPos.Service.SaleOrder;
 using EzPos.Utility;
 
 namespace EzPos.GUIs.Controls
@@ -117,6 +118,10 @@ namespace EzPos.GUIs.Controls
                 var product = (Product) cmbProduct.SelectedItem;
                 if (product == null)
                     return;
+
+                if (product.QtyInStock <= 0)
+                    return;
+
                 SetProductInfo(product);
 
                 var foundFlag = false;
@@ -400,9 +405,6 @@ namespace EzPos.GUIs.Controls
                         UpdateSelectedIndex(dgvSaleItem.SelectedRows[0].Index + 1);
                         break;
                     case Keys.Return:
-                        //if (!btnValid.Enabled)
-                        //    return;
-
                         DoProductFetching(txtHidden.Text, true);
                         break;
                     case Keys.F1:
@@ -577,12 +579,9 @@ namespace EzPos.GUIs.Controls
                 else
                 {
                     cmbProduct.SelectedIndexChanged -= CmbProductSelectedIndexChanged;
-                    foreach (var product in _productList)
+                    foreach (var product in
+                        _productList.Where(product => product.ProductID == Int32.Parse(dgvSaleItem.Rows[dgvSaleItem.SelectedRows[0].Index].Cells["ProductID"].Value.ToString(), AppContext.CultureInfo)))
                     {
-                        if (product.ProductID != 
-                            Int32.Parse(dgvSaleItem.Rows[dgvSaleItem.SelectedRows[0].Index].Cells["ProductID"].Value.ToString(), AppContext.CultureInfo)) 
-                            continue;
-
                         SetProductInfo(product);
                         cmbProduct.SelectedIndex = -1;
                         break;
@@ -616,15 +615,6 @@ namespace EzPos.GUIs.Controls
             {
                 if ((_returnEnabled) || (btnValid.Text.Equals(Resources.ConstSalePrint)))
                 {
-                    //InvoicePrinting(
-                    //    _saleOrder.FKCustomer,
-                    //    _saleOrder.SaleOrderNumber,
-                    //    (DateTime)_saleOrder.SaleOrderDate,
-                    //    _saleOrder.Discount,
-                    //    0,
-                    //    _saleOrder.AmountPaidInt,
-                    //    0,
-                    //    false);                                        
                     InvoicePrinting(
                         _saleOrder.FKCustomer,
                         _saleOrder.SaleOrderNumber,
@@ -680,6 +670,8 @@ namespace EzPos.GUIs.Controls
                                 _saleOrder.AmountPaidInt,
                                 _saleOrder.AmountReturnInt,
                                 false);
+
+                            LocalStockHandler();
 
                             var frmThank = new FrmThank();
                             frmThank.ShowDialog(this);
@@ -864,6 +856,8 @@ namespace EzPos.GUIs.Controls
                             0,
                             0,
                             true);
+
+                        LocalStockHandler();
 
                         var frmThank = new FrmThank();
                         frmThank.ShowDialog(this);
@@ -1108,8 +1102,6 @@ namespace EzPos.GUIs.Controls
             if (String.IsNullOrEmpty(productCode))
                 return;
 
-            //productCode = productCode.Replace("+", string.Empty);
-            //productCode = productCode.Replace("-", string.Empty);
             cmbProduct.SelectedIndex = -1;
             var selectedIndex = cmbProduct.FindStringExact(
                 StringHelper.Right("000000000" + productCode, 9));
@@ -1427,6 +1419,25 @@ namespace EzPos.GUIs.Controls
 
             _returnEnabled = false;
             btnSearchSaleOrder.Text = Resources.ConstSaleSearch;
+        }
+
+        private void LocalStockHandler()
+        {
+            if(_saleItemBindingList == null)
+                return;
+
+            foreach (var saleItem in _saleItemBindingList.Where(saleItem => saleItem != null).Where(saleItem => saleItem.FKProduct != null))
+            {
+                if(saleItem == null)
+                    continue;
+
+                if(saleItem.FKProduct == null)
+                    continue;
+
+                var product = saleItem.FKProduct;
+                product.QtyInStock -= saleItem.QtySold;
+                product.QtySold += saleItem.QtySold;
+            }            
         }
     }
 }
