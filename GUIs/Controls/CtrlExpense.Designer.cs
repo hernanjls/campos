@@ -120,8 +120,8 @@ namespace EzPos.GUIs.Controls
             this.dgvExpense.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvExpense.Size = new System.Drawing.Size(822, 469);
             this.dgvExpense.TabIndex = 1;
-            this.dgvExpense.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpense_CellDoubleClick);
-            this.dgvExpense.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvExpense_DataError);
+            this.dgvExpense.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvExpenseCellDoubleClick);
+            this.dgvExpense.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DgvExpenseDataError);
             // 
             // pnlBodySearch
             // 
@@ -273,7 +273,7 @@ namespace EzPos.GUIs.Controls
             this.btnNew.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNew.UseVisualStyleBackColor = false;
             this.btnNew.MouseLeave += new System.EventHandler(this.BtnNewMouseLeave);
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            this.btnNew.Click += new System.EventHandler(this.BtnNewClick);
             this.btnNew.MouseEnter += new System.EventHandler(this.BtnNewMouseEnter);
             // 
             // cmbExpenseType

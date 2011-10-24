@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
 using EzPos.Model;
+using EzPos.Model.Expense;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
@@ -14,9 +15,9 @@ namespace EzPos.GUIs.Controls
 {
     public partial class CtrlExpense : UserControl
     {
-        private CommonService _CommonService;
-        private BindingList<Expense> _ExpenseList;
-        private ExpenseService _ExpenseService;
+        private CommonService _commonService;
+        private BindingList<Expense> _expenseList;
+        private ExpenseService _expenseService;
 
         public CtrlExpense()
         {
@@ -25,22 +26,22 @@ namespace EzPos.GUIs.Controls
 
         public CommonService CommonService
         {
-            set { _CommonService = value; }
+            set { _commonService = value; }
         }
 
         public ExpenseService ExpenseService
         {
-            set { _ExpenseService = value; }
+            set { _expenseService = value; }
         }
 
-        private void dgvExpense_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void DgvExpenseDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             FrmExtendedMessageBox.UnknownErrorMessage(
                 Resources.MsgCaptionUnknownError,
                 e.Exception.Message);
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
+        private void BtnNewClick(object sender, EventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionAddExpense))
             {
@@ -60,7 +61,7 @@ namespace EzPos.GUIs.Controls
 
         private void BtnDeleteClick(object sender, EventArgs e)
         {
-            string briefMsg, detailMsg;
+            string briefMsg, detailMsg = string.Empty;
 
             if (!UserService.AllowToPerform(Resources.PermissionDeleteExpense))
             {
@@ -77,8 +78,9 @@ namespace EzPos.GUIs.Controls
             }
 
             briefMsg = "អំពីការលុប";
-            detailMsg = Resources.MsgOperationRequestDelete + "\n" +
-                        dgvExpense.CurrentRow.Cells["Description"].Value + " ?";
+            if (dgvExpense.CurrentRow != null)
+                detailMsg = Resources.MsgOperationRequestDelete + "\n" +
+                            dgvExpense.CurrentRow.Cells["Description"].Value + " ?";
             using (var frmMessageBox = new FrmExtendedMessageBox())
             {
                 frmMessageBox.BriefMsgStr = briefMsg;
@@ -89,10 +91,13 @@ namespace EzPos.GUIs.Controls
 
             try
             {
-                _ExpenseService.ExpenseManagement(_ExpenseList[dgvExpense.CurrentRow.Index],
-                                                  Resources.OperationRequestDelete);
+                if (dgvExpense.CurrentRow != null)
+                {
+                    _expenseService.ExpenseManagement(_expenseList[dgvExpense.CurrentRow.Index],
+                                                      Resources.OperationRequestDelete);
 
-                _ExpenseList.RemoveAt(dgvExpense.CurrentRow.Index);
+                    _expenseList.RemoveAt(dgvExpense.CurrentRow.Index);
+                }
                 dgvExpense.Refresh();
                 UpdateResultInfo();
                 EnableActionButton();
@@ -107,10 +112,10 @@ namespace EzPos.GUIs.Controls
 
         private void CtrlExpense_Load(object sender, EventArgs e)
         {
-            if (_CommonService == null)
-                _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
-            if (_ExpenseService == null)
-                _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+            if (_commonService == null)
+                _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+            if (_expenseService == null)
+                _expenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
             
             try
             {
@@ -125,7 +130,7 @@ namespace EzPos.GUIs.Controls
                 var thread = new Thread(threadStart) {IsBackground = true};
                 thread.Start();
 
-                IListToBindingList(_ExpenseService.GetExpenses());
+                IListToBindingList(_expenseService.GetExpenses());
                 dgvExpense.Refresh();
             }
             catch (Exception exception)
@@ -140,10 +145,10 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
-                if (_ExpenseList == null)
-                    _ExpenseList = new BindingList<Expense>();
+                if (_expenseList == null)
+                    _expenseList = new BindingList<Expense>();
 
-                dgvExpense.DataSource = _ExpenseList;
+                dgvExpense.DataSource = _expenseList;
                 dgvExpense.Columns["ExpenseDate"].DisplayIndex = 0;
                 dgvExpense.Columns["ExpenseTypeStr"].DisplayIndex = 1;
                 dgvExpense.Columns["Description"].DisplayIndex = 2;
@@ -161,14 +166,14 @@ namespace EzPos.GUIs.Controls
         private void IListToBindingList(IList expenseList)
         {
             if (expenseList == null)
-                throw new ArgumentNullException("expenseList", "Expense List");
+                throw new ArgumentNullException("expenseList", Resources.MsgInvalidExpense);
 
-            if (_ExpenseList == null)
+            if (_expenseList == null)
                 return;
 
-            _ExpenseList.Clear();
+            _expenseList.Clear();
             foreach (Expense expense in expenseList)
-                _ExpenseList.Add(expense);
+                _expenseList.Add(expense);
 
             UpdateResultInfo();
             EnableActionButton();
@@ -176,7 +181,7 @@ namespace EzPos.GUIs.Controls
 
         private void EnableActionButton()
         {
-            btnDelete.Enabled = _ExpenseList.Count != 0;
+            btnDelete.Enabled = _expenseList.Count != 0;
 
             SetFocusToExpenseList();
         }
@@ -192,30 +197,30 @@ namespace EzPos.GUIs.Controls
             using (var frmExpense = new FrmExpense())
             {
                 if (operationRequest.Equals(Resources.OperationRequestUpdate))
-                    frmExpense.Expense = _ExpenseList[dgvExpense.CurrentRow.Index];
+                    if (dgvExpense.CurrentRow != null) frmExpense.Expense = _expenseList[dgvExpense.CurrentRow.Index];
 
-                if (frmExpense.ShowDialog(this) == DialogResult.OK)
+                if (frmExpense.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                try
                 {
-                    try
-                    {
-                        if (operationRequest.Equals(Resources.OperationRequestInsert))
-                            _ExpenseList.Add(frmExpense.Expense);
+                    if (operationRequest.Equals(Resources.OperationRequestInsert))
+                        _expenseList.Add(frmExpense.Expense);
 
-                        dgvExpense.Refresh();
-                        UpdateResultInfo();
-                        EnableActionButton();
-                    }
-                    catch (Exception exception)
-                    {
-                        FrmExtendedMessageBox.UnknownErrorMessage(
-                            Resources.MsgCaptionUnknownError,
-                            exception.Message);
-                    }
+                    dgvExpense.Refresh();
+                    UpdateResultInfo();
+                    EnableActionButton();
+                }
+                catch (Exception exception)
+                {
+                    FrmExtendedMessageBox.UnknownErrorMessage(
+                        Resources.MsgCaptionUnknownError,
+                        exception.Message);
                 }
             }
         }
 
-        private void dgvExpense_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvExpenseCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!UserService.AllowToPerform(Resources.PermissionEditExpense))
             {
@@ -235,7 +240,7 @@ namespace EzPos.GUIs.Controls
 
         private void UpdateControlContent()
         {
-            var objList = _CommonService.GetAppParametersByType(
+            var objList = _commonService.GetAppParametersByType(
                 Int32.Parse(Resources.AppParamExpense, AppContext.CultureInfo));
 
             if (cmbExpenseType.InvokeRequired)
@@ -244,15 +249,15 @@ namespace EzPos.GUIs.Controls
                 Invoke(safeCrossCallBackDelegate);
             }
             else
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbExpenseType, objList, Int32.Parse(Resources.AppParamExpense, AppContext.CultureInfo), false);
         }
 
         private void UpdateResultInfo()
         {
             var resultNum = 0;
-            if (_ExpenseList != null)
-                resultNum = _ExpenseList.Count;
+            if (_expenseList != null)
+                resultNum = _expenseList.Count;
 
             var strResultInfo = string.Format(
                 "ការសែ្វងរករបស់អ្នកផ្តល់លទ្ឋផលចំនួន {0}",
@@ -282,8 +287,8 @@ namespace EzPos.GUIs.Controls
 
         private void CmdSearchProductClick(object sender, EventArgs e)
         {
-            if (_ExpenseService == null)
-                _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+            if (_expenseService == null)
+                _expenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
             var searchCriteria = 
                 new List<string>
                 {
@@ -293,7 +298,7 @@ namespace EzPos.GUIs.Controls
                     dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     "', 103)"
                 };
-            var expenseList = _ExpenseService.GetExpenses(searchCriteria);
+            var expenseList = _expenseService.GetExpenses(searchCriteria);
             IListToBindingList(expenseList);
         }
 

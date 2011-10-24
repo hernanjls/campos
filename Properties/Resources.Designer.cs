@@ -579,6 +579,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to expense statement.xlsx.
+        /// </summary>
+        internal static string ConstExpenseStatementExcelFile {
+            get {
+                return ResourceManager.GetString("ConstExpenseStatementExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string ConstFileName {
@@ -750,6 +759,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sale statement.xlsx.
+        /// </summary>
+        internal static string ConstSaleStatementExcelFile {
+            get {
+                return ResourceManager.GetString("ConstSaleStatementExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string ConstSearchCriteria {
@@ -764,6 +782,15 @@ namespace EzPos.Properties {
         internal static string ConstSheetBarcode {
             get {
                 return ResourceManager.GetString("ConstSheetBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expense.
+        /// </summary>
+        internal static string ConstSheetExpenseStatement {
+            get {
+                return ResourceManager.GetString("ConstSheetExpenseStatement", resourceCulture);
             }
         }
         
@@ -791,6 +818,15 @@ namespace EzPos.Properties {
         internal static string ConstSheetReceipt {
             get {
                 return ResourceManager.GetString("ConstSheetReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sale.
+        /// </summary>
+        internal static string ConstSheetSaleStatement {
+            get {
+                return ResourceManager.GetString("ConstSheetSaleStatement", resourceCulture);
             }
         }
         

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using EzPos.Model;
+using EzPos.Model.Expense;
 using EzPos.Utility;
 using NHibernate.Expression;
 
@@ -13,7 +14,7 @@ namespace EzPos.DataAccess
     {
         public virtual IList GetExpenses()
         {
-            var orderList = new Collection<Order> {Order.Desc(Expense.CONST_EXPENSE_ID)};
+            var orderList = new Collection<Order> {Order.Desc(Expense.ConstExpenseId)};
 
             return SelectObjects(
                 typeof (Expense), orderList).List();
@@ -55,8 +56,8 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Desc(Expense.CONST_EXPENSE_DATE),
-                    Order.Asc(Expense.CONST_EXPENSE_TYPE_STR)
+                    Order.Desc(Expense.ConstExpenseDate),
+                    Order.Asc(Expense.ConstExpenseTypeStr)
                 };
 
             return SelectObjects(typeof (Expense), criterionList, orderList).List();
@@ -83,7 +84,7 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(Expense.CONST_EXPENSE_TYPE_STR)
+                    Order.Asc(Expense.ConstExpenseTypeStr)
                 };            
 
             return SelectObjects(typeof (Expense), criterionList, orderList).List();

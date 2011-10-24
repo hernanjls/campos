@@ -152,7 +152,7 @@ namespace EzPos.GUIs.Forms
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 const string briefMsg = "អំពីការចូលទៅក្នុងប្រព័ន្ឋ";
                 var detailMsg = Resources.MsgConnectionLost;

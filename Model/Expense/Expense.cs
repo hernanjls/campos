@@ -1,18 +1,18 @@
-namespace EzPos.Model
+namespace EzPos.Model.Expense
 {
     /// <summary>
     /// Summary description for Customer.
     /// </summary>
     public class Expense
     {
-        public const string CONST_EXPENSE_DATE = "ExpenseDate";
-        public const string CONST_EXPENSE_ID = "ExpenseID";
-        public const string CONST_EXPENSE_TYPE_ID = "ExpenseTypeID";
-        public const string CONST_EXPENSE_TYPE_STR = "ExpenseTypeStr";
+        public const string ConstExpenseDate = "ExpenseDate";
+        public const string ConstExpenseId = "ExpenseId";
+        public const string ConstExpenseTypeId = "ExpenseTypeId";
+        public const string ConstExpenseTypeStr = "ExpenseTypeStr";
 
-        public int ExpenseID { get; set; }
+        public int ExpenseId { get; set; }
 
-        public int ExpenseTypeID { get; set; }
+        public int ExpenseTypeId { get; set; }
 
         public string ExpenseTypeStr { get; set; }
 
@@ -24,7 +24,7 @@ namespace EzPos.Model
 
         public float ExpenseAmountRiel { get; set; }
 
-        public int CurrencyID { get; set; }
+        public int CurrencyId { get; set; }
 
         public float ExchangeRate { get; set; }
     }

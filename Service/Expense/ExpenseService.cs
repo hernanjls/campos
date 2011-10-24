@@ -3,6 +3,7 @@ using System.Collections;
 using Castle.Services.Transaction;
 using EzPos.DataAccess;
 using EzPos.Model;
+using EzPos.Model.Expense;
 using EzPos.Properties;
 
 namespace EzPos.Service
@@ -37,7 +38,7 @@ namespace EzPos.Service
                 InsertExpense(expense);
             else if (requestCode == Resources.OperationRequestDuplicate)
             {
-                expense.ExpenseID = 0;
+                expense.ExpenseId = 0;
                 InsertExpense(expense);
             }
             else if (requestCode == Resources.OperationRequestUpdate)

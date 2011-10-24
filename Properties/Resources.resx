@@ -757,4 +757,16 @@
   <data name="MsgSearchResultEmpty" xml:space="preserve">
     <value>ពុំ​មាន​លទ្ឋផល​សំរាប់​ការ​ស្វែង​រក​របស់​​អ្នក​។​ សូម​ព្យាយាម​ម្ដង​ទៀត៕</value>
   </data>
+  <data name="ConstExpenseStatementExcelFile" xml:space="preserve">
+    <value>expense statement.xlsx</value>
+  </data>
+  <data name="ConstSaleStatementExcelFile" xml:space="preserve">
+    <value>sale statement.xlsx</value>
+  </data>
+  <data name="ConstSheetExpenseStatement" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="ConstSheetSaleStatement" xml:space="preserve">
+    <value>Sale</value>
+  </data>
 </root>
