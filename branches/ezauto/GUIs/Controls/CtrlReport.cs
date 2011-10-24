@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using EzPos.Service.Common;
 using EzPos.Service.Product;
+using EzPos.Service.Report;
 using EzPos.Service.SaleOrder;
 using Microsoft.Office.Interop.Excel;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
@@ -22,7 +23,12 @@ namespace EzPos.GUIs.Controls
 {
     public partial class CtrlReport : UserControl
     {
+        private delegate void SafeCrossCallBackDelegate();
+
+        private ReportService _reportService;
         private DepositService _depositService;
+        private CommonService _commonService;
+
         public CtrlReport()
         {
             InitializeComponent();
@@ -33,10 +39,7 @@ namespace EzPos.GUIs.Controls
             set { _SaleOrderService = value; }
         }
 
-        public ProductService ProductService
-        {
-            set { _ProductService = value; }
-        }
+        public ProductService ProductService { get; set; }
 
         public ExpenseService ExpenseService
         {
@@ -168,8 +171,8 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
-                if (rdbStockDetail.Checked)
-                {
+                //if (rdbStockDetail.Checked)
+                //{
                     if (!UserService.AllowToPerform(Resources.PermissionViewDetailStockReport))
                     {
                         const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
@@ -183,71 +186,54 @@ namespace EzPos.GUIs.Controls
                             return;
                         }
                     }
-                }
-                else if (rdbStockShort.Checked)
+                //}
+                //else if (rdbStockShort.Checked)
+                //{
+                //    if (!UserService.AllowToPerform(Resources.PermissionViewStockReport))
+                //    {
+                //        const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
+                //        var detailMsg = Resources.MsgUserPermissionDeny;
+                //        using (var frmMessageBox = new FrmExtendedMessageBox())
+                //        {
+                //            frmMessageBox.BriefMsgStr = briefMsg;
+                //            frmMessageBox.DetailMsgStr = detailMsg;
+                //            frmMessageBox.IsCanceledOnly = true;
+                //            frmMessageBox.ShowDialog(this);
+                //            return;
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    if (!UserService.AllowToPerform(Resources.PermissionViewExpiredProductReport))
+                //    {
+                //        const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
+                //        var detailMsg = Resources.MsgUserPermissionDeny;
+                //        using (var frmMessageBox = new FrmExtendedMessageBox())
+                //        {
+                //            frmMessageBox.BriefMsgStr = briefMsg;
+                //            frmMessageBox.DetailMsgStr = detailMsg;
+                //            frmMessageBox.IsCanceledOnly = true;
+                //            frmMessageBox.ShowDialog(this);
+                //            return;
+                //        }
+                //    }
+                //}
+
+                var selectedMarkId = -1;
+                var selctedMarkStr = string.Empty;
+                if(cmbMark.SelectedItem != null)
                 {
-                    if (!UserService.AllowToPerform(Resources.PermissionViewStockReport))
-                    {
-                        const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                        var detailMsg = Resources.MsgUserPermissionDeny;
-                        using (var frmMessageBox = new FrmExtendedMessageBox())
-                        {
-                            frmMessageBox.BriefMsgStr = briefMsg;
-                            frmMessageBox.DetailMsgStr = detailMsg;
-                            frmMessageBox.IsCanceledOnly = true;
-                            frmMessageBox.ShowDialog(this);
-                            return;
-                        }
-                    }
-                }
-                else
-                {
-                    if (!UserService.AllowToPerform(Resources.PermissionViewExpiredProductReport))
-                    {
-                        const string briefMsg = "អំពី​សិទ្ឋិ​ប្រើ​ប្រាស់";
-                        var detailMsg = Resources.MsgUserPermissionDeny;
-                        using (var frmMessageBox = new FrmExtendedMessageBox())
-                        {
-                            frmMessageBox.BriefMsgStr = briefMsg;
-                            frmMessageBox.DetailMsgStr = detailMsg;
-                            frmMessageBox.IsCanceledOnly = true;
-                            frmMessageBox.ShowDialog(this);
-                            return;
-                        }
-                    }
+                    Int32.TryParse(cmbMark.SelectedValue.ToString(), out selectedMarkId);
+                    selctedMarkStr = cmbMark.Text;
                 }
 
-                var searchCriteria = new List<string> {"QtyInStock > 0"};
-                if (rdbProductExpired.Checked)
-                    searchCriteria.Add(
-                        "LastUpdate <= CONVERT(DATETIME, '" +
-                        DateTime.Now.AddMonths(-1).ToString("dd/MM/yyyy") +
-                        "', 103)");
+                _reportService.ProductService = _ProductService;
+                var reportFileName = _reportService.StockStatementReport(
+                    selectedMarkId,
+                    selctedMarkStr);
 
-                var productList = _ProductService.GetObjects(searchCriteria);
-
-                DataSet dtsProduct = new DtsModels();
-                var propertyInfos = typeof (Product).GetProperties();
-                foreach (var objInstance in productList)
-                {
-                    var dataRow = dtsProduct.Tables[0].NewRow();
-                    foreach (var propertyInfo in propertyInfos)
-                        dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
-                    dtsProduct.Tables[0].Rows.Add(dataRow);
-                }
-
-                if ((rdbStockDetail.Checked) || (rdbProductExpired.Checked))
-                {
-                    var csrCatalog = new CsrCatalog();
-                    csrCatalog.SetDataSource(dtsProduct);
-                    crvReport.ReportSource = csrCatalog;
-                }
-                else
-                {
-                    var csrCatalogShorten = new CsrCatalogShorten();
-                    csrCatalogShorten.SetDataSource(dtsProduct);
-                    crvReport.ReportSource = csrCatalogShorten;
-                }
+                OpenReport(reportFileName);
             }
             catch (Exception exception)
             {
@@ -368,6 +354,8 @@ namespace EzPos.GUIs.Controls
 
         private void CtrlReport_Load(object sender, EventArgs e)
         {
+            if (_commonService == null)
+                _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
             if (_SaleOrderService == null)
                 _SaleOrderService = ServiceFactory.GenerateServiceInstance().GenerateSaleOrderService();
             if (_depositService == null)
@@ -376,11 +364,17 @@ namespace EzPos.GUIs.Controls
                 _ProductService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
             if (_ExpenseService == null)
                 _ExpenseService = ServiceFactory.GenerateServiceInstance().GenerateExpenseService();
+            if (_reportService == null)
+                _reportService = new ReportService();
 
             try
             {
+                ThreadStart updateControlContent = UpdateControlContent;
+                var thread = new Thread(updateControlContent) { IsBackground = true };
+                thread.Start();
+
                 ThreadStart threadStart = RemoveTemporaryFiles;
-                var thread = new Thread(threadStart) { IsBackground = true };
+                thread = new Thread(threadStart) { IsBackground = true };
                 thread.Start();
             }
             catch (Exception exception)
@@ -388,6 +382,31 @@ namespace EzPos.GUIs.Controls
                 FrmExtendedMessageBox.UnknownErrorMessage(
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
+            }
+        }
+
+        private void UpdateControlContent()
+        {
+            SafeCrossCallBackDelegate safeCrossCallBackDelegate = null;
+
+            if (cmbMark.InvokeRequired)
+                safeCrossCallBackDelegate = UpdateControlContent;
+
+            if (cmbMark.InvokeRequired)
+                Invoke(safeCrossCallBackDelegate);
+            else
+            {
+                var searchCriteria =
+                    new List<string>
+                        {
+                            "ParameterTypeID IN (" + Resources.AppParamMark + ")"
+                        };
+                var objectList = _commonService.GetAppParameters(searchCriteria);
+                _commonService.PopAppParamExtendedCombobox(
+                    ref cmbMark,
+                    objectList,
+                    Int32.Parse(Resources.AppParamMark, AppContext.CultureInfo),
+                    false);
             }
         }
 
@@ -795,6 +814,37 @@ namespace EzPos.GUIs.Controls
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }            
+        }
+
+        private void OpenReport(string reportFileName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(reportFileName))
+                {
+                    var briefMsg = Resources.MsgExtendedCaptionFind;
+                    var detailMsg = Resources.MsgSearchResultEmpty;
+                    using (var frmMessageBox = new FrmExtendedMessageBox())
+                    {
+                        frmMessageBox.BriefMsgStr = briefMsg;
+                        frmMessageBox.DetailMsgStr = detailMsg;
+                        frmMessageBox.IsCanceledOnly = true;
+                        frmMessageBox.ShowDialog(this);
+                        return;
+                    }
+                }
+
+                //Open report
+                wbsReport.Navigate("about:blank");
+                wbsReport.BringToFront();
+                wbsReport.Navigate(reportFileName);
+            }
+            catch (Exception exception)
+            {
+                FrmExtendedMessageBox.UnknownErrorMessage(
+                    Resources.MsgCaptionUnknownError,
+                    exception.Message);
+            }
         }
     }
 }
