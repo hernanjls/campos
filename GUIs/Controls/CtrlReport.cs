@@ -86,46 +86,61 @@ namespace EzPos.GUIs.Controls
                 }
             }
 
-            var searchCriteria = 
-                new List<string>
-                {
-                    "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 0)",
-                    "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
-                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                    "', 103) AND CONVERT(DATETIME, '" +
-                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-                    " 23:59', 103)"
-                };
-            var saleList = _saleOrderService.GetSaleHistories(searchCriteria);
+            //var searchCriteria = 
+            //    new List<string>
+            //    {
+            //        "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 0)",
+            //        "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
+            //        dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+            //        "', 103) AND CONVERT(DATETIME, '" +
+            //        dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
+            //        " 23:59', 103)"
+            //    };
+            //var saleList = _saleOrderService.GetSaleHistories(searchCriteria);
 
-            DataSet dtsModel = new DtsModels();
-            var propertyInfos = typeof (SaleOrderReport).GetProperties();
-            foreach (var objInstance in saleList)
+            //DataSet dtsModel = new DtsModels();
+            //var propertyInfos = typeof (SaleOrderReport).GetProperties();
+            //foreach (var objInstance in saleList)
+            //{
+            //    var dataRow = dtsModel.Tables[1].NewRow();
+            //    foreach (var propertyInfo in propertyInfos)
+            //        dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
+            //    dtsModel.Tables[1].Rows.Add(dataRow);
+            //}
+
+            //if (chbShowQuantity.Checked)
+            //{
+            //    var rptSaleOrderQuantity = new CsrSaleOrderQuantity();
+            //    rptSaleOrderQuantity.SetDataSource(dtsModel);
+            //    crvReport.ReportSource = rptSaleOrderQuantity;
+            //}
+            //else if(chbShowBenefit.Checked)
+            //{
+            //    var rptSaleBenefit = new CsrSaleBenefit();
+            //    rptSaleBenefit.SetDataSource(dtsModel);
+            //    crvReport.ReportSource = rptSaleBenefit;
+            //}
+            //else
+            //{
+            //    var rptSaleOrder = new CsrSaleOrder();
+            //    rptSaleOrder.SetDataSource(dtsModel);
+            //    crvReport.ReportSource = rptSaleOrder;
+            //}
+
+            var selectedMarkId = -1;
+            if (cmbMark.SelectedItem != null)
             {
-                var dataRow = dtsModel.Tables[1].NewRow();
-                foreach (var propertyInfo in propertyInfos)
-                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
-                dtsModel.Tables[1].Rows.Add(dataRow);
+                Int32.TryParse(cmbMark.SelectedValue.ToString(), out selectedMarkId);
             }
 
-            if (chbShowQuantity.Checked)
-            {
-                var rptSaleOrderQuantity = new CsrSaleOrderQuantity();
-                rptSaleOrderQuantity.SetDataSource(dtsModel);
-                crvReport.ReportSource = rptSaleOrderQuantity;
-            }
-            else if(chbShowBenefit.Checked)
-            {
-                var rptSaleBenefit = new CsrSaleBenefit();
-                rptSaleBenefit.SetDataSource(dtsModel);
-                crvReport.ReportSource = rptSaleBenefit;
-            }
-            else
-            {
-                var rptSaleOrder = new CsrSaleOrder();
-                rptSaleOrder.SetDataSource(dtsModel);
-                crvReport.ReportSource = rptSaleOrder;
-            }
+            _reportService.SaleOrderService = _saleOrderService;
+            var reportFileName = _reportService.SaleStatementReport(
+                dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+                dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+                selectedMarkId,
+                chbShowBenefit.Checked);
+
+            OpenReport(reportFileName);
         }
 
         //private void RefreshReportReturn()

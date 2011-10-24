@@ -181,7 +181,7 @@ namespace EzPos.Service.Report
         }
         
         //Sale
-        public string SaleStatementReport(string startDate, string endDate)
+        public string SaleStatementReport(string startDate, string endDate, int markId, bool showProfit)
         {
             if (string.IsNullOrEmpty(startDate))
                 return string.Empty;
@@ -196,12 +196,11 @@ namespace EzPos.Service.Report
             var searchCriteria =
                 new List<string>
                     {
-                        //"SaleOrderId IN (SELECT SaleOrderId FROM TSaleOrders WHERE SaleOrderTypeId = 0)",
                         "SaleOrderId IN (SELECT SaleOrderId FROM TSaleOrders WHERE SaleOrderDate BETWEEN CONVERT(DATETIME, '" + startDate + "', 103) AND CONVERT(DATETIME, '" +
                         endDate + " 23:59', 103))"
                     };
             var saleOrderList = SaleOrderService.GetSaleOrders(searchCriteria);
-            var saleItemList = SaleOrderService.GetSaleItems(searchCriteria);
+            var saleOrderHistoryList = SaleOrderService.GetSaleHistories(searchCriteria);
 
             if ((saleOrderList == null) || (saleOrderList.Count == 0))
                 return string.Empty;
@@ -244,13 +243,13 @@ namespace EzPos.Service.Report
             var rowIndex = 1;
             var excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
             excelRange.Select();
-            excelRange.Value2 = "របាយ​ការណ៏​លក់​ប្រចាំ​ថ្ងៃរបស់​ " + AppContext.ShopNameLocal;
+            excelRange.Value2 = "របាយ​ការណ៏​លក់​របស់ក្រុមហ៊ុន​ " + AppContext.ShopNameLocal;
 
             //Period
             rowIndex = 2;
             excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
             excelRange.Select();
-            excelRange.Value2 = "ពី " + invoicePeriode;
+            excelRange.Value2 = "សំរាប់រយៈពេល " + invoicePeriode;
 
             //Sale            
             rowIndex = 5;
@@ -278,10 +277,10 @@ namespace EzPos.Service.Report
 
                 var discountPercentage = saleOrder.Discount;
 
-                var filteredSaleItemList =
+                var filteredSaleOrderHistoryList =
                     (from saleOrderReport
-                         in saleItemList.Cast<SaleItem>()
-                     where saleOrderReport.SaleOrderID == localSaleOrder.SaleOrderId
+                         in saleOrderHistoryList.Cast<SaleOrderReport>()
+                     where saleOrderReport.SaleOrderId == localSaleOrder.SaleOrderId
                      select saleOrderReport).ToList();
 
                 //Invoice number
@@ -289,32 +288,35 @@ namespace EzPos.Service.Report
                 invoiceNumber +=
                     string.IsNullOrEmpty(saleOrder.ReferenceNum) ?
                     string.Empty : "(" + saleOrder.ReferenceNum + ")";
-                workSheet.get_Range("A" + rowIndex + ":B" + rowIndex, Type.Missing).Merge(Type.Missing);
+                workSheet.get_Range("A" + rowIndex + ":C" + rowIndex, Type.Missing).Merge(Type.Missing);
                 excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
                 excelRange.Select();
                 excelRange.Value2 = "លេខ​វិក្ក័យ​ប័ត្រ: " + invoiceNumber;
 
-                //Customer
-                workSheet.get_Range("C" + rowIndex + ":E" + rowIndex, Type.Missing).Merge(Type.Missing);
-                excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                excelRange.Select();
-                excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                excelRange.Value2 = "កាល​បរិច្ឆេទ​: " + ((DateTime)saleOrder.SaleOrderDate).ToString("dd/MM/yyyy", AppContext.CultureInfo);
+                excelRange = workSheet.get_Range("A" + rowIndex, "G" + rowIndex);
+                excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDot;
 
-                excelRange = workSheet.get_Range("A" + rowIndex, "E" + rowIndex);
-                excelRange.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
-                excelRange.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
-                excelRange.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
-                excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
+                //Customer
+                //workSheet.get_Range("C" + rowIndex + ":E" + rowIndex, Type.Missing).Merge(Type.Missing);
+                //excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                //excelRange.Select();
+                //excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                //excelRange.Value2 = "កាល​បរិច្ឆេទ​: " + ((DateTime)saleOrder.SaleOrderDate).ToString("dd/MM/yyyy", AppContext.CultureInfo);
+
+                //excelRange = workSheet.get_Range("A" + rowIndex, "E" + rowIndex);
+                //excelRange.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
+                //excelRange.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
+                //excelRange.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
+                //excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
 
                 rowIndex += 1;
                 excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
                 excelRange.EntireRow.Insert(XlInsertShiftDirection.xlShiftDown, 1);
 
                 var orderNumber = 0;
-                foreach (var saleItem in filteredSaleItemList)
+                foreach (var saleOrderHistory in filteredSaleOrderHistoryList)
                 {
-                    if (saleItem == null)
+                    if (saleOrderHistory == null)
                         continue;
 
                     orderNumber += 1;
@@ -324,24 +326,35 @@ namespace EzPos.Service.Report
 
                     excelRange = workSheet.get_Range("B" + rowIndex, "B" + rowIndex);
                     excelRange.Select();
-                    excelRange.Value2 = saleItem.FKProduct.Description;
+                    excelRange.Value2 = saleOrderHistory.ProductCode;
 
-                    var quantity = saleItem.QtySold;
                     excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = saleOrderHistory.ProductName;
+
+                    var quantity = saleOrderHistory.QtySold;
+                    excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
                     excelRange.Select();
                     excelRange.Value2 = quantity;
 
-                    var unitPrice = saleItem.UnitPriceOut;
-                    excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                    var unitPrice = saleOrderHistory.UnitPriceOut;
+                    excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
                     excelRange.Select();
                     excelRange.Value2 = unitPrice;
 
                     var subTotal = quantity * unitPrice;
-                    excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                    excelRange = workSheet.get_Range("F" + rowIndex, "F" + rowIndex);
                     excelRange.Select();
                     excelRange.Value2 = subTotal;
 
-                    excelRange = workSheet.get_Range("A" + rowIndex, "E" + rowIndex);
+                    if(showProfit)
+                    {
+                        excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
+                        excelRange.Select();
+                        excelRange.Value2 = subTotal;  
+                    }
+
+                    excelRange = workSheet.get_Range("A" + rowIndex, "G" + rowIndex);
                     excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDot;
 
                     rowIndex += 1;
@@ -381,80 +394,80 @@ namespace EzPos.Service.Report
                 //////var totalAmountForeign = totalSoldForeign - discountAmountForeign;
 
                 //SubTotal
-                excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
                 excelRange.Select();
                 excelRange.Value2 = "សរុប";
                 excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                excelRange = workSheet.get_Range("F" + rowIndex, "F" + rowIndex);
                 excelRange.Select();
                 //////excelRange.Value2 = totalSoldLocal;
-                excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
                 excelRange.Select();
                 //////excelRange.Value2 = totalSoldForeign;
 
-                //Discount
+                ////////Discount
+                //////rowIndex += 1;
+                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                //////excelRange.Select();
+                //////excelRange.Value2 = "បញ្ចុះ​តំលៃ " + saleOrder.Discount + " %";
+                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                //////excelRange.Select();
+
+                ////////////excelRange.Value2 = discountAmountLocal;
+                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                //////excelRange.Select();
+                ////////////excelRange.Value2 = discountAmountForeign;
+
+                ////////Grand Total
+                //////rowIndex += 1;
+                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                //////excelRange.Select();
+                //////excelRange.Value2 = "ប្រាក់​សរុប";
+                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                //////excelRange.Select();
+                ////////////excelRange.Value2 = totalAmountLocal;
+                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                //////excelRange.Select();
+                ////////////excelRange.Value2 = totalAmountForeign;
+
+                ////////Paid
+                //////rowIndex += 1;
+                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                //////excelRange.Select();
+                //////excelRange.Value2 = "ប្រាក់​ទទួល";
+                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                //////excelRange.Select();
+                ////////////excelRange.Value2 = totalPaidLocal;
+                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                //////excelRange.Select();
+                ////////////excelRange.Value2 = totalPaidForeign;
+
+                ////////Return
+                //////rowIndex += 1;
+                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                //////excelRange.Select();
+                //////excelRange.Value2 = "ប្រាក់​អាប់";
+                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                //////excelRange.Select();
+                ////////////excelRange.Value2 = totalReturnLocal;
+                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                //////excelRange.Select();
+                ////////////excelRange.Value2 = totalReturnForeign;
+
                 rowIndex += 1;
-                excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                excelRange.Select();
-                excelRange.Value2 = "បញ្ចុះ​តំលៃ " + saleOrder.Discount + " %";
-                excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                excelRange.Select();
 
-                //////excelRange.Value2 = discountAmountLocal;
-                excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                excelRange.Select();
-                //////excelRange.Value2 = discountAmountForeign;
+                ////////////grandTotalSoldLocal += totalAmountLocal;
+                ////////////grandTotalSoldForeign += totalAmountForeign;
 
-                //Grand Total
-                rowIndex += 1;
-                excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                excelRange.Select();
-                excelRange.Value2 = "ប្រាក់​សរុប";
-                excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                excelRange.Select();
-                //////excelRange.Value2 = totalAmountLocal;
-                excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                excelRange.Select();
-                //////excelRange.Value2 = totalAmountForeign;
+                ////////////grandTotalPaidLocal += totalPaidLocal;
+                ////////////grandTotalPaidForeign += totalPaidForeign;
 
-                //Paid
-                rowIndex += 1;
-                excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                excelRange.Select();
-                excelRange.Value2 = "ប្រាក់​ទទួល";
-                excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                excelRange.Select();
-                //////excelRange.Value2 = totalPaidLocal;
-                excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                excelRange.Select();
-                //////excelRange.Value2 = totalPaidForeign;
-
-                //Return
-                rowIndex += 1;
-                excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                excelRange.Select();
-                excelRange.Value2 = "ប្រាក់​អាប់";
-                excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                excelRange.Select();
-                //////excelRange.Value2 = totalReturnLocal;
-                excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                excelRange.Select();
-                //////excelRange.Value2 = totalReturnForeign;
-
-                rowIndex += 2;
-
-                //////grandTotalSoldLocal += totalAmountLocal;
-                //////grandTotalSoldForeign += totalAmountForeign;
-
-                //////grandTotalPaidLocal += totalPaidLocal;
-                //////grandTotalPaidForeign += totalPaidForeign;
-
-                //////grandTotalReturnLocal += totalReturnLocal;
-                //////grandTotalReturnForeign += totalReturnForeign;
+                ////////////grandTotalReturnLocal += totalReturnLocal;
+                ////////////grandTotalReturnForeign += totalReturnForeign;
             }
 
             //rowIndex += 2;

@@ -4,15 +4,15 @@ namespace EzPos.Model
 {
     public class SaleOrderReport
     {
-        public const string CONST_SALE_ORDER_DATE = "SaleOrderDate";
-        public const string CONST_SALE_ORDER_NUMBER = "SaleOrderNumber";
-        public const string CONST_SALE_ORDER_PRODUCT_CATEGORY = "CategoryStr";
+        public const string ConstSaleOrderDate = "SaleOrderDate";
+        public const string ConstSaleOrderNumber = "SaleOrderNumber";
+        public const string ConstSaleOrderProductCategory = "CategoryStr";
 
         //private string _SaleOrderNumber;
 
         public int ReportID { get; set; }
 
-        public int SalesOrderId { get; set; }
+        public int SaleOrderId { get; set; }
 
         public string SaleOrderNumber
         {

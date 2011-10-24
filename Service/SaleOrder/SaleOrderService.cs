@@ -175,7 +175,7 @@ namespace EzPos.Service.SaleOrder
                 var saleOrderReport = 
                     new SaleOrderReport
                         {
-                            SalesOrderId = saleOrder.SaleOrderId,
+                            SaleOrderId = saleOrder.SaleOrderId,
                             SaleOrderNumber = saleOrder.SaleOrderNumber,
                             SaleOrderDate = ((DateTime) saleOrder.SaleOrderDate),
                             CustomerID = customer.CustomerID,
