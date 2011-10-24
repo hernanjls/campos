@@ -597,6 +597,7 @@
     <Compile Include="Service\Expense\ExpenseService.cs" />
     <Compile Include="Service\Payment\PaymentService.cs" />
     <Compile Include="Service\Product\ProductService.cs" />
+    <Compile Include="Service\Report\ReportService.cs" />
     <Compile Include="Service\SaleOrder\SaleOrderService.cs" />
     <Compile Include="Service\ServiceFactory.cs" />
     <Compile Include="Service\Supplier\SupplierService.cs" />

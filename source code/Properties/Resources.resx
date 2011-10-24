@@ -745,4 +745,10 @@
   <data name="AppParamApplicationType" xml:space="preserve">
     <value>69</value>
   </data>
+  <data name="ConstSheetStockStatement" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="ConstStockStatementExcelFile" xml:space="preserve">
+    <value>stock statement.xlsx</value>
+  </data>
 </root>
