@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
+	<class name="EzPos.Model.SaleItem,EzPos" table="[TSaleItems]">
+		<id name="SaleItemID" column="SaleItemID" unsaved-value="0" type="Int32" >
+			<generator class="identity" />
+		</id>
+		<property name="SaleOrderID" column="SaleOrderID" type="Int32" />    
+    <property name="ProductID" column="ProductID" type="Int32" />
+    <property name="UnitPriceIn" column="UnitPriceIn" type="float" />
+    <property name="UnitPriceOut" column="UnitPriceOut" type="float" />
+    <property name="Discount" column="Discount" type="float" />
+    <property name="QtySold" column="QtySold" type="Int32" />
+
+    <many-to-one name="FKProduct" column="ProductID" class="EzPos.Model.Product, EzPos" insert="false" update="false"	/>
+  </class>
+</hibernate-mapping>
+		
+	
+		
+		
+		
+	
+		
+		
+		
