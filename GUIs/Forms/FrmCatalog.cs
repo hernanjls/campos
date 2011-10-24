@@ -734,7 +734,7 @@ namespace EzPos.GUIs.Forms
         {
             txtForeignCode.TextChanged -= ModificationHandler;
             string detailMsg;
-            if (!_productService.IsValidatedProductCode(_product.ProductID, txtForeignCode.Text, out detailMsg))
+            if (!_productService.IsValidatedProductCode(_product == null ? 0 : _product.ProductID, txtForeignCode.Text, out detailMsg))
             {
                 const string briefMsg = "អំពីពត៌មាន";
                 using (var frmMessageBox = new FrmExtendedMessageBox())
@@ -791,8 +791,8 @@ namespace EzPos.GUIs.Forms
             if (String.IsNullOrEmpty(foreignCode))
                 return;
 
-            foreignCode = foreignCode.Replace("+", string.Empty);
-            foreignCode = foreignCode.Replace("-", string.Empty);
+            //foreignCode = foreignCode.Replace("+", string.Empty);
+            //foreignCode = foreignCode.Replace("-", string.Empty);
             cmbProduct.SelectedIndex = -1;
             var selectedIndex = cmbProduct.FindStringExact(foreignCode);
             cmbProduct.SelectedIndex = selectedIndex;

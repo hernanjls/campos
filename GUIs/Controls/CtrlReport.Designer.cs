@@ -7,10 +7,6 @@ namespace EzPos.GUIs.Controls
 {
     partial class CtrlReport
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
-        private readonly System.ComponentModel.IContainer components;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -33,13 +29,11 @@ namespace EzPos.GUIs.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.lblStock = new System.Windows.Forms.Label();
             this.grbStock = new System.Windows.Forms.GroupBox();
-            this.rdbProductExpired = new System.Windows.Forms.RadioButton();
             this.btnSearchStock = new System.Windows.Forms.Button();
-            this.rdbStockShort = new System.Windows.Forms.RadioButton();
-            this.rdbStockDetail = new System.Windows.Forms.RadioButton();
             this.lblSale = new System.Windows.Forms.Label();
             this.grbSale = new System.Windows.Forms.GroupBox();
             this.rdbIncomeStatement = new System.Windows.Forms.RadioButton();
@@ -59,6 +53,7 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyLeft = new System.Windows.Forms.Panel();
             this.crvReport = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.wbsReport = new System.Windows.Forms.WebBrowser();
+            this.cmbMark = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.pnlBodyRight.SuspendLayout();
             this.grbStock.SuspendLayout();
             this.grbSale.SuspendLayout();
@@ -93,28 +88,14 @@ namespace EzPos.GUIs.Controls
             // grbStock
             // 
             this.grbStock.BackgroundImage = global::EzPos.Properties.Resources.pnlBodyRight;
-            this.grbStock.Controls.Add(this.rdbProductExpired);
+            this.grbStock.Controls.Add(this.cmbMark);
             this.grbStock.Controls.Add(this.btnSearchStock);
-            this.grbStock.Controls.Add(this.rdbStockShort);
-            this.grbStock.Controls.Add(this.rdbStockDetail);
             this.grbStock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.grbStock.Location = new System.Drawing.Point(10, 0);
             this.grbStock.Name = "grbStock";
-            this.grbStock.Size = new System.Drawing.Size(180, 174);
+            this.grbStock.Size = new System.Drawing.Size(180, 130);
             this.grbStock.TabIndex = 101;
             this.grbStock.TabStop = false;
-            // 
-            // rdbProductExpired
-            // 
-            this.rdbProductExpired.AutoSize = true;
-            this.rdbProductExpired.BackColor = System.Drawing.Color.Transparent;
-            this.rdbProductExpired.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbProductExpired.Location = new System.Drawing.Point(7, 96);
-            this.rdbProductExpired.Name = "rdbProductExpired";
-            this.rdbProductExpired.Size = new System.Drawing.Size(114, 31);
-            this.rdbProductExpired.TabIndex = 12;
-            this.rdbProductExpired.Text = "ហួសកំណត់";
-            this.rdbProductExpired.UseVisualStyleBackColor = false;
             // 
             // btnSearchStock
             // 
@@ -125,7 +106,7 @@ namespace EzPos.GUIs.Controls
             this.btnSearchStock.ForeColor = System.Drawing.Color.White;
             this.btnSearchStock.Image = global::EzPos.Properties.Resources.Search32;
             this.btnSearchStock.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchStock.Location = new System.Drawing.Point(18, 127);
+            this.btnSearchStock.Location = new System.Drawing.Point(18, 80);
             this.btnSearchStock.Name = "btnSearchStock";
             this.btnSearchStock.Size = new System.Drawing.Size(144, 40);
             this.btnSearchStock.TabIndex = 11;
@@ -136,38 +117,12 @@ namespace EzPos.GUIs.Controls
             this.btnSearchStock.Click += new System.EventHandler(this.BtnSearchStockClick);
             this.btnSearchStock.MouseEnter += new System.EventHandler(this.BtnSearchStockMouseEnter);
             // 
-            // rdbStockShort
-            // 
-            this.rdbStockShort.AutoSize = true;
-            this.rdbStockShort.BackColor = System.Drawing.Color.Transparent;
-            this.rdbStockShort.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbStockShort.Location = new System.Drawing.Point(7, 64);
-            this.rdbStockShort.Name = "rdbStockShort";
-            this.rdbStockShort.Size = new System.Drawing.Size(79, 31);
-            this.rdbStockShort.TabIndex = 3;
-            this.rdbStockShort.Text = "សង្ខេប";
-            this.rdbStockShort.UseVisualStyleBackColor = false;
-            // 
-            // rdbStockDetail
-            // 
-            this.rdbStockDetail.AutoSize = true;
-            this.rdbStockDetail.BackColor = System.Drawing.Color.Transparent;
-            this.rdbStockDetail.Checked = true;
-            this.rdbStockDetail.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbStockDetail.Location = new System.Drawing.Point(6, 32);
-            this.rdbStockDetail.Name = "rdbStockDetail";
-            this.rdbStockDetail.Size = new System.Drawing.Size(72, 31);
-            this.rdbStockDetail.TabIndex = 2;
-            this.rdbStockDetail.TabStop = true;
-            this.rdbStockDetail.Text = "លំអិត";
-            this.rdbStockDetail.UseVisualStyleBackColor = false;
-            // 
             // lblSale
             // 
             this.lblSale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(127)))), ((int)(((byte)(178)))));
             this.lblSale.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSale.ForeColor = System.Drawing.Color.Yellow;
-            this.lblSale.Location = new System.Drawing.Point(10, 177);
+            this.lblSale.Location = new System.Drawing.Point(10, 136);
             this.lblSale.Name = "lblSale";
             this.lblSale.Size = new System.Drawing.Size(179, 32);
             this.lblSale.TabIndex = 100;
@@ -190,7 +145,7 @@ namespace EzPos.GUIs.Controls
             this.grbSale.Controls.Add(this.dtpStopDate);
             this.grbSale.Controls.Add(this.dtpStartDate);
             this.grbSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.grbSale.Location = new System.Drawing.Point(10, 176);
+            this.grbSale.Location = new System.Drawing.Point(10, 135);
             this.grbSale.Name = "grbSale";
             this.grbSale.Size = new System.Drawing.Size(180, 380);
             this.grbSale.TabIndex = 99;
@@ -401,6 +356,16 @@ namespace EzPos.GUIs.Controls
             this.wbsReport.Size = new System.Drawing.Size(826, 596);
             this.wbsReport.TabIndex = 1;
             // 
+            // cmbMark
+            // 
+            this.cmbMark.DropDownWidth = 180;
+            this.cmbMark.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMark.FormattingEnabled = true;
+            this.cmbMark.Location = new System.Drawing.Point(7, 39);
+            this.cmbMark.Name = "cmbMark";
+            this.cmbMark.Size = new System.Drawing.Size(167, 27);
+            this.cmbMark.TabIndex = 13;
+            // 
             // CtrlReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -415,7 +380,6 @@ namespace EzPos.GUIs.Controls
             this.Load += new System.EventHandler(this.CtrlReport_Load);
             this.pnlBodyRight.ResumeLayout(false);
             this.grbStock.ResumeLayout(false);
-            this.grbStock.PerformLayout();
             this.grbSale.ResumeLayout(false);
             this.grbSale.PerformLayout();
             this.pnlBodyLeft.ResumeLayout(false);
@@ -437,14 +401,11 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.Label lblStart;
         private System.Windows.Forms.DateTimePicker dtpStopDate;
         private System.Windows.Forms.DateTimePicker dtpStartDate;
-        private System.Windows.Forms.RadioButton rdbStockShort;
-        private System.Windows.Forms.RadioButton rdbStockDetail;
         private System.Windows.Forms.Button btnSearchStock;
         private System.Windows.Forms.Button btnSearchSale;
         private System.Windows.Forms.CheckBox chbShowBenefit;
         private System.Windows.Forms.RadioButton rdbReturn;
         private System.Windows.Forms.RadioButton rdbSale;
-        private System.Windows.Forms.RadioButton rdbProductExpired;
         private System.Windows.Forms.RadioButton rdbDeposit;
         private System.Windows.Forms.RadioButton rdbExpense;
         private System.Windows.Forms.CheckBox chbAllDeposit;
@@ -454,5 +415,7 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.CheckBox chbShowQuantity;
         private System.Windows.Forms.RadioButton rdbIncomeStatement;
         private System.Windows.Forms.WebBrowser wbsReport;
+        private EzPos.GUIs.Components.ExtendedComboBox cmbMark;
+        private System.ComponentModel.IContainer components;
     }
 }

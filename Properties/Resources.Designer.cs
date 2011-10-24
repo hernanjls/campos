@@ -1003,6 +1003,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to អំពី​ការ​ស្វែង​រក.
+        /// </summary>
+        internal static string MsgExtendedCaptionFind {
+            get {
+                return ResourceManager.GetString("MsgExtendedCaptionFind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid paramter..
         /// </summary>
         internal static string MsgInvalidAppParameter {
@@ -1215,6 +1224,15 @@ namespace EzPos.Properties {
         internal static string MsgOperationRequestUnknown {
             get {
                 return ResourceManager.GetString("MsgOperationRequestUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ពុំ​មាន​លទ្ឋផល​សំរាប់​ការ​ស្វែង​រក​របស់​​អ្នក​។​ សូម​ព្យាយាម​ម្ដង​ទៀត៕.
+        /// </summary>
+        internal static string MsgSearchResultEmpty {
+            get {
+                return ResourceManager.GetString("MsgSearchResultEmpty", resourceCulture);
             }
         }
         
