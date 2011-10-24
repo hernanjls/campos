@@ -1,4 +1,5 @@
 ﻿using EzPos.Model;
+using EzPos.Model.Expense;
 using ExtendedComboBox=EzPos.GUIs.Components.ExtendedComboBox;
 
 namespace EzPos.GUIs.Forms

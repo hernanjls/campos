@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Expense;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
@@ -70,7 +71,7 @@ namespace EzPos.GUIs.Forms
 
             try
             {
-                cmbExpenseType.SelectedValue = _Expense.ExpenseTypeID;
+                cmbExpenseType.SelectedValue = _Expense.ExpenseTypeId;
                 dtpExpenseDate.Value = (DateTime) _Expense.ExpenseDate;
                 txtDescription.Text = _Expense.Description;
                 txtExpenseAmountRiel.Text = _Expense.ExpenseAmountRiel.ToString("N");
@@ -105,7 +106,7 @@ namespace EzPos.GUIs.Forms
                 if (_Expense == null)
                     _Expense = new Expense();
 
-                _Expense.ExpenseTypeID = int.Parse(cmbExpenseType.SelectedValue.ToString());
+                _Expense.ExpenseTypeId = int.Parse(cmbExpenseType.SelectedValue.ToString());
                 _Expense.ExpenseTypeStr = cmbExpenseType.Text;
                 _Expense.ExpenseDate = dtpExpenseDate.Value.Date;
                 _Expense.Description = txtDescription.Text;
@@ -115,7 +116,7 @@ namespace EzPos.GUIs.Forms
 
                 ExpenseService.ExpenseManagement(
                     _Expense,
-                    _Expense.ExpenseID != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
+                    _Expense.ExpenseId != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
 
                 DialogResult = DialogResult.OK;
             }
