@@ -250,7 +250,28 @@ namespace EzPos.Service
                     where depositReport != null
                     select new SaleOrderReport
                                {
-                                   AmountPaidInt = depositReport.AmountPaidInt, AmountPaidRiel = depositReport.AmountPaidRiel, AmountReturnInt = depositReport.AmountReturnInt, AmountReturnRiel = depositReport.AmountReturnRiel, AmountSoldInt = depositReport.AmountSoldInt, CardNumber = depositReport.CardNumber, CashierName = depositReport.CashierName, CustomerName = depositReport.CustomerName, Discount = depositReport.Discount, ExchangeRate = depositReport.ExchangeRate, ProductID = depositReport.ProductId, ProductName = depositReport.ProductName, QtySold = depositReport.QtySold, ReferenceNum = depositReport.ReferenceNum, SaleItemID = depositReport.DepositItemId, SaleOrderDate = (DateTime) depositReport.DepositDate, SaleOrderNumber = depositReport.DepositNumber, SalesOrderId = depositReport.DepositId, SubTotal = depositReport.SubTotal, TotalDiscount = depositReport.TotalDiscount, UnitPriceIn = depositReport.UnitPriceIn, UnitPriceOut = depositReport.UnitPriceOut
+                                   AmountPaidInt = depositReport.AmountPaidInt, 
+                                   AmountPaidRiel = depositReport.AmountPaidRiel, 
+                                   AmountReturnInt = depositReport.AmountReturnInt, 
+                                   AmountReturnRiel = depositReport.AmountReturnRiel, 
+                                   AmountSoldInt = depositReport.AmountSoldInt, 
+                                   CardNumber = depositReport.CardNumber, 
+                                   CashierName = depositReport.CashierName, 
+                                   CustomerName = depositReport.CustomerName, 
+                                   Discount = depositReport.Discount, 
+                                   ExchangeRate = depositReport.ExchangeRate, 
+                                   ProductID = depositReport.ProductId, 
+                                   ProductName = depositReport.ProductName, 
+                                   QtySold = depositReport.QtySold, 
+                                   ReferenceNum = depositReport.ReferenceNum, 
+                                   SaleItemID = depositReport.DepositItemId, 
+                                   SaleOrderDate = (DateTime) depositReport.DepositDate, 
+                                   SaleOrderNumber = depositReport.DepositNumber, 
+                                   SaleOrderId = depositReport.DepositId, 
+                                   SubTotal = depositReport.SubTotal, 
+                                   TotalDiscount = depositReport.TotalDiscount, 
+                                   UnitPriceIn = depositReport.UnitPriceIn, 
+                                   UnitPriceOut = depositReport.UnitPriceOut
                                }).ToList();
         }
     }

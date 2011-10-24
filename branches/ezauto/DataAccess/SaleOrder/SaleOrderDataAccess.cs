@@ -106,8 +106,8 @@ namespace EzPos.DataAccess.SaleOrder
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_DATE),
-                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_NUMBER)
+                    Order.Asc(SaleOrderReport.ConstSaleOrderDate),
+                    Order.Asc(SaleOrderReport.ConstSaleOrderNumber)
                 };
 
             return SelectObjects(typeof (SaleOrderReport), criterionList, orderList).List();
@@ -134,7 +134,7 @@ namespace EzPos.DataAccess.SaleOrder
             var orderList =
                 new Collection<Order>
                 {
-                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_PRODUCT_CATEGORY)
+                    Order.Asc(SaleOrderReport.ConstSaleOrderProductCategory)
                 };
 
             return SelectObjects(typeof(SaleOrderReport), criterionList, orderList).List();

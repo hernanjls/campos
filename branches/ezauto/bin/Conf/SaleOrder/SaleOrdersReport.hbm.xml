@@ -4,7 +4,7 @@
     <id name="ReportID" column="ReportID" unsaved-value="0" type="Int32" >
       <generator class="identity" />
     </id>
-    <property name="SalesOrderId" column="SalesOrderId" type="Int32" />
+    <property name="SaleOrderId" column="SaleOrderId" type="Int32" />
     <property name="SaleOrderNumber" column="SaleOrderNumber" />
     <property name="SaleOrderDate" column="SaleOrderDate" />
     <property name="CustomerID" column="CustomerID" type="Int32" />
