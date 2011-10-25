@@ -199,6 +199,10 @@ namespace EzPos.Service.Report
                         "SaleOrderId IN (SELECT SaleOrderId FROM TSaleOrders WHERE SaleOrderDate BETWEEN CONVERT(DATETIME, '" + startDate + "', 103) AND CONVERT(DATETIME, '" +
                         endDate + " 23:59', 103))"
                     };
+
+            if(markId != -1)
+                searchCriteria.Add("SaleOrderId IN (SELECT SaleOrderId FROM TSaleItems WHERE ProductId IN (SELECT ProductID FROM TProducts WHERE MarkID = " + markId + "))");
+
             var saleOrderList = SaleOrderService.GetSaleOrders(searchCriteria);
             var saleOrderHistoryList = SaleOrderService.GetSaleHistories(searchCriteria);
 
@@ -209,6 +213,9 @@ namespace EzPos.Service.Report
             var templateReportFile =
                 System.Windows.Forms.Application.StartupPath + @"\" +
                 Resources.ConstSaleStatementExcelFile;
+            //var templateReportFile =
+            //    @"D:\projects\yim sakal\point of sales\ezpos\application\branches\ezauto\bin\Debug\" +
+            //    Resources.ConstSaleStatementExcelFile;
 
             var reportFileInfo = new FileInfo(templateReportFile);
             if (!reportFileInfo.Exists)
@@ -253,30 +260,12 @@ namespace EzPos.Service.Report
 
             //Sale            
             rowIndex = 5;
-
-            var grandTotalSoldForeign = 0f;
-            var grandTotalSoldLocal = 0f;
-            var grandTotalPaidForeign = 0f;
-            var grandTotalPaidLocal = 0f;
-            var grandTotalReturnForeign = 0f;
-            var grandTotalReturnLocal = 0f;
             foreach (Model.SaleOrder saleOrder in saleOrderList)
             {
                 if (saleOrder == null)
                     continue;
 
                 var localSaleOrder = saleOrder;
-
-                var exchangeRate = saleOrder.ExchangeRate;
-
-                //////var totalPaidForeign = saleOrder.AmountPaidForeign;
-                //////var totalPaidLocal = saleOrder.AmountPaidLocal;
-
-                //////var totalReturnForeign = saleOrder.AmountReturnForeign;
-                //////var totalReturnLocal = saleOrder.AmountReturnLocal;
-
-                var discountPercentage = saleOrder.Discount;
-
                 var filteredSaleOrderHistoryList =
                     (from saleOrderReport
                          in saleOrderHistoryList.Cast<SaleOrderReport>()
@@ -293,32 +282,28 @@ namespace EzPos.Service.Report
                 excelRange.Select();
                 excelRange.Value2 = "លេខ​វិក្ក័យ​ប័ត្រ: " + invoiceNumber;
 
-                excelRange = workSheet.get_Range("A" + rowIndex, "G" + rowIndex);
-                excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDot;
-
                 //Customer
-                //workSheet.get_Range("C" + rowIndex + ":E" + rowIndex, Type.Missing).Merge(Type.Missing);
-                //excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                //excelRange.Select();
-                //excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                //excelRange.Value2 = "កាល​បរិច្ឆេទ​: " + ((DateTime)saleOrder.SaleOrderDate).ToString("dd/MM/yyyy", AppContext.CultureInfo);
+                workSheet.get_Range("D" + rowIndex + ":G" + rowIndex, Type.Missing).Merge(Type.Missing);
+                excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                excelRange.Select();
+                excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                excelRange.Value2 = "កាល​បរិច្ឆេទ​: " + ((DateTime)saleOrder.SaleOrderDate).ToString("dd/MM/yyyy", AppContext.CultureInfo);
 
-                //excelRange = workSheet.get_Range("A" + rowIndex, "E" + rowIndex);
-                //excelRange.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
-                //excelRange.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
-                //excelRange.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
-                //excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
+                excelRange = workSheet.get_Range("A" + rowIndex, "G" + rowIndex);
+                excelRange.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
+                excelRange.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
+                excelRange.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
+                excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
 
                 rowIndex += 1;
                 excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
                 excelRange.EntireRow.Insert(XlInsertShiftDirection.xlShiftDown, 1);
 
                 var orderNumber = 0;
-                foreach (var saleOrderHistory in filteredSaleOrderHistoryList)
+                foreach (
+                    var saleOrderHistory in
+                    filteredSaleOrderHistoryList.Where(saleOrderHistory => saleOrderHistory != null))
                 {
-                    if (saleOrderHistory == null)
-                        continue;
-
                     orderNumber += 1;
                     excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
                     excelRange.Select();
@@ -342,16 +327,20 @@ namespace EzPos.Service.Report
                     excelRange.Select();
                     excelRange.Value2 = unitPrice;
 
-                    var subTotal = quantity * unitPrice;
+                    var subTotalSold = quantity * unitPrice;
                     excelRange = workSheet.get_Range("F" + rowIndex, "F" + rowIndex);
                     excelRange.Select();
-                    excelRange.Value2 = subTotal;
+                    excelRange.Value2 = subTotalSold;
 
                     if(showProfit)
                     {
+                        var subTotalProfit = 
+                            subTotalSold - 
+                            (quantity * saleOrderHistory.UnitPriceIn);
+
                         excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
                         excelRange.Select();
-                        excelRange.Value2 = subTotal;  
+                        excelRange.Value2 = subTotalProfit;  
                     }
 
                     excelRange = workSheet.get_Range("A" + rowIndex, "G" + rowIndex);
@@ -363,36 +352,11 @@ namespace EzPos.Service.Report
                 }
 
                 //Total amount
-                //Total Amount before discount
-                //////var discountableTotalAmount =
-                //////    (from saleItem
-                //////     in saleItemList.Cast<SaleItem>()
-                //////     where
-                //////        (saleItem.SaleOrderID == localSaleOrder.SaleOrderId)
-                //////        && (saleItem.FKProduct != null)
-                //////        && ((from categoryId in AppContext.DiscountProductCategoryList select categoryId).Contains(saleItem.FkProduct.CategoryId))
-                //////     select (saleItem.QtySold * saleItem.UnitPriceOut)).Sum();
-
-                //////var nonDiscountableTotalAmount =
-                //////    (from saleItem
-                //////    in saleItemList.Cast<SaleItem>()
-                //////     where
-                //////         (saleItem.SaleOrderID == localSaleOrder.SaleOrderId)
-                //////         && (saleItem.FKProduct != null)
-                //////         && !((from categoryId in AppContext.DiscountProductCategoryList select categoryId).Contains(saleItem.FkProduct.CategoryId))
-                //////     select (saleItem.QtySold * saleItem.UnitPriceOut)).Sum();
-
-                //////var totalSoldLocal = discountableTotalAmount + nonDiscountableTotalAmount;
-                //////var totalSoldForeign = totalSoldLocal / exchangeRate;
-
-                //Discount
-                //////var discountAmountLocal = (discountableTotalAmount * discountPercentage) / 100;
-                //////var discountAmountForeign = discountAmountLocal / exchangeRate;
-
-                ////////Total amount after discount
-                //////var totalAmountLocal = totalSoldLocal - discountAmountLocal;
-                //////var totalAmountForeign = totalSoldForeign - discountAmountForeign;
-
+                var totalSold =
+                    (from saleOrderHistory
+                     in filteredSaleOrderHistoryList
+                     select (saleOrderHistory.QtySold * saleOrderHistory.UnitPriceOut)).Sum();
+                
                 //SubTotal
                 excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
                 excelRange.Select();
@@ -400,118 +364,45 @@ namespace EzPos.Service.Report
                 excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
                 excelRange = workSheet.get_Range("F" + rowIndex, "F" + rowIndex);
                 excelRange.Select();
-                //////excelRange.Value2 = totalSoldLocal;
+                excelRange.Value2 = totalSold;
                 excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
                 excelRange.Select();
-                //////excelRange.Value2 = totalSoldForeign;
 
-                ////////Discount
-                //////rowIndex += 1;
-                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                //////excelRange.Select();
-                //////excelRange.Value2 = "បញ្ចុះ​តំលៃ " + saleOrder.Discount + " %";
-                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                //////excelRange.Select();
-
-                ////////////excelRange.Value2 = discountAmountLocal;
-                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                //////excelRange.Select();
-                ////////////excelRange.Value2 = discountAmountForeign;
-
-                ////////Grand Total
-                //////rowIndex += 1;
-                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                //////excelRange.Select();
-                //////excelRange.Value2 = "ប្រាក់​សរុប";
-                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                //////excelRange.Select();
-                ////////////excelRange.Value2 = totalAmountLocal;
-                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                //////excelRange.Select();
-                ////////////excelRange.Value2 = totalAmountForeign;
-
-                ////////Paid
-                //////rowIndex += 1;
-                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                //////excelRange.Select();
-                //////excelRange.Value2 = "ប្រាក់​ទទួល";
-                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                //////excelRange.Select();
-                ////////////excelRange.Value2 = totalPaidLocal;
-                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                //////excelRange.Select();
-                ////////////excelRange.Value2 = totalPaidForeign;
-
-                ////////Return
-                //////rowIndex += 1;
-                //////excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-                //////excelRange.Select();
-                //////excelRange.Value2 = "ប្រាក់​អាប់";
-                //////excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-                //////excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-                //////excelRange.Select();
-                ////////////excelRange.Value2 = totalReturnLocal;
-                //////excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-                //////excelRange.Select();
-                ////////////excelRange.Value2 = totalReturnForeign;
+                excelRange = workSheet.get_Range("F" + rowIndex, "G" + rowIndex);
+                excelRange.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(253, 233, 217));
 
                 rowIndex += 1;
-
-                ////////////grandTotalSoldLocal += totalAmountLocal;
-                ////////////grandTotalSoldForeign += totalAmountForeign;
-
-                ////////////grandTotalPaidLocal += totalPaidLocal;
-                ////////////grandTotalPaidForeign += totalPaidForeign;
-
-                ////////////grandTotalReturnLocal += totalReturnLocal;
-                ////////////grandTotalReturnForeign += totalReturnForeign;
             }
 
-            //rowIndex += 2;
-            excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-            excelRange.Select();
-            excelRange.Value2 = "សរុប​ប្រាក់​លក់";
-            excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-            excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-            excelRange.Select();
-            excelRange.Value2 = grandTotalSoldLocal;
             excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
             excelRange.Select();
-            excelRange.Value2 = grandTotalSoldForeign;
-            excelRange = workSheet.get_Range("D" + rowIndex, "E" + rowIndex);
-            excelRange.Font.Bold = true;
-            excelRange.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(253, 233, 217));
+            excelRange.Value2 = "សរុបទាំងអស់";
 
-            rowIndex += 1;
-            excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-            excelRange.Select();
-            excelRange.Value2 = "សរុប​ប្រាក់ទទួល";
-            excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-            excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
-            excelRange.Select();
-            excelRange.Value2 = grandTotalPaidLocal;
-            excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-            excelRange.Select();
-            excelRange.Value2 = grandTotalPaidForeign;
-            excelRange = workSheet.get_Range("D" + rowIndex, "E" + rowIndex);
-            excelRange.Font.Bold = true;
-            excelRange.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(253, 233, 217));
+            var grandTotalSold =
+                (from saleOrderHistory
+                 in saleOrderHistoryList.Cast<SaleOrderReport>()
+                 select (saleOrderHistory.QtySold * saleOrderHistory.UnitPriceOut)).Sum();
 
-            rowIndex += 1;
-            excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
-            excelRange.Select();
-            excelRange.Value2 = "សរុប​ប្រាក់អាប់";
             excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
-            excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+            excelRange = workSheet.get_Range("F" + rowIndex, "F" + rowIndex);
             excelRange.Select();
-            excelRange.Value2 = grandTotalReturnLocal;
-            excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
-            excelRange.Select();
-            excelRange.Value2 = grandTotalReturnForeign;
-            excelRange = workSheet.get_Range("D" + rowIndex, "E" + rowIndex);
+            excelRange.Value2 = grandTotalSold;
+
+            if(showProfit)
+            {
+                var grandTotalProfit =
+                    (from saleOrderHistory
+                    in saleOrderHistoryList.Cast<SaleOrderReport>()
+                    select 
+                        (saleOrderHistory.QtySold * saleOrderHistory.UnitPriceOut) -
+                        (saleOrderHistory.QtySold * saleOrderHistory.UnitPriceIn)).Sum();
+
+                excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = grandTotalProfit;
+            }
+
+            excelRange = workSheet.get_Range("F" + rowIndex, "G" + rowIndex);
             excelRange.Font.Bold = true;
             excelRange.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(253, 233, 217));
 
