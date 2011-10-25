@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -8,8 +7,6 @@ using EzPos.Model.Expense;
 using EzPos.Service;
 using EzPos.GUIs.Forms;
 using EzPos.Properties;
-using EzPos.GUIs.Reports;
-using EzPos.GUIs.DataSets;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using EzPos.Service.Common;
@@ -448,6 +445,12 @@ namespace EzPos.GUIs.Controls
             CommonService.DeleteFile(
                 System.Windows.Forms.Application.StartupPath,
                 Resources.ConstStockStatementExcelFile,
+                "*.xls*",
+                true);
+
+            CommonService.DeleteFile(
+                System.Windows.Forms.Application.StartupPath,
+                Resources.ConstSaleStatementExcelFile,
                 "*.xls*",
                 true);
 
