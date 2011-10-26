@@ -520,15 +520,15 @@ namespace EzPos.GUIs.Controls
         //    crvReport.ReportSource = rptDeposit;           
         //}
 
-        private void ChbShowBenefitEnter(object sender, EventArgs e)
-        {
-            chbShowBenefit.CheckedChanged += ChbShowBenefitCheckedChanged;
-        }
+        //private void ChbShowBenefitEnter(object sender, EventArgs e)
+        //{
+        //    chbShowBenefit.CheckedChanged += ChbShowBenefitCheckedChanged;
+        //}
 
-        private void ChbShowBenefitLeave(object sender, EventArgs e)
-        {
-            chbShowBenefit.CheckedChanged -= ChbShowBenefitCheckedChanged;
-        }
+        //private void ChbShowBenefitLeave(object sender, EventArgs e)
+        //{
+        //    chbShowBenefit.CheckedChanged -= ChbShowBenefitCheckedChanged;
+        //}
 
         //private void ChbAllDepositEnter(object sender, EventArgs e)
         //{
@@ -540,13 +540,13 @@ namespace EzPos.GUIs.Controls
         //    chbAllDeposit.CheckedChanged -= ChbAllDepositCheckedChanged;
         //}
 
-        private void ChbShowBenefitCheckedChanged(object sender, EventArgs e)
-        {
-            rdbSale.Checked = true;
-            //chbAllDeposit.Checked = false;
-            if (chbShowBenefit.Checked)
-                chbShowQuantity.Checked = false;
-        }
+        //private void ChbShowBenefitCheckedChanged(object sender, EventArgs e)
+        //{
+        //    rdbSale.Checked = true;
+        //    //chbAllDeposit.Checked = false;
+        //    if (chbShowBenefit.Checked)
+        //        chbShowQuantity.Checked = false;
+        //}
 
         //private void ChbAllDepositCheckedChanged(object sender, EventArgs e)
         //{
