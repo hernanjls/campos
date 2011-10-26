@@ -1784,10 +1784,10 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:EzAuto"
-        "ProductCode" = "8:{C1926A8B-8769-4594-9284-E791B119A852}"
-        "PackageCode" = "8:{79163A7E-BEBD-4C63-8EF8-05535D98AD1F}"
-        "UpgradeCode" = "8:{D19B300D-E8C7-48CF-91D6-CEA8A8E1591F}"
+        "ProductName" = "8:EzAuto-SokHy"
+        "ProductCode" = "8:{05F7B08D-83A2-4178-B2E6-00C7D2BA49AB}"
+        "PackageCode" = "8:{9D0F6223-CE8B-45A5-991F-31CC0ADCC663}"
+        "UpgradeCode" = "8:{3274B348-7E1A-46CF-BFE0-FB5822AE82E7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
@@ -1907,7 +1907,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_91970E15708F49ECAC0C4EB0BD8AD7D3"
             {
-            "Name" = "8:EzPos-EcoElectric"
+            "Name" = "8:EzAuto-SokHy"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

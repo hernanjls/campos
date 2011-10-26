@@ -33,9 +33,11 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.lblStock = new System.Windows.Forms.Label();
             this.grbStock = new System.Windows.Forms.GroupBox();
+            this.cmbMark = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.btnSearchStock = new System.Windows.Forms.Button();
             this.lblSale = new System.Windows.Forms.Label();
             this.grbSale = new System.Windows.Forms.GroupBox();
+            this.cmbMarkSale = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.chbShowQuantity = new System.Windows.Forms.CheckBox();
             this.rdbExpense = new System.Windows.Forms.RadioButton();
             this.rdbSale = new System.Windows.Forms.RadioButton();
@@ -49,8 +51,6 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyLeft = new System.Windows.Forms.Panel();
             this.crvReport = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.wbsReport = new System.Windows.Forms.WebBrowser();
-            this.cmbMark = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
-            this.cmbMarkSale = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.pnlBodyRight.SuspendLayout();
             this.grbStock.SuspendLayout();
             this.grbSale.SuspendLayout();
@@ -94,6 +94,16 @@ namespace EzPos.GUIs.Controls
             this.grbStock.TabIndex = 101;
             this.grbStock.TabStop = false;
             // 
+            // cmbMark
+            // 
+            this.cmbMark.DropDownWidth = 180;
+            this.cmbMark.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMark.FormattingEnabled = true;
+            this.cmbMark.Location = new System.Drawing.Point(7, 39);
+            this.cmbMark.Name = "cmbMark";
+            this.cmbMark.Size = new System.Drawing.Size(167, 27);
+            this.cmbMark.TabIndex = 13;
+            // 
             // btnSearchStock
             // 
             this.btnSearchStock.BackColor = System.Drawing.Color.Transparent;
@@ -123,7 +133,7 @@ namespace EzPos.GUIs.Controls
             this.lblSale.Name = "lblSale";
             this.lblSale.Size = new System.Drawing.Size(179, 32);
             this.lblSale.TabIndex = 100;
-            this.lblSale.Text = "លក់ សង ចំណាយ";
+            this.lblSale.Text = "លក់ ចំណាយ";
             // 
             // grbSale
             // 
@@ -141,16 +151,26 @@ namespace EzPos.GUIs.Controls
             this.grbSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.grbSale.Location = new System.Drawing.Point(10, 135);
             this.grbSale.Name = "grbSale";
-            this.grbSale.Size = new System.Drawing.Size(180, 254);
+            this.grbSale.Size = new System.Drawing.Size(180, 284);
             this.grbSale.TabIndex = 99;
             this.grbSale.TabStop = false;
+            // 
+            // cmbMarkSale
+            // 
+            this.cmbMarkSale.DropDownWidth = 180;
+            this.cmbMarkSale.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMarkSale.FormattingEnabled = true;
+            this.cmbMarkSale.Location = new System.Drawing.Point(7, 130);
+            this.cmbMarkSale.Name = "cmbMarkSale";
+            this.cmbMarkSale.Size = new System.Drawing.Size(167, 27);
+            this.cmbMarkSale.TabIndex = 20;
             // 
             // chbShowQuantity
             // 
             this.chbShowQuantity.AutoSize = true;
             this.chbShowQuantity.BackColor = System.Drawing.Color.Transparent;
             this.chbShowQuantity.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbShowQuantity.Location = new System.Drawing.Point(29, 262);
+            this.chbShowQuantity.Location = new System.Drawing.Point(29, 271);
             this.chbShowQuantity.Name = "chbShowQuantity";
             this.chbShowQuantity.Size = new System.Drawing.Size(89, 34);
             this.chbShowQuantity.TabIndex = 19;
@@ -191,15 +211,12 @@ namespace EzPos.GUIs.Controls
             this.chbShowBenefit.AutoSize = true;
             this.chbShowBenefit.BackColor = System.Drawing.Color.Transparent;
             this.chbShowBenefit.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbShowBenefit.Location = new System.Drawing.Point(28, 235);
+            this.chbShowBenefit.Location = new System.Drawing.Point(28, 191);
             this.chbShowBenefit.Name = "chbShowBenefit";
             this.chbShowBenefit.Size = new System.Drawing.Size(123, 34);
             this.chbShowBenefit.TabIndex = 13;
             this.chbShowBenefit.Text = "ប្រាក់ចំណេញ";
             this.chbShowBenefit.UseVisualStyleBackColor = false;
-            this.chbShowBenefit.Visible = false;
-            this.chbShowBenefit.Leave += new System.EventHandler(this.ChbShowBenefitLeave);
-            this.chbShowBenefit.Enter += new System.EventHandler(this.ChbShowBenefitEnter);
             // 
             // btnSearchSale
             // 
@@ -210,7 +227,7 @@ namespace EzPos.GUIs.Controls
             this.btnSearchSale.ForeColor = System.Drawing.Color.White;
             this.btnSearchSale.Image = global::EzPos.Properties.Resources.Search32;
             this.btnSearchSale.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchSale.Location = new System.Drawing.Point(18, 200);
+            this.btnSearchSale.Location = new System.Drawing.Point(18, 231);
             this.btnSearchSale.Name = "btnSearchSale";
             this.btnSearchSale.Size = new System.Drawing.Size(144, 40);
             this.btnSearchSale.TabIndex = 12;
@@ -301,26 +318,6 @@ namespace EzPos.GUIs.Controls
             this.wbsReport.Name = "wbsReport";
             this.wbsReport.Size = new System.Drawing.Size(826, 596);
             this.wbsReport.TabIndex = 1;
-            // 
-            // cmbMark
-            // 
-            this.cmbMark.DropDownWidth = 180;
-            this.cmbMark.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMark.FormattingEnabled = true;
-            this.cmbMark.Location = new System.Drawing.Point(7, 39);
-            this.cmbMark.Name = "cmbMark";
-            this.cmbMark.Size = new System.Drawing.Size(167, 27);
-            this.cmbMark.TabIndex = 13;
-            // 
-            // cmbMarkSale
-            // 
-            this.cmbMarkSale.DropDownWidth = 180;
-            this.cmbMarkSale.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMarkSale.FormattingEnabled = true;
-            this.cmbMarkSale.Location = new System.Drawing.Point(7, 130);
-            this.cmbMarkSale.Name = "cmbMarkSale";
-            this.cmbMarkSale.Size = new System.Drawing.Size(167, 27);
-            this.cmbMarkSale.TabIndex = 20;
             // 
             // CtrlReport
             // 

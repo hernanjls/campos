@@ -1784,9 +1784,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:EzAuto"
+        "ProductName" = "8:EzAuto-ChhayLy"
         "ProductCode" = "8:{C1926A8B-8769-4594-9284-E791B119A852}"
-        "PackageCode" = "8:{727585B5-9793-4FF9-85E7-EC5AC8FA7BBA}"
+        "PackageCode" = "8:{DCDDE0B7-7773-44FF-A14A-0FACDB72A09C}"
         "UpgradeCode" = "8:{D19B300D-E8C7-48CF-91D6-CEA8A8E1591F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -1907,7 +1907,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_91970E15708F49ECAC0C4EB0BD8AD7D3"
             {
-            "Name" = "8:EzPos-EcoElectric"
+            "Name" = "8:EzAuto-ChhayLy"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
