@@ -82,60 +82,31 @@ namespace EzPos.GUIs.Controls
                     }
                 }
             }
-
-            //var searchCriteria = 
-            //    new List<string>
-            //    {
-            //        "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 0)",
-            //        "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
-            //        dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-            //        "', 103) AND CONVERT(DATETIME, '" +
-            //        dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
-            //        " 23:59', 103)"
-            //    };
-            //var saleList = _saleOrderService.GetSaleHistories(searchCriteria);
-
-            //DataSet dtsModel = new DtsModels();
-            //var propertyInfos = typeof (SaleOrderReport).GetProperties();
-            //foreach (var objInstance in saleList)
-            //{
-            //    var dataRow = dtsModel.Tables[1].NewRow();
-            //    foreach (var propertyInfo in propertyInfos)
-            //        dataRow[propertyInfo.Name] = propertyInfo.GetValue(objInstance, null);
-            //    dtsModel.Tables[1].Rows.Add(dataRow);
-            //}
-
-            //if (chbShowQuantity.Checked)
-            //{
-            //    var rptSaleOrderQuantity = new CsrSaleOrderQuantity();
-            //    rptSaleOrderQuantity.SetDataSource(dtsModel);
-            //    crvReport.ReportSource = rptSaleOrderQuantity;
-            //}
-            //else if(chbShowBenefit.Checked)
-            //{
-            //    var rptSaleBenefit = new CsrSaleBenefit();
-            //    rptSaleBenefit.SetDataSource(dtsModel);
-            //    crvReport.ReportSource = rptSaleBenefit;
-            //}
-            //else
-            //{
-            //    var rptSaleOrder = new CsrSaleOrder();
-            //    rptSaleOrder.SetDataSource(dtsModel);
-            //    crvReport.ReportSource = rptSaleOrder;
-            //}
-
+            
             var selectedMarkId = -1;
             if (cmbMark.SelectedItem != null)
             {
                 Int32.TryParse(cmbMark.SelectedValue.ToString(), out selectedMarkId);
             }
 
-            _reportService.SaleOrderService = _saleOrderService;
-            var reportFileName = _reportService.SaleStatementReport(
-                dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
-                dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
-                selectedMarkId,
-                chbShowBenefit.Checked);
+            string reportFileName;
+            if (chbShowQuantity.Checked)
+            {
+                _reportService.SaleOrderService = _saleOrderService;
+                reportFileName = _reportService.SaleStatementQuantityOnlyReport(
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+                    selectedMarkId);
+            }
+            else
+            {
+                _reportService.SaleOrderService = _saleOrderService;
+                reportFileName = _reportService.SaleStatementReport(
+                    dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+                    dtpStopDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+                    selectedMarkId,
+                    chbShowBenefit.Checked);
+            }
 
             OpenReport(reportFileName);
         }
@@ -456,6 +427,12 @@ namespace EzPos.GUIs.Controls
 
             CommonService.DeleteFile(
                 System.Windows.Forms.Application.StartupPath,
+                Resources.ConstSaleStatementQuantityOnlyExcelFile,
+                "*.xls*",
+                true);
+
+            CommonService.DeleteFile(
+                System.Windows.Forms.Application.StartupPath,
                 Resources.ConstExpenseStatementExcelFile,
                 "*.xls*",
                 true);
@@ -520,16 +497,6 @@ namespace EzPos.GUIs.Controls
         //    crvReport.ReportSource = rptDeposit;           
         //}
 
-        //private void ChbShowBenefitEnter(object sender, EventArgs e)
-        //{
-        //    chbShowBenefit.CheckedChanged += ChbShowBenefitCheckedChanged;
-        //}
-
-        //private void ChbShowBenefitLeave(object sender, EventArgs e)
-        //{
-        //    chbShowBenefit.CheckedChanged -= ChbShowBenefitCheckedChanged;
-        //}
-
         //private void ChbAllDepositEnter(object sender, EventArgs e)
         //{
         //    chbAllDeposit.CheckedChanged += ChbAllDepositCheckedChanged;
@@ -568,9 +535,15 @@ namespace EzPos.GUIs.Controls
         private void ChbShowQuantityCheckedChanged(object sender, EventArgs e)
         {
             rdbSale.Checked = true;
-            //chbAllDeposit.Checked = false;
             if (chbShowQuantity.Checked)
                 chbShowBenefit.Checked = false;
+        }
+
+        private void ChbShowBenefitCheckedChanged(object sender, EventArgs e)
+        {
+            rdbSale.Checked = true;
+            if (chbShowBenefit.Checked)
+                chbShowQuantity.Checked = false;
         }
 
         private void RefreshIncomeStatementReport()
@@ -893,6 +866,16 @@ namespace EzPos.GUIs.Controls
                     Resources.MsgCaptionUnknownError,
                     exception.Message);
             }
+        }
+
+        private void ChbShowBenefitEnter(object sender, EventArgs e)
+        {
+            chbShowBenefit.CheckedChanged += ChbShowBenefitCheckedChanged;
+        }
+
+        private void ChbShowBenefitLeave(object sender, EventArgs e)
+        {
+            chbShowBenefit.CheckedChanged -= ChbShowBenefitCheckedChanged;
         }
     }
 }

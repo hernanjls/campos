@@ -769,4 +769,7 @@
   <data name="ConstSheetSaleStatement" xml:space="preserve">
     <value>Sale</value>
   </data>
+  <data name="ConstSaleStatementQuantityOnlyExcelFile" xml:space="preserve">
+    <value>sale statement - quantity only.xlsx</value>
+  </data>
 </root>

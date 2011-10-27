@@ -514,11 +514,10 @@ namespace EzPos
             var starDate = new DateTime(2011, 10, 1);
             var endDate = new DateTime(2011, 10, 31);
 
-            reportService.SaleStatementReport(
+            reportService.SaleStatementQuantityOnlyReport(
                 starDate.ToString("dd/MM/yyyy", AppContext.CultureInfo),
                 endDate.ToString("dd/MM/yyyy", AppContext.CultureInfo),
-                999,
-                true);
+                -1);
 
             Assert.AreEqual(1, 1, "Test performed");
         }

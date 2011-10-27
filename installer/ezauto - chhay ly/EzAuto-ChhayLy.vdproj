@@ -375,6 +375,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_EE8298CAE3CB46BA9873A294AF1A0039"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EF48CA26D9C8DBC107BEEACF02F17F5A"
         "OwnerKey" = "8:_87F4470BE737683E47C2B8FD120F06A9"
         "MsmSig" = "8:_UNDEFINED"
@@ -1618,6 +1624,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EE8298CAE3CB46BA9873A294AF1A0039"
+            {
+            "SourcePath" = "8:..\\output\\sale statement - quantity only.xlsx"
+            "TargetName" = "8:sale statement - quantity only.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_886E1BF37C85481BB816F0043E999BE2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EF48CA26D9C8DBC107BEEACF02F17F5A"
             {
             "AssemblyRegister" = "3:1"
@@ -1786,7 +1812,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EzAuto-ChhayLy"
         "ProductCode" = "8:{C1926A8B-8769-4594-9284-E791B119A852}"
-        "PackageCode" = "8:{DCDDE0B7-7773-44FF-A14A-0FACDB72A09C}"
+        "PackageCode" = "8:{46A7A316-BC01-481E-9C75-898A4E6DEBCD}"
         "UpgradeCode" = "8:{D19B300D-E8C7-48CF-91D6-CEA8A8E1591F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
