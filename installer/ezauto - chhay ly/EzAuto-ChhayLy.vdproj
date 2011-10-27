@@ -1811,9 +1811,9 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EzAuto-ChhayLy"
-        "ProductCode" = "8:{C1926A8B-8769-4594-9284-E791B119A852}"
+        "ProductCode" = "8:{F3237D59-53C9-4C01-997D-6560B0F3C55F}"
         "PackageCode" = "8:{46A7A316-BC01-481E-9C75-898A4E6DEBCD}"
-        "UpgradeCode" = "8:{D19B300D-E8C7-48CF-91D6-CEA8A8E1591F}"
+        "UpgradeCode" = "8:{F2B729E2-47D2-4128-B21B-852894722A28}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"

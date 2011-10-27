@@ -176,7 +176,6 @@ namespace EzPos.GUIs.Controls
             this.chbShowQuantity.TabIndex = 19;
             this.chbShowQuantity.Text = "បរិមាណ";
             this.chbShowQuantity.UseVisualStyleBackColor = false;
-            this.chbShowQuantity.Visible = false;
             this.chbShowQuantity.Leave += new System.EventHandler(this.ChbShowQuantityLeave);
             this.chbShowQuantity.Enter += new System.EventHandler(this.ChbShowQuantityEnter);
             // 

@@ -1811,9 +1811,9 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EzAuto-SokHy"
-        "ProductCode" = "8:{05F7B08D-83A2-4178-B2E6-00C7D2BA49AB}"
+        "ProductCode" = "8:{A7E66C97-26A5-4087-A192-9D433CDC591F}"
         "PackageCode" = "8:{77F9C8E0-F5E4-4107-A368-8C6AF28FFE82}"
-        "UpgradeCode" = "8:{3274B348-7E1A-46CF-BFE0-FB5822AE82E7}"
+        "UpgradeCode" = "8:{86899ADE-523D-4129-8B12-C13D5F649B94}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
