@@ -28,7 +28,12 @@ namespace EzPos.Service.Report
                 return string.Empty;
 
             //Stock
-            var searchCriteria = new List<string> { "QtyInStock > 0" };
+            var searchCriteria = new List<string>();
+            if (markId != -1)
+            {
+                searchCriteria.Add("MarkID|" + markId);
+            }
+
             var productList = ProductService.GetObjects(searchCriteria);
             if ((productList == null) || (productList.Count == 0))
                 return string.Empty;
@@ -428,6 +433,246 @@ namespace EzPos.Service.Report
             return reportFileName;
         }
 
+        //Sale
+        public string SaleStatementQuantityOnlyReport(string startDate, string endDate, int markId)
+        {
+            if (string.IsNullOrEmpty(startDate))
+                return string.Empty;
+
+            if (string.IsNullOrEmpty(endDate))
+                return string.Empty;
+
+            if (SaleOrderService == null)
+                return string.Empty;
+
+            //Sales
+            var searchCriteria =
+                new List<string>
+                    {
+                        "SaleOrderId IN (SELECT SaleOrderId FROM TSaleOrders WHERE SaleOrderDate BETWEEN CONVERT(DATETIME, '" + startDate + "', 103) AND CONVERT(DATETIME, '" +
+                        endDate + " 23:59', 103))"
+                    };
+
+            if (markId != -1)
+                searchCriteria.Add("SaleOrderId IN (SELECT SaleOrderId FROM TSaleItems WHERE ProductId IN (SELECT ProductID FROM TProducts WHERE MarkID = " + markId + "))");
+
+            var saleOrderList = SaleOrderService.GetSaleOrders(searchCriteria);
+            var saleOrderHistoryList = SaleOrderService.GetSaleHistories(searchCriteria);
+
+            //List of sale date
+            var soldDateList =
+                (from saleOrder
+                in saleOrderList.Cast<Model.SaleOrder>()
+                orderby (DateTime)saleOrder.SaleOrderDate
+                select ((DateTime) saleOrder.SaleOrderDate).Date).Distinct().ToList();
+
+            if ((saleOrderList == null) || (saleOrderList.Count == 0))
+                return string.Empty;
+
+            //Write to Excel file
+            var templateReportFile =
+                System.Windows.Forms.Application.StartupPath + @"\" +
+                Resources.ConstSaleStatementExcelFile;
+            //var templateReportFile =
+            //    @"D:\projects\yim sakal\point of sales\ezpos\application\branches\ezauto\source code\bin\Debug\" + 
+            //    Resources.ConstSaleStatementQuantityOnlyExcelFile;
+
+            var reportFileInfo = new FileInfo(templateReportFile);
+            if (!reportFileInfo.Exists)
+                return string.Empty;
+
+            var invoicePeriode =
+                startDate + " ដល់ " + endDate;
+
+            //Open workbook                
+            var excelApplication = new ExcelApplication();
+            var workBook = excelApplication.Workbooks.Open(
+                templateReportFile,
+                0,
+                false,
+                5,
+                false,
+                string.Empty,
+                false,
+                XlPlatform.xlWindows,
+                string.Empty,
+                true,
+                false,
+                0,
+                true,
+                false,
+                false);
+
+            //Invoice content
+            var workSheet = (Worksheet)workBook.Worksheets[Resources.ConstSheetSaleStatement];
+
+            //Shop name
+            var rowIndex = 1;
+            var excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+            excelRange.Select();
+            excelRange.Value2 = "របាយ​ការណ៏​លក់​របស់ក្រុមហ៊ុន​ " + AppContext.ShopNameLocal;
+
+            //Period
+            rowIndex = 2;
+            excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+            excelRange.Select();
+            excelRange.Value2 = "សំរាប់រយៈពេល " + invoicePeriode;
+
+            //Sale            
+            rowIndex = 5;
+            foreach (var soldDate in soldDateList)
+            {
+                var localSoldDate = soldDate;
+
+                //Date
+                var shortDateString = localSoldDate.ToString("dd/MM/yyyy", AppContext.CultureInfo);
+                workSheet.get_Range("A" + rowIndex + ":H" + rowIndex, Type.Missing).Merge(Type.Missing);
+                excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = "កាលបរិច្ឆេទ: " + shortDateString;
+
+                excelRange = workSheet.get_Range("A" + rowIndex, "H" + rowIndex);
+                excelRange.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
+                excelRange.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
+                excelRange.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
+                excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
+
+                rowIndex += 1;
+                excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                excelRange.EntireRow.Insert(XlInsertShiftDirection.xlShiftDown, 1);
+
+                var filteredSaleOrderList =
+                    (from saleOrder
+                    in saleOrderList.Cast<Model.SaleOrder>()
+                    where ((DateTime)saleOrder.SaleOrderDate).Date.Equals(localSoldDate)
+                    select saleOrder).ToList();
+
+                var filteredSaleOrderHistoryList = 
+                    (from saleOrderReport
+                    in saleOrderHistoryList.Cast<SaleOrderReport>()
+                    where (from saleOrder in filteredSaleOrderList select saleOrder.SaleOrderId).Contains(saleOrderReport.SaleOrderId)
+                    select saleOrderReport).ToList();
+
+                var counter = 1;
+                foreach (
+                    var saleOrderHistory in
+                    filteredSaleOrderHistoryList.Where(saleOrderHistory => saleOrderHistory != null))
+                {
+                    //Order number
+                    excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = counter;
+
+                    //Invoice
+                    excelRange = workSheet.get_Range("B" + rowIndex, "B" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = saleOrderHistory.SaleOrderNumber;
+
+                    //Customer
+                    excelRange = workSheet.get_Range("C" + rowIndex, "C" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = saleOrderHistory.CustomerName;
+
+                    //Product code
+                    excelRange = workSheet.get_Range("D" + rowIndex, "D" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = saleOrderHistory.ProductCode;
+
+                    //Product name
+                    excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = saleOrderHistory.ProductName;
+
+                    //Qty
+                    var quantity = saleOrderHistory.QtySold;
+                    excelRange = workSheet.get_Range("F" + rowIndex, "F" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = quantity;
+
+                    //Unit price
+                    var unitPrice = saleOrderHistory.UnitPriceOut;
+                    excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = saleOrderHistory.UnitPriceOut;
+
+                    //Total
+                    var subTotal = quantity*unitPrice;
+                    excelRange = workSheet.get_Range("H" + rowIndex, "H" + rowIndex);
+                    excelRange.Select();
+                    excelRange.Value2 = subTotal;
+
+                    counter += 1;
+
+                    excelRange = workSheet.get_Range("A" + rowIndex, "H" + rowIndex);
+                    excelRange.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlDot;
+
+                    rowIndex += 1;
+                    excelRange = workSheet.get_Range("A" + rowIndex, "A" + rowIndex);
+                    excelRange.EntireRow.Insert(XlInsertShiftDirection.xlShiftDown, 1);
+                }
+
+                //Total amount
+                var totalSold =
+                    (from saleOrderHistory
+                     in filteredSaleOrderHistoryList
+                     select (saleOrderHistory.QtySold * saleOrderHistory.UnitPriceOut)).Sum();
+
+                //SubTotal
+                excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = "សរុប";
+                excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+                excelRange = workSheet.get_Range("H" + rowIndex, "H" + rowIndex);
+                excelRange.Select();
+                excelRange.Value2 = totalSold;
+
+                excelRange = workSheet.get_Range("H" + rowIndex, "H" + rowIndex);
+                excelRange.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(253, 233, 217));
+
+                rowIndex += 1;
+            }
+
+            //Grand Total
+            var grandTotalSold =
+                (from saleOrderHistory
+                 in saleOrderHistoryList.Cast<SaleOrderReport>()
+                 select (saleOrderHistory.QtySold * saleOrderHistory.UnitPriceOut)).Sum();
+
+            excelRange = workSheet.get_Range("G" + rowIndex, "G" + rowIndex);
+            excelRange.Select();
+            excelRange.Value2 = "សរុបទាំងអស់";
+            excelRange.HorizontalAlignment = XlHAlign.xlHAlignRight;
+            excelRange = workSheet.get_Range("H" + rowIndex, "H" + rowIndex);
+            excelRange.Select();
+            excelRange.Value2 = grandTotalSold;
+
+            excelRange = workSheet.get_Range("H" + rowIndex, "H" + rowIndex);
+            excelRange.Font.Bold = true;
+            excelRange.Interior.Color = ColorTranslator.ToOle(Color.FromArgb(253, 233, 217));
+
+            excelRange = workSheet.get_Range("A1", "A1");
+            excelRange.Select();
+
+            var reportFileName =
+                System.Windows.Forms.Application.StartupPath + @"\" +
+                DateTime.Now.Ticks + " - " +
+                Resources.ConstSaleStatementQuantityOnlyExcelFile;
+
+            workBook.Close(
+                true,
+                reportFileName,
+                System.Reflection.Missing.Value);
+
+            excelApplication.Quit();
+
+            Marshal.ReleaseComObject(excelApplication);
+            GC.Collect(0, GCCollectionMode.Forced);
+            GC.WaitForPendingFinalizers();
+
+            return reportFileName;
+        }
+
+        //Expense
         public string ExpenseStatementReport(string startDate, string endDate)
         {
             if (string.IsNullOrEmpty(startDate))

@@ -151,7 +151,7 @@ namespace EzPos.GUIs.Controls
             this.grbSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.grbSale.Location = new System.Drawing.Point(10, 135);
             this.grbSale.Name = "grbSale";
-            this.grbSale.Size = new System.Drawing.Size(180, 284);
+            this.grbSale.Size = new System.Drawing.Size(180, 304);
             this.grbSale.TabIndex = 99;
             this.grbSale.TabStop = false;
             // 
@@ -160,7 +160,7 @@ namespace EzPos.GUIs.Controls
             this.cmbMarkSale.DropDownWidth = 180;
             this.cmbMarkSale.Font = new System.Drawing.Font("Candara", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMarkSale.FormattingEnabled = true;
-            this.cmbMarkSale.Location = new System.Drawing.Point(7, 130);
+            this.cmbMarkSale.Location = new System.Drawing.Point(7, 185);
             this.cmbMarkSale.Name = "cmbMarkSale";
             this.cmbMarkSale.Size = new System.Drawing.Size(167, 27);
             this.cmbMarkSale.TabIndex = 20;
@@ -170,7 +170,7 @@ namespace EzPos.GUIs.Controls
             this.chbShowQuantity.AutoSize = true;
             this.chbShowQuantity.BackColor = System.Drawing.Color.Transparent;
             this.chbShowQuantity.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbShowQuantity.Location = new System.Drawing.Point(29, 271);
+            this.chbShowQuantity.Location = new System.Drawing.Point(29, 154);
             this.chbShowQuantity.Name = "chbShowQuantity";
             this.chbShowQuantity.Size = new System.Drawing.Size(89, 34);
             this.chbShowQuantity.TabIndex = 19;
@@ -185,7 +185,7 @@ namespace EzPos.GUIs.Controls
             this.rdbExpense.AutoSize = true;
             this.rdbExpense.BackColor = System.Drawing.Color.Transparent;
             this.rdbExpense.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbExpense.Location = new System.Drawing.Point(6, 163);
+            this.rdbExpense.Location = new System.Drawing.Point(6, 215);
             this.rdbExpense.Name = "rdbExpense";
             this.rdbExpense.Size = new System.Drawing.Size(145, 31);
             this.rdbExpense.TabIndex = 17;
@@ -198,7 +198,7 @@ namespace EzPos.GUIs.Controls
             this.rdbSale.BackColor = System.Drawing.Color.Transparent;
             this.rdbSale.Checked = true;
             this.rdbSale.Font = new System.Drawing.Font("Khmer OS System", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbSale.Location = new System.Drawing.Point(6, 99);
+            this.rdbSale.Location = new System.Drawing.Point(6, 101);
             this.rdbSale.Name = "rdbSale";
             this.rdbSale.Size = new System.Drawing.Size(152, 31);
             this.rdbSale.TabIndex = 14;
@@ -211,12 +211,14 @@ namespace EzPos.GUIs.Controls
             this.chbShowBenefit.AutoSize = true;
             this.chbShowBenefit.BackColor = System.Drawing.Color.Transparent;
             this.chbShowBenefit.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbShowBenefit.Location = new System.Drawing.Point(28, 191);
+            this.chbShowBenefit.Location = new System.Drawing.Point(28, 128);
             this.chbShowBenefit.Name = "chbShowBenefit";
             this.chbShowBenefit.Size = new System.Drawing.Size(123, 34);
             this.chbShowBenefit.TabIndex = 13;
             this.chbShowBenefit.Text = "ប្រាក់ចំណេញ";
             this.chbShowBenefit.UseVisualStyleBackColor = false;
+            this.chbShowBenefit.Leave += new System.EventHandler(this.ChbShowBenefitLeave);
+            this.chbShowBenefit.Enter += new System.EventHandler(this.ChbShowBenefitEnter);
             // 
             // btnSearchSale
             // 
@@ -227,7 +229,7 @@ namespace EzPos.GUIs.Controls
             this.btnSearchSale.ForeColor = System.Drawing.Color.White;
             this.btnSearchSale.Image = global::EzPos.Properties.Resources.Search32;
             this.btnSearchSale.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearchSale.Location = new System.Drawing.Point(18, 231);
+            this.btnSearchSale.Location = new System.Drawing.Point(18, 253);
             this.btnSearchSale.Name = "btnSearchSale";
             this.btnSearchSale.Size = new System.Drawing.Size(144, 40);
             this.btnSearchSale.TabIndex = 12;

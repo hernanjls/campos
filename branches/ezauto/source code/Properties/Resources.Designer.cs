@@ -768,6 +768,15 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sale statement - quantity only.xlsx.
+        /// </summary>
+        internal static string ConstSaleStatementQuantityOnlyExcelFile {
+            get {
+                return ResourceManager.GetString("ConstSaleStatementQuantityOnlyExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string ConstSearchCriteria {
