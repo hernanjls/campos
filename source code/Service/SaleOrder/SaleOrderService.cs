@@ -169,7 +169,7 @@ namespace EzPos.Service.SaleOrder
                 productService.UpdateProduct(saleItem);
 
                 //SaleItem
-                saleItem.SaleOrderID = saleOrder.SaleOrderId;
+                saleItem.SaleOrderId = saleOrder.SaleOrderId;
                 _saleOrderDataAccess.InsertSaleItem(saleItem);
 
                 var saleOrderReport = 
@@ -245,7 +245,16 @@ namespace EzPos.Service.SaleOrder
             return _saleOrderDataAccess.GetSaleItems(saleOrderId);
         }
 
-        public virtual IList GetSaleItems(IList depositItemList)
+        public virtual IList GetSaleItems(IList searchCriteria)
+        {
+            if (searchCriteria == null)
+                throw new ArgumentNullException("searchCriteria", Resources.MsgInvalidSearchCriteria);
+
+            return _saleOrderDataAccess.GetSaleItems(searchCriteria);
+
+        }
+
+        public virtual IList GetSaleItemsByDeposit(IList depositItemList)
         {
             var saleItemList = new List<SaleItem>();
             foreach (DepositItem depositItem in depositItemList)
@@ -256,7 +265,7 @@ namespace EzPos.Service.SaleOrder
                 var saleItem = 
                     new SaleItem
                     {
-                        SaleOrderID = depositItem.DepositId,
+                        SaleOrderId = depositItem.DepositId,
                         ProductID = depositItem.ProductId,
                         ProductName = depositItem.ProductName,
                         FKProduct = depositItem.FKProduct,

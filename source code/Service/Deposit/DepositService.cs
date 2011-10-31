@@ -151,7 +151,7 @@ namespace EzPos.Service
                 var depositItem = 
                     new DepositItem
                     {
-                        DepositId = saleItem.SaleOrderID,
+                        DepositId = saleItem.SaleOrderId,
                         ProductId = saleItem.ProductID,
                         FKProduct = saleItem.FKProduct,
                         UnitPriceIn = saleItem.UnitPriceIn,

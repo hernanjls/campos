@@ -311,9 +311,16 @@ namespace EzPos.GUIs.Controls
                 //        saleItem.UnitPriceOut;
                 //else
                 //{
-                var unitPriceOut =
-                    unitPriceIn +
-                    ((unitPriceIn * saleItem.FKProduct.ExtraPercentage) / 100);
+                float unitPriceOut;
+                var extraPercentage = saleItem.FKProduct.ExtraPercentage;
+                if(extraPercentage != 0)
+                {
+                    unitPriceOut =
+                        unitPriceIn +
+                        ((unitPriceIn * saleItem.FKProduct.ExtraPercentage) / 100);
+                }
+                else
+                    unitPriceOut = saleItem.FKProduct.UnitPriceOut;
 
                 unitPriceOut =
                     unitPriceOut - ((unitPriceOut * saleItem.Discount) / 100);

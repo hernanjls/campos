@@ -172,6 +172,7 @@
     <Compile Include="ApplicationContainer.cs" />
     <Compile Include="DataAccess\Deposit\DepositDataAccess.cs" />
     <Compile Include="DataAccess\Payments\PaymentDataAccess.cs" />
+    <Compile Include="EzPosUnitTest.cs" />
     <Compile Include="GUIs\Components\ExtendedButton.cs">
       <SubType>Component</SubType>
     </Compile>

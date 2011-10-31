@@ -84,9 +84,9 @@ namespace EzPos.GUIs.Controls
             }
             
             var selectedMarkId = -1;
-            if (cmbMark.SelectedItem != null)
+            if (cmbMarkSale.SelectedItem != null)
             {
-                Int32.TryParse(cmbMark.SelectedValue.ToString(), out selectedMarkId);
+                Int32.TryParse(cmbMarkSale.SelectedValue.ToString(), out selectedMarkId);
             }
 
             string reportFileName;
