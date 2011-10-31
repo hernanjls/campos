@@ -514,6 +514,12 @@ namespace EzPos
             var starDate = new DateTime(2011, 10, 1);
             var endDate = new DateTime(2011, 10, 31);
 
+            //reportService.SaleStatementReport(
+            //    starDate.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+            //    endDate.ToString("dd/MM/yyyy", AppContext.CultureInfo),
+            //    -1,
+            //    true);
+
             reportService.SaleStatementQuantityOnlyReport(
                 starDate.ToString("dd/MM/yyyy", AppContext.CultureInfo),
                 endDate.ToString("dd/MM/yyyy", AppContext.CultureInfo),

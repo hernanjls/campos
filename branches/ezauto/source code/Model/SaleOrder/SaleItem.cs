@@ -7,12 +7,12 @@ namespace EzPos.Model
     /// </summary>
     public class SaleItem
     {
-        public const string CONST_PRODUCT_ID = "ProductID";
-        public const string CONST_SALE_ORDER_ID = "SaleOrderID";
+        public const string ConstProductId = "ProductID";
+        public const string ConstSaleOrderId = "SaleOrderId";
 
         public int SaleItemID { get; set; }
 
-        public int SaleOrderID { get; set; }
+        public int SaleOrderId { get; set; }
 
         public int ProductID { get; set; }
 

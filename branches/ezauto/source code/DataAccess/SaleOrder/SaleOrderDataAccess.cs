@@ -61,18 +61,45 @@ namespace EzPos.DataAccess.SaleOrder
         //SaleItem
         public virtual IList GetSaleItems()
         {
-            var orderList = new Collection<Order> {Order.Asc(SaleItem.CONST_SALE_ORDER_ID)};
+            var orderList = new Collection<Order> {Order.Asc(SaleItem.ConstSaleOrderId)};
 
             return SelectObjects(typeof (SaleItem), orderList).List();
         }
 
         public virtual IList GetSaleItems(int saleOrderId)
         {
-            var criterionList = new Collection<ICriterion> {Expression.Eq("SaleOrderID", saleOrderId)};
+            var criterionList = new Collection<ICriterion> {Expression.Eq("SaleOrderId", saleOrderId)};
 
-            var orderList = new Collection<Order> {Order.Asc(SaleItem.CONST_PRODUCT_ID)};
+            var orderList = new Collection<Order> {Order.Asc(SaleItem.ConstProductId)};
 
             return SelectObjects(typeof (SaleItem), criterionList, orderList).List();
+        }
+
+        public virtual IList GetSaleItems(IList searchCriteria)
+        {
+            var criterionList = new Collection<ICriterion>();
+            if (searchCriteria != null)
+            {
+                foreach (string strCriteria in searchCriteria)
+                {
+                    var delimiterIndex = strCriteria.IndexOf("|");
+                    if (delimiterIndex >= 0)
+                        criterionList.Add(
+                            Expression.Eq(
+                                StringHelper.Left(strCriteria, delimiterIndex),
+                                StringHelper.Right(strCriteria, strCriteria.Length - delimiterIndex - 1)));
+                    else
+                        criterionList.Add(Expression.Sql(strCriteria));
+                }
+            }
+
+            var orderList =
+                new Collection<Order>
+                {
+                    Order.Asc(SaleItem.ConstSaleOrderId)
+                };
+
+            return SelectObjects(typeof(SaleItem), criterionList, orderList).List();
         }
 
         public virtual void UpdateSaleItem(SaleItem saleItem)

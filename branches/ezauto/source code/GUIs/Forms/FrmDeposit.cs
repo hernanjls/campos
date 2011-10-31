@@ -178,7 +178,7 @@ namespace EzPos.GUIs.Forms
                 return;
 
             _depositItemList = _depositService.GetDepositItems(_deposit.DepositId);
-            var saleItemList = _saleOrderService.GetSaleItems(_depositItemList);
+            var saleItemList = _saleOrderService.GetSaleItemsByDeposit(_depositItemList);
 
             var printInvoice = new PrintInvoice();
             printInvoice.ExcelInvoicePrintingHandler(
@@ -272,7 +272,7 @@ namespace EzPos.GUIs.Forms
                 }
 
                 _depositItemList = _depositService.GetDepositItems(_deposit.DepositId);
-                var saleItemList = _saleOrderService.GetSaleItems(_depositItemList);
+                var saleItemList = _saleOrderService.GetSaleItemsByDeposit(_depositItemList);
 
                 _saleOrderService.RecordSaleOrder(
                     saleItemList,

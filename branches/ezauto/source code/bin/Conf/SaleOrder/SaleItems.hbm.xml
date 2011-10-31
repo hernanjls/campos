@@ -4,7 +4,7 @@
 		<id name="SaleItemID" column="SaleItemID" unsaved-value="0" type="Int32" >
 			<generator class="identity" />
 		</id>
-		<property name="SaleOrderID" column="SaleOrderID" type="Int32" />    
+		<property name="SaleOrderId" column="SaleOrderId" type="Int32" />    
     <property name="ProductID" column="ProductID" type="Int32" />
     <property name="UnitPriceIn" column="UnitPriceIn" type="float" />
     <property name="UnitPriceOut" column="UnitPriceOut" type="float" />

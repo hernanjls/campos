@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzPos", "EzPos.csproj", "{B8EFF784-4821-428E-AFC6-E5E0F42E989A}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EzAuto-ChhayLy", "..\installer\ezauto - chhay ly\EzAuto-ChhayLy.vdproj", "{44989077-7576-4943-9645-3E51237B0FE3}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EzAuto-SokHy", "..\installer\ezauto - sok hy\EzAuto-SokHy.vdproj", "{3E71E66F-4ED6-416F-847A-4605CF960851}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,22 @@ Global
 		{B8EFF784-4821-428E-AFC6-E5E0F42E989A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8EFF784-4821-428E-AFC6-E5E0F42E989A}.Release|x86.ActiveCfg = Release|x86
 		{B8EFF784-4821-428E-AFC6-E5E0F42E989A}.Release|x86.Build.0 = Release|x86
+		{44989077-7576-4943-9645-3E51237B0FE3}.Debug|Any CPU.ActiveCfg = Debug
+		{44989077-7576-4943-9645-3E51237B0FE3}.Debug|Any CPU.Build.0 = Debug
+		{44989077-7576-4943-9645-3E51237B0FE3}.Debug|x86.ActiveCfg = Debug
+		{44989077-7576-4943-9645-3E51237B0FE3}.Debug|x86.Build.0 = Debug
+		{44989077-7576-4943-9645-3E51237B0FE3}.Release|Any CPU.ActiveCfg = Release
+		{44989077-7576-4943-9645-3E51237B0FE3}.Release|Any CPU.Build.0 = Release
+		{44989077-7576-4943-9645-3E51237B0FE3}.Release|x86.ActiveCfg = Release
+		{44989077-7576-4943-9645-3E51237B0FE3}.Release|x86.Build.0 = Release
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Debug|Any CPU.ActiveCfg = Debug
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Debug|Any CPU.Build.0 = Debug
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Debug|x86.ActiveCfg = Debug
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Debug|x86.Build.0 = Debug
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Release|Any CPU.ActiveCfg = Release
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Release|Any CPU.Build.0 = Release
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Release|x86.ActiveCfg = Release
+		{3E71E66F-4ED6-416F-847A-4605CF960851}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
