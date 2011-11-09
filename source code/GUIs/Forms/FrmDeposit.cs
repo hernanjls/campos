@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Deposit;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Deposit;
 using EzPos.Service.SaleOrder;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Forms
 {
@@ -185,8 +188,8 @@ namespace EzPos.GUIs.Forms
                 AppContext.Counter.ReceiptPrinter,
                 Application.StartupPath + @"\" + Resources.ConstDepositExcelFile,
                 string.Empty,
-                _deposit.FKCustomer.CustomerName,
-                _deposit.FKCustomer.CustomerName,
+                _deposit.FkCustomer.CustomerName,
+                _deposit.FkCustomer.CustomerName,
                 _deposit.DepositNumber,
                 (DateTime)_deposit.DepositDate,
                 _deposit.Discount,
@@ -280,7 +283,7 @@ namespace EzPos.GUIs.Forms
                     saleOrder.AmountSoldInt - saleOrder.AmountPaidInt,
                     0,
                     0,
-                    saleOrder.FKCustomer,
+                    saleOrder.FkCustomer,
                     false,
                     _deposit.DepositNumber,
                     saleOrder.Discount,
@@ -366,7 +369,7 @@ namespace EzPos.GUIs.Forms
                 _deposit.AmountSoldInt,
                 _deposit.AmountPaidInt,
                 0,
-                _deposit.FKCustomer,
+                _deposit.FkCustomer,
                 _deposit.DepositNumber,
                 _deposit.Discount,
                 true);

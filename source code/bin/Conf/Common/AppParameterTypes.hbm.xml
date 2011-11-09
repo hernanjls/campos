@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
-  <class name="EzPos.Model.AppParameterType,EzPos" table="[TAppParameterTypes]">
-    <id column="ParameterTypeID" name="ParameterTypeID" type="Int32" unsaved-value="0">
+  <class name="EzPos.Model.Common.AppParameterType,EzPos" table="[TAppParameterTypes]">
+    <id column="ParameterTypeId" name="ParameterTypeId" type="Int32" unsaved-value="0">
       <generator class="identity"/>
     </id>
     <property column="ParameterType" name="ParameterType"/>

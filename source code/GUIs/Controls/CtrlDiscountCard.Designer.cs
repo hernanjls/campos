@@ -71,11 +71,11 @@ namespace EzPos.GUIs.Controls
             this.PrintCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.CardNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DiscountCardTypeStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountCardTypeID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiscountCardTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DiscountPercentage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountCardID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiscountCardId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpireDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FKCustomer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AllowDiscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -122,11 +122,11 @@ namespace EzPos.GUIs.Controls
             this.PrintCheck,
             this.CardNumber,
             this.DiscountCardTypeStr,
-            this.DiscountCardTypeID,
+            this.DiscountCardTypeId,
             this.DiscountPercentage,
-            this.CustomerID,
+            this.CustomerId,
             this.CustomerStr,
-            this.DiscountCardID,
+            this.DiscountCardId,
             this.ExpireDate,
             this.FKCustomer,
             this.AllowDiscount});
@@ -587,17 +587,17 @@ namespace EzPos.GUIs.Controls
             this.DiscountCardTypeStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.DiscountCardTypeStr.Width = 140;
             // 
-            // DiscountCardTypeID
+            // DiscountCardTypeId
             // 
-            this.DiscountCardTypeID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DiscountCardTypeID.DataPropertyName = "DiscountCardTypeID";
-            this.DiscountCardTypeID.HeaderText = "ប្រភេទកាត";
-            this.DiscountCardTypeID.Name = "DiscountCardTypeID";
-            this.DiscountCardTypeID.ReadOnly = true;
-            this.DiscountCardTypeID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.DiscountCardTypeID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DiscountCardTypeID.Visible = false;
-            this.DiscountCardTypeID.Width = 140;
+            this.DiscountCardTypeId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DiscountCardTypeId.DataPropertyName = "DiscountCardTypeId";
+            this.DiscountCardTypeId.HeaderText = "ប្រភេទកាត";
+            this.DiscountCardTypeId.Name = "DiscountCardTypeId";
+            this.DiscountCardTypeId.ReadOnly = true;
+            this.DiscountCardTypeId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DiscountCardTypeId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DiscountCardTypeId.Visible = false;
+            this.DiscountCardTypeId.Width = 140;
             // 
             // DiscountPercentage
             // 
@@ -613,16 +613,16 @@ namespace EzPos.GUIs.Controls
             this.DiscountPercentage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.DiscountPercentage.Width = 130;
             // 
-            // CustomerID
+            // CustomerId
             // 
-            this.CustomerID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.CustomerID.DataPropertyName = "CustomerID";
-            this.CustomerID.HeaderText = "CustomerID";
-            this.CustomerID.Name = "CustomerID";
-            this.CustomerID.ReadOnly = true;
-            this.CustomerID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CustomerID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CustomerID.Visible = false;
+            this.CustomerId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CustomerId.DataPropertyName = "CustomerId";
+            this.CustomerId.HeaderText = "CustomerId";
+            this.CustomerId.Name = "CustomerId";
+            this.CustomerId.ReadOnly = true;
+            this.CustomerId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CustomerId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CustomerId.Visible = false;
             // 
             // CustomerStr
             // 
@@ -634,14 +634,14 @@ namespace EzPos.GUIs.Controls
             this.CustomerStr.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.CustomerStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // DiscountCardID
+            // DiscountCardId
             // 
-            this.DiscountCardID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DiscountCardID.DataPropertyName = "DiscountCardID";
-            this.DiscountCardID.HeaderText = "DiscountCardID";
-            this.DiscountCardID.Name = "DiscountCardID";
-            this.DiscountCardID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DiscountCardID.Visible = false;
+            this.DiscountCardId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DiscountCardId.DataPropertyName = "DiscountCardId";
+            this.DiscountCardId.HeaderText = "DiscountCardId";
+            this.DiscountCardId.Name = "DiscountCardId";
+            this.DiscountCardId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DiscountCardId.Visible = false;
             // 
             // ExpireDate
             // 
@@ -739,11 +739,11 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.DataGridViewCheckBoxColumn PrintCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn CardNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn DiscountCardTypeStr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DiscountCardTypeID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DiscountCardTypeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn DiscountPercentage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerId;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerStr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DiscountCardID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DiscountCardId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpireDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn FKCustomer;
         private System.Windows.Forms.DataGridViewTextBoxColumn AllowDiscount;

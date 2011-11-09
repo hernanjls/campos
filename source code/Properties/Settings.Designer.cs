@@ -27,7 +27,7 @@ namespace EzPos.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=MATRIX-PC;Initial Catalog=ezpos_eco_electric;Persist Security Info=Tr" +
-            "ue;User ID=sa;Password=matrix")]
+            "ue;User Id=sa;Password=matrix")]
         public string ezpos_eco_electricConnectionString {
             get {
                 return ((string)(this["ezpos_eco_electricConnectionString"]));

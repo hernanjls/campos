@@ -5,11 +5,16 @@ using System.Windows.Forms;
 using EzPos.GUIs.Components;
 using EzPos.GUIs.Controls;
 using EzPos.Model;
+using EzPos.Model.Common;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
+using EzPos.Service.Expense;
 using EzPos.Service.Product;
 using EzPos.Service.SaleOrder;
+using EzPos.Service.Supplier;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Forms
 {

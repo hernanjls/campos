@@ -1,13 +1,13 @@
-namespace EzPos.Model
+namespace EzPos.Model.SaleOrder
 {
     /// <summary>
     /// Summary description for SalesOrder.
     /// </summary>
     public class SaleOrder
     {
-        public const string CONST_SALE_ORDER_ID = "SaleOrderId";
-        public const string CONST_SALE_ORDER_DATE = "SaleOrderDate";
-        public const string CONST_SALE_ORDER_NUMBER = "SaleOrderNumber";
+        public const string ConstSaleOrderId = "SaleOrderId";
+        public const string ConstSaleOrderDate = "SaleOrderDate";
+        public const string ConstSaleOrderNumber = "SaleOrderNumber";
 
         public int SaleOrderId { get; set; }
 
@@ -15,19 +15,19 @@ namespace EzPos.Model
 
         public object SaleOrderDate { get; set; }
 
-        public int SaleOrderTypeID { get; set; }
+        public int SaleOrderTypeId { get; set; }
 
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         public int CashierId { get; set; }
 
-        public int DelivererID { get; set; }
+        public int DelivererId { get; set; }
 
         public string Description { get; set; }
 
-        public int PaymentTypeID { get; set; }
+        public int PaymentTypeId { get; set; }
 
-        public int CurrencyID { get; set; }
+        public int CurrencyId { get; set; }
 
         public float ExchangeRate { get; set; }
 
@@ -45,11 +45,11 @@ namespace EzPos.Model
 
         public float Discount { get; set; }
 
-        public int DiscountTypeID { get; set; }
+        public int DiscountTypeId { get; set; }
 
         public string CardNumber { get; set; }
 
-        public Customer FKCustomer { get; set; }
+        public Customer.Customer FkCustomer { get; set; }
 
         public string ReferenceNum { get; set; }
 

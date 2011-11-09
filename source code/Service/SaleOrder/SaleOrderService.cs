@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using EzPos.DataAccess.SaleOrder;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Deposit;
+using EzPos.Model.SaleOrder;
 using EzPos.Properties;
 
 namespace EzPos.Service.SaleOrder
@@ -30,13 +32,13 @@ namespace EzPos.Service.SaleOrder
             return _saleOrderDataAccess.GetSaleOrders(searchCriteria);
         }
 
-        public virtual Model.SaleOrder GetSaleOrder(Deposit deposit)
+        public virtual Model.SaleOrder.SaleOrder GetSaleOrder(Model.Deposit.Deposit deposit)
         {
             if (deposit == null)
                 throw new ArgumentNullException("deposit", Resources.MsgInvalidDeposit);
 
             var saleOrder = 
-                new Model.SaleOrder
+                new Model.SaleOrder.SaleOrder
                 {
                     AmountPaidInt = deposit.AmountPaidInt,
                     AmountPaidRiel = deposit.AmountPaidRiel,
@@ -46,28 +48,28 @@ namespace EzPos.Service.SaleOrder
                     AmountSoldRiel = deposit.AmountSoldRiel,
                     CardNumber = deposit.CardNumber,
                     CashierId = deposit.CashierId,
-                    CurrencyID = deposit.CurrencyId,
-                    CustomerID = deposit.CustomerId,
-                    DelivererID = deposit.DelivererId,
+                    CurrencyId = deposit.CurrencyId,
+                    CustomerId = deposit.CustomerId,
+                    DelivererId = deposit.DelivererId,
                     Description = deposit.Description,
                     Discount = deposit.Discount,
-                    DiscountTypeID = deposit.DiscountTypeId,
+                    DiscountTypeId = deposit.DiscountTypeId,
                     ExchangeRate = deposit.ExchangeRate,
-                    FKCustomer = deposit.FKCustomer,
-                    PaymentTypeID = deposit.PaymentTypeId,
+                    FkCustomer = deposit.FkCustomer,
+                    PaymentTypeId = deposit.PaymentTypeId,
                     ReferenceNum = deposit.ReferenceNum,
                     SaleOrderDate = deposit.DepositDate,
-                    SaleOrderTypeID = deposit.DepositTypeId
+                    SaleOrderTypeId = deposit.DepositTypeId
                 };
             return saleOrder;
         }
 
-        public virtual void UpdateSaleOrder(Model.SaleOrder saleOrder)
+        public virtual void UpdateSaleOrder(Model.SaleOrder.SaleOrder saleOrder)
         {
             _saleOrderDataAccess.UpdateSaleOrder(saleOrder);
         }
 
-        public virtual void InsertSaleOrder(Model.SaleOrder saleOrder)
+        public virtual void InsertSaleOrder(Model.SaleOrder.SaleOrder saleOrder)
         {
             if (saleOrder == null)
                 throw new ArgumentNullException("saleOrder", Resources.MsgInvalidSaleOrder);
@@ -78,13 +80,13 @@ namespace EzPos.Service.SaleOrder
             _saleOrderDataAccess.UpdateSaleOrder(saleOrder);
         }
 
-        public virtual Model.SaleOrder RecordSaleOrder(
+        public virtual Model.SaleOrder.SaleOrder RecordSaleOrder(
             IList saleItemList,
             float totalAmountInt,
             float totalAmountPaidInt,
             float totalAmountPaidRiel,
             float totalAmountReturnInt,
-            Customer customer,
+            Model.Customer.Customer customer,
             bool isReturned,
             string referenceNum,
             float discount,
@@ -99,17 +101,17 @@ namespace EzPos.Service.SaleOrder
                 factor = -1;
 
             //SaleOrder
-            var saleOrder = 
-                new Model.SaleOrder
+            var saleOrder =
+                new Model.SaleOrder.SaleOrder
                 {
                     SaleOrderDate = DateTime.Now,
-                    SaleOrderTypeID = (isReturned ? 1 : 0),
-                    CustomerID = customer.CustomerID,
-                    CashierId = AppContext.User.UserID,
-                    DelivererID = 0,
-                    Description = "",
-                    PaymentTypeID = 0,
-                    CurrencyID = 0,
+                    SaleOrderTypeId = (isReturned ? 1 : 0),
+                    CustomerId = customer.CustomerId,
+                    CashierId = AppContext.User.UserId,
+                    DelivererId = 0,
+                    Description = string.Empty,
+                    PaymentTypeId = 0,
+                    CurrencyId = 0,
                     ExchangeRate = (AppContext.ExchangeRate == null ? 0 : AppContext.ExchangeRate.ExchangeValue),
                     AmountSoldInt = fromDeposit ? totalAmountInt : (totalAmountInt - ((totalAmountInt * discount) / 100)),
                     DepositAmount = depositAmount
@@ -131,10 +133,10 @@ namespace EzPos.Service.SaleOrder
             saleOrder.AmountReturnInt = totalAmountReturnInt;
             saleOrder.AmountReturnRiel = saleOrder.AmountReturnInt * saleOrder.ExchangeRate;
             saleOrder.Discount = discount;
-            if (customer.FKDiscountCard != null)
+            if (customer.FkDiscountCard != null)
             {
-                saleOrder.DiscountTypeID = customer.FKDiscountCard.DiscountCardTypeID;
-                saleOrder.CardNumber = customer.FKDiscountCard.CardNumber;
+                saleOrder.DiscountTypeId = customer.FkDiscountCard.DiscountCardTypeId;
+                saleOrder.CardNumber = customer.FkDiscountCard.CardNumber;
             }
             saleOrder.ReferenceNum = referenceNum;
 
@@ -155,12 +157,12 @@ namespace EzPos.Service.SaleOrder
                 Resources.OperationRequestUpdate);
 
             //localy update SaleOrder
-            saleOrder.FKCustomer = customer;
+            saleOrder.FkCustomer = customer;
             
             //Sale item      
             var productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
             var isAllowed = true;
-            foreach (var saleItem in saleItemList.Cast<SaleItem>().Where(saleItem => saleItem.ProductID != 0))
+            foreach (var saleItem in saleItemList.Cast<SaleItem>().Where(saleItem => saleItem.ProductId != 0))
             {
                 if (isReturned)
                     saleItem.QtySold *= factor;
@@ -169,16 +171,16 @@ namespace EzPos.Service.SaleOrder
                 productService.UpdateProduct(saleItem);
 
                 //SaleItem
-                saleItem.SaleOrderID = saleOrder.SaleOrderId;
+                saleItem.SaleOrderId = saleOrder.SaleOrderId;
                 _saleOrderDataAccess.InsertSaleItem(saleItem);
 
                 var saleOrderReport = 
                     new SaleOrderReport
                         {
-                            SalesOrderId = saleOrder.SaleOrderId,
+                            SaleOrderId = saleOrder.SaleOrderId,
                             SaleOrderNumber = saleOrder.SaleOrderNumber,
                             SaleOrderDate = ((DateTime) saleOrder.SaleOrderDate),
-                            CustomerID = customer.CustomerID,
+                            CustomerId = customer.CustomerId,
                             CustomerName = customer.CustomerName,
                             CashierName = AppContext.User.LogInName,
                             ExchangeRate = saleOrder.ExchangeRate
@@ -191,34 +193,34 @@ namespace EzPos.Service.SaleOrder
                     saleOrderReport.AmountPaidRiel = saleOrder.AmountPaidRiel;
                     saleOrderReport.AmountReturnInt = saleOrder.AmountReturnInt;
                     saleOrderReport.AmountReturnRiel = saleOrder.AmountReturnRiel;
-                    saleOrderReport.DiscountTypeID = saleOrder.DiscountTypeID;
+                    saleOrderReport.DiscountTypeId = saleOrder.DiscountTypeId;
                     saleOrderReport.TotalDiscount = saleOrder.Discount;
                     saleOrderReport.CardNumber = saleOrder.CardNumber;
                     saleOrderReport.ReportHeader = 1;
                     saleOrderReport.DepositAmount = depositAmount;
                 }
-                saleOrderReport.SaleItemID = saleItem.SaleItemID;
-                saleOrderReport.ProductID = saleItem.ProductID;
+                saleOrderReport.SaleItemId = saleItem.SaleItemId;
+                saleOrderReport.ProductId = saleItem.ProductId;
                 saleOrderReport.ReferenceNum = referenceNum;                
 
-                if (saleItem.FKProduct != null)
+                if (saleItem.FkProduct != null)
                 {
-                    saleOrderReport.CategoryStr = saleItem.FKProduct.CategoryStr;
-                    saleOrderReport.PurchaseUnitPrice = saleItem.FKProduct.UnitPriceIn;
+                    saleOrderReport.CategoryStr = saleItem.FkProduct.CategoryStr;
+                    saleOrderReport.PurchaseUnitPrice = saleItem.FkProduct.UnitPriceIn;
 
-                    if (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode))
+                    if (!string.IsNullOrEmpty(saleItem.FkProduct.ProductCode))
                     {
                         var productCode = 
-                            !string.IsNullOrEmpty(saleItem.FKProduct.ForeignCode) ?
-                                                                                      saleItem.FKProduct.ForeignCode :
+                            !string.IsNullOrEmpty(saleItem.FkProduct.ForeignCode) ?
+                                                                                      saleItem.FkProduct.ForeignCode :
                                                                                                                          string.Empty;
                         productCode = productCode.Replace(",", string.Empty);
                         productCode = productCode.Replace(" ", string.Empty);
                         saleOrderReport.ProductCode =
                             productCode + 
                             " (" + 
-                            (!string.IsNullOrEmpty(saleItem.FKProduct.ProductCode) ? 
-                                                                                       saleItem.FKProduct.ProductCode : 
+                            (!string.IsNullOrEmpty(saleItem.FkProduct.ProductCode) ? 
+                                                                                       saleItem.FkProduct.ProductCode : 
                                                                                                                           string.Empty) + 
                             ")";
                         saleOrderReport.ProductName = saleItem.ProductName + " (" + productCode + ")";                        
@@ -230,13 +232,15 @@ namespace EzPos.Service.SaleOrder
                 saleOrderReport.UnitPriceIn = saleItem.UnitPriceIn;
                 saleOrderReport.Discount = saleItem.Discount;
                 saleOrderReport.QtySold = saleItem.QtySold;
+                saleOrderReport.QtyBonus = saleItem.QtyBonus;
                 //Public Unit Price Out : Unit price after discount
-                saleOrderReport.UnitPriceOut = saleItem.PublicUPOut;
-                saleOrderReport.SubTotal = saleItem.PublicUPOut * saleItem.QtySold;
+                saleOrderReport.UnitPriceOut = saleItem.PublicUpOut;
+                saleOrderReport.SubTotal = saleItem.PublicUpOut * saleItem.QtySold;
 
                 _saleOrderDataAccess.InsertSaleOrderReport(saleOrderReport);
                 isAllowed = false;
             }
+
             return saleOrder;
         }
 
@@ -256,27 +260,27 @@ namespace EzPos.Service.SaleOrder
                 var saleItem = 
                     new SaleItem
                     {
-                        SaleOrderID = depositItem.DepositId,
-                        ProductID = depositItem.ProductId,
+                        SaleOrderId = depositItem.DepositId,
+                        ProductId = depositItem.ProductId,
                         ProductName = depositItem.ProductName,
-                        FKProduct = depositItem.FKProduct,
+                        FkProduct = depositItem.FkProduct,
                         UnitPriceIn = depositItem.UnitPriceIn,
                         UnitPriceOut = depositItem.UnitPriceOut,
                         Discount = depositItem.Discount,
                         QtySold = depositItem.QtySold
                     };
 
-                if (saleItem.FKProduct != null)
+                if (saleItem.FkProduct != null)
                 {
-                    saleItem.ProductName = saleItem.FKProduct.ProductName;
+                    saleItem.ProductName = saleItem.FkProduct.ProductName;
 
-                    var extraPercentage = saleItem.FKProduct.ExtraPercentage;
+                    var extraPercentage = saleItem.FkProduct.ExtraPercentage;
                     var discountPercentage = depositItem.Discount;
                     var publicUnitPriceOut = 
                         saleItem.UnitPriceIn + ((saleItem.UnitPriceIn * extraPercentage) / 100);
                     publicUnitPriceOut = 
                         publicUnitPriceOut - ((publicUnitPriceOut * discountPercentage) / 100);
-                    saleItem.PublicUPOut = publicUnitPriceOut;
+                    saleItem.PublicUpOut = publicUnitPriceOut;
                 }
 
                 saleItemList.Add(saleItem);

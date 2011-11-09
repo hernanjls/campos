@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Customer;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
 
 namespace EzPos.GUIs.Forms
 {
@@ -94,7 +96,7 @@ namespace EzPos.GUIs.Forms
                 _Customer.PhoneNumber = txtPhoneNumber.Text;
                 _Customer.EmailAddress = txtEmailAddress.Text;
                 _Customer.Website = txtWebsite.Text;
-                _Customer.GenderID = Int32.Parse(cmbGender.SelectedValue.ToString());
+                _Customer.GenderId = Int32.Parse(cmbGender.SelectedValue.ToString());
                 _Customer.GenderStr = cmbGender.Text;
                 _Customer.DiscountRejected = chbDiscountRejected.Checked ? 1 : 0;
 
@@ -104,12 +106,12 @@ namespace EzPos.GUIs.Forms
                     var discountCard = (DiscountCard) lsbDiscountCard.SelectedItem;
                     //if (discountCard != null)
                     //{
-                        if ((discountCard.CustomerID != _Customer.CustomerID) ||
-                            _Customer.CustomerID == 0)
+                        if ((discountCard.CustomerId != _Customer.CustomerId) ||
+                            _Customer.CustomerId == 0)
                         {
                             isAllowed = true;
 
-                            _Customer.FKDiscountCard = discountCard;
+                            _Customer.FkDiscountCard = discountCard;
                             _Customer.DiscountCardNumber = discountCard.CardNumber;
                             _Customer.DiscountCardType = discountCard.DiscountCardTypeStr;
                             _Customer.DiscountPercentage = discountCard.DiscountPercentage;
@@ -129,14 +131,14 @@ namespace EzPos.GUIs.Forms
                     _CustomerService = ServiceFactory.GenerateServiceInstance().GenerateCustomerService();
 
                 _CustomerService.CustomerManagement(_Customer,
-                                                    _Customer.CustomerID != 0
+                                                    _Customer.CustomerId != 0
                                                         ? Resources.OperationRequestUpdate
                                                         : Resources.OperationRequestInsert);
 
                 if (isAllowed)
                 {
                     var discountCard = (DiscountCard) lsbDiscountCard.SelectedItem;
-                    discountCard.CustomerID = _Customer.CustomerID;
+                    discountCard.CustomerId = _Customer.CustomerId;
                     _CustomerService.DiscountCardManagement(
                         discountCard,
                         Resources.OperationRequestUpdate);
@@ -229,16 +231,16 @@ namespace EzPos.GUIs.Forms
                 cmbDCardType.SelectedIndex = 0;
                 lblDisPercentage.Text = ((AppParameter) cmbDCardType.SelectedItem).ParameterValue;
 
-                var criteriaList = new List<string> {"CustomerID|0"};
+                var criteriaList = new List<string> {"CustomerId|0"};
                 if (cmbDCardType.SelectedItem != null)
-                    criteriaList.Add("DiscountCardTypeID|" + ((AppParameter) cmbDCardType.SelectedItem).ParameterID);
+                    criteriaList.Add("DiscountCardTypeId|" + ((AppParameter) cmbDCardType.SelectedItem).ParameterId);
 
                 objList = _CustomerService.GetDiscountCards(criteriaList);
                 lsbDiscountCard.DataSource = objList;
                 if (objList.Count != 0)
                 {
-                    lsbDiscountCard.DisplayMember = DiscountCard.CONST_DISCOUNT_CARD_NUMBER;
-                    lsbDiscountCard.ValueMember = DiscountCard.CONST_DISCOUNT_CARD_ID;
+                    lsbDiscountCard.DisplayMember = DiscountCard.ConstDiscountCardNumber;
+                    lsbDiscountCard.ValueMember = DiscountCard.ConstDiscountCardId;
                     lsbDiscountCard.SelectedIndex = -1;
                 }
 
@@ -262,7 +264,7 @@ namespace EzPos.GUIs.Forms
             if (_Customer == null)
                 return;
 
-            var objList = _CustomerService.GetDiscountCardsByCustomer(_Customer.CustomerID);
+            var objList = _CustomerService.GetDiscountCardsByCustomer(_Customer.CustomerId);
             if (objList.Count != 0)
             {
                 discountCard = (DiscountCard) objList[0];
@@ -276,7 +278,7 @@ namespace EzPos.GUIs.Forms
 
             txtLocalName.Text = _Customer.LocalName;
             txtCustomerName.Text = _Customer.CustomerName;
-            cmbGender.SelectedValue = _Customer.GenderID;
+            cmbGender.SelectedValue = _Customer.GenderId;
             txtAddress.Text = _Customer.Address;
             txtPhoneNumber.Text = _Customer.PhoneNumber;
             txtEmailAddress.Text = _Customer.EmailAddress;
@@ -297,8 +299,8 @@ namespace EzPos.GUIs.Forms
         {
             var criteriaList = new List<string>
                                    {
-                                       "CustomerID|0",
-                                       "DiscountCardTypeID|" + ((AppParameter) cmbDCardType.SelectedItem).ParameterID
+                                       "CustomerId|0",
+                                       "DiscountCardTypeId|" + ((AppParameter) cmbDCardType.SelectedItem).ParameterId
                                    };
             lblDisPercentage.Text = ((AppParameter) cmbDCardType.SelectedItem).ParameterValue;
 
@@ -307,8 +309,8 @@ namespace EzPos.GUIs.Forms
             if (objList.Count == 0) 
                 return;
 
-            lsbDiscountCard.DisplayMember = DiscountCard.CONST_DISCOUNT_CARD_NUMBER;
-            lsbDiscountCard.ValueMember = DiscountCard.CONST_DISCOUNT_CARD_ID;
+            lsbDiscountCard.DisplayMember = DiscountCard.ConstDiscountCardNumber;
+            lsbDiscountCard.ValueMember = DiscountCard.ConstDiscountCardId;
             lsbDiscountCard.SelectedIndex = -1;
         }
 

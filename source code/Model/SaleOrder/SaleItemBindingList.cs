@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace EzPos.Model
+namespace EzPos.Model.SaleOrder
 {
     public class SaleItemBindingList<T> : BindingList<T>, ITypedList
     {
@@ -8,12 +8,12 @@ namespace EzPos.Model
 
         public PropertyDescriptorCollection GetItemProperties(PropertyDescriptor[] propertyDescriptor)
         {
-            PropertyDescriptorCollection typePropertiesCollection = TypeDescriptor.GetProperties(typeof (T));
+            var typePropertiesCollection = TypeDescriptor.GetProperties(typeof (T));
             return typePropertiesCollection.Sort(new[]
                                                      {
-                                                         "SaleItemID",
+                                                         "SaleItemId",
                                                          "SaleOrderId",
-                                                         "ProductID",
+                                                         "ProductId",
                                                          "ProdPicture",
                                                          "ProductName",
                                                          "ProductDisplayName",
@@ -21,6 +21,7 @@ namespace EzPos.Model
                                                          "UnitPriceOut",
                                                          "PublicUPOut",
                                                          "QtySold",
+                                                         "QtyBonus",
                                                          "Discount",
                                                          "SubTotal"
                                                      });

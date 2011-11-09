@@ -6,9 +6,13 @@ using System.Threading;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Customer;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
+using EzPos.Service.User;
 using EzPos.Utility;
 using NHibernate;
 
@@ -57,8 +61,8 @@ namespace EzPos.GUIs.Controls
                 var discountCardList = _customerService.GetUsedDiscountCards();
                 cmbDiscountCard.CustomizedDataBinding(
                     discountCardList,
-                    DiscountCard.CONST_DISCOUNT_CARD_NUMBER,
-                    DiscountCard.CONST_CUSTOMER_ID,
+                    DiscountCard.ConstDiscountCardNumber,
+                    DiscountCard.ConstCustomerId,
                     false);
 
                 IListToBindingList(_customerService.GetCustomers());
@@ -79,7 +83,7 @@ namespace EzPos.GUIs.Controls
 
             dgvCustomer.DataSource = _customerList;
             dgvCustomer.Columns["CustomerName"].DisplayIndex = 0;
-            dgvCustomer.Columns["GenderID"].DisplayIndex = 1;
+            dgvCustomer.Columns["GenderId"].DisplayIndex = 1;
             dgvCustomer.Columns["PhoneNumber"].DisplayIndex = 2;
             dgvCustomer.Columns["EmailAddress"].DisplayIndex = 3;
             dgvCustomer.Columns["Website"].DisplayIndex = 4;
@@ -98,7 +102,7 @@ namespace EzPos.GUIs.Controls
             {
                 if (cmbDiscountCard.Items.Count != 0)
                 {
-                    cmbDiscountCard.SelectedValue = customer.CustomerID;
+                    cmbDiscountCard.SelectedValue = customer.CustomerId;
                     if (cmbDiscountCard.SelectedItem != null)
                     {
                         var discountCard = (DiscountCard) cmbDiscountCard.SelectedItem;
@@ -285,7 +289,7 @@ namespace EzPos.GUIs.Controls
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                var searchCriteria = new List<string> {"ParameterTypeID IN (20)"};
+                var searchCriteria = new List<string> {"ParameterTypeId IN (20)"};
 
                 var objList = _commonService.GetAppParameters(searchCriteria);
 
@@ -330,16 +334,16 @@ namespace EzPos.GUIs.Controls
 
                 if (chbDeposit.Checked)
                     searchCriteria.Add(
-                        "CustomerID IN (SELECT CustomerId FROM TDeposits WHERE (AmountPaidInt < AmountSoldInt) AND (DepositNumber NOT IN (SELECT ReferenceNum FROM TDeposits WHERE ReferenceNum IS NOT NULL)))");
+                        "CustomerId IN (SELECT CustomerId FROM TDeposits WHERE (AmountPaidInt < AmountSoldInt) AND (DepositNumber NOT IN (SELECT ReferenceNum FROM TDeposits WHERE ReferenceNum IS NOT NULL)))");
 
                 if (StringHelper.Length(txtCardNum.Text) != 0)
                     searchCriteria.Add(
-                        "CustomerID IN (SELECT CustomerID FROM TDiscountCards WHERE CustomerID <> 0 AND CardNumber LIKE '%" +
+                        "CustomerId IN (SELECT CustomerId FROM TDiscountCards WHERE CustomerId <> 0 AND CardNumber LIKE '%" +
                         StringHelper.Right("000000000" + txtCardNum.Text, 9) + "%')");
 
                 if (cmbDCardType.SelectedIndex != -1)
                     searchCriteria.Add(
-                        "CustomerID IN (SELECT CustomerID FROM TDiscountCards WHERE CustomerID <> 0 AND DiscountCardTypeID = " +
+                        "CustomerId IN (SELECT CustomerId FROM TDiscountCards WHERE CustomerId <> 0 AND DiscountCardTypeId = " +
                         cmbDCardType.SelectedValue + ")");
 
                 IListToBindingList(
@@ -400,7 +404,7 @@ namespace EzPos.GUIs.Controls
                 if(dgvCustomer.CurrentRow == null)
                     return;
 
-                frmOutstandingInvoice.CustomerId = _customerList[dgvCustomer.CurrentRow.Index].CustomerID;
+                frmOutstandingInvoice.CustomerId = _customerList[dgvCustomer.CurrentRow.Index].CustomerId;
                 if (frmOutstandingInvoice.ShowDialog(this) == DialogResult.OK)
                 {
                     try

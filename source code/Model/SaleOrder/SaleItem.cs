@@ -1,20 +1,20 @@
 using System.Drawing;
 
-namespace EzPos.Model
+namespace EzPos.Model.SaleOrder
 {
     /// <summary>
     /// Summary description for SalesItem.
     /// </summary>
     public class SaleItem
     {
-        public const string CONST_PRODUCT_ID = "ProductID";
-        public const string CONST_SALE_ORDER_ID = "SaleOrderID";
+        public const string ConstProductId = "ProductId";
+        public const string ConstSaleOrderId = "SaleOrderId";
 
-        public int SaleItemID { get; set; }
+        public int SaleItemId { get; set; }
 
-        public int SaleOrderID { get; set; }
+        public int SaleOrderId { get; set; }
 
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         public float UnitPriceIn { get; set; }
 
@@ -28,12 +28,14 @@ namespace EzPos.Model
 
         public float SubTotal { get; set; }
 
-        public float PublicUPOut { get; set; }
+        public float PublicUpOut { get; set; }
 
         public Image ProdPicture { get; set; }
 
         public string ProductDisplayName { get; set; }
 
-        public Product FKProduct { get; set; }
+        public Product.Product FkProduct { get; set; }
+
+        public float QtyBonus { get; set; }
     }
 }

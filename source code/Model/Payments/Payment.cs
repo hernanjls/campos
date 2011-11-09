@@ -6,9 +6,9 @@ namespace EzPos.Model.Payments
     /// </summary>
     public class Payment
     {
-        public const string CONST_PAYMENT_ID = "PaymentId";
-        public const string CONST_PAYMENT_DATE = "PaymentDate";
-        public const string CONST_SALE_ORDER_ID = "SalesOrderId";
+        public const string ConstPaymentId = "PaymentId";
+        public const string ConstPaymentDate = "PaymentDate";
+        public const string ConstSaleOrderId = "SaleOrderId";
 
         public int PaymentId { get; set; }
 
@@ -24,14 +24,14 @@ namespace EzPos.Model.Payments
         {
             get
             {
-                return FKCashier != null ? FKCashier.LogInName : string.Empty;
+                return FkCashier != null ? FkCashier.LogInName : string.Empty;
             }
         }
 
         public string Remark { get; set; }
 
-        public SaleOrder FKSaleOrder { get; set; }
+        public SaleOrder.SaleOrder FkSaleOrder { get; set; }
 
-        public User FKCashier { get; set; }
+        public User.User FkCashier { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.User;
 using EzPos.Properties;
 using EzPos.Service;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Forms
 {

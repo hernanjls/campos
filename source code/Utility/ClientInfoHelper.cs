@@ -12,12 +12,12 @@ namespace EzPos.Utility
             return Dns.GetHostName();
         }
 
-        public static string GetHostIP()
+        public static string GetHostIp()
         {
-            IPHostEntry ipHostentry = Dns.GetHostEntry(GetHostName());
+            var ipHostentry = Dns.GetHostEntry(GetHostName());
 
             // Enumerate IP addresses
-            foreach (IPAddress ipaddress in ipHostentry.AddressList)
+            foreach (var ipaddress in ipHostentry.AddressList)
                 return ipaddress.ToString();
 
             return string.Empty;

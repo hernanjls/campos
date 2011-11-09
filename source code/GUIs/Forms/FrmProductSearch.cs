@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using EzPos.Model;
+using EzPos.Model.Product;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;

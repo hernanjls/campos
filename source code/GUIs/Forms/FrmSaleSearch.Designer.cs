@@ -72,10 +72,10 @@ namespace EzPos.GUIs.Forms
             this.txtInvoiceNumber = new System.Windows.Forms.TextBox();
             this.dtpStopDate = new System.Windows.Forms.DateTimePicker();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
-            this.ReportID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReportId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SaleOrderNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SaleOrderDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CashierName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExchangeRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -84,11 +84,11 @@ namespace EzPos.GUIs.Forms
             this.AmountPaidRiel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AmountReturnInt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AmountReturnRiel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiscountTypeID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiscountTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CardNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalDiscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitPriceIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitPriceOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -249,10 +249,10 @@ namespace EzPos.GUIs.Forms
             this.dgvSearchResult.ColumnHeadersHeight = 40;
             this.dgvSearchResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvSearchResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ReportID,
+            this.ReportId,
             this.SaleOrderNumber,
             this.SaleOrderDate,
-            this.CustomerID,
+            this.CustomerId,
             this.CustomerName,
             this.CashierName,
             this.ExchangeRate,
@@ -261,11 +261,11 @@ namespace EzPos.GUIs.Forms
             this.AmountPaidRiel,
             this.AmountReturnInt,
             this.AmountReturnRiel,
-            this.DiscountTypeID,
+            this.DiscountTypeId,
             this.CardNumber,
             this.TotalDiscount,
-            this.SaleItemID,
-            this.ProductID,
+            this.SaleItemId,
+            this.ProductId,
             this.ProductNameCol,
             this.UnitPriceIn,
             this.UnitPriceOut,
@@ -582,13 +582,13 @@ namespace EzPos.GUIs.Forms
             this.dtpStartDate.Size = new System.Drawing.Size(190, 36);
             this.dtpStartDate.TabIndex = 3;
             // 
-            // ReportID
+            // ReportId
             // 
-            this.ReportID.DataPropertyName = "ReportID";
-            this.ReportID.HeaderText = "ReportID";
-            this.ReportID.Name = "ReportID";
-            this.ReportID.ReadOnly = true;
-            this.ReportID.Visible = false;
+            this.ReportId.DataPropertyName = "ReportId";
+            this.ReportId.HeaderText = "ReportId";
+            this.ReportId.Name = "ReportId";
+            this.ReportId.ReadOnly = true;
+            this.ReportId.Visible = false;
             // 
             // SaleOrderNumber
             // 
@@ -609,13 +609,13 @@ namespace EzPos.GUIs.Forms
             this.SaleOrderDate.ReadOnly = true;
             this.SaleOrderDate.Width = 110;
             // 
-            // CustomerID
+            // CustomerId
             // 
-            this.CustomerID.DataPropertyName = "CustomerID";
-            this.CustomerID.HeaderText = "CustomerID";
-            this.CustomerID.Name = "CustomerID";
-            this.CustomerID.ReadOnly = true;
-            this.CustomerID.Visible = false;
+            this.CustomerId.DataPropertyName = "CustomerId";
+            this.CustomerId.HeaderText = "CustomerId";
+            this.CustomerId.Name = "CustomerId";
+            this.CustomerId.ReadOnly = true;
+            this.CustomerId.Visible = false;
             // 
             // CustomerName
             // 
@@ -694,13 +694,13 @@ namespace EzPos.GUIs.Forms
             this.AmountReturnRiel.ReadOnly = true;
             this.AmountReturnRiel.Visible = false;
             // 
-            // DiscountTypeID
+            // DiscountTypeId
             // 
-            this.DiscountTypeID.DataPropertyName = "DiscountTypeID";
-            this.DiscountTypeID.HeaderText = "DiscountTypeID";
-            this.DiscountTypeID.Name = "DiscountTypeID";
-            this.DiscountTypeID.ReadOnly = true;
-            this.DiscountTypeID.Visible = false;
+            this.DiscountTypeId.DataPropertyName = "DiscountTypeId";
+            this.DiscountTypeId.HeaderText = "DiscountTypeId";
+            this.DiscountTypeId.Name = "DiscountTypeId";
+            this.DiscountTypeId.ReadOnly = true;
+            this.DiscountTypeId.Visible = false;
             // 
             // CardNumber
             // 
@@ -721,21 +721,21 @@ namespace EzPos.GUIs.Forms
             this.TotalDiscount.ReadOnly = true;
             this.TotalDiscount.Visible = false;
             // 
-            // SaleItemID
+            // SaleItemId
             // 
-            this.SaleItemID.DataPropertyName = "SaleItemID";
-            this.SaleItemID.HeaderText = "SaleItemID";
-            this.SaleItemID.Name = "SaleItemID";
-            this.SaleItemID.ReadOnly = true;
-            this.SaleItemID.Visible = false;
+            this.SaleItemId.DataPropertyName = "SaleItemId";
+            this.SaleItemId.HeaderText = "SaleItemId";
+            this.SaleItemId.Name = "SaleItemId";
+            this.SaleItemId.ReadOnly = true;
+            this.SaleItemId.Visible = false;
             // 
-            // ProductID
+            // ProductId
             // 
-            this.ProductID.DataPropertyName = "ProductID";
-            this.ProductID.HeaderText = "ProductID";
-            this.ProductID.Name = "ProductID";
-            this.ProductID.ReadOnly = true;
-            this.ProductID.Visible = false;
+            this.ProductId.DataPropertyName = "ProductId";
+            this.ProductId.HeaderText = "ProductId";
+            this.ProductId.Name = "ProductId";
+            this.ProductId.ReadOnly = true;
+            this.ProductId.Visible = false;
             // 
             // ProductNameCol
             // 
@@ -809,10 +809,10 @@ namespace EzPos.GUIs.Forms
             this.ReportTypeStr.ReadOnly = true;
             this.ReportTypeStr.Visible = false;
             // 
-            // SalesOrderId
+            // SaleOrderId
             // 
-            this.SalesOrderId.DataPropertyName = "SalesOrderId";
-            this.SalesOrderId.HeaderText = "SalesOrderId";
+            this.SalesOrderId.DataPropertyName = "SaleOrderId";
+            this.SalesOrderId.HeaderText = "SaleOrderId";
             this.SalesOrderId.Name = "SalesOrderId";
             this.SalesOrderId.ReadOnly = true;
             this.SalesOrderId.Visible = false;
@@ -917,10 +917,10 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.RadioButton rbtDeposit;
         private System.Windows.Forms.RadioButton rbtSale;
         private System.Windows.Forms.Button btnDeleteDeposit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ReportID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ReportId;
         private System.Windows.Forms.DataGridViewTextBoxColumn SaleOrderNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn SaleOrderDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerId;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn CashierName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExchangeRate;
@@ -929,11 +929,11 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn AmountPaidRiel;
         private System.Windows.Forms.DataGridViewTextBoxColumn AmountReturnInt;
         private System.Windows.Forms.DataGridViewTextBoxColumn AmountReturnRiel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DiscountTypeID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DiscountTypeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn CardNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn TotalDiscount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SaleItemID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SaleItemId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductNameCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceIn;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceOut;

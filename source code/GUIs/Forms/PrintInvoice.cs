@@ -3,6 +3,8 @@ using System.Collections;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.SaleOrder;
 using EzPos.Properties;
 using Microsoft.Office.Interop.Excel;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
@@ -117,7 +119,7 @@ namespace EzPos.GUIs.Forms
                 rowIndex += 4;
                 var totalAmount = 0f;
                 var counter = 1;
-                foreach (var saleItem in invoiceItemList.Cast<SaleItem>().Where(saleItem => saleItem != null).Where(saleItem => saleItem.ProductID != 0))
+                foreach (var saleItem in invoiceItemList.Cast<SaleItem>().Where(saleItem => saleItem != null).Where(saleItem => saleItem.ProductId != 0))
                 {
                     var tmpRowIndex = rowIndex;
                     if(counter > 15)
@@ -137,8 +139,8 @@ namespace EzPos.GUIs.Forms
 
                     //Product
                     var productName = saleItem.ProductName;
-                    if (saleItem.FKProduct != null)
-                        productName += " (" + saleItem.FKProduct.ForeignCode + ")";
+                    if (saleItem.FkProduct != null)
+                        productName += " (" + saleItem.FkProduct.ForeignCode + ")";
                     excelRange = workSheet.get_Range("B" + tmpRowIndex, "B" + tmpRowIndex);
                     excelRange.Select();
                     excelRange.Value2 = productName;

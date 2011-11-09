@@ -1,27 +1,27 @@
 using System;
 
-namespace EzPos.Model
+namespace EzPos.Model.User
 {
     public class User
     {
-        public const string CONST_USER_LOG_IN_NAME = "LogInName";
-        public const string CONST_USER_ID = "UserID";
+        public const string ConstUserLogInName = "LogInName";
+        public const string ConstUserId = "UserId";
 
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         public string UserNumber { get; set; }
 
         public string UserName { get; set; }
 
-        public int GenderID { get; set; }
+        public int GenderId { get; set; }
 
         public string GenderStr { get; set; }
 
-        public int CivilityID { get; set; }
+        public int CivilityId { get; set; }
 
         public string CivilityStr { get; set; }
 
-        public int MaritalStatusID { get; set; }
+        public int MaritalStatusId { get; set; }
 
         public string MaritalStatusStr { get; set; }
 
@@ -29,13 +29,13 @@ namespace EzPos.Model
 
         public string PhotoPath { get; set; }
 
-        public int PositionID { get; set; }
+        public int PositionId { get; set; }
 
         public string PositionStr { get; set; }
 
         public string PhoneNumber { get; set; }
 
-        public int ContractID { get; set; }
+        public int ContractId { get; set; }
 
         public string ContractStr { get; set; }
 

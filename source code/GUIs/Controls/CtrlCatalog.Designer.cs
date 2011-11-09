@@ -81,18 +81,18 @@ namespace EzPos.GUIs.Controls
             this.QtyInStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitPriceOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DiscountPercentage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PhotoPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitPriceIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CategoryID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategoryId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CategoryStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MarkID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MarkId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MarkStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColorID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColorId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColorStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SkinID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SkinId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SkinStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SizeID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SizeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SizeStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -100,6 +100,8 @@ namespace EzPos.GUIs.Controls
             this.ExtraPercentage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastUpdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ForeignCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QtyPromotion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QtyBonus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlBodyRight.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.grbPrintProduct.SuspendLayout();
@@ -383,7 +385,7 @@ namespace EzPos.GUIs.Controls
             this.ptbProduct.BackColor = System.Drawing.Color.Transparent;
             this.ptbProduct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ptbProduct.Cursor = System.Windows.Forms.Cursors.Default;
-            this.ptbProduct.ImageLocation = "";
+            this.ptbProduct.ImageLocation = global::EzPos.Properties.Resources.ConstBarCodeTemplate6;
             this.ptbProduct.Location = new System.Drawing.Point(10, 0);
             this.ptbProduct.Name = "ptbProduct";
             this.ptbProduct.Size = new System.Drawing.Size(180, 156);
@@ -597,25 +599,27 @@ namespace EzPos.GUIs.Controls
             this.QtyInStock,
             this.UnitPriceOut,
             this.DiscountPercentage,
-            this.ProductID,
+            this.ProductId,
             this.PhotoPath,
             this.UnitPriceIn,
-            this.CategoryID,
+            this.CategoryId,
             this.CategoryStr,
-            this.MarkID,
+            this.MarkId,
             this.MarkStr,
-            this.ColorID,
+            this.ColorId,
             this.ColorStr,
-            this.SkinID,
+            this.SkinId,
             this.SkinStr,
-            this.SizeID,
+            this.SizeId,
             this.SizeStr,
             this.ProductNameCol,
             this.ProductCode,
             this.QtySold,
             this.ExtraPercentage,
             this.LastUpdate,
-            this.ForeignCode});
+            this.ForeignCode,
+            this.QtyPromotion,
+            this.QtyBonus});
             this.dgvProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProduct.EnableHeadersVisualStyles = false;
             this.dgvProduct.GridColor = System.Drawing.Color.White;
@@ -645,7 +649,7 @@ namespace EzPos.GUIs.Controls
             // PrintCheck
             // 
             this.PrintCheck.DataPropertyName = "PrintCheck";
-            this.PrintCheck.HeaderText = "";
+            this.PrintCheck.HeaderText = global::EzPos.Properties.Resources.ConstBarCodeTemplate6;
             this.PrintCheck.Name = "PrintCheck";
             this.PrintCheck.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.PrintCheck.Width = 25;
@@ -744,15 +748,15 @@ namespace EzPos.GUIs.Controls
             this.DiscountPercentage.Visible = false;
             this.DiscountPercentage.Width = 120;
             // 
-            // ProductID
+            // ProductId
             // 
-            this.ProductID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ProductID.DataPropertyName = "ProductID";
-            this.ProductID.HeaderText = "ProductID";
-            this.ProductID.Name = "ProductID";
-            this.ProductID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ProductID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ProductID.Visible = false;
+            this.ProductId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProductId.DataPropertyName = "ProductId";
+            this.ProductId.HeaderText = "ProductId";
+            this.ProductId.Name = "ProductId";
+            this.ProductId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ProductId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ProductId.Visible = false;
             // 
             // PhotoPath
             // 
@@ -774,15 +778,15 @@ namespace EzPos.GUIs.Controls
             this.UnitPriceIn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.UnitPriceIn.Visible = false;
             // 
-            // CategoryID
+            // CategoryId
             // 
-            this.CategoryID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.CategoryID.DataPropertyName = "CategoryID";
-            this.CategoryID.HeaderText = "CategoryID";
-            this.CategoryID.Name = "CategoryID";
-            this.CategoryID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CategoryID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CategoryID.Visible = false;
+            this.CategoryId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CategoryId.DataPropertyName = "CategoryId";
+            this.CategoryId.HeaderText = "CategoryId";
+            this.CategoryId.Name = "CategoryId";
+            this.CategoryId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CategoryId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CategoryId.Visible = false;
             // 
             // CategoryStr
             // 
@@ -794,15 +798,15 @@ namespace EzPos.GUIs.Controls
             this.CategoryStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.CategoryStr.Visible = false;
             // 
-            // MarkID
+            // MarkId
             // 
-            this.MarkID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.MarkID.DataPropertyName = "MarkID";
-            this.MarkID.HeaderText = "MarkID";
-            this.MarkID.Name = "MarkID";
-            this.MarkID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.MarkID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.MarkID.Visible = false;
+            this.MarkId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.MarkId.DataPropertyName = "MarkId";
+            this.MarkId.HeaderText = "MarkId";
+            this.MarkId.Name = "MarkId";
+            this.MarkId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.MarkId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.MarkId.Visible = false;
             // 
             // MarkStr
             // 
@@ -814,15 +818,15 @@ namespace EzPos.GUIs.Controls
             this.MarkStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.MarkStr.Visible = false;
             // 
-            // ColorID
+            // ColorId
             // 
-            this.ColorID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColorID.DataPropertyName = "ColorID";
-            this.ColorID.HeaderText = "ColorID";
-            this.ColorID.Name = "ColorID";
-            this.ColorID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColorID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ColorID.Visible = false;
+            this.ColorId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColorId.DataPropertyName = "ColorId";
+            this.ColorId.HeaderText = "ColorId";
+            this.ColorId.Name = "ColorId";
+            this.ColorId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColorId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColorId.Visible = false;
             // 
             // ColorStr
             // 
@@ -834,15 +838,15 @@ namespace EzPos.GUIs.Controls
             this.ColorStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColorStr.Visible = false;
             // 
-            // SkinID
+            // SkinId
             // 
-            this.SkinID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.SkinID.DataPropertyName = "SkinID";
-            this.SkinID.HeaderText = "SkinID";
-            this.SkinID.Name = "SkinID";
-            this.SkinID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.SkinID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SkinID.Visible = false;
+            this.SkinId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SkinId.DataPropertyName = "SkinId";
+            this.SkinId.HeaderText = "SkinId";
+            this.SkinId.Name = "SkinId";
+            this.SkinId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.SkinId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SkinId.Visible = false;
             // 
             // SkinStr
             // 
@@ -854,15 +858,15 @@ namespace EzPos.GUIs.Controls
             this.SkinStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.SkinStr.Visible = false;
             // 
-            // SizeID
+            // SizeId
             // 
-            this.SizeID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.SizeID.DataPropertyName = "SizeID";
-            this.SizeID.HeaderText = "SizeID";
-            this.SizeID.Name = "SizeID";
-            this.SizeID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.SizeID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SizeID.Visible = false;
+            this.SizeId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SizeId.DataPropertyName = "SizeId";
+            this.SizeId.HeaderText = "SizeId";
+            this.SizeId.Name = "SizeId";
+            this.SizeId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.SizeId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SizeId.Visible = false;
             // 
             // SizeStr
             // 
@@ -927,6 +931,20 @@ namespace EzPos.GUIs.Controls
             this.ForeignCode.HeaderText = "ForeignCode";
             this.ForeignCode.Name = "ForeignCode";
             this.ForeignCode.Visible = false;
+            // 
+            // QtyPromotion
+            // 
+            this.QtyPromotion.DataPropertyName = "QtyPromotion";
+            this.QtyPromotion.HeaderText = "QtyPromotion";
+            this.QtyPromotion.Name = "QtyPromotion";
+            this.QtyPromotion.Visible = false;
+            // 
+            // QtyBonus
+            // 
+            this.QtyBonus.DataPropertyName = "QtyBonus";
+            this.QtyBonus.HeaderText = "QtyBonus";
+            this.QtyBonus.Name = "QtyBonus";
+            this.QtyBonus.Visible = false;
             // 
             // CtrlCatalog
             // 
@@ -1000,18 +1018,18 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.DataGridViewTextBoxColumn QtyInStock;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn DiscountPercentage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductId;
         private System.Windows.Forms.DataGridViewTextBoxColumn PhotoPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceIn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CategoryID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CategoryId;
         private System.Windows.Forms.DataGridViewTextBoxColumn CategoryStr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MarkID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MarkId;
         private System.Windows.Forms.DataGridViewTextBoxColumn MarkStr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColorID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColorId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColorStr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SkinID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SkinId;
         private System.Windows.Forms.DataGridViewTextBoxColumn SkinStr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SizeID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SizeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn SizeStr;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductNameCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductCode;
@@ -1019,5 +1037,7 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.DataGridViewTextBoxColumn ExtraPercentage;
         private System.Windows.Forms.DataGridViewTextBoxColumn LastUpdate;
         private System.Windows.Forms.DataGridViewTextBoxColumn ForeignCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QtyPromotion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QtyBonus;
     }
 }

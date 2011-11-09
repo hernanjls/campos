@@ -5,6 +5,7 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
 using EzPos.Properties;
 using EzPos.Utility;
 using Microsoft.Office.Interop.Excel;

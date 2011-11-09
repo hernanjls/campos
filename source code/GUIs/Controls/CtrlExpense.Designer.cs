@@ -46,14 +46,14 @@ namespace EzPos.GUIs.Controls
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.btnNew = new System.Windows.Forms.Button();
             this.cmbExpenseType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
-            this.ExpenseID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExpenseId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpenseDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExpenseTypeID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExpenseTypeId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpenseTypeStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpenseAmountInt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpenseAmountRiel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CurrencyID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CurrencyId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExchangeRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlBodyLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpense)).BeginInit();
@@ -91,14 +91,14 @@ namespace EzPos.GUIs.Controls
             this.dgvExpense.ColumnHeadersHeight = 40;
             this.dgvExpense.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvExpense.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ExpenseID,
+            this.ExpenseId,
             this.ExpenseDate,
-            this.ExpenseTypeID,
+            this.ExpenseTypeId,
             this.ExpenseTypeStr,
             this.Description,
             this.ExpenseAmountInt,
             this.ExpenseAmountRiel,
-            this.CurrencyID,
+            this.CurrencyId,
             this.ExchangeRate});
             this.dgvExpense.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvExpense.EnableHeadersVisualStyles = false;
@@ -287,17 +287,17 @@ namespace EzPos.GUIs.Controls
             this.cmbExpenseType.Size = new System.Drawing.Size(181, 27);
             this.cmbExpenseType.TabIndex = 4;
             // 
-            // ExpenseID
+            // ExpenseId
             // 
-            this.ExpenseID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ExpenseID.DataPropertyName = "ExpenseID";
-            this.ExpenseID.HeaderText = "ExpenseID";
-            this.ExpenseID.Name = "ExpenseID";
-            this.ExpenseID.ReadOnly = true;
-            this.ExpenseID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ExpenseID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ExpenseID.Visible = false;
-            this.ExpenseID.Width = 150;
+            this.ExpenseId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ExpenseId.DataPropertyName = "ExpenseId";
+            this.ExpenseId.HeaderText = "ExpenseId";
+            this.ExpenseId.Name = "ExpenseId";
+            this.ExpenseId.ReadOnly = true;
+            this.ExpenseId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ExpenseId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ExpenseId.Visible = false;
+            this.ExpenseId.Width = 150;
             // 
             // ExpenseDate
             // 
@@ -314,17 +314,17 @@ namespace EzPos.GUIs.Controls
             this.ExpenseDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ExpenseDate.Width = 125;
             // 
-            // ExpenseTypeID
+            // ExpenseTypeId
             // 
-            this.ExpenseTypeID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ExpenseTypeID.DataPropertyName = "ExpenseTypeID";
-            this.ExpenseTypeID.HeaderText = "ExpenseTypeID";
-            this.ExpenseTypeID.Name = "ExpenseTypeID";
-            this.ExpenseTypeID.ReadOnly = true;
-            this.ExpenseTypeID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ExpenseTypeID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ExpenseTypeID.Visible = false;
-            this.ExpenseTypeID.Width = 140;
+            this.ExpenseTypeId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ExpenseTypeId.DataPropertyName = "ExpenseTypeId";
+            this.ExpenseTypeId.HeaderText = "ExpenseTypeId";
+            this.ExpenseTypeId.Name = "ExpenseTypeId";
+            this.ExpenseTypeId.ReadOnly = true;
+            this.ExpenseTypeId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ExpenseTypeId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ExpenseTypeId.Visible = false;
+            this.ExpenseTypeId.Width = 140;
             // 
             // ExpenseTypeStr
             // 
@@ -377,16 +377,16 @@ namespace EzPos.GUIs.Controls
             this.ExpenseAmountRiel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ExpenseAmountRiel.Width = 120;
             // 
-            // CurrencyID
+            // CurrencyId
             // 
-            this.CurrencyID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.CurrencyID.DataPropertyName = "CurrencyID";
-            this.CurrencyID.HeaderText = "CurrencyID";
-            this.CurrencyID.Name = "CurrencyID";
-            this.CurrencyID.ReadOnly = true;
-            this.CurrencyID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CurrencyID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CurrencyID.Visible = false;
+            this.CurrencyId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CurrencyId.DataPropertyName = "CurrencyId";
+            this.CurrencyId.HeaderText = "CurrencyId";
+            this.CurrencyId.Name = "CurrencyId";
+            this.CurrencyId.ReadOnly = true;
+            this.CurrencyId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CurrencyId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CurrencyId.Visible = false;
             // 
             // ExchangeRate
             // 
@@ -438,14 +438,14 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.Label lblResultInfo;
         private System.Windows.Forms.DateTimePicker dtpStopDate;
         private System.Windows.Forms.DateTimePicker dtpStartDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseTypeID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseTypeId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseTypeStr;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseAmountInt;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpenseAmountRiel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CurrencyID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CurrencyId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExchangeRate;
     }
 }

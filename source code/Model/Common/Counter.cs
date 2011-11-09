@@ -1,18 +1,18 @@
-namespace EzPos.Model
+namespace EzPos.Model.Common
 {
     public class Counter
     {
-        public const string CONST_COUNTER_ID = "CounterID";
-        public const string CONST_COUNTER_IP = "CounterIP";
-        public const string CONST_COUNTER_NAME = "CounterName";
+        public const string ConstCounterId = "CounterId";
+        public const string ConstCounterIp = "CounterIp";
+        public const string ConstCounterName = "CounterName";
 
-        public int CounterID { get; set; }
+        public int CounterId { get; set; }
 
         public string CounterName { get; set; }
 
-        public string CounterIP { get; set; }
+        public string CounterIp { get; set; }
 
-        public string CounterMAC { get; set; }
+        public string CounterMac { get; set; }
 
         public string ProductPhotoNetworkPath { get; set; }
 

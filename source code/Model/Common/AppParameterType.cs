@@ -1,11 +1,11 @@
-namespace EzPos.Model
+namespace EzPos.Model.Common
 {
     public class AppParameterType
     {
-        public const string CONST_PARAMETER_ID = "ParameterTypeID";
-        public const string CONST_PARAMETER_LABEL = "ParameterType";
+        public const string ConstParameterId = "ParameterTypeId";
+        public const string ConstParameterLabel = "ParameterType";
 
-        public int ParameterTypeID { get; set; }
+        public int ParameterTypeId { get; set; }
 
         public string ParameterType { get; set; }
 

@@ -158,7 +158,7 @@
     <value>ParameterLabel</value>
   </data>
   <data name="AppParamValue" xml:space="preserve">
-    <value>ParameterID</value>
+    <value>ParameterId</value>
   </data>
   <data name="AppParamColor" xml:space="preserve">
     <value>3</value>
@@ -616,12 +616,6 @@
   <data name="MsgInvalidInput" xml:space="preserve">
     <value>Invalid input.</value>
   </data>
-  <data name="ConstAmountZeroDollarTwoDigits" xml:space="preserve">
-    <value>$ 0.00</value>
-  </data>
-  <data name="ConstAmountZeroRielTwoDigits" xml:space="preserve">
-    <value>R 0.00</value>
-  </data>
   <data name="ConstPrefixDollar" xml:space="preserve">
     <value>$ </value>
   </data>
@@ -685,9 +679,6 @@
   <data name="PermissionViewUserResultInfo" xml:space="preserve">
     <value>60</value>
   </data>
-  <data name="ConstAmountZeroDollarThreeDigits" xml:space="preserve">
-    <value>$0.000</value>
-  </data>
   <data name="ConstBarCodeTemplate6" xml:space="preserve">
     <value />
   </data>
@@ -716,16 +707,10 @@
     <value />
   </data>
   <data name="ConstSuffixPercentage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ConstZeroPercent" xml:space="preserve">
-    <value>0</value>
+    <value>%</value>
   </data>
   <data name="MsgEmptyBindingList" xml:space="preserve">
     <value>Failed to convert empty BindingList to List</value>
-  </data>
-  <data name="ConstSupportedImageExtension" xml:space="preserve">
-    <value>All Pictures|*.bmp;*.gif;*.jpg|Bitmaps|*.bmp|GIFs|*.gif|JPEGs|*.jpg</value>
   </data>
   <data name="ConstAmountZeroThreeDigits" xml:space="preserve">
     <value>0.000</value>
@@ -750,5 +735,17 @@
   </data>
   <data name="ConstStockStatementExcelFile" xml:space="preserve">
     <value>stock statement.xlsx</value>
+  </data>
+  <data name="ConstExtensionImage" xml:space="preserve">
+    <value>All Pictures|*.bmp;*.gif;*.jpg|Bitmaps|*.bmp|GIFs|*.gif|JPEGs|*.jpg</value>
+  </data>
+  <data name="ConstAmountZeroTwoDigits" xml:space="preserve">
+    <value>0.00</value>
+  </data>
+  <data name="ConstCurrencyDollar" xml:space="preserve">
+    <value>$</value>
+  </data>
+  <data name="ConstCurrencyRiel" xml:space="preserve">
+    <value>R</value>
   </data>
 </root>

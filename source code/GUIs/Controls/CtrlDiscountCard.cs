@@ -7,9 +7,13 @@ using System.Windows.Forms;
 using EzPos.GUI;
 using EzPos.GUIs.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Customer;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
+using EzPos.Service.User;
 using EzPos.Utility;
 
 namespace EzPos.GUIs.Controls
@@ -61,8 +65,8 @@ namespace EzPos.GUIs.Controls
                 var objList = _CustomerService.GetCustomers();
                 cmbCustomer.CustomizedDataBinding(
                     objList,
-                    Customer.CONST_CUSTOMER_NAME,
-                    Customer.CONST_CUSTOMER_ID,
+                    Customer.ConstCustomerName,
+                    Customer.ConstCustomerId,
                     false);
 
                 var customerList = new List<Customer>();
@@ -71,8 +75,8 @@ namespace EzPos.GUIs.Controls
 
                 cmbCustomerHidden.CustomizedDataBinding(
                     customerList,
-                    Customer.CONST_CUSTOMER_NAME,
-                    Customer.CONST_CUSTOMER_ID,
+                    Customer.ConstCustomerName,
+                    Customer.ConstCustomerId,
                     false);
 
                 btnSearch_Click(sender, e);
@@ -106,7 +110,7 @@ namespace EzPos.GUIs.Controls
 
                 dgvDiscountCard.Columns["PrintCheck"].DisplayIndex = 0;
                 dgvDiscountCard.Columns["CardNumber"].DisplayIndex = 1;
-                dgvDiscountCard.Columns["DiscountCardTypeID"].DisplayIndex = 2;
+                dgvDiscountCard.Columns["DiscountCardTypeId"].DisplayIndex = 2;
                 dgvDiscountCard.Columns["DiscountPercentage"].DisplayIndex = 3;
                 dgvDiscountCard.Columns["CustomerStr"].DisplayIndex = 4;
             }
@@ -147,7 +151,7 @@ namespace EzPos.GUIs.Controls
                     }
                 }
 
-                var discountCardTypeID = Int32.Parse(cmbDiscountType.SelectedValue.ToString(), AppContext.CultureInfo);
+                var discountCardTypeId = Int32.Parse(cmbDiscountType.SelectedValue.ToString(), AppContext.CultureInfo);
                 var discountCardTypeStr = ((AppParameter) cmbDiscountType.SelectedItem).ParameterLabel;
                 var discountPercentage =
                     float.Parse(((AppParameter) cmbDiscountType.SelectedItem).ParameterValue, AppContext.CultureInfo);
@@ -157,7 +161,7 @@ namespace EzPos.GUIs.Controls
                 {
                     var discountCard = new DiscountCard
                                            {
-                                               DiscountCardTypeID = discountCardTypeID,
+                                               DiscountCardTypeId = discountCardTypeId,
                                                DiscountCardTypeStr = discountCardTypeStr,
                                                DiscountPercentage = discountPercentage,
                                                ExpireDate = DateTime.Now,
@@ -286,15 +290,15 @@ namespace EzPos.GUIs.Controls
                 searchCriteria.Add("CardNumber|" + StringHelper.Right("000000000" + txtCardNum.Text, 9));
 
             if (cmbDCardType.SelectedIndex != -1)
-                searchCriteria.Add("DiscountCardTypeID|" + cmbDCardType.SelectedValue);
+                searchCriteria.Add("DiscountCardTypeId|" + cmbDCardType.SelectedValue);
 
             if (cmbCustomer.SelectedIndex != -1)
-                searchCriteria.Add("CustomerID|" + cmbCustomer.SelectedValue);
+                searchCriteria.Add("CustomerId|" + cmbCustomer.SelectedValue);
 
             if (!chbUsed.Checked)
-                searchCriteria.Add("CustomerID = 0");
+                searchCriteria.Add("CustomerId = 0");
             else if (!chbNonUsed.Checked)
-                searchCriteria.Add("CustomerID > 0");
+                searchCriteria.Add("CustomerId > 0");
 
             IListToBindingList(
                 _CustomerService.GetDiscountCards(searchCriteria));
@@ -312,9 +316,9 @@ namespace EzPos.GUIs.Controls
             _DiscountCardList.Clear();
             foreach (DiscountCard discountCard in dCardList)
             {
-                if (discountCard.CustomerID != 0)
+                if (discountCard.CustomerId != 0)
                 {
-                    cmbCustomerHidden.SelectedValue = discountCard.CustomerID;
+                    cmbCustomerHidden.SelectedValue = discountCard.CustomerId;
                     discountCard.CustomerStr = cmbCustomerHidden.Text;
                 }
                 _DiscountCardList.Add(discountCard);
@@ -393,7 +397,7 @@ namespace EzPos.GUIs.Controls
                 return;
 
             lblCardSelect.Text = discountCard.CardNumber;
-            btnReturnCard.Enabled = !(discountCard.CustomerID == 0);
+            btnReturnCard.Enabled = !(discountCard.CustomerId == 0);
         }
 
         private void UpdateResultInfo()
@@ -443,7 +447,7 @@ namespace EzPos.GUIs.Controls
             var discountCard =
                 (DiscountCard) _DiscountCardList[dgvDiscountCard.CurrentRow.Index];
 
-            if (discountCard.CustomerID == 0)
+            if (discountCard.CustomerId == 0)
                 return;
 
             string briefMsg, detailMsg;
@@ -475,7 +479,7 @@ namespace EzPos.GUIs.Controls
 
             try
             {
-                discountCard.CustomerID = 0;
+                discountCard.CustomerId = 0;
                 discountCard.CustomerStr = "";
                 _CustomerService.DiscountCardManagement(
                     discountCard,

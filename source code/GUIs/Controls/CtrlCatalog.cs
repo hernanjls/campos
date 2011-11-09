@@ -9,11 +9,13 @@ using System.Threading;
 using System.Windows.Forms;
 using EzPos.GUI;
 using EzPos.GUIs.Forms;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Product;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
 using EzPos.Service.Product;
+using EzPos.Service.User;
 using EzPos.Utility;
 
 namespace EzPos.GUIs.Controls
@@ -54,7 +56,7 @@ namespace EzPos.GUIs.Controls
                 var searchCriteria = 
                     new List<string>
                     {
-                        "ParameterTypeID IN (" +
+                        "ParameterTypeId IN (" +
                         Resources.AppParamCategory + ", " +
                         Resources.AppParamMark + "," +
                         Resources.AppParamColor + ")"
@@ -175,7 +177,7 @@ namespace EzPos.GUIs.Controls
         {
             try
             {
-                if (dgvProduct.CurrentRow == null)
+                if ((dgvProduct.CurrentRow == null) && (!operationRequest.Equals(Resources.OperationRequestInsert)))
                     return;
 
                 using (var frmCatalog = new FrmCatalog())
@@ -207,7 +209,7 @@ namespace EzPos.GUIs.Controls
                                     {
                                         for (var counter = 0; counter < _productList.Count; counter++)
                                         {
-                                            if (_productList[counter].ProductID == frmCatalog.Product.ProductID)
+                                            if (_productList[counter].ProductId == frmCatalog.Product.ProductId)
                                                 _productList.RemoveAt(counter);
                                         }
                                     }
@@ -328,13 +330,13 @@ namespace EzPos.GUIs.Controls
             {
                 var searchCriteria = new List<string>();
                 if (cmbCategory.SelectedIndex != -1)
-                    searchCriteria.Add("CategoryID|" + cmbCategory.SelectedValue);
+                    searchCriteria.Add("CategoryId|" + cmbCategory.SelectedValue);
 
                 if (cmbMark.SelectedIndex != -1)
-                    searchCriteria.Add("MarkID|" + cmbMark.SelectedValue);
+                    searchCriteria.Add("MarkId|" + cmbMark.SelectedValue);
 
                 if (cmbColor.SelectedIndex != -1)
-                    searchCriteria.Add("ColorID|" + cmbColor.SelectedValue);
+                    searchCriteria.Add("ColorId|" + cmbColor.SelectedValue);
 
                 if (txtProductCode.Text.Length != 0)
                 {
@@ -545,10 +547,10 @@ namespace EzPos.GUIs.Controls
             if ((_productList.Count == 0) || (dgvProduct.CurrentRow == null))
             {
                 ptbProduct.Image = Resources.NoImage;
-                UPInLbl.Text = Resources.ConstAmountZeroDollarThreeDigits;
-                extraPercentageLbl.Text = Resources.ConstZeroPercent;
-                discountLbl.Text = Resources.ConstZeroPercent;
-                UPOutLbl.Text = Resources.ConstAmountZeroDollarThreeDigits;
+                UPInLbl.Text = Resources.ConstCurrencyDollar + Resources.ConstAmountZeroThreeDigits;
+                extraPercentageLbl.Text = Resources.ConstAmountZeroOneDigit;
+                discountLbl.Text = Resources.ConstAmountZeroOneDigit;
+                UPOutLbl.Text = Resources.ConstCurrencyDollar + Resources.ConstAmountZeroThreeDigits;
                 return;
             }
 
@@ -613,10 +615,11 @@ namespace EzPos.GUIs.Controls
             }
 
             lblResultInfo.Text = strResultInfo;
-            rdbPrintAll.Text = 
-                "កូដទាំងអស់ (" +
-                totalProdNum.ToString("N0", AppContext.CultureInfo) + 
-                ")";
+            rdbPrintAll.Text = string.Format(
+                "{0}{1}{2}",
+                "កូដទាំងអស់ (",
+                totalProdNum.ToString("N0", AppContext.CultureInfo),
+                ")");
         }
 
         private void BtnPrintMouseEnter(object sender, EventArgs e)
@@ -781,8 +784,11 @@ namespace EzPos.GUIs.Controls
                         printedQty + " / " + curProduct.QtyInStock;
                 }
 
-                rdbPrintSelected.Text = "កូដជ្រើសរើស (" + _barCodeList.Count.ToString(
-                                                              "N0", AppContext.CultureInfo) + ")";
+                rdbPrintSelected.Text = string.Format(
+                    "{0}{1}{2}",
+                    "កូដជ្រើសរើស (", 
+                    _barCodeList.Count.ToString("N0", AppContext.CultureInfo),
+                    ")");
             }
             catch (Exception exception)
             {
@@ -1008,8 +1014,9 @@ namespace EzPos.GUIs.Controls
 
             if (setPrintingStatus)
                 _productList[dgvProduct.CurrentRow.Index].PrintCheck = requestPrinting;
-            rdbPrintSelected.Text = "កូដជ្រើសរើស (" + _barCodeList.Count.ToString(
-                                                          "N0", AppContext.CultureInfo) + ")";
+            rdbPrintSelected.Text = string.Format(
+                "{0}{1}{2}",
+                "កូដជ្រើសរើស (", _barCodeList.Count.ToString("N0", AppContext.CultureInfo), ")");
             dgvProduct.Refresh();
         }
 

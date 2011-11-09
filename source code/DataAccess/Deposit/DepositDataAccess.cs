@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using EzPos.Model;
+using EzPos.Model.Deposit;
 using EzPos.Utility;
 using NHibernate.Expression;
 
-namespace EzPos.DataAccess
+namespace EzPos.DataAccess.Deposit
 {
     public class DepositDataAccess : BaseDataAccess
     {
@@ -30,19 +30,19 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                     {
-                        Order.Asc(Deposit.CONST_DEPOSIT_DATE),
-                        Order.Asc(Deposit.CONST_DEPOSIT_NUMBER)
+                        Order.Asc(Model.Deposit.Deposit.ConstDepositDate),
+                        Order.Asc(Model.Deposit.Deposit.ConstDepositNumber)
                     };
 
-            return SelectObjects(typeof(Deposit), criterionList, orderList).List();
+            return SelectObjects(typeof(Model.Deposit.Deposit), criterionList, orderList).List();
         }
 
-        public virtual void UpdateDeposit(Deposit deposit)
+        public virtual void UpdateDeposit(Model.Deposit.Deposit deposit)
         {
             UpdateObject(deposit);
         }
 
-        public virtual void InsertDeposit(Deposit deposit)
+        public virtual void InsertDeposit(Model.Deposit.Deposit deposit)
         {
             InsertObject(deposit);
         }
@@ -59,7 +59,7 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(DepositItem.CONST_PRODUCT_ID)
+                    Order.Asc(DepositItem.ConstProductId)
                 };
 
             return SelectObjects(typeof (DepositItem), criterionList, orderList).List();
@@ -112,11 +112,11 @@ namespace EzPos.DataAccess
             aliasList[4] = "e";
 
             var typeList = new Type[5];
-            typeList[0] = typeof(Deposit);
-            typeList[1] = typeof(Model.Customer);
-            typeList[2] = typeof(User);
+            typeList[0] = typeof(Model.Deposit.Deposit);
+            typeList[1] = typeof(Model.Customer.Customer);
+            typeList[2] = typeof(Model.User.User);
             typeList[3] = typeof(DepositItem);
-            typeList[4] = typeof(Model.Product);
+            typeList[4] = typeof(Model.Product.Product);
 
             return SelectObjects(qryStr, aliasList, typeList);
         }

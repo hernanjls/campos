@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using Castle.Services.Transaction;
-using EzPos.DataAccess;
 using EzPos.DataAccess.Customer;
-using EzPos.Model;
+using EzPos.Model.Customer;
 using EzPos.Properties;
 using EzPos.Utility;
 
-namespace EzPos.Service
+namespace EzPos.Service.Customer
 {
     /// <summary>
     /// Summary description for CustomerService.
@@ -15,16 +14,16 @@ namespace EzPos.Service
     [Transactional]
     public class CustomerService
     {
-        private readonly CustomerDataAccess _CustomerDataAccess;
+        private readonly CustomerDataAccess _customerDataAccess;
 
         public CustomerService(CustomerDataAccess customerDataAccess)
         {
-            _CustomerDataAccess = customerDataAccess;
+            _customerDataAccess = customerDataAccess;
         }
 
         public IList GetCustomers()
         {
-            return _CustomerDataAccess.GetCustomers();
+            return _customerDataAccess.GetCustomers();
         }
 
         public IList GetCustomers(IList searchCriteria)
@@ -32,11 +31,11 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", "Search Criteria");
 
-            IList customerList = _CustomerDataAccess.GetCustomers(searchCriteria);
+            IList customerList = _customerDataAccess.GetCustomers(searchCriteria);
             return customerList;
         }
 
-        public virtual void CustomerManagement(Customer customer, string requestCode)
+        public virtual void CustomerManagement(Model.Customer.Customer customer, string requestCode)
         {
             if (requestCode == null)
                 throw new ArgumentException("Request code", "requestCode");
@@ -48,7 +47,7 @@ namespace EzPos.Service
                 InsertCustomer(customer);
             else if (requestCode == Resources.OperationRequestDuplicate)
             {
-                customer.CustomerID = 0;
+                customer.CustomerId = 0;
                 InsertCustomer(customer);
             }
             else if (requestCode == Resources.OperationRequestUpdate)
@@ -57,56 +56,56 @@ namespace EzPos.Service
                 DeleteCustomer(customer);
         }
 
-        private void DeleteCustomer(Customer customer)
+        private void DeleteCustomer(Model.Customer.Customer customer)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer", "Customer");
 
-            int customerID = customer.CustomerID;
-            _CustomerDataAccess.DeleteCustomer(customer);
+            int customerId = customer.CustomerId;
+            _customerDataAccess.DeleteCustomer(customer);
 
-            IList dCardList = _CustomerDataAccess.GetDiscountCardsByCustomer(customerID);
+            IList dCardList = _customerDataAccess.GetDiscountCardsByCustomer(customerId);
             if (dCardList.Count != 0)
             {
                 var discountCard = (DiscountCard) dCardList[0];
-                discountCard.CustomerID = 0;
-                _CustomerDataAccess.UpdateDiscountCard(discountCard);
+                discountCard.CustomerId = 0;
+                _customerDataAccess.UpdateDiscountCard(discountCard);
             }
         }
 
-        public virtual IList GetDiscountCardsByCustomer(int customerID)
+        public virtual IList GetDiscountCardsByCustomer(int customerId)
         {
-            return _CustomerDataAccess.GetDiscountCardsByCustomer(customerID);
+            return _customerDataAccess.GetDiscountCardsByCustomer(customerId);
         }
 
-        private void InsertCustomer(Customer customer)
+        private void InsertCustomer(Model.Customer.Customer customer)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer", "Customer");
 
             //Insert customer
-            _CustomerDataAccess.InsertCustomer(customer);
+            _customerDataAccess.InsertCustomer(customer);
 
             //Updating customer code
             customer.CustomerCode =
                 StringHelper.Right("00" + DateTime.Now.Year, 2) + "-" +
                 StringHelper.Right("00" + DateTime.Now.Month, 2) + "-" +
-                customer.CustomerID;
+                customer.CustomerId;
             UpdateCustomer(customer);
         }
 
-        private void UpdateCustomer(Customer customer)
+        private void UpdateCustomer(Model.Customer.Customer customer)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer", "Customer");
 
-            _CustomerDataAccess.UpdateCustomer(customer);
+            _customerDataAccess.UpdateCustomer(customer);
         }
 
         //Discount card
         public IList GetDiscountCards()
         {
-            return _CustomerDataAccess.GetDiscountCards();
+            return _customerDataAccess.GetDiscountCards();
         }
 
         public IList GetDiscountCards(IList searchCriteria)
@@ -114,12 +113,12 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", "Search Criteria");
 
-            return _CustomerDataAccess.GetDiscountCards(searchCriteria);
+            return _customerDataAccess.GetDiscountCards(searchCriteria);
         }
 
         public IList GetUsedDiscountCards()
         {
-            return _CustomerDataAccess.GetUsedDiscountCards();
+            return _customerDataAccess.GetUsedDiscountCards();
         }
 
         public virtual void DiscountCardManagement(DiscountCard discountCard, string requestCode)
@@ -134,7 +133,7 @@ namespace EzPos.Service
                 InsertDiscountCard(discountCard);
             else if (requestCode == Resources.OperationRequestDuplicate)
             {
-                discountCard.DiscountCardID = 0;
+                discountCard.DiscountCardId = 0;
                 InsertDiscountCard(discountCard);
             }
             else if (requestCode == Resources.OperationRequestUpdate)
@@ -149,11 +148,11 @@ namespace EzPos.Service
                 throw new ArgumentNullException("discountCard", "DiscountCard");
 
             //Insert customer
-            _CustomerDataAccess.InsertDiscountCard(discountCard);
+            _customerDataAccess.InsertDiscountCard(discountCard);
 
             //Updating customer code
             discountCard.CardNumber =
-                StringHelper.Right("000000000" + discountCard.DiscountCardID, 9);
+                StringHelper.Right("000000000" + discountCard.DiscountCardId, 9);
             UpdateDiscountCard(discountCard);
         }
 
@@ -162,21 +161,21 @@ namespace EzPos.Service
             if (discountCard == null)
                 throw new ArgumentNullException("discountCard", "DiscountCard");
 
-            IList objList = _CustomerDataAccess.GetDiscountCardsByCustomer(discountCard.CustomerID);
+            var objList = _customerDataAccess.GetDiscountCardsByCustomer(discountCard.CustomerId);
             if (objList != null)
             {
                 if (objList.Count != 0)
                 {
                     foreach (DiscountCard dCard in objList)
                     {
-                        dCard.CustomerID = 0;
-                        _CustomerDataAccess.UpdateDiscountCard(dCard);
+                        dCard.CustomerId = 0;
+                        _customerDataAccess.UpdateDiscountCard(dCard);
                     }
                 }
             }
 
-            if (discountCard.DiscountCardID != 0)
-                _CustomerDataAccess.UpdateDiscountCard(discountCard);
+            if (discountCard.DiscountCardId != 0)
+                _customerDataAccess.UpdateDiscountCard(discountCard);
         }
 
         private void DeleteDiscountCard(DiscountCard discountCard)
@@ -184,7 +183,7 @@ namespace EzPos.Service
             if (discountCard == null)
                 throw new ArgumentNullException("discountCard", "DiscountCard");
 
-            _CustomerDataAccess.DeleteDiscountCard(discountCard);
+            _customerDataAccess.DeleteDiscountCard(discountCard);
         }
     }
 }

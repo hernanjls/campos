@@ -5,11 +5,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Product;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
 using EzPos.Service.Product;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Forms
 {
@@ -222,7 +224,7 @@ namespace EzPos.GUIs.Forms
             var searchCriteria = 
                 new List<string>
                 {
-                    "ParameterTypeID IN (" +
+                    "ParameterTypeId IN (" +
                     Resources.AppParamProductCodeLength + ", " +
                     Resources.AppParamCategory + ", " +
                     Resources.AppParamMark + ", " +
@@ -265,8 +267,8 @@ namespace EzPos.GUIs.Forms
 
             _productList = new BindingList<Product>();
             cmbProduct.DataSource = _productList;
-            cmbProduct.DisplayMember = Product.CONST_FOREIGN_CODE;
-            cmbProduct.ValueMember = Product.CONST_PRODUCT_ID;
+            cmbProduct.DisplayMember = Product.ConstForeignCode;
+            cmbProduct.ValueMember = Product.ConstProductId;
             cmbProduct.SelectedIndex = -1;
 
             SetProductInfo(_product);
@@ -287,10 +289,10 @@ namespace EzPos.GUIs.Forms
 
             txtForeignCode.Text = product.ForeignCode;
             lblProductName.Text = product.ProductName + Resources.ConstTextBreak + product.ProductCode;
-            cmbCategory.SelectedValue = product.CategoryID;
-            cmbMark.SelectedValue = product.MarkID;
-            cmbColor.SelectedValue = product.ColorID;
-            cmbSize.SelectedValue = product.SizeID;
+            cmbCategory.SelectedValue = product.CategoryId;
+            cmbMark.SelectedValue = product.MarkId;
+            cmbColor.SelectedValue = product.ColorId;
+            cmbSize.SelectedValue = product.SizeId;
             txtDescription.Text = product.Description;
             txtUPIn.Text = product.UnitPriceIn.ToString("N3", AppContext.CultureInfo);
             txtExtraPercentage.Text = product.ExtraPercentage.ToString("N0", AppContext.CultureInfo);
@@ -303,6 +305,9 @@ namespace EzPos.GUIs.Forms
                 ptbProduct.Image = Resources.NoImage;
             else
                 ptbProduct.ImageLocation = product.PhotoPath;
+
+            txtQtyPromotion.Text = product.QtyPromotion.ToString("N0", AppContext.CultureInfo);
+            txtQtyBonus.Text = product.QtyBonus.ToString("N0", AppContext.CultureInfo);
         }
 
         public void GenerateProductCode()
@@ -349,20 +354,22 @@ namespace EzPos.GUIs.Forms
                 if (_product == null)
                     _product = new Product();
 
-                _product.CategoryID = int.Parse(cmbCategory.SelectedValue.ToString());
+                _product.CategoryId = int.Parse(cmbCategory.SelectedValue.ToString());
                 _product.CategoryStr = cmbCategory.Text;
-                _product.MarkID = int.Parse(cmbMark.SelectedValue.ToString());
+                _product.MarkId = int.Parse(cmbMark.SelectedValue.ToString());
                 _product.MarkStr = cmbMark.Text;
-                _product.ColorID = int.Parse(cmbColor.SelectedValue.ToString());
+                _product.ColorId = int.Parse(cmbColor.SelectedValue.ToString());
                 _product.ColorStr = cmbColor.Text;
-                _product.SizeID = Int32.Parse(cmbSize.SelectedValue.ToString());
+                _product.SizeId = Int32.Parse(cmbSize.SelectedValue.ToString());
                 _product.SizeStr = cmbSize.Text;
-                _product.ProductName = _product.CategoryStr + " \\ " + _product.MarkStr + " \\ " + _product.ColorStr;
+                _product.ProductName = _product.CategoryStr + @" \ " + _product.MarkStr + @" \ " + _product.ColorStr;
                 _product.UnitPriceIn = float.Parse(txtUPIn.Text);
                 _product.ExtraPercentage = float.Parse(txtExtraPercentage.Text);
                 _product.UnitPriceOut = float.Parse(txtUPOut.Text);
                 _product.DiscountPercentage = float.Parse(txtDiscount.Text);
                 _product.QtyInStock = float.Parse(txtQtyInStock.Text);
+                _product.QtyPromotion = float.Parse(txtQtyPromotion.Text);
+                _product.QtyBonus = float.Parse(txtQtyBonus.Text);
                 _product.ForeignCode = txtForeignCode.Text;
                 _product.Description = txtDescription.Text;
                 if (txtPhotoPath.Text.Length == 0)
@@ -385,7 +392,6 @@ namespace EzPos.GUIs.Forms
                 if (_productService == null)
                     _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
 
-                //_product.Description = string.Empty;
                 _product.DisplayName = _product.ProductName + "\r" +
                                        "Size: " + _product.SizeStr + "\r" +
                                        "Code: " + _product.ProductCode;
@@ -396,7 +402,7 @@ namespace EzPos.GUIs.Forms
                 {
                     _productService.ManageProduct(
                         _product,
-                        _product.ProductID != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
+                        _product.ProductId != 0 ? Resources.OperationRequestUpdate : Resources.OperationRequestInsert);
                 }
 
                 DialogResult = DialogResult.OK;
@@ -481,7 +487,7 @@ namespace EzPos.GUIs.Forms
         {
             using (var openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = Resources.ConstSupportedImageExtension;
+                openFileDialog.Filter = Resources.ConstExtensionImage;
                 openFileDialog.Multiselect = false;
                 if (openFileDialog.ShowDialog() != DialogResult.OK) 
                     return;
@@ -553,7 +559,7 @@ namespace EzPos.GUIs.Forms
         {
             using (var openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = Resources.ConstSupportedImageExtension;
+                openFileDialog.Filter = Resources.ConstExtensionImage;
                 openFileDialog.Multiselect = true;
                 if (openFileDialog.ShowDialog() != DialogResult.OK) 
                     return;
@@ -639,10 +645,10 @@ namespace EzPos.GUIs.Forms
 
                         var productAdjustment = new ProductAdjustment
                                                     {
-                                                        ProductID = _product.ProductID,
+                                                        ProductId = _product.ProductId,
                                                         QtyInStock = _product.QtyInStock,
                                                         QtyAdjusted = ((-1)*_product.QtyInStock),
-                                                        FKProduct = _product
+                                                        FkProduct = _product
                                                     };
 
                         if (_productService == null)
@@ -734,7 +740,7 @@ namespace EzPos.GUIs.Forms
         {
             txtForeignCode.TextChanged -= ModificationHandler;
             string detailMsg;
-            if (!_productService.IsValidatedProductCode(_product.ProductID, txtForeignCode.Text, out detailMsg))
+            if (!_productService.IsValidatedProductCode(_product != null ? _product.ProductId : 0, txtForeignCode.Text, out detailMsg))
             {
                 const string briefMsg = "អំពីពត៌មាន";
                 using (var frmMessageBox = new FrmExtendedMessageBox())
@@ -804,7 +810,7 @@ namespace EzPos.GUIs.Forms
                 {
                     "ForeignCode|" + foreignCode,
                     //"QtyInStock > 0",
-                    "ProductID <> " + (_product == null ? 0 : _product.ProductID)
+                    "ProductId <> " + (_product == null ? 0 : _product.ProductId)
                 };
             var productList = _productService.GetObjects(searchCriteria);
             if (productList.Count == 0) 
@@ -841,6 +847,26 @@ namespace EzPos.GUIs.Forms
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en"));
             txtDescription.TextChanged -= ModificationHandler;
+        }
+
+        private void TxtQtyPromotionEnter(object sender, EventArgs e)
+        {
+            txtQtyPromotion.TextChanged += ModificationHandler;
+        }
+
+        private void TxtQtyPromotionLeave(object sender, EventArgs e)
+        {
+            txtQtyPromotion.TextChanged -= ModificationHandler;
+        }
+
+        private void TxtQtyBonusEnter(object sender, EventArgs e)
+        {
+            txtQtyBonus.TextChanged += ModificationHandler;
+        }
+
+        private void TxtQtyBonusLeave(object sender, EventArgs e)
+        {
+            txtQtyBonus.TextChanged -= ModificationHandler;
         }
     }
 }

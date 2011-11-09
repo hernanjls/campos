@@ -122,7 +122,7 @@ namespace EzPos.GUIs.Forms
             this.ptbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ptbUser.TabIndex = 101;
             this.ptbUser.TabStop = false;
-            this.ptbUser.Click += new System.EventHandler(this.ptbProduct_Click);
+            this.ptbUser.Click += new System.EventHandler(this.PtbProductClick);
             // 
             // lblSalary
             // 
@@ -143,8 +143,8 @@ namespace EzPos.GUIs.Forms
             this.txtSalary.TabIndex = 22;
             this.txtSalary.Text = "0.00";
             this.txtSalary.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtSalary.Leave += new System.EventHandler(this.txtSalary_Leave);
-            this.txtSalary.Enter += new System.EventHandler(this.txtSalary_Enter);
+            this.txtSalary.Leave += new System.EventHandler(this.TxtSalaryLeave);
+            this.txtSalary.Enter += new System.EventHandler(this.TxtSalaryEnter);
             // 
             // grbLine_1
             // 
@@ -166,8 +166,8 @@ namespace EzPos.GUIs.Forms
             this.clbPermission.Size = new System.Drawing.Size(250, 199);
             this.clbPermission.TabIndex = 29;
             this.clbPermission.ThreeDCheckBoxes = true;
-            this.clbPermission.Leave += new System.EventHandler(this.clbPermission_Leave);
-            this.clbPermission.Enter += new System.EventHandler(this.clbPermission_Enter);
+            this.clbPermission.Leave += new System.EventHandler(this.ClbPermissionLeave);
+            this.clbPermission.Enter += new System.EventHandler(this.ClbPermissionEnter);
             // 
             // lblPermission
             // 
@@ -249,8 +249,8 @@ namespace EzPos.GUIs.Forms
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(230, 36);
             this.txtPassword.TabIndex = 27;
-            this.txtPassword.Leave += new System.EventHandler(this.txtPassword_Leave);
-            this.txtPassword.Enter += new System.EventHandler(this.txtPassword_Enter);
+            this.txtPassword.Leave += new System.EventHandler(this.TxtPasswordLeave);
+            this.txtPassword.Enter += new System.EventHandler(this.TxtPasswordEnter);
             // 
             // txtLogInName
             // 
@@ -260,8 +260,8 @@ namespace EzPos.GUIs.Forms
             this.txtLogInName.Name = "txtLogInName";
             this.txtLogInName.Size = new System.Drawing.Size(230, 36);
             this.txtLogInName.TabIndex = 25;
-            this.txtLogInName.Leave += new System.EventHandler(this.txtLogInName_Leave);
-            this.txtLogInName.Enter += new System.EventHandler(this.txtLogInName_Enter);
+            this.txtLogInName.Leave += new System.EventHandler(this.TxtLogInNameLeave);
+            this.txtLogInName.Enter += new System.EventHandler(this.TxtLogInNameEnter);
             // 
             // lblPassword
             // 
@@ -290,8 +290,8 @@ namespace EzPos.GUIs.Forms
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(230, 36);
             this.txtPhoneNumber.TabIndex = 9;
-            this.txtPhoneNumber.Leave += new System.EventHandler(this.txtPhoneNumber_Leave);
-            this.txtPhoneNumber.Enter += new System.EventHandler(this.txtPhoneNumber_Enter);
+            this.txtPhoneNumber.Leave += new System.EventHandler(this.TxtPhoneNumberLeave);
+            this.txtPhoneNumber.Enter += new System.EventHandler(this.TxtPhoneNumberEnter);
             // 
             // lblPhoneNumber
             // 
@@ -312,8 +312,8 @@ namespace EzPos.GUIs.Forms
             this.txtAddress.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtAddress.Size = new System.Drawing.Size(230, 43);
             this.txtAddress.TabIndex = 11;
-            this.txtAddress.Leave += new System.EventHandler(this.txtAddress_Leave);
-            this.txtAddress.Enter += new System.EventHandler(this.txtAddress_Enter);
+            this.txtAddress.Leave += new System.EventHandler(this.TxtAddressLeave);
+            this.txtAddress.Enter += new System.EventHandler(this.TxtAddressEnter);
             // 
             // lblStartingDate
             // 
@@ -334,8 +334,8 @@ namespace EzPos.GUIs.Forms
             this.dtpStartingDate.Size = new System.Drawing.Size(230, 36);
             this.dtpStartingDate.TabIndex = 18;
             this.dtpStartingDate.Value = new System.DateTime(2007, 10, 21, 0, 0, 0, 0);
-            this.dtpStartingDate.Leave += new System.EventHandler(this.dtpStartingDate_Leave);
-            this.dtpStartingDate.Enter += new System.EventHandler(this.dtpStartingDate_Enter);
+            this.dtpStartingDate.Leave += new System.EventHandler(this.DtpStartingDateLeave);
+            this.dtpStartingDate.Enter += new System.EventHandler(this.DtpStartingDateEnter);
             // 
             // cmbContractType
             // 
@@ -346,8 +346,8 @@ namespace EzPos.GUIs.Forms
             this.cmbContractType.Name = "cmbContractType";
             this.cmbContractType.Size = new System.Drawing.Size(230, 36);
             this.cmbContractType.TabIndex = 16;
-            this.cmbContractType.Leave += new System.EventHandler(this.cmbContractType_Leave);
-            this.cmbContractType.Enter += new System.EventHandler(this.cmbContractType_Enter);
+            this.cmbContractType.Leave += new System.EventHandler(this.CmbContractTypeLeave);
+            this.cmbContractType.Enter += new System.EventHandler(this.CmbContractTypeEnter);
             // 
             // lblContractType
             // 
@@ -379,8 +379,8 @@ namespace EzPos.GUIs.Forms
             this.dtpBirthDate.Size = new System.Drawing.Size(230, 36);
             this.dtpBirthDate.TabIndex = 7;
             this.dtpBirthDate.Value = new System.DateTime(2007, 10, 21, 0, 0, 0, 0);
-            this.dtpBirthDate.Leave += new System.EventHandler(this.dtpBirthDate_Leave);
-            this.dtpBirthDate.Enter += new System.EventHandler(this.dtpBirthDate_Enter);
+            this.dtpBirthDate.Leave += new System.EventHandler(this.DtpBirthDateLeave);
+            this.dtpBirthDate.Enter += new System.EventHandler(this.DtpBirthDateEnter);
             // 
             // txtUserName
             // 
@@ -390,8 +390,8 @@ namespace EzPos.GUIs.Forms
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(230, 36);
             this.txtUserName.TabIndex = 1;
-            this.txtUserName.Leave += new System.EventHandler(this.txtUserName_Leave);
-            this.txtUserName.Enter += new System.EventHandler(this.txtUserName_Enter);
+            this.txtUserName.Leave += new System.EventHandler(this.TxtUserNameLeave);
+            this.txtUserName.Enter += new System.EventHandler(this.TxtUserNameEnter);
             // 
             // grbLine_2
             // 
@@ -411,8 +411,8 @@ namespace EzPos.GUIs.Forms
             this.cmbPosition.Name = "cmbPosition";
             this.cmbPosition.Size = new System.Drawing.Size(230, 36);
             this.cmbPosition.TabIndex = 14;
-            this.cmbPosition.Leave += new System.EventHandler(this.cmbPosition_Leave);
-            this.cmbPosition.Enter += new System.EventHandler(this.cmbPosition_Enter);
+            this.cmbPosition.Leave += new System.EventHandler(this.CmbPositionLeave);
+            this.cmbPosition.Enter += new System.EventHandler(this.CmbPositionEnter);
             // 
             // cmbMaritalStatus
             // 
@@ -423,7 +423,7 @@ namespace EzPos.GUIs.Forms
             this.cmbMaritalStatus.Name = "cmbMaritalStatus";
             this.cmbMaritalStatus.Size = new System.Drawing.Size(230, 36);
             this.cmbMaritalStatus.TabIndex = 5;
-            this.cmbMaritalStatus.Leave += new System.EventHandler(this.cmbMaritalStatus_Leave);
+            this.cmbMaritalStatus.Leave += new System.EventHandler(this.CmbMaritalStatusLeave);
             this.cmbMaritalStatus.Enter += new System.EventHandler(this.CmbMaritalStatus_Enter);
             // 
             // cmbGender
@@ -436,8 +436,8 @@ namespace EzPos.GUIs.Forms
             this.cmbGender.Name = "cmbGender";
             this.cmbGender.Size = new System.Drawing.Size(230, 36);
             this.cmbGender.TabIndex = 3;
-            this.cmbGender.Leave += new System.EventHandler(this.cmbCategory_Leave);
-            this.cmbGender.Enter += new System.EventHandler(this.cmbCategory_Enter);
+            this.cmbGender.Leave += new System.EventHandler(this.CmbCategoryLeave);
+            this.cmbGender.Enter += new System.EventHandler(this.CmbCategoryEnter);
             // 
             // pnlHeader
             // 
@@ -492,8 +492,8 @@ namespace EzPos.GUIs.Forms
             this.btnCancel.Text = "បោះបង់";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.MouseLeave += new System.EventHandler(this.btnCancel_MouseLeave);
-            this.btnCancel.MouseEnter += new System.EventHandler(this.btnCancel_MouseEnter);
+            this.btnCancel.MouseLeave += new System.EventHandler(this.BtnCancelMouseLeave);
+            this.btnCancel.MouseEnter += new System.EventHandler(this.BtnCancelMouseEnter);
             // 
             // btnSave
             // 
@@ -513,9 +513,9 @@ namespace EzPos.GUIs.Forms
             this.btnSave.Text = "យល់ព្រម";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            this.btnSave.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            this.btnSave.MouseLeave += new System.EventHandler(this.BtnSaveMouseLeave);
+            this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
+            this.btnSave.MouseEnter += new System.EventHandler(this.BtnSaveMouseEnter);
             // 
             // FrmUser
             // 

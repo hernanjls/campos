@@ -1,8 +1,8 @@
-namespace EzPos.Model
+namespace EzPos.Model.Common
 {
     public class IntegratedModule
     {
-        public int ModuleID { get; set; }
+        public int ModuleId { get; set; }
 
         public string ModuleName { get; set; }
 

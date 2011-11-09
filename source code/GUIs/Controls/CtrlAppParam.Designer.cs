@@ -34,7 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvAppParameter = new System.Windows.Forms.DataGridView();
-            this.ParameterID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ParameterId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParameterLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParameterCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ParameterValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,7 +65,7 @@
             this.dgvAppParameter.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAppParameter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAppParameter.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ParameterID,
+            this.ParameterId,
             this.ParameterLabel,
             this.ParameterCode,
             this.ParameterValue});
@@ -106,15 +106,15 @@
             this.dgvAppParameter.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAppParameter_RowValidated);
             this.dgvAppParameter.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvAppParameter_DataError);
             // 
-            // ParameterID
+            // ParameterId
             // 
-            this.ParameterID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ParameterID.DataPropertyName = "ParameterID";
-            this.ParameterID.HeaderText = "ParameterID";
-            this.ParameterID.Name = "ParameterID";
-            this.ParameterID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ParameterID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ParameterID.Visible = false;
+            this.ParameterId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ParameterId.DataPropertyName = "ParameterId";
+            this.ParameterId.HeaderText = "ParameterId";
+            this.ParameterId.Name = "ParameterId";
+            this.ParameterId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ParameterId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ParameterId.Visible = false;
             // 
             // ParameterLabel
             // 
@@ -173,8 +173,8 @@
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "ParameterID";
-            this.dataGridViewTextBoxColumn1.HeaderText = "ParameterID";
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "ParameterId";
+            this.dataGridViewTextBoxColumn1.HeaderText = "ParameterId";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -241,7 +241,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridView dgvAppParameter;
         private System.Windows.Forms.ComboBox cmbAppParamValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ParameterID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ParameterId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParameterLabel;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParameterCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn ParameterValue;

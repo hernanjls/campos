@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
 
 namespace EzPos.GUI
 {

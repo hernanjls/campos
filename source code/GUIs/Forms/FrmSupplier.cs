@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Supplier;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Supplier;
 
 namespace EzPos.GUIs.Forms
 {
@@ -180,7 +182,7 @@ namespace EzPos.GUIs.Forms
             {
                 var searchCriteria = new List<string>
                                          {
-                                             "ParameterTypeID IN (" + Resources.AppParamCountry + ")"
+                                             "ParameterTypeId IN (" + Resources.AppParamCountry + ")"
                                          };
                 var objList = _CommonService.GetAppParameters(searchCriteria);
 

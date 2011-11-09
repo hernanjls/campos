@@ -1,9 +1,14 @@
 using System;
 using System.Configuration;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
+using EzPos.Service.Deposit;
+using EzPos.Service.Expense;
 using EzPos.Service.Payment;
 using EzPos.Service.Product;
 using EzPos.Service.SaleOrder;
+using EzPos.Service.Supplier;
+using EzPos.Service.User;
 
 namespace EzPos.Service
 {

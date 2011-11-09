@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
-  <class name="EzPos.Model.IntegratedModule,EzPos" table="[TIntegratedModules]">
-    <id name="ModuleID" column="ModuleID" unsaved-value="0" type="Int32" >
+  <class name="EzPos.Model.Common.IntegratedModule,EzPos" table="[TIntegratedModules]">
+    <id name="ModuleId" column="ModuleId" unsaved-value="0" type="Int32" >
       <generator class="identity" />
     </id>
     <property name="ModuleName" column="ModuleName" />

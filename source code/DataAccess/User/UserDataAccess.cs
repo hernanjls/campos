@@ -1,42 +1,40 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using EzPos.Model;
+using EzPos.Model.User;
 using EzPos.Utility;
 using NHibernate.Expression;
 
-namespace EzPos.DataAccess
+namespace EzPos.DataAccess.User
 {
     public class UserDataAccess : BaseDataAccess
     {
         public virtual IList GetUsers()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(User.CONST_USER_LOG_IN_NAME));
+            var orderList = new Collection<Order> {Order.Asc(Model.User.User.ConstUserLogInName)};
 
-            return SelectObjects(typeof (User), orderList).List();
+            return SelectObjects(typeof (Model.User.User), orderList).List();
         }
 
         public virtual IList GetUsers(string logIn)
         {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("LogIn", logIn));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("LogIn", logIn)};
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(User.CONST_USER_LOG_IN_NAME));
+            var orderList = new Collection<Order> {Order.Asc(Model.User.User.ConstUserLogInName)};
 
-            return SelectObjects(typeof (User), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.User.User), criterionList, orderList).List();
         }
 
         public virtual IList GetUsers(string logIn, string pwd)
         {
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("LogInName", logIn));
-            criterionList.Add(Expression.Eq("Password", pwd));
+            var criterionList = new Collection<ICriterion>
+                                    {
+                                        Expression.Eq("LogInName", logIn),
+                                        Expression.Eq("Password", pwd)
+                                    };
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(User.CONST_USER_LOG_IN_NAME));
+            var orderList = new Collection<Order> {Order.Asc(Model.User.User.ConstUserLogInName)};
 
-            return SelectObjects(typeof (User), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.User.User), criterionList, orderList).List();
         }
 
         public virtual IList GetUsers(IList searchCriteria)
@@ -57,31 +55,30 @@ namespace EzPos.DataAccess
                 }
             }
 
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(User.CONST_USER_LOG_IN_NAME));
+            var orderList = new Collection<Order> {Order.Asc(Model.User.User.ConstUserLogInName)};
 
             return SelectObjects(
-                typeof (User), criterionList, orderList).List();
+                typeof (Model.User.User), criterionList, orderList).List();
         }
 
-        public virtual void UpdateUser(User user)
+        public virtual void UpdateUser(Model.User.User user)
         {
             UpdateObject(user);
         }
 
-        public virtual void InsertUser(User user)
+        public virtual void InsertUser(Model.User.User user)
         {
             InsertObject(user);
         }
 
-        public virtual void DeleteUser(User user)
+        public virtual void DeleteUser(Model.User.User user)
         {
             DeleteObject(user);
         }
 
         public virtual void DeleteUserPermission(int userId)
         {
-            string qryStr = "FROM UserPermission WHERE UserID = " + userId;
+            var qryStr = "FROM UserPermission WHERE UserId = " + userId;
             DeleteObject(qryStr);
         }
 
@@ -92,19 +89,16 @@ namespace EzPos.DataAccess
 
         public virtual IList GetPermissions()
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(Permission.CONST_SPECIAL_ORDER));
+            var orderList = new Collection<Order> {Order.Asc(Permission.ConstSpecialOrder)};
 
             return SelectObjects(typeof (Permission), orderList).List();
         }
 
         public virtual IList GetPermissionsByUser(int userId)
         {
-            var orderList = new Collection<Order>();
-            orderList.Add(Order.Asc(UserPermission.CONST_PERMISSION_ID));
+            var orderList = new Collection<Order> {Order.Asc(UserPermission.ConstPermissionId)};
 
-            var criterionList = new Collection<ICriterion>();
-            criterionList.Add(Expression.Eq("UserID", userId));
+            var criterionList = new Collection<ICriterion> {Expression.Eq("UserId", userId)};
 
             return SelectObjects(typeof (UserPermission), criterionList, orderList).List();
         }

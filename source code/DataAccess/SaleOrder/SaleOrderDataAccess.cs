@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using EzPos.Model;
+using EzPos.Model.SaleOrder;
 using EzPos.Utility;
 using NHibernate.Expression;
 
@@ -13,11 +13,11 @@ namespace EzPos.DataAccess.SaleOrder
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_ID),
-                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_NUMBER)
+                    Order.Asc(Model.SaleOrder.SaleOrder.ConstSaleOrderId),
+                    Order.Asc(Model.SaleOrder.SaleOrder.ConstSaleOrderNumber)
                 };
 
-            return SelectObjects(typeof (Model.SaleOrder), orderList).List();
+            return SelectObjects(typeof(Model.SaleOrder.SaleOrder), orderList).List();
         }
 
         public virtual IList GetSaleOrders(IList searchCriteria)
@@ -41,19 +41,19 @@ namespace EzPos.DataAccess.SaleOrder
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_DATE),
-                    Order.Asc(Model.SaleOrder.CONST_SALE_ORDER_NUMBER)
+                    Order.Asc(Model.SaleOrder.SaleOrder.ConstSaleOrderDate),
+                    Order.Asc(Model.SaleOrder.SaleOrder.ConstSaleOrderNumber)
                 };
 
-            return SelectObjects(typeof (Model.SaleOrder), criterionList, orderList).List();
+            return SelectObjects(typeof(Model.SaleOrder.SaleOrder), criterionList, orderList).List();
         }
 
-        public virtual void UpdateSaleOrder(Model.SaleOrder saleOrder)
+        public virtual void UpdateSaleOrder(Model.SaleOrder.SaleOrder saleOrder)
         {
             UpdateObject(saleOrder);
         }
 
-        public virtual void InsertSaleOrder(Model.SaleOrder saleOrder)
+        public virtual void InsertSaleOrder(Model.SaleOrder.SaleOrder saleOrder)
         {
             InsertObject(saleOrder);
         }
@@ -61,16 +61,16 @@ namespace EzPos.DataAccess.SaleOrder
         //SaleItem
         public virtual IList GetSaleItems()
         {
-            var orderList = new Collection<Order> {Order.Asc(SaleItem.CONST_SALE_ORDER_ID)};
+            var orderList = new Collection<Order> {Order.Asc(SaleItem.ConstSaleOrderId)};
 
             return SelectObjects(typeof (SaleItem), orderList).List();
         }
 
         public virtual IList GetSaleItems(int saleOrderId)
         {
-            var criterionList = new Collection<ICriterion> {Expression.Eq("SaleOrderID", saleOrderId)};
+            var criterionList = new Collection<ICriterion> {Expression.Eq("SaleOrderId", saleOrderId)};
 
-            var orderList = new Collection<Order> {Order.Asc(SaleItem.CONST_PRODUCT_ID)};
+            var orderList = new Collection<Order> {Order.Asc(SaleItem.ConstProductId)};
 
             return SelectObjects(typeof (SaleItem), criterionList, orderList).List();
         }
@@ -106,8 +106,8 @@ namespace EzPos.DataAccess.SaleOrder
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_DATE),
-                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_NUMBER)
+                    Order.Asc(SaleOrderReport.ConstSaleOrderDate),
+                    Order.Asc(SaleOrderReport.ConstSaleOrderNumber)
                 };
 
             return SelectObjects(typeof (SaleOrderReport), criterionList, orderList).List();
@@ -134,7 +134,7 @@ namespace EzPos.DataAccess.SaleOrder
             var orderList =
                 new Collection<Order>
                 {
-                    Order.Asc(SaleOrderReport.CONST_SALE_ORDER_PRODUCT_CATEGORY)
+                    Order.Asc(SaleOrderReport.ConstSaleOrderProductCategory)
                 };
 
             return SelectObjects(typeof(SaleOrderReport), criterionList, orderList).List();

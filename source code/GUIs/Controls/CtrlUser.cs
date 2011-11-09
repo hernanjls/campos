@@ -6,9 +6,12 @@ using System.Threading;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.User;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.User;
 using EzPos.Utility;
 
 namespace EzPos.GUIs.Controls
@@ -273,10 +276,10 @@ namespace EzPos.GUIs.Controls
                 searchCriteria.Add("UserName LIKE '%" + txtUserName.Text + "%'");
 
             if (cmbGender.SelectedIndex != -1)
-                searchCriteria.Add("GenderID|" + cmbGender.SelectedValue);
+                searchCriteria.Add("GenderId|" + cmbGender.SelectedValue);
 
             if (cmbPosition.SelectedIndex != -1)
-                searchCriteria.Add("PositionID|" + cmbPosition.SelectedValue);
+                searchCriteria.Add("PositionId|" + cmbPosition.SelectedValue);
 
             if (StringHelper.Length(txtPhoneNumber.Text) != 0)
                 searchCriteria.Add("PhoneNumber LIKE '%" + txtPhoneNumber.Text + "%'");
@@ -296,7 +299,7 @@ namespace EzPos.GUIs.Controls
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                var searchCriteria = new List<string> {"ParameterTypeID IN (8, 10)"};
+                var searchCriteria = new List<string> {"ParameterTypeId IN (8, 10)"};
 
                 var objList = _CommonService.GetAppParameters(searchCriteria);
 

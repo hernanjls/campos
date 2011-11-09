@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
-	<class name="EzPos.Model.UserPermission,EzPos" table="[TUserPermissions]">
-		<id name="UserPermissionID" column="UserPermissionID" unsaved-value="0" type="Int32" >
+	<class name="EzPos.Model.User.UserPermission,EzPos" table="[TUserPermissions]">
+		<id name="UserPermissionId" column="UserPermissionId" unsaved-value="0" type="Int32" >
 			<generator class="identity" />
 		</id>
-    <property name="UserID" column="UserID" type="Int32"/>
-    <property name="PermissionID" column="PermissionID" type="Int32"/>
+    <property name="UserId" column="UserId" type="Int32"/>
+    <property name="PermissionId" column="PermissionId" type="Int32"/>
   </class>
 </hibernate-mapping>
 		

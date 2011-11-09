@@ -1,6 +1,8 @@
 ﻿using EzPos.Model;
+using EzPos.Model.Customer;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
 using ExtendedComboBox=EzPos.GUIs.Components.ExtendedComboBox;
 
 namespace EzPos.GUIs.Forms
@@ -379,8 +381,8 @@ namespace EzPos.GUIs.Forms
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "ContactID";
-            this.dataGridViewTextBoxColumn1.HeaderText = "ContactID";
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "ContactId";
+            this.dataGridViewTextBoxColumn1.HeaderText = "ContactId";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -389,8 +391,8 @@ namespace EzPos.GUIs.Forms
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "CustomerID";
-            this.dataGridViewTextBoxColumn2.HeaderText = "CustomerID";
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "CustomerId";
+            this.dataGridViewTextBoxColumn2.HeaderText = "CustomerId";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;

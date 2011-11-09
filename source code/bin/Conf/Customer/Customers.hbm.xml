@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos.DataAccess">
-	<class name="EzPos.Model.Customer, EzPos" table="[TCustomers]">
-		<id name="CustomerID" column="CustomerID" unsaved-value="0" type="Int32" >
+	<class name="EzPos.Model.Customer.Customer, EzPos" table="[TCustomers]">
+		<id name="CustomerId" column="CustomerId" unsaved-value="0" type="Int32" >
 			<generator class="identity" />
     </id>
 
@@ -12,7 +12,7 @@
 		<property name="PhoneNumber" column="PhoneNumber" />
 		<property name="EmailAddress" column="EmailAddress" />
 		<property name="Website" column="Website" />
-    <property name="GenderID" column="GenderID" type="Int32" />
+    <property name="GenderId" column="GenderId" type="Int32" />
     <property name="GenderStr" column="GenderStr" />
     <property name="PurchasedAmount" column="PurchasedAmount" type="float" />
     <property name="DebtAmount" column="DebtAmount" type="float" />

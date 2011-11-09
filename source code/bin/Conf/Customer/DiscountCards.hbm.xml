@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos.DataAccess">
-	<class name="EzPos.Model.DiscountCard,EzPos" table="[TDiscountCards]">
-		<id name="DiscountCardID" column="DiscountCardID" unsaved-value="0" type="Int32" >
+	<class name="EzPos.Model.Customer.DiscountCard,EzPos" table="[TDiscountCards]">
+		<id name="DiscountCardId" column="DiscountCardId" unsaved-value="0" type="Int32" >
 			<generator class="identity" />
 		</id>
     <property name="CardNumber" column="CardNumber" />
     <property name="DiscountPercentage" column="DiscountPercentage" type="float" />
-    <property name="DiscountCardTypeID" column="DiscountCardTypeID" type="Int32" />
+    <property name="DiscountCardTypeId" column="DiscountCardTypeId" type="Int32" />
     <property name="DiscountCardTypeStr" column="DiscountCardTypeStr" />
-    <property name="CustomerID" column="CustomerID" type="Int32" />
+    <property name="CustomerId" column="CustomerId" type="Int32" />
     <property name="ExpireDate" column="ExpireDate" type="DateTime" />
     <property name="AllowDiscount" column="AllowDiscount" type="Int32" />
   </class>

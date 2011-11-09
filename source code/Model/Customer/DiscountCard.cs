@@ -1,27 +1,27 @@
 using System;
 
-namespace EzPos.Model
+namespace EzPos.Model.Customer
 {
     /// <summary>
     /// Summary description for DiscountCard.
     /// </summary>
     public class DiscountCard
     {
-        public const string CONST_CUSTOMER_ID = "CustomerID";
-        public const string CONST_DISCOUNT_CARD_ID = "DiscountCardID";
-        public const string CONST_DISCOUNT_CARD_NUMBER = "CardNumber";
+        public const string ConstCustomerId = "CustomerId";
+        public const string ConstDiscountCardId = "DiscountCardId";
+        public const string ConstDiscountCardNumber = "CardNumber";
 
-        public int DiscountCardID { get; set; }
+        public int DiscountCardId { get; set; }
 
         public string CardNumber { get; set; }
 
         public float DiscountPercentage { get; set; }
 
-        public int DiscountCardTypeID { get; set; }
+        public int DiscountCardTypeId { get; set; }
 
         public string DiscountCardTypeStr { get; set; }
 
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         public string CustomerStr { get; set; }
 

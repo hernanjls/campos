@@ -1,12 +1,12 @@
-namespace EzPos.Model
+namespace EzPos.Model.Supplier
 {
     /// <summary>
     /// Summary description for Customer.
     /// </summary>
     public class Supplier
     {
-        public const string CONST_SUPPLIER_ID = "SupplierId";
-        public const string CONST_SUPPLIER_NAME = "SupplierName";
+        public const string ConstSupplierId = "SupplierId";
+        public const string ConstSupplierName = "SupplierName";
 
         public int SupplierId { get; set; }
 

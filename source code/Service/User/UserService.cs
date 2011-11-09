@@ -1,33 +1,35 @@
 using System;
 using System.Collections;
-using EzPos.DataAccess;
-using EzPos.Model;
+using System.Linq;
+using EzPos.DataAccess.User;
+using EzPos.Model.Common;
+using EzPos.Model.User;
 using EzPos.Properties;
 
-namespace EzPos.Service
+namespace EzPos.Service.User
 {
     public class UserService
     {
-        private readonly UserDataAccess _UserDataAccess;
+        private readonly UserDataAccess _userDataAccess;
 
         public UserService(UserDataAccess userDataAccess)
         {
-            _UserDataAccess = userDataAccess;
+            _userDataAccess = userDataAccess;
         }
 
         public virtual IList GetUsers()
         {
-            return _UserDataAccess.GetUsers();
+            return _userDataAccess.GetUsers();
         }
 
         public virtual IList GetUsers(string logIn)
         {
-            return _UserDataAccess.GetUsers(logIn);
+            return _userDataAccess.GetUsers(logIn);
         }
 
-        public virtual User GetUser(string logIn, string pwd)
+        public virtual Model.User.User GetUser(string logIn, string pwd)
         {
-            IList userList = _UserDataAccess.GetUsers(logIn, pwd);
+            IList userList = _userDataAccess.GetUsers(logIn, pwd);
 
             if (userList == null)
                 return null;
@@ -35,7 +37,7 @@ namespace EzPos.Service
             if (userList.Count == 0)
                 return null;
 
-            return userList[0] as User;
+            return userList[0] as Model.User.User;
         }
 
         public virtual IList GetUsers(IList searchCriteria)
@@ -43,10 +45,10 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", "Search Criteria");
 
-            return _UserDataAccess.GetUsers(searchCriteria);
+            return _userDataAccess.GetUsers(searchCriteria);
         }
 
-        public virtual void UserManagement(User user, IList userPermissionList, string requestCode)
+        public virtual void UserManagement(Model.User.User user, IList userPermissionList, string requestCode)
         {
             if (requestCode == null)
                 throw new ArgumentNullException("requestCode", "Request code");
@@ -55,14 +57,14 @@ namespace EzPos.Service
                 throw new ArgumentNullException("user", "User");
 
             if (requestCode == Resources.OperationRequestInsert)
-                _UserDataAccess.InsertUser(user);
+                _userDataAccess.InsertUser(user);
             else if (requestCode == Resources.OperationRequestDuplicate)
             {
-                user.UserID = 0;
-                _UserDataAccess.InsertUser(user);
+                user.UserId = 0;
+                _userDataAccess.InsertUser(user);
             }
             else if (requestCode == Resources.OperationRequestUpdate)
-                _UserDataAccess.UpdateUser(user);
+                _userDataAccess.UpdateUser(user);
             else
             {
                 //_UserDataAccess.DeleteUser(user);
@@ -73,16 +75,16 @@ namespace EzPos.Service
             UserPermissionManagement(user, userPermissionList);
         }
 
-        private void DeleteUser(User user)
+        private void DeleteUser(Model.User.User user)
         {
             if (user == null)
                 throw new ArgumentNullException("user", "User");
 
-            _UserDataAccess.DeleteUserPermission(user.UserID);
-            _UserDataAccess.DeleteUser(user);
+            _userDataAccess.DeleteUserPermission(user.UserId);
+            _userDataAccess.DeleteUser(user);
         }
 
-        private void UserPermissionManagement(User user, IList userPermissionList)
+        private void UserPermissionManagement(Model.User.User user, IList userPermissionList)
         {
             if (user == null)
                 throw new ArgumentNullException("user", "User");
@@ -93,41 +95,27 @@ namespace EzPos.Service
             if (userPermissionList.Count == 0)
                 throw new ArgumentNullException("userPermissionList", "User Permission List");
 
-            _UserDataAccess.DeleteUserPermission(user.UserID);
+            _userDataAccess.DeleteUserPermission(user.UserId);
             foreach (UserPermission userPermission in userPermissionList)
             {
-                userPermission.UserID = user.UserID;
-                _UserDataAccess.InsertUserPermission(userPermission);
+                userPermission.UserId = user.UserId;
+                _userDataAccess.InsertUserPermission(userPermission);
             }
         }
 
         public static bool AllowToPerform(string actionStr)
         {
-            bool allowFlag = false;
-
-            if (AppContext.UserPermissionList == null)
-                allowFlag = false;
-
-            foreach (UserPermission userPermission in AppContext.UserPermissionList)
-            {
-                if (actionStr.Equals(userPermission.PermissionID.ToString()))
-                {
-                    allowFlag = true;
-                    break;
-                }
-            }
-
-            return allowFlag;
+            return AppContext.UserPermissionList != null && AppContext.UserPermissionList.Cast<UserPermission>().Any(userPermission => actionStr.Equals(userPermission.PermissionId.ToString()));
         }
 
         public virtual IList GetPermissions()
         {
-            return _UserDataAccess.GetPermissions();
+            return _userDataAccess.GetPermissions();
         }
 
-        public virtual IList GetPermissionsByUser(int userID)
+        public virtual IList GetPermissionsByUser(int userId)
         {
-            return _UserDataAccess.GetPermissionsByUser(userID);
+            return _userDataAccess.GetPermissionsByUser(userId);
         }
     }
 }

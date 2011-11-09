@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using EzPos.Model;
+using EzPos.Model.Product;
 using EzPos.Utility;
 using NHibernate.Expression;
 
@@ -13,9 +13,9 @@ namespace EzPos.DataAccess.Product
     {
         public virtual IList GetProducts()
         {
-            var orderList = new Collection<Order> {Order.Desc(Model.Product.CONST_PRODUCT_CODE)};
+            var orderList = new Collection<Order> {Order.Desc(Model.Product.Product.ConstProductCode)};
 
-            return SelectObjects(typeof (Model.Product), orderList).List();
+            return SelectObjects(typeof (Model.Product.Product), orderList).List();
         }
 
         public virtual IList GetProducts(IList searchCriteria)
@@ -35,54 +35,54 @@ namespace EzPos.DataAccess.Product
                 }
             }
 
-            var orderList = new Collection<Order> {Order.Desc(Model.Product.CONST_PRODUCT_CODE)};
+            var orderList = new Collection<Order> {Order.Desc(Model.Product.Product.ConstProductCode)};
 
-            return SelectObjects(typeof (Model.Product), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.Product.Product), criterionList, orderList).List();
         }
 
         public virtual IList GetProductById(int productId)
         {
-            var criterionList = new Collection<ICriterion> {Expression.Eq("ProductID", productId)};
+            var criterionList = new Collection<ICriterion> {Expression.Eq("ProductId", productId)};
 
-            return SelectObjects(typeof (Model.Product), criterionList).List();
+            return SelectObjects(typeof (Model.Product.Product), criterionList).List();
         }
 
-        public virtual Model.Product GetProductByCode(string productCode)
+        public virtual Model.Product.Product GetProductByCode(string productCode)
         {
             var criterionList = new Collection<ICriterion> {Expression.Eq("ProductCode", productCode)};
 
-            return (Model.Product) SelectObjects(typeof (Model.Product), criterionList).UniqueResult();
+            return (Model.Product.Product) SelectObjects(typeof (Model.Product.Product), criterionList).UniqueResult();
         }
 
         public virtual IList GetAvailableProducts()
         {
-            var orderList = new Collection<Order> {Order.Desc(Model.Product.CONST_PRODUCT_CODE)};
+            var orderList = new Collection<Order> {Order.Desc(Model.Product.Product.ConstProductCode)};
 
             var criterionList = new Collection<ICriterion> {Expression.Gt("QtyInStock", 0)};
 
-            return SelectObjects(typeof (Model.Product), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.Product.Product), criterionList, orderList).List();
         }
 
         public virtual IList GetUnavailableProducts()
         {
-            var orderList = new Collection<Order> {Order.Desc(Model.Product.CONST_PRODUCT_CODE)};
+            var orderList = new Collection<Order> {Order.Desc(Model.Product.Product.ConstProductCode)};
 
             var criterionList = new Collection<ICriterion> {Expression.Le("QtyInStock", 0)};
 
-            return SelectObjects(typeof (Model.Product), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.Product.Product), criterionList, orderList).List();
         }
 
-        public virtual void UpdateProduct(Model.Product product)
+        public virtual void UpdateProduct(Model.Product.Product product)
         {
             UpdateObject(product);
         }
 
-        public virtual void InsertProduct(Model.Product product)
+        public virtual void InsertProduct(Model.Product.Product product)
         {
             InsertObject(product);
         }
 
-        public virtual void DeleteProduct(Model.Product product)
+        public virtual void DeleteProduct(Model.Product.Product product)
         {
             DeleteObject(product);
         }
@@ -91,9 +91,9 @@ namespace EzPos.DataAccess.Product
         {
             var criterionList = new Collection<ICriterion> {Expression.Eq("PhotoPath", photoPath)};
 
-            var orderList = new Collection<Order> {Order.Desc(Model.Product.CONST_PRODUCT_CODE)};
+            var orderList = new Collection<Order> {Order.Desc(Model.Product.Product.ConstProductCode)};
 
-            return SelectObjects(typeof (Model.Product), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.Product.Product), criterionList, orderList).List();
         }
 
         public virtual void InsertProductAdjustment(ProductAdjustment productAdjustment)

@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using Castle.Services.Transaction;
-using EzPos.DataAccess;
-using EzPos.Model;
+using EzPos.DataAccess.Expense;
 using EzPos.Properties;
 
-namespace EzPos.Service
+namespace EzPos.Service.Expense
 {
     /// <summary>
     /// Summary description for ExpenseService.
@@ -13,19 +12,19 @@ namespace EzPos.Service
     [Transactional]
     public class ExpenseService
     {
-        private readonly ExpenseDataAccess ExpenseDataAccess;
+        private readonly ExpenseDataAccess _expenseDataAccess;
 
         public ExpenseService(ExpenseDataAccess expenseDataAccess)
         {
-            ExpenseDataAccess = expenseDataAccess;
+            _expenseDataAccess = expenseDataAccess;
         }
 
         public IList GetExpenses()
         {
-            return ExpenseDataAccess.GetExpenses();
+            return _expenseDataAccess.GetExpenses();
         }
 
-        public virtual void ExpenseManagement(Expense expense, string requestCode)
+        public virtual void ExpenseManagement(Model.Expense.Expense expense, string requestCode)
         {
             if (requestCode == null)
                 throw new ArgumentException(Resources.MsgUnknownRequestCode, Resources.MsgUnknownRequestCode);
@@ -37,7 +36,7 @@ namespace EzPos.Service
                 InsertExpense(expense);
             else if (requestCode == Resources.OperationRequestDuplicate)
             {
-                expense.ExpenseID = 0;
+                expense.ExpenseId = 0;
                 InsertExpense(expense);
             }
             else if (requestCode == Resources.OperationRequestUpdate)
@@ -46,29 +45,29 @@ namespace EzPos.Service
                 DeleteExpense(expense);
         }
 
-        private void DeleteExpense(Expense expense)
+        private void DeleteExpense(Model.Expense.Expense expense)
         {
             if (expense == null)
                 throw new ArgumentNullException(Resources.MsgInvalidExpense, Resources.MsgInvalidExpense);
 
-            ExpenseDataAccess.DeleteExpense(expense);
+            _expenseDataAccess.DeleteExpense(expense);
         }
 
-        private void InsertExpense(Expense expense)
+        private void InsertExpense(Model.Expense.Expense expense)
         {
             if (expense == null)
                 throw new ArgumentNullException(Resources.MsgInvalidExpense, Resources.MsgInvalidExpense);
 
             //Expense
-            ExpenseDataAccess.InsertExpense(expense);
+            _expenseDataAccess.InsertExpense(expense);
         }
 
-        private void UpdateExpense(Expense expense)
+        private void UpdateExpense(Model.Expense.Expense expense)
         {
             if (expense == null)
                 throw new ArgumentNullException(Resources.MsgInvalidExpense, Resources.MsgInvalidExpense);
 
-            ExpenseDataAccess.UpdateExpense(expense);
+            _expenseDataAccess.UpdateExpense(expense);
         }
 
         public virtual IList GetExpenses(IList searchCriteria)
@@ -76,7 +75,7 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException(Resources.MsgInvalidSearchCriteria, Resources.MsgInvalidSearchCriteria);
 
-            return ExpenseDataAccess.GetExpenses(searchCriteria);
+            return _expenseDataAccess.GetExpenses(searchCriteria);
         }
 
         public virtual IList GetExpensesOrderByType(IList searchCriteria)
@@ -84,7 +83,7 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException(Resources.MsgInvalidSearchCriteria, Resources.MsgInvalidSearchCriteria);
 
-            return ExpenseDataAccess.GetExpensesOrderByType(searchCriteria);
+            return _expenseDataAccess.GetExpensesOrderByType(searchCriteria);
         }
     }
 }

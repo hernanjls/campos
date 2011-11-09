@@ -65,11 +65,11 @@ namespace EzPos.GUIs.Controls
             this.btnSearch = new System.Windows.Forms.Button();
             this.cmbDCardType = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
             this.cmbDiscountCard = new EzPos.GUIs.Components.ExtendedComboBox(this.components);
-            this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GenderStr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PhoneNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EmailAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Website = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -122,11 +122,11 @@ namespace EzPos.GUIs.Controls
             this.dgvCustomer.ColumnHeadersHeight = 40;
             this.dgvCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvCustomer.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.CustomerID,
+            this.CustomerId,
             this.CustomerCode,
             this.CustomerName,
             this.GenderStr,
-            this.GenderID,
+            this.GenderId,
             this.PhoneNumber,
             this.EmailAddress,
             this.Website,
@@ -498,15 +498,15 @@ namespace EzPos.GUIs.Controls
             this.cmbDiscountCard.TabIndex = 101;
             this.cmbDiscountCard.Visible = false;
             // 
-            // CustomerID
+            // CustomerId
             // 
-            this.CustomerID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.CustomerID.DataPropertyName = "CustomerID";
-            this.CustomerID.HeaderText = "CustomerID";
-            this.CustomerID.Name = "CustomerID";
-            this.CustomerID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CustomerID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CustomerID.Visible = false;
+            this.CustomerId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CustomerId.DataPropertyName = "CustomerId";
+            this.CustomerId.HeaderText = "CustomerId";
+            this.CustomerId.Name = "CustomerId";
+            this.CustomerId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CustomerId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CustomerId.Visible = false;
             // 
             // CustomerCode
             // 
@@ -539,16 +539,16 @@ namespace EzPos.GUIs.Controls
             this.GenderStr.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.GenderStr.Width = 95;
             // 
-            // GenderID
+            // GenderId
             // 
-            this.GenderID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.GenderID.DataPropertyName = "GenderID";
-            this.GenderID.HeaderText = "GenderID";
-            this.GenderID.Name = "GenderID";
-            this.GenderID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.GenderID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.GenderID.Visible = false;
-            this.GenderID.Width = 80;
+            this.GenderId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.GenderId.DataPropertyName = "GenderId";
+            this.GenderId.HeaderText = "GenderId";
+            this.GenderId.Name = "GenderId";
+            this.GenderId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.GenderId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.GenderId.Visible = false;
+            this.GenderId.Width = 80;
             // 
             // PhoneNumber
             // 
@@ -739,11 +739,11 @@ namespace EzPos.GUIs.Controls
         private ExtendedComboBox cmbDiscountCard;
         private System.Windows.Forms.Button btnOutstandingInvoice;
         private System.Windows.Forms.CheckBox chbDeposit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerId;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn GenderStr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GenderID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GenderId;
         private System.Windows.Forms.DataGridViewTextBoxColumn PhoneNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn EmailAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn Website;
