@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using EzPos.DataAccess;
-using EzPos.Model;
+using EzPos.DataAccess.Deposit;
+using EzPos.Model.Common;
+using EzPos.Model.Deposit;
+using EzPos.Model.SaleOrder;
 using EzPos.Properties;
 
-namespace EzPos.Service
+namespace EzPos.Service.Deposit
 {
     public class DepositService
     {
@@ -25,12 +27,12 @@ namespace EzPos.Service
             return _depositDataAccess.GetDeposits(searchCriteria);
         }
 
-        public virtual void UpdateDeposit(Deposit deposit)
+        public virtual void UpdateDeposit(Model.Deposit.Deposit deposit)
         {
             _depositDataAccess.UpdateDeposit(deposit);
         }
 
-        public virtual void InsertDeposit(Deposit deposit)
+        public virtual void InsertDeposit(Model.Deposit.Deposit deposit)
         {
             if (deposit == null)
                 throw new ArgumentNullException("deposit", Resources.ConstDeposit);
@@ -53,12 +55,12 @@ namespace EzPos.Service
             paymentService.ManagePayment(Resources.OperationRequestInsert, payment);
         }
 
-        public virtual Deposit RecordDeposit(
+        public virtual Model.Deposit.Deposit RecordDeposit(
             IList depositItemList,
             float totalAmountInt,
             float totalAmountPaidInt,
             float totalAmountPaidRiel,
-            Customer customer,
+            Model.Customer.Customer customer,
             string referenceNum,
             float discount,
             bool isReturned)
@@ -72,12 +74,12 @@ namespace EzPos.Service
 
             //Deposit
             var deposit = 
-                new Deposit
+                new Model.Deposit.Deposit
                 {
                     DepositDate = DateTime.Now,
                     DepositTypeId = isReturned ? 1 : 0,
-                    CustomerId = customer.CustomerID,
-                    CashierId = AppContext.User.UserID,
+                    CustomerId = customer.CustomerId,
+                    CashierId = AppContext.User.UserId,
                     DelivererId = 0,
                     Description = string.Empty,
                     PaymentTypeId = 0,
@@ -97,10 +99,10 @@ namespace EzPos.Service
             deposit.AmountReturnInt *= factor;
             deposit.AmountSoldRiel = deposit.AmountSoldInt * deposit.ExchangeRate;
             deposit.AmountReturnRiel = deposit.AmountReturnInt * deposit.ExchangeRate;
-            if (customer.FKDiscountCard != null)
+            if (customer.FkDiscountCard != null)
             {
-                deposit.DiscountTypeId = customer.FKDiscountCard.DiscountCardTypeID;
-                deposit.CardNumber = customer.FKDiscountCard.CardNumber;
+                deposit.DiscountTypeId = customer.FkDiscountCard.DiscountCardTypeId;
+                deposit.CardNumber = customer.FkDiscountCard.CardNumber;
             }
             deposit.ReferenceNum = referenceNum;
 
@@ -118,7 +120,7 @@ namespace EzPos.Service
                 Resources.OperationRequestUpdate);
 
             //localy update SaleOrder
-            deposit.FKCustomer = customer;
+            deposit.FkCustomer = customer;
 
             //Deposit item      
             if (!isReturned)
@@ -151,17 +153,17 @@ namespace EzPos.Service
                 var depositItem = 
                     new DepositItem
                     {
-                        DepositId = saleItem.SaleOrderID,
-                        ProductId = saleItem.ProductID,
-                        FKProduct = saleItem.FKProduct,
+                        DepositId = saleItem.SaleOrderId,
+                        ProductId = saleItem.ProductId,
+                        FkProduct = saleItem.FkProduct,
                         UnitPriceIn = saleItem.UnitPriceIn,
                         UnitPriceOut = saleItem.UnitPriceOut,
                         Discount = saleItem.Discount,
                         QtySold = saleItem.QtySold                        
                     };
 
-                if (saleItem.FKProduct != null)
-                    depositItem.ProductName = saleItem.FKProduct.ProductName;
+                if (saleItem.FkProduct != null)
+                    depositItem.ProductName = saleItem.FkProduct.ProductName;
 
                 depositItemList.Add(depositItem);
             }
@@ -179,11 +181,11 @@ namespace EzPos.Service
                 if (anObject == null)
                     continue;
 
-                var deposit = anObject[0] as Deposit;                
-                var customer = anObject[1] as Customer;
-                var user = anObject[2] as User;
+                var deposit = anObject[0] as Model.Deposit.Deposit;                
+                var customer = anObject[1] as Model.Customer.Customer;
+                var user = anObject[2] as Model.User.User;
                 var depositItem = anObject[3] as DepositItem;
-                var product = anObject[4] as Model.Product;
+                var product = anObject[4] as Model.Product.Product;
 
                 if ((deposit == null) || (customer == null) || (user == null))
                     continue;
@@ -250,7 +252,7 @@ namespace EzPos.Service
                     where depositReport != null
                     select new SaleOrderReport
                                {
-                                   AmountPaidInt = depositReport.AmountPaidInt, AmountPaidRiel = depositReport.AmountPaidRiel, AmountReturnInt = depositReport.AmountReturnInt, AmountReturnRiel = depositReport.AmountReturnRiel, AmountSoldInt = depositReport.AmountSoldInt, CardNumber = depositReport.CardNumber, CashierName = depositReport.CashierName, CustomerName = depositReport.CustomerName, Discount = depositReport.Discount, ExchangeRate = depositReport.ExchangeRate, ProductID = depositReport.ProductId, ProductName = depositReport.ProductName, QtySold = depositReport.QtySold, ReferenceNum = depositReport.ReferenceNum, SaleItemID = depositReport.DepositItemId, SaleOrderDate = (DateTime) depositReport.DepositDate, SaleOrderNumber = depositReport.DepositNumber, SalesOrderId = depositReport.DepositId, SubTotal = depositReport.SubTotal, TotalDiscount = depositReport.TotalDiscount, UnitPriceIn = depositReport.UnitPriceIn, UnitPriceOut = depositReport.UnitPriceOut
+                                   AmountPaidInt = depositReport.AmountPaidInt, AmountPaidRiel = depositReport.AmountPaidRiel, AmountReturnInt = depositReport.AmountReturnInt, AmountReturnRiel = depositReport.AmountReturnRiel, AmountSoldInt = depositReport.AmountSoldInt, CardNumber = depositReport.CardNumber, CashierName = depositReport.CashierName, CustomerName = depositReport.CustomerName, Discount = depositReport.Discount, ExchangeRate = depositReport.ExchangeRate, ProductId = depositReport.ProductId, ProductName = depositReport.ProductName, QtySold = depositReport.QtySold, ReferenceNum = depositReport.ReferenceNum, SaleItemId = depositReport.DepositItemId, SaleOrderDate = (DateTime) depositReport.DepositDate, SaleOrderNumber = depositReport.DepositNumber, SaleOrderId = depositReport.DepositId, SubTotal = depositReport.SubTotal, TotalDiscount = depositReport.TotalDiscount, UnitPriceIn = depositReport.UnitPriceIn, UnitPriceOut = depositReport.UnitPriceOut
                                }).ToList();
         }
     }

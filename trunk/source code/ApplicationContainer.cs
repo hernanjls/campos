@@ -3,16 +3,24 @@ using Castle.Facilities.AutomaticTransactionManagement;
 using Castle.Facilities.NHibernateIntegration;
 using Castle.MicroKernel;
 using Castle.Windsor;
-using EzPos.DataAccess;
+using EzPos.DataAccess.Common;
 using EzPos.DataAccess.Customer;
+using EzPos.DataAccess.Deposit;
+using EzPos.DataAccess.Expense;
 using EzPos.DataAccess.Product;
 using EzPos.DataAccess.SaleOrder;
-using EzPos.Service;
+using EzPos.DataAccess.Supplier;
+using EzPos.DataAccess.User;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
+using EzPos.Service.Deposit;
+using EzPos.Service.Expense;
 using EzPos.Service.Payment;
 using EzPos.DataAccess.Payments;
 using EzPos.Service.Product;
 using EzPos.Service.SaleOrder;
+using EzPos.Service.Supplier;
+using EzPos.Service.User;
 
 // Copyright 2004-2005 Castle Project - http://www.castleproject.org/
 // 

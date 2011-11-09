@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
 
 namespace EzPos.GUI
 {

@@ -43,10 +43,10 @@ namespace EzPos.GUIs.Forms
             this.btnPrint = new System.Windows.Forms.Button();
             this.pnlBody = new System.Windows.Forms.Panel();
             this.dgvDeposit = new System.Windows.Forms.DataGridView();
+            this.lblSearchInfo = new System.Windows.Forms.Label();
             this.DepositId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DepositNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DepositDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CashierName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExchangeRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AmountSoldInt = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,7 +69,7 @@ namespace EzPos.GUIs.Forms
             this.ReferenceNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UpdateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblSearchInfo = new System.Windows.Forms.Label();
+            this.ColCustomerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlHeader.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.pnlBody.SuspendLayout();
@@ -229,7 +229,6 @@ namespace EzPos.GUIs.Forms
             this.DepositId,
             this.DepositNumber,
             this.DepositDate,
-            this.CustomerID,
             this.CashierName,
             this.ExchangeRate,
             this.AmountSoldInt,
@@ -251,7 +250,8 @@ namespace EzPos.GUIs.Forms
             this.DiscountTypeId,
             this.ReferenceNum,
             this.UpdateDate,
-            this.CustomerName});
+            this.CustomerName,
+            this.ColCustomerId});
             this.dgvDeposit.EnableHeadersVisualStyles = false;
             this.dgvDeposit.GridColor = System.Drawing.Color.White;
             this.dgvDeposit.Location = new System.Drawing.Point(19, 48);
@@ -272,6 +272,14 @@ namespace EzPos.GUIs.Forms
             this.dgvDeposit.Size = new System.Drawing.Size(657, 359);
             this.dgvDeposit.TabIndex = 3;
             this.dgvDeposit.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSearchResultCellDoubleClick);
+            // 
+            // lblSearchInfo
+            // 
+            this.lblSearchInfo.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSearchInfo.Location = new System.Drawing.Point(14, 13);
+            this.lblSearchInfo.Name = "lblSearchInfo";
+            this.lblSearchInfo.Size = new System.Drawing.Size(668, 29);
+            this.lblSearchInfo.TabIndex = 4;
             // 
             // DepositId
             // 
@@ -299,14 +307,6 @@ namespace EzPos.GUIs.Forms
             this.DepositDate.Name = "DepositDate";
             this.DepositDate.ReadOnly = true;
             this.DepositDate.Width = 115;
-            // 
-            // CustomerID
-            // 
-            this.CustomerID.DataPropertyName = "CustomerId";
-            this.CustomerID.HeaderText = "CustomerId";
-            this.CustomerID.Name = "CustomerID";
-            this.CustomerID.ReadOnly = true;
-            this.CustomerID.Visible = false;
             // 
             // CashierName
             // 
@@ -396,7 +396,7 @@ namespace EzPos.GUIs.Forms
             // 
             // FKCustomer
             // 
-            this.FKCustomer.DataPropertyName = "FKCustomer";
+            this.FKCustomer.DataPropertyName = "FkCustomer";
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle9.Format = "N0";
             this.FKCustomer.DefaultCellStyle = dataGridViewCellStyle9;
@@ -415,7 +415,7 @@ namespace EzPos.GUIs.Forms
             // 
             // FKCashier
             // 
-            this.FKCashier.DataPropertyName = "FKCashier";
+            this.FKCashier.DataPropertyName = "FkCashier";
             this.FKCashier.HeaderText = "FKCashier";
             this.FKCashier.Name = "FKCashier";
             this.FKCashier.ReadOnly = true;
@@ -501,13 +501,13 @@ namespace EzPos.GUIs.Forms
             this.CustomerName.ReadOnly = true;
             this.CustomerName.Visible = false;
             // 
-            // lblSearchInfo
+            // ColCustomerId
             // 
-            this.lblSearchInfo.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSearchInfo.Location = new System.Drawing.Point(14, 13);
-            this.lblSearchInfo.Name = "lblSearchInfo";
-            this.lblSearchInfo.Size = new System.Drawing.Size(668, 29);
-            this.lblSearchInfo.TabIndex = 4;
+            this.ColCustomerId.DataPropertyName = "CustomerId";
+            this.ColCustomerId.HeaderText = "CustomerId";
+            this.ColCustomerId.Name = "ColCustomerId";
+            this.ColCustomerId.ReadOnly = true;
+            this.ColCustomerId.Visible = false;
             // 
             // FrmDeposit
             // 
@@ -547,7 +547,6 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn DepositId;
         private System.Windows.Forms.DataGridViewTextBoxColumn DepositNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn DepositDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerID;
         private System.Windows.Forms.DataGridViewTextBoxColumn CashierName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExchangeRate;
         private System.Windows.Forms.DataGridViewTextBoxColumn AmountSoldInt;
@@ -570,6 +569,7 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn ReferenceNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn UpdateDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColCustomerId;
 
     }
 }

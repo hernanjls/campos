@@ -29,13 +29,14 @@ namespace EzPos.GUIs.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlBodyRight = new System.Windows.Forms.Panel();
             this.btnProductAdjustment = new System.Windows.Forms.Button();
             this.grbInvoice = new System.Windows.Forms.GroupBox();
@@ -61,20 +62,6 @@ namespace EzPos.GUIs.Controls
             this.btnCancel = new System.Windows.Forms.Button();
             this.pnlBodyLeft = new System.Windows.Forms.Panel();
             this.dgvSaleItem = new System.Windows.Forms.DataGridView();
-            this.DelColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ProdPicture = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ProductNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QtySold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitPriceOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Discount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PublicUPOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnitPriceIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FKProduct = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColSaleOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlBodySearch = new System.Windows.Forms.Panel();
             this.pnlBodySepartor = new System.Windows.Forms.Panel();
             this.lblProductName = new System.Windows.Forms.Label();
@@ -84,6 +71,21 @@ namespace EzPos.GUIs.Controls
             this.cmbProduct = new System.Windows.Forms.ComboBox();
             this.ptbDisplay = new System.Windows.Forms.PictureBox();
             this.txtHidden = new System.Windows.Forms.TextBox();
+            this.DelColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ProdPicture = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ProductNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductDisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QtySold = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QtyBonus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnitPriceOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Discount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PublicUPOut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SubTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProductId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnitPriceIn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FKProduct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColSaleOrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlBodyRight.SuspendLayout();
             this.grbInvoice.SuspendLayout();
             this.grbPrintProduct.SuspendLayout();
@@ -436,14 +438,14 @@ namespace EzPos.GUIs.Controls
             this.dgvSaleItem.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvSaleItem.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.dgvSaleItem.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.InfoText;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSaleItem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.InfoText;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Khmer OS Freehand", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSaleItem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvSaleItem.ColumnHeadersHeight = 40;
             this.dgvSaleItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvSaleItem.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -452,12 +454,13 @@ namespace EzPos.GUIs.Controls
             this.ProductNameCol,
             this.ProductDisplayName,
             this.QtySold,
+            this.QtyBonus,
             this.UnitPriceOut,
             this.Discount,
             this.PublicUPOut,
             this.SubTotal,
-            this.SaleItemID,
-            this.ProductID,
+            this.SaleItemId,
+            this.ProductId,
             this.UnitPriceIn,
             this.FKProduct,
             this.ColSaleOrderId});
@@ -484,161 +487,6 @@ namespace EzPos.GUIs.Controls
             this.dgvSaleItem.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSaleItemCellDoubleClick);
             this.dgvSaleItem.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSaleItemCellClick);
             this.dgvSaleItem.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DgvSaleItemDataError);
-            // 
-            // DelColumn
-            // 
-            this.DelColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.DelColumn.HeaderText = "";
-            this.DelColumn.Image = global::EzPos.Properties.Resources.b_drop;
-            this.DelColumn.Name = "DelColumn";
-            this.DelColumn.ReadOnly = true;
-            this.DelColumn.Width = 40;
-            // 
-            // ProdPicture
-            // 
-            this.ProdPicture.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ProdPicture.DataPropertyName = "ProdPicture";
-            this.ProdPicture.HeaderText = "រូបភាព";
-            this.ProdPicture.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.ProdPicture.Name = "ProdPicture";
-            this.ProdPicture.ReadOnly = true;
-            this.ProdPicture.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ProdPicture.Width = 120;
-            // 
-            // ProductNameCol
-            // 
-            this.ProductNameCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ProductNameCol.DataPropertyName = "ProductName";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ProductNameCol.DefaultCellStyle = dataGridViewCellStyle9;
-            this.ProductNameCol.HeaderText = "ឈ្មោះ";
-            this.ProductNameCol.Name = "ProductNameCol";
-            this.ProductNameCol.ReadOnly = true;
-            this.ProductNameCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ProductNameCol.Visible = false;
-            this.ProductNameCol.Width = 315;
-            // 
-            // ProductDisplayName
-            // 
-            this.ProductDisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ProductDisplayName.DataPropertyName = "ProductDisplayName";
-            this.ProductDisplayName.HeaderText = "ឈ្មោះ";
-            this.ProductDisplayName.Name = "ProductDisplayName";
-            this.ProductDisplayName.ReadOnly = true;
-            this.ProductDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ProductDisplayName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // QtySold
-            // 
-            this.QtySold.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.QtySold.DataPropertyName = "QtySold";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.QtySold.DefaultCellStyle = dataGridViewCellStyle10;
-            this.QtySold.HeaderText = "ចំនួន";
-            this.QtySold.Name = "QtySold";
-            this.QtySold.ReadOnly = true;
-            this.QtySold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.QtySold.Width = 60;
-            // 
-            // UnitPriceOut
-            // 
-            this.UnitPriceOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.UnitPriceOut.DataPropertyName = "UnitPriceOut";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "C2";
-            this.UnitPriceOut.DefaultCellStyle = dataGridViewCellStyle11;
-            this.UnitPriceOut.HeaderText = "តំលៃ";
-            this.UnitPriceOut.Name = "UnitPriceOut";
-            this.UnitPriceOut.ReadOnly = true;
-            this.UnitPriceOut.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.UnitPriceOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.UnitPriceOut.Width = 110;
-            // 
-            // Discount
-            // 
-            this.Discount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Discount.DataPropertyName = "Discount";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Discount.DefaultCellStyle = dataGridViewCellStyle12;
-            this.Discount.HeaderText = "%";
-            this.Discount.Name = "Discount";
-            this.Discount.ReadOnly = true;
-            this.Discount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Discount.Width = 50;
-            // 
-            // PublicUPOut
-            // 
-            this.PublicUPOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.PublicUPOut.DataPropertyName = "PublicUPOut";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "C2";
-            dataGridViewCellStyle13.NullValue = null;
-            this.PublicUPOut.DefaultCellStyle = dataGridViewCellStyle13;
-            this.PublicUPOut.HeaderText = "តំលៃលក់";
-            this.PublicUPOut.Name = "PublicUPOut";
-            this.PublicUPOut.ReadOnly = true;
-            this.PublicUPOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PublicUPOut.Width = 110;
-            // 
-            // SubTotal
-            // 
-            this.SubTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.SubTotal.DataPropertyName = "SubTotal";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle14.Format = "C2";
-            dataGridViewCellStyle14.NullValue = null;
-            this.SubTotal.DefaultCellStyle = dataGridViewCellStyle14;
-            this.SubTotal.HeaderText = "សរុប";
-            this.SubTotal.Name = "SubTotal";
-            this.SubTotal.ReadOnly = true;
-            this.SubTotal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SubTotal.Width = 110;
-            // 
-            // SaleItemID
-            // 
-            this.SaleItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.SaleItemID.DataPropertyName = "SaleItemID";
-            this.SaleItemID.HeaderText = "SaleItemID";
-            this.SaleItemID.Name = "SaleItemID";
-            this.SaleItemID.ReadOnly = true;
-            this.SaleItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.SaleItemID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SaleItemID.Visible = false;
-            // 
-            // ProductID
-            // 
-            this.ProductID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ProductID.DataPropertyName = "ProductID";
-            this.ProductID.HeaderText = "ProductID";
-            this.ProductID.Name = "ProductID";
-            this.ProductID.ReadOnly = true;
-            this.ProductID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ProductID.Visible = false;
-            // 
-            // UnitPriceIn
-            // 
-            this.UnitPriceIn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.UnitPriceIn.DataPropertyName = "UnitPriceIn";
-            this.UnitPriceIn.HeaderText = "UnitPriceIn";
-            this.UnitPriceIn.Name = "UnitPriceIn";
-            this.UnitPriceIn.ReadOnly = true;
-            this.UnitPriceIn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.UnitPriceIn.Visible = false;
-            // 
-            // FKProduct
-            // 
-            this.FKProduct.DataPropertyName = "FKProduct";
-            this.FKProduct.HeaderText = "FKProduct";
-            this.FKProduct.Name = "FKProduct";
-            this.FKProduct.Visible = false;
-            // 
-            // ColSaleOrderId
-            // 
-            this.ColSaleOrderId.DataPropertyName = "SaleOrderId";
-            this.ColSaleOrderId.HeaderText = "SaleOrderId";
-            this.ColSaleOrderId.Name = "ColSaleOrderId";
-            this.ColSaleOrderId.Visible = false;
             // 
             // pnlBodySearch
             // 
@@ -744,6 +592,173 @@ namespace EzPos.GUIs.Controls
             this.txtHidden.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtHiddenKeyDown);
             this.txtHidden.Leave += new System.EventHandler(this.TxtHiddenLeave);
             // 
+            // DelColumn
+            // 
+            this.DelColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DelColumn.HeaderText = global::EzPos.Properties.Resources.ConstBarCodeTemplate6;
+            this.DelColumn.Image = global::EzPos.Properties.Resources.b_drop;
+            this.DelColumn.Name = "DelColumn";
+            this.DelColumn.ReadOnly = true;
+            this.DelColumn.Width = 40;
+            // 
+            // ProdPicture
+            // 
+            this.ProdPicture.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProdPicture.DataPropertyName = "ProdPicture";
+            this.ProdPicture.HeaderText = "រូបភាព";
+            this.ProdPicture.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.ProdPicture.Name = "ProdPicture";
+            this.ProdPicture.ReadOnly = true;
+            this.ProdPicture.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ProdPicture.Width = 120;
+            // 
+            // ProductNameCol
+            // 
+            this.ProductNameCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProductNameCol.DataPropertyName = "ProductName";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ProductNameCol.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ProductNameCol.HeaderText = "ឈ្មោះ";
+            this.ProductNameCol.Name = "ProductNameCol";
+            this.ProductNameCol.ReadOnly = true;
+            this.ProductNameCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ProductNameCol.Visible = false;
+            this.ProductNameCol.Width = 315;
+            // 
+            // ProductDisplayName
+            // 
+            this.ProductDisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ProductDisplayName.DataPropertyName = "ProductDisplayName";
+            this.ProductDisplayName.HeaderText = "ឈ្មោះ";
+            this.ProductDisplayName.Name = "ProductDisplayName";
+            this.ProductDisplayName.ReadOnly = true;
+            this.ProductDisplayName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ProductDisplayName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // QtySold
+            // 
+            this.QtySold.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.QtySold.DataPropertyName = "QtySold";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.QtySold.DefaultCellStyle = dataGridViewCellStyle3;
+            this.QtySold.HeaderText = "ចំនួន";
+            this.QtySold.Name = "QtySold";
+            this.QtySold.ReadOnly = true;
+            this.QtySold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.QtySold.Width = 60;
+            // 
+            // QtyBonus
+            // 
+            this.QtyBonus.DataPropertyName = "QtyBonus";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.QtyBonus.DefaultCellStyle = dataGridViewCellStyle4;
+            this.QtyBonus.HeaderText = "ថែម";
+            this.QtyBonus.Name = "QtyBonus";
+            this.QtyBonus.ReadOnly = true;
+            this.QtyBonus.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.QtyBonus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.QtyBonus.Width = 60;
+            // 
+            // UnitPriceOut
+            // 
+            this.UnitPriceOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.UnitPriceOut.DataPropertyName = "UnitPriceOut";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "C2";
+            this.UnitPriceOut.DefaultCellStyle = dataGridViewCellStyle5;
+            this.UnitPriceOut.HeaderText = "តំលៃ";
+            this.UnitPriceOut.Name = "UnitPriceOut";
+            this.UnitPriceOut.ReadOnly = true;
+            this.UnitPriceOut.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.UnitPriceOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.UnitPriceOut.Width = 110;
+            // 
+            // Discount
+            // 
+            this.Discount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Discount.DataPropertyName = "Discount";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Discount.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Discount.HeaderText = "%";
+            this.Discount.Name = "Discount";
+            this.Discount.ReadOnly = true;
+            this.Discount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Discount.Width = 50;
+            // 
+            // PublicUPOut
+            // 
+            this.PublicUPOut.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PublicUPOut.DataPropertyName = "PublicUPOut";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "C2";
+            dataGridViewCellStyle7.NullValue = null;
+            this.PublicUPOut.DefaultCellStyle = dataGridViewCellStyle7;
+            this.PublicUPOut.HeaderText = "តំលៃលក់";
+            this.PublicUPOut.Name = "PublicUPOut";
+            this.PublicUPOut.ReadOnly = true;
+            this.PublicUPOut.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PublicUPOut.Width = 110;
+            // 
+            // SubTotal
+            // 
+            this.SubTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SubTotal.DataPropertyName = "SubTotal";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "C2";
+            dataGridViewCellStyle8.NullValue = null;
+            this.SubTotal.DefaultCellStyle = dataGridViewCellStyle8;
+            this.SubTotal.HeaderText = "សរុប";
+            this.SubTotal.Name = "SubTotal";
+            this.SubTotal.ReadOnly = true;
+            this.SubTotal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SubTotal.Width = 110;
+            // 
+            // SaleItemId
+            // 
+            this.SaleItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SaleItemId.DataPropertyName = "SaleItemId";
+            this.SaleItemId.HeaderText = "SaleItemId";
+            this.SaleItemId.Name = "SaleItemId";
+            this.SaleItemId.ReadOnly = true;
+            this.SaleItemId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.SaleItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SaleItemId.Visible = false;
+            // 
+            // ProductId
+            // 
+            this.ProductId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ProductId.DataPropertyName = "ProductId";
+            this.ProductId.HeaderText = "ProductId";
+            this.ProductId.Name = "ProductId";
+            this.ProductId.ReadOnly = true;
+            this.ProductId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ProductId.Visible = false;
+            // 
+            // UnitPriceIn
+            // 
+            this.UnitPriceIn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.UnitPriceIn.DataPropertyName = "UnitPriceIn";
+            this.UnitPriceIn.HeaderText = "UnitPriceIn";
+            this.UnitPriceIn.Name = "UnitPriceIn";
+            this.UnitPriceIn.ReadOnly = true;
+            this.UnitPriceIn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.UnitPriceIn.Visible = false;
+            // 
+            // FKProduct
+            // 
+            this.FKProduct.DataPropertyName = "FKProduct";
+            this.FKProduct.HeaderText = "FKProduct";
+            this.FKProduct.Name = "FKProduct";
+            this.FKProduct.Visible = false;
+            // 
+            // ColSaleOrderId
+            // 
+            this.ColSaleOrderId.DataPropertyName = "SaleOrderId";
+            this.ColSaleOrderId.HeaderText = "SaleOrderId";
+            this.ColSaleOrderId.Name = "ColSaleOrderId";
+            this.ColSaleOrderId.Visible = false;
+            // 
             // CtrlSale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -803,19 +818,20 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.Label lblDisPercentage;
         private System.Windows.Forms.Label lblInvoiceInfo;
         private System.Windows.Forms.Button btnProductAdjustment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SaleOrderID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SaleOrderId;
         private System.Windows.Forms.Panel pnlBodySearch;
         private System.Windows.Forms.DataGridViewImageColumn DelColumn;
         private System.Windows.Forms.DataGridViewImageColumn ProdPicture;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductNameCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductDisplayName;
         private System.Windows.Forms.DataGridViewTextBoxColumn QtySold;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QtyBonus;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn Discount;
         private System.Windows.Forms.DataGridViewTextBoxColumn PublicUPOut;
         private System.Windows.Forms.DataGridViewTextBoxColumn SubTotal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SaleItemID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SaleItemId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductId;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnitPriceIn;
         private System.Windows.Forms.DataGridViewTextBoxColumn FKProduct;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColSaleOrderId;

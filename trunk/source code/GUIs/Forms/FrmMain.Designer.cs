@@ -343,7 +343,7 @@ namespace EzPos.GUIs.Forms
             // 
             // dataGridViewTextBoxColumn1
             // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "SaleItemID";
+            this.dataGridViewTextBoxColumn1.HeaderText = "SaleItemId";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Visible = false;
             // 
@@ -355,7 +355,7 @@ namespace EzPos.GUIs.Forms
             // 
             // dataGridViewTextBoxColumn3
             // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "ProductID";
+            this.dataGridViewTextBoxColumn3.HeaderText = "ProductId";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Visible = false;
             // 

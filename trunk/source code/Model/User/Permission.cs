@@ -1,20 +1,20 @@
-namespace EzPos.Model
+namespace EzPos.Model.User
 {
     /// <summary>
     /// Summary description for Permission.
     /// </summary>
     public class Permission
     {
-        public const string CONST_PERMISSION_ID = "PermissionID";
-        public const string CONST_PERMISSION_LABEL = "PermissionLabel";
-        public const string CONST_SPECIAL_ORDER = "SpecialOrderID";
+        public const string ConstPermissionId = "PermissionId";
+        public const string ConstPermissionLabel = "PermissionLabel";
+        public const string ConstSpecialOrder = "SpecialOrderId";
 
-        public int PermissionID { get; set; }
+        public int PermissionId { get; set; }
 
         public string PermissionLabel { get; set; }
 
         public string PermissionCode { get; set; }
 
-        public int SpecialOrderID { get; set; }
+        public int SpecialOrderId { get; set; }
     }
 }

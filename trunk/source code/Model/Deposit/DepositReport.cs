@@ -1,14 +1,14 @@
 
-namespace EzPos.Model
+namespace EzPos.Model.Deposit
 {
     /// <summary>
     /// Summary description for SalesOrder.
     /// </summary>
     public class DepositReport
     {
-        public const string CONST_DEPOSIT_ID = "DepositId";
-        public const string CONST_DEPOSIT_NUMBER = "DepositNumber";
-        public const string CONST_DEPOSIT_DATE = "DepositDate";
+        public const string ConstDepositId = "DepositId";
+        public const string ConstDepositNumber = "DepositNumber";
+        public const string ConstDepositDate = "DepositDate";
 
         public int DepositId { get; set; }
 
@@ -16,21 +16,13 @@ namespace EzPos.Model
 
         public object DepositDate { get; set; }
 
-        //public int CustomerId { get; set; }
-
         public string CustomerName { get; set; }
 
-        //public int CashierId { get; set; }
-
         public string CashierName { get; set; }
-
-        //public string Description { get; set; }
 
         public float ExchangeRate { get; set; }
 
         public float AmountSoldInt { get; set; }
-
-        //public float AmountSoldRiel { get; set; }
 
         public float AmountPaidInt { get; set; }
 

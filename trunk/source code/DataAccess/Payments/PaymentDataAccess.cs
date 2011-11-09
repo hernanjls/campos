@@ -12,8 +12,8 @@ namespace EzPos.DataAccess.Payments
         {
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(Payment.CONST_SALE_ORDER_ID),
-                                    Order.Asc(Payment.CONST_PAYMENT_DATE)
+                                    Order.Asc(Payment.ConstSaleOrderId),
+                                    Order.Asc(Payment.ConstPaymentDate)
                                 };
 
             return SelectObjects(typeof (Payment), orderList).List();
@@ -38,8 +38,8 @@ namespace EzPos.DataAccess.Payments
 
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(Payment.CONST_SALE_ORDER_ID),
-                                    Order.Asc(Payment.CONST_PAYMENT_DATE)
+                                    Order.Asc(Payment.ConstSaleOrderId),
+                                    Order.Asc(Payment.ConstPaymentDate)
                                 };
 
             return SelectObjects(typeof(Payment), criterionList, orderList).List();

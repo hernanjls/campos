@@ -5,6 +5,8 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Product;
 using EzPos.Properties;
 
 namespace EzPos.GUI

@@ -7,9 +7,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using EzPos.DataAccess;
+using EzPos.DataAccess.Common;
 using EzPos.GUIs.Components;
-using EzPos.Model;
+using EzPos.Model.Common;
 using EzPos.Properties;
 using EzPos.Utility;
 using DataTable=System.Data.DataTable;
@@ -31,10 +31,10 @@ namespace EzPos.Service.Common
             var operationLog = 
                 new OperationLog
                 {
-                    UserID = userId,
-                    OperationID = operationId,
+                    UserId = userId,
+                    OperationId = operationId,
                     LogDateTime = DateTime.Now,
-                    IPAddress = ClientInfoHelper.GetHostIP()
+                    IpAddress = ClientInfoHelper.GetHostIp()
                 };
 
             _commonDataAccess.InsertOperationLog(operationLog);
@@ -74,7 +74,7 @@ namespace EzPos.Service.Common
             if (appParamList == null)
                 throw new ArgumentNullException("appParamList", Resources.MsgInvalidAppParameter);
 
-            return appParamList.Cast<AppParameter>().Where(appParameter => appParameter.ParameterTypeID == parameterTypeId).ToList();
+            return appParamList.Cast<AppParameter>().Where(appParameter => appParameter.ParameterTypeId == parameterTypeId).ToList();
         }
 
         public virtual IList GetAppParametersByType(IList appParamList, int parameterTypeId)
@@ -82,7 +82,7 @@ namespace EzPos.Service.Common
             if (appParamList == null)
                 throw new ArgumentNullException("appParamList", Resources.MsgInvalidAppParameter);
 
-            return appParamList.Cast<AppParameter>().Where(appParameter => appParameter.ParameterTypeID == parameterTypeId).ToList();
+            return appParamList.Cast<AppParameter>().Where(appParameter => appParameter.ParameterTypeId == parameterTypeId).ToList();
         }
 
         public virtual void AppParameterManagement(AppParameter appParameter, string requestStr)
@@ -174,7 +174,7 @@ namespace EzPos.Service.Common
             var searchCriteria = 
                 new List<string>
                 {
-                    "ParameterTypeID IN (" +
+                    "ParameterTypeId IN (" +
                     Resources.AppParamServerPhotoPath + ", " +
                     Resources.AppParamShopName + ", " +
                     Resources.AppParamShopAddress + ", " +
@@ -189,28 +189,28 @@ namespace EzPos.Service.Common
             var appParameterList = GetAppParameters(searchCriteria);
             foreach (AppParameter appParameter in appParameterList)
             {
-                if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamServerPhotoPath))
+                if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamServerPhotoPath))
                     AppContext.ServerPhotoPath = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamShopName))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamShopName))
                 {
                     AppContext.ShopNameLocal = appParameter.ParameterValue;
                     AppContext.ShopName = appParameter.ParameterLabel;
                 }
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamShopAddress))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamShopAddress))
                     AppContext.ShopAddress = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamShopContact))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamShopContact))
                     AppContext.ShopContact = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamReceiptFooter))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamReceiptFooter))
                     AppContext.ReceiptFooter = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamBarcodeTemplate))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamBarcodeTemplate))
                     AppContext.BarCodeTemplate = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamReceiptTemplate))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamReceiptTemplate))
                     AppContext.ReceiptTemplate = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamIssueReceipt))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamIssueReceipt))
                     AppContext.IssueReceipt = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamReceiptPrinter))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamReceiptPrinter))
                     AppContext.ReceiptPrinter = appParameter.ParameterLabel;
-                else if (appParameter.ParameterTypeID.ToString().Equals(Resources.AppParamApplicationType))
+                else if (appParameter.ParameterTypeId.ToString().Equals(Resources.AppParamApplicationType))
                     AppContext.ApplicationType = appParameter.ParameterLabel;
             }
         }
@@ -221,21 +221,20 @@ namespace EzPos.Service.Common
             AppContext.Counter = GetCounter();
         }
 
-        public void InitializeCustomizedConfiguration(User usrObj)
+        public void InitializeCustomizedConfiguration(Model.User.User usrObj)
         {
             AppContext.User = usrObj;
             var userService =
                 ServiceFactory.GenerateServiceInstance().GenerateUserService();
-            var userPermissionList = userService.GetPermissionsByUser(usrObj.UserID);
+            var userPermissionList = userService.GetPermissionsByUser(usrObj.UserId);
             if (userPermissionList == null)
                 return;
             AppContext.UserPermissionList = userPermissionList;
         }
 
-        public void StoreApplicationContext(User usrObj, ExchangeRate exchangeRate)
+        public void StoreApplicationContext(Model.User.User usrObj, ExchangeRate exchangeRate)
         {
             AppContext.CultureInfo = new CultureInfo(CultureInfo.CurrentCulture.Name);
-
             AppContext.User = usrObj;
 
             if (exchangeRate == null)
@@ -246,7 +245,7 @@ namespace EzPos.Service.Common
 
             var userService =
                 ServiceFactory.GenerateServiceInstance().GenerateUserService();
-            var userPermissionList = userService.GetPermissionsByUser(usrObj.UserID);
+            var userPermissionList = userService.GetPermissionsByUser(usrObj.UserId);
             if (userPermissionList == null)
                 return;
             AppContext.UserPermissionList = userPermissionList;
@@ -254,15 +253,15 @@ namespace EzPos.Service.Common
 
         public virtual Counter GetCounter()
         {
-            var ipAddress = ClientInfoHelper.GetHostIP();
-            var counterList = _commonDataAccess.GetCounterByIP(ipAddress);
+            var ipAddress = ClientInfoHelper.GetHostIp();
+            var counterList = _commonDataAccess.GetCounterByIp(ipAddress);
             if (counterList == null)
                 return null;
 
             if (counterList.Count == 0)
             {
                 ipAddress = ClientInfoHelper.GetHostName();
-                counterList = _commonDataAccess.GetCounterByIP(ipAddress);
+                counterList = _commonDataAccess.GetCounterByIp(ipAddress);
             }
 
             if (counterList.Count == 0)

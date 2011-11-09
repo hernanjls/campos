@@ -1,69 +1,46 @@
 using System;
 
-namespace EzPos.Model
+namespace EzPos.Model.Product
 {
     /// <summary>
     /// Summary description for Product.
     /// </summary>
     public class Product
     {
-        public const string CONST_PRODUCT_CODE = "ProductCode";
-        public const string CONST_FOREIGN_CODE = "ForeignCode";
-        public const string CONST_PRODUCT_ID = "ProductID";
-        public const string CONST_PRODUCT_NAME = "ProductName";
+        public const string ConstProductCode = "ProductCode";
+        public const string ConstForeignCode = "ForeignCode";
+        public const string ConstProductId = "ProductId";
+        public const string ConstProductName = "ProductName";
 
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
         public string ProductCode { get; set; }
 
         public string ProductName { get; set; }
 
-        //private string _description;
-
         public string Description
         {
             get;
             set;
-            //get
-            //{
-            //    if(string.IsNullOrEmpty(_description))
-            //    {
-            //        var displayName =
-            //            ProductName + "\r" +
-            //            "Size: " + SizeStr + "\r" +
-            //            "Code: " + ProductCode;
-
-            //        if (!string.IsNullOrEmpty(ForeignCode))
-            //            displayName += " (" + ForeignCode + ")";
-
-            //        return displayName;
-            //    }
-
-            //    return _description; 
-            //}
-            //set
-            //{
-            //    _description = value;
-            //}
         }
 
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         public string CategoryStr { get; set; }
 
-        public int MarkID { get; set; }
+        public int MarkId { get; set; }
 
         public string MarkStr { get; set; }
 
-        public int SizeID { get; set; }
+        public int SizeId { get; set; }
 
         public string SizeStr { get; set; }
 
-        public int ColorID { get; set; }
+        public int ColorId { get; set; }
 
         public string ColorStr { get; set; }
 
-        public int SkinID { get; set; }
+        public int SkinId { get; set; }
 
         public string SkinStr { get; set; }
 
@@ -112,5 +89,9 @@ namespace EzPos.Model
         public DateTime LastUpdate { get; set; }
 
         public string ForeignCode { get; set; }
+        
+        public float QtyPromotion { get; set; }
+
+        public float QtyBonus { get; set; }
     }
 }

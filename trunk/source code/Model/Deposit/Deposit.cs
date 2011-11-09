@@ -1,14 +1,14 @@
 
-namespace EzPos.Model
+namespace EzPos.Model.Deposit
 {
     /// <summary>
     /// Summary description for SalesOrder.
     /// </summary>
     public class Deposit
     {
-        public const string CONST_DEPOSIT_ID = "DepositId";
-        public const string CONST_DEPOSIT_NUMBER = "DepositNumber";
-        public const string CONST_DEPOSIT_DATE = "DepositDate";
+        public const string ConstDepositId = "DepositId";
+        public const string ConstDepositNumber = "DepositNumber";
+        public const string ConstDepositDate = "DepositDate";
 
         public int DepositId { get; set; }
 
@@ -54,15 +54,15 @@ namespace EzPos.Model
 
         public object UpdateDate { get; set; }
 
-        public Customer FKCustomer { get; set; }
+        public Customer.Customer FkCustomer { get; set; }
 
-        public User FKCashier { get; set; }
+        public User.User FkCashier { get; set; }
 
         public string CashierName
         {
             get
             {
-                return FKCashier != null ? FKCashier.LogInName : string.Empty;
+                return FkCashier != null ? FkCashier.LogInName : string.Empty;
             }
         }
 
@@ -70,7 +70,7 @@ namespace EzPos.Model
         {
             get
             {
-                return FKCustomer != null ? FKCustomer.CustomerName : string.Empty;
+                return FkCustomer != null ? FkCustomer.CustomerName : string.Empty;
             }
         }
     }

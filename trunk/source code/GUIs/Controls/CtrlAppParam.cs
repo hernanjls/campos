@@ -3,9 +3,11 @@ using System.Collections;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.User;
 using EzPos.Utility;
 
 namespace EzPos.GUIs.Controls
@@ -34,8 +36,8 @@ namespace EzPos.GUIs.Controls
                     _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
                 IList objectList = _CommonService.GetAppParameterTypes();
-                lsbAppParam.DisplayMember = AppParameterType.CONST_PARAMETER_LABEL;
-                lsbAppParam.ValueMember = AppParameterType.CONST_PARAMETER_ID;
+                lsbAppParam.DisplayMember = AppParameterType.ConstParameterLabel;
+                lsbAppParam.ValueMember = AppParameterType.ConstParameterId;
                 lsbAppParam.DataSource = objectList;
 
                 _IsModified = false;
@@ -72,14 +74,14 @@ namespace EzPos.GUIs.Controls
 
                 cmbAppParamValue.DataSource = _AppParamList;
                 if (StringHelper.Length(cmbAppParamValue.DisplayMember) == 0)
-                    cmbAppParamValue.DisplayMember = AppParameter.CONST_PARAMETER_VALUE;
+                    cmbAppParamValue.DisplayMember = AppParameter.ConstParameterValue;
                 if (StringHelper.Length(cmbAppParamValue.ValueMember) == 0)
-                    cmbAppParamValue.ValueMember = AppParameter.CONST_PARAMETER_ID;
+                    cmbAppParamValue.ValueMember = AppParameter.ConstParameterId;
 
                 if (_AppParamList.Count != 0)
                 {
                     cmbAppParamValue.SelectedIndex = _AppParamList.Count - 1;
-                    dgvAppParameter.Columns["ParameterTypeID"].Visible = false;
+                    dgvAppParameter.Columns["ParameterTypeId"].Visible = false;
                     dgvAppParameter.Columns["ParameterLabel"].DisplayIndex = 0;
                     dgvAppParameter.Columns["ParameterCode"].DisplayIndex = 1;
                     dgvAppParameter.Columns["ParameterValue"].DisplayIndex = 2;
@@ -106,7 +108,7 @@ namespace EzPos.GUIs.Controls
             try
             {
                 AppParameter appParameter;
-                if (dgvAppParameter.Rows[e.RowIndex].Cells["ParameterID"].Value is DBNull)
+                if (dgvAppParameter.Rows[e.RowIndex].Cells["ParameterId"].Value is DBNull)
                 {
                     appParameter = new AppParameter();
                     _AppParamList.Add(appParameter);
@@ -124,11 +126,11 @@ namespace EzPos.GUIs.Controls
                 appParameter.ParameterValue = dgvAppParameter.Rows[e.RowIndex].Cells["ParameterValue"].Value.ToString();
 
                 appParameter.ParameterCode = dgvAppParameter.Rows[e.RowIndex].Cells["ParameterCode"].Value == null ? "" : dgvAppParameter.Rows[e.RowIndex].Cells["ParameterCode"].Value.ToString();
-                appParameter.ParameterTypeID = Int32.Parse(LstProduct.SelectedValue.ToString(), AppContext.CultureInfo);
+                appParameter.ParameterTypeId = Int32.Parse(LstProduct.SelectedValue.ToString(), AppContext.CultureInfo);
 
                 SetModifyStatus(false);
 
-                if (appParameter.ParameterID == 0)
+                if (appParameter.ParameterId == 0)
                 {
                     //appParameter.ParameterValue = _CommonService
                     //    .GenerateAppParamValue(cmbAppParamValue.Text);
@@ -142,9 +144,9 @@ namespace EzPos.GUIs.Controls
                         Int32.Parse(lsbAppParam.SelectedValue.ToString(), AppContext.CultureInfo));
                     cmbAppParamValue.DataSource = _AppParamList;
                     if (StringHelper.Length(cmbAppParamValue.DisplayMember) == 0)
-                        cmbAppParamValue.DisplayMember = AppParameter.CONST_PARAMETER_VALUE;
+                        cmbAppParamValue.DisplayMember = AppParameter.ConstParameterValue;
                     if (StringHelper.Length(cmbAppParamValue.ValueMember) == 0)
-                        cmbAppParamValue.ValueMember = AppParameter.CONST_PARAMETER_ID;
+                        cmbAppParamValue.ValueMember = AppParameter.ConstParameterId;
                     cmbAppParamValue.SelectedIndex = _AppParamList.Count - 1;
                 }
                 else
@@ -251,9 +253,9 @@ namespace EzPos.GUIs.Controls
                 .GetAppParametersByType(Int32.Parse(lsbAppParam.SelectedValue.ToString(), AppContext.CultureInfo));
             cmbAppParamValue.DataSource = _AppParamList;
             if (StringHelper.Length(cmbAppParamValue.DisplayMember) == 0)
-                cmbAppParamValue.DisplayMember = AppParameter.CONST_PARAMETER_VALUE;
+                cmbAppParamValue.DisplayMember = AppParameter.ConstParameterValue;
             if (StringHelper.Length(cmbAppParamValue.ValueMember) == 0)
-                cmbAppParamValue.ValueMember = AppParameter.CONST_PARAMETER_ID;
+                cmbAppParamValue.ValueMember = AppParameter.ConstParameterId;
             cmbAppParamValue.SelectedIndex = _AppParamList.Count - 1;
         }
 

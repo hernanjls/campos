@@ -10,7 +10,7 @@
     <property name="CashierId" column="CashierId" type="Int32" />
     <property name="Remark" column="Remark" />
 
-    <many-to-one name="FKSaleOrder" column="SalesOrderId" class="EzPos.Model.SaleOrder,EzPos" insert="false" update="false" />
-    <many-to-one name="FKCashier" column="CashierId" class="EzPos.Model.User,EzPos" insert="false" update="false" />
+    <many-to-one name="FkSaleOrder" column="SalesOrderId" class="EzPos.Model.SaleOrder.SaleOrder,EzPos" insert="false" update="false" />
+    <many-to-one name="FkCashier" column="CashierId" class="EzPos.Model.User.User,EzPos" insert="false" update="false" />
   </class>
 </hibernate-mapping>

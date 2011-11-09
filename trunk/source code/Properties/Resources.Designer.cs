@@ -356,7 +356,7 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ParameterID.
+        ///   Looks up a localized string similar to ParameterId.
         /// </summary>
         internal static string AppParamValue {
             get {
@@ -435,24 +435,6 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to $0.000.
-        /// </summary>
-        internal static string ConstAmountZeroDollarThreeDigits {
-            get {
-                return ResourceManager.GetString("ConstAmountZeroDollarThreeDigits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to $ 0.00.
-        /// </summary>
-        internal static string ConstAmountZeroDollarTwoDigits {
-            get {
-                return ResourceManager.GetString("ConstAmountZeroDollarTwoDigits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 0.
         /// </summary>
         internal static string ConstAmountZeroOneDigit {
@@ -462,20 +444,20 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to R 0.00.
-        /// </summary>
-        internal static string ConstAmountZeroRielTwoDigits {
-            get {
-                return ResourceManager.GetString("ConstAmountZeroRielTwoDigits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 0.000.
         /// </summary>
         internal static string ConstAmountZeroThreeDigits {
             get {
                 return ResourceManager.GetString("ConstAmountZeroThreeDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.00.
+        /// </summary>
+        internal static string ConstAmountZeroTwoDigits {
+            get {
+                return ResourceManager.GetString("ConstAmountZeroTwoDigits", resourceCulture);
             }
         }
         
@@ -552,6 +534,24 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to $.
+        /// </summary>
+        internal static string ConstCurrencyDollar {
+            get {
+                return ResourceManager.GetString("ConstCurrencyDollar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R.
+        /// </summary>
+        internal static string ConstCurrencyRiel {
+            get {
+                return ResourceManager.GetString("ConstCurrencyRiel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         internal static string ConstDeposit {
@@ -575,6 +575,15 @@ namespace EzPos.Properties {
         internal static string ConstDepositItem {
             get {
                 return ResourceManager.GetString("ConstDepositItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Pictures|*.bmp;*.gif;*.jpg|Bitmaps|*.bmp|GIFs|*.gif|JPEGs|*.jpg.
+        /// </summary>
+        internal static string ConstExtensionImage {
+            get {
+                return ResourceManager.GetString("ConstExtensionImage", resourceCulture);
             }
         }
         
@@ -813,20 +822,11 @@ namespace EzPos.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to %.
         /// </summary>
         internal static string ConstSuffixPercentage {
             get {
                 return ResourceManager.GetString("ConstSuffixPercentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All Pictures|*.bmp;*.gif;*.jpg|Bitmaps|*.bmp|GIFs|*.gif|JPEGs|*.jpg.
-        /// </summary>
-        internal static string ConstSupportedImageExtension {
-            get {
-                return ResourceManager.GetString("ConstSupportedImageExtension", resourceCulture);
             }
         }
         
@@ -836,15 +836,6 @@ namespace EzPos.Properties {
         internal static string ConstTextBreak {
             get {
                 return ResourceManager.GetString("ConstTextBreak", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 0.
-        /// </summary>
-        internal static string ConstZeroPercent {
-            get {
-                return ResourceManager.GetString("ConstZeroPercent", resourceCulture);
             }
         }
         

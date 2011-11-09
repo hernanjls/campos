@@ -1,14 +1,9 @@
 ﻿using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Drawing;
-//using System.IO;
 using System.Windows.Forms;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Product;
+using EzPos.Model.SaleOrder;
 using EzPos.Properties;
-//using EzPos.Service;
-//using EzPos.Service.Common;
 
 namespace EzPos.GUIs.Forms
 {
@@ -34,45 +29,6 @@ namespace EzPos.GUIs.Forms
             InitializeComponent();
         }
 
-        //public CommonService CommonService
-        //{
-        //    set { _commonService = value; }
-        //}
-
-        //public ProductService ProductService
-        //{
-        //    set { _productService = value; }
-        //}
-
-        //public string CodeProduct
-        //{
-        //    set { _codeProduct = value; }
-        //}
-
-        //private void ProductFetching()
-        //{
-        //    //if(string.IsNullOrEmpty(txtProductCode.Text))
-        //    //{
-        //    //    _productList.Clear();
-        //    //    return;
-        //    //}
-
-        //    //var searchCriteria = new List<string>();
-        //    //if (txtProductCode.Text.Length != 0)
-        //    //{
-        //    //    searchCriteria.Add(
-        //    //        "(ProductCode LIKE '%" + txtProductCode.Text + "%') OR " +
-        //    //        "(ForeignCode LIKE '%" + txtProductCode.Text + "%')");
-        //    //}
-
-        //    //if (_productService == null)
-        //    //    _productService = ServiceFactory.GenerateServiceInstance().GenerateProductService();
-
-        //    //_productList.Clear();
-        //    //IListToBindingList(
-        //    //    _productService.GetCatalogs(searchCriteria, true));
-        //}
-
         private void FrmProduct_Load(object sender, EventArgs e)
         {
             try
@@ -83,13 +39,13 @@ namespace EzPos.GUIs.Forms
                     return;
                 }
 
-                if (_saleItem.FKProduct == null)
+                if (_saleItem.FkProduct == null)
                 {
                     DialogResult = DialogResult.Cancel;
                     return;
                 }
 
-                SetProductInfo(_saleItem.FKProduct);
+                SetProductInfo(_saleItem.FkProduct);
             }
             catch (Exception exception)
             {
@@ -105,16 +61,14 @@ namespace EzPos.GUIs.Forms
                 return;
 
             txtForeignCode.Text = product.ForeignCode;
-            lblProductName.Text = product.ProductName + "\r" + product.ProductCode;
+            lblProductName.Text = string.Format("{0}{1}{2}", product.ProductName, "\r", product.ProductCode);
             txtCategory.Text = product.CategoryStr;
             txtMark.Text = product.MarkStr;
             txtColor.Text = product.ColorStr;
             txtSize.Text = product.SizeStr;
             txtDiscount.Text = product.DiscountPercentage.ToString("N0", AppContext.CultureInfo);
             txtUPOut.Text = product.UnitPriceOut.ToString("N", AppContext.CultureInfo);
-            //DefaultUnitPriceOut = product.UnitPriceOut;
             txtQtyInStock.Text = product.QtyInStock.ToString("N0", AppContext.CultureInfo);
-            //txtPhotoPath.Text = product.PhotoPath;
             if (product.PhotoPath == null)
                 ptbProduct.Image = Resources.NoImage;
             else
@@ -375,7 +329,11 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if((qtySold < 0) ||(qtySold > _saleItem.FKProduct.QtyInStock))
+            var qtyBonus = CalculateQtyBonus(
+                qtySold,
+                Int32.Parse(_saleItem.FkProduct.QtyPromotion.ToString("N0", AppContext.CultureInfo)),
+                Int32.Parse(_saleItem.FkProduct.QtyBonus.ToString("N0", AppContext.CultureInfo)));
+            if((qtySold < 0) ||((qtySold + qtyBonus) > _saleItem.FkProduct.QtyInStock))
             {
                 const string briefMsg = "អំពីពត៌មាន";
                 var detailMsg = Resources.MsgInvalidData;
@@ -390,7 +348,18 @@ namespace EzPos.GUIs.Forms
             }
 
             _saleItem.QtySold = qtySold;
+            _saleItem.QtyBonus = qtyBonus;
             DialogResult = DialogResult.OK;
+        }
+
+        private static float CalculateQtyBonus(int purchasedQty, int promotionQty, int bonusQty)
+        {
+            var returnQty = 0f;
+
+            if (promotionQty != 0)
+                returnQty = (purchasedQty / promotionQty) * bonusQty;
+
+            return returnQty;
         }
     }
 }

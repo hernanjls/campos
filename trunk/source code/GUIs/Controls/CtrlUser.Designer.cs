@@ -61,12 +61,12 @@ namespace EzPos.GUIs.Controls
             this.StartingDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CivilityID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaritalStatusID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PositionID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ContractID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UserID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CivilityId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaritalStatusId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PositionId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ContractId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PhotoPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DefaultModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -337,12 +337,12 @@ namespace EzPos.GUIs.Controls
             this.StartingDate,
             this.Address,
             this.Password,
-            this.GenderID,
-            this.CivilityID,
-            this.MaritalStatusID,
-            this.PositionID,
-            this.ContractID,
-            this.UserID,
+            this.GenderId,
+            this.CivilityId,
+            this.MaritalStatusId,
+            this.PositionId,
+            this.ContractId,
+            this.UserId,
             this.UserNumber,
             this.PhotoPath,
             this.DefaultModule});
@@ -510,71 +510,71 @@ namespace EzPos.GUIs.Controls
             this.Password.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Password.Visible = false;
             // 
-            // GenderID
+            // GenderId
             // 
-            this.GenderID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.GenderID.DataPropertyName = "GenderID";
-            this.GenderID.HeaderText = "GenderID";
-            this.GenderID.Name = "GenderID";
-            this.GenderID.ReadOnly = true;
-            this.GenderID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.GenderID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.GenderID.Visible = false;
+            this.GenderId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.GenderId.DataPropertyName = "GenderId";
+            this.GenderId.HeaderText = "GenderId";
+            this.GenderId.Name = "GenderId";
+            this.GenderId.ReadOnly = true;
+            this.GenderId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.GenderId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.GenderId.Visible = false;
             // 
-            // CivilityID
+            // CivilityId
             // 
-            this.CivilityID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.CivilityID.DataPropertyName = "CivilityID";
-            this.CivilityID.HeaderText = "CivilityID";
-            this.CivilityID.Name = "CivilityID";
-            this.CivilityID.ReadOnly = true;
-            this.CivilityID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.CivilityID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CivilityID.Visible = false;
+            this.CivilityId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.CivilityId.DataPropertyName = "CivilityId";
+            this.CivilityId.HeaderText = "CivilityId";
+            this.CivilityId.Name = "CivilityId";
+            this.CivilityId.ReadOnly = true;
+            this.CivilityId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.CivilityId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CivilityId.Visible = false;
             // 
-            // MaritalStatusID
+            // MaritalStatusId
             // 
-            this.MaritalStatusID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.MaritalStatusID.DataPropertyName = "MaritalStatusID";
-            this.MaritalStatusID.HeaderText = "MaritalStatusID";
-            this.MaritalStatusID.Name = "MaritalStatusID";
-            this.MaritalStatusID.ReadOnly = true;
-            this.MaritalStatusID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.MaritalStatusID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.MaritalStatusID.Visible = false;
+            this.MaritalStatusId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.MaritalStatusId.DataPropertyName = "MaritalStatusId";
+            this.MaritalStatusId.HeaderText = "MaritalStatusId";
+            this.MaritalStatusId.Name = "MaritalStatusId";
+            this.MaritalStatusId.ReadOnly = true;
+            this.MaritalStatusId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.MaritalStatusId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.MaritalStatusId.Visible = false;
             // 
-            // PositionID
+            // PositionId
             // 
-            this.PositionID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.PositionID.DataPropertyName = "PositionID";
-            this.PositionID.HeaderText = "PositionID";
-            this.PositionID.Name = "PositionID";
-            this.PositionID.ReadOnly = true;
-            this.PositionID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.PositionID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PositionID.Visible = false;
+            this.PositionId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PositionId.DataPropertyName = "PositionId";
+            this.PositionId.HeaderText = "PositionId";
+            this.PositionId.Name = "PositionId";
+            this.PositionId.ReadOnly = true;
+            this.PositionId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.PositionId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PositionId.Visible = false;
             // 
-            // ContractID
+            // ContractId
             // 
-            this.ContractID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ContractID.DataPropertyName = "ContractID";
-            this.ContractID.HeaderText = "ContractID";
-            this.ContractID.Name = "ContractID";
-            this.ContractID.ReadOnly = true;
-            this.ContractID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ContractID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ContractID.Visible = false;
+            this.ContractId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ContractId.DataPropertyName = "ContractId";
+            this.ContractId.HeaderText = "ContractId";
+            this.ContractId.Name = "ContractId";
+            this.ContractId.ReadOnly = true;
+            this.ContractId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ContractId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ContractId.Visible = false;
             // 
-            // UserID
+            // UserId
             // 
-            this.UserID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.UserID.DataPropertyName = "UserID";
-            this.UserID.HeaderText = "UserID";
-            this.UserID.Name = "UserID";
-            this.UserID.ReadOnly = true;
-            this.UserID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.UserID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.UserID.Visible = false;
+            this.UserId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.UserId.DataPropertyName = "UserId";
+            this.UserId.HeaderText = "UserId";
+            this.UserId.Name = "UserId";
+            this.UserId.ReadOnly = true;
+            this.UserId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.UserId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.UserId.Visible = false;
             // 
             // UserNumber
             // 
@@ -667,12 +667,12 @@ namespace EzPos.GUIs.Controls
         private System.Windows.Forms.DataGridViewTextBoxColumn StartingDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn Address;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GenderID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CivilityID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MaritalStatusID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PositionID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ContractID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UserID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GenderId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CivilityId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaritalStatusId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PositionId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ContractId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserId;
         private System.Windows.Forms.DataGridViewTextBoxColumn UserNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn PhotoPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn DefaultModule;

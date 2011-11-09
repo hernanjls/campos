@@ -3,19 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.User;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Forms
 {
     public partial class FrmUser : Form
     {
-        private CommonService _CommonService;
-        private bool _IsModified;
-        private User _User;
-        private UserService _UserService;
+        private CommonService _commonService;
+        private bool _isModified;
+        private User _user;
+        private UserService _userService;
 
         public FrmUser()
         {
@@ -24,13 +26,13 @@ namespace EzPos.GUIs.Forms
 
         public User User
         {
-            get { return _User; }
-            set { _User = value; }
+            get { return _user; }
+            set { _user = value; }
         }
 
         private void SetModifydStatus(bool modifyStatus)
         {
-            _IsModified = modifyStatus;
+            _isModified = modifyStatus;
             btnSave.Enabled = modifyStatus;
         }
 
@@ -39,7 +41,7 @@ namespace EzPos.GUIs.Forms
             SetModifydStatus(true);
         }
 
-        private void cmbCategory_Enter(object sender, EventArgs e)
+        private void CmbCategoryEnter(object sender, EventArgs e)
         {
             cmbGender.SelectedIndexChanged += ModificationHandler;
         }
@@ -49,77 +51,77 @@ namespace EzPos.GUIs.Forms
             cmbMaritalStatus.SelectedIndexChanged += ModificationHandler;
         }
 
-        private void cmbPosition_Enter(object sender, EventArgs e)
+        private void CmbPositionEnter(object sender, EventArgs e)
         {
             cmbPosition.SelectedIndexChanged += ModificationHandler;
         }
 
-        private void txtPhotoPath_TextChanged(object sender, EventArgs e)
+        private void TxtPhotoPathTextChanged(object sender, EventArgs e)
         {
             SetModifydStatus(true);
         }
 
-        private void cmbCategory_Leave(object sender, EventArgs e)
+        private void CmbCategoryLeave(object sender, EventArgs e)
         {
             cmbGender.SelectedIndexChanged -= ModificationHandler;
             cmbGender.TextChanged -= ModificationHandler;
         }
 
-        private void cmbMaritalStatus_Leave(object sender, EventArgs e)
+        private void CmbMaritalStatusLeave(object sender, EventArgs e)
         {
             cmbMaritalStatus.SelectedIndexChanged -= ModificationHandler;
         }
 
-        private void cmbPosition_Leave(object sender, EventArgs e)
+        private void CmbPositionLeave(object sender, EventArgs e)
         {
             cmbPosition.SelectedIndexChanged -= ModificationHandler;
         }
 
-        private void txtSalary_Leave(object sender, EventArgs e)
+        private void TxtSalaryLeave(object sender, EventArgs e)
         {
             txtSalary.TextChanged -= ModificationHandler;
         }
 
         private void FrmUser_Load(object sender, EventArgs e)
         {
-            if (_UserService == null)
-                _UserService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
-            if (_CommonService == null)
-                _CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+            if (_userService == null)
+                _userService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
+            if (_commonService == null)
+                _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
             ThreadStart threadStart = UpdateControlContent;
             var thread = new Thread(threadStart);
             thread.Start();
 
             SetUserInfo();
-            txtPhotoPath.TextChanged += txtPhotoPath_TextChanged;
+            txtPhotoPath.TextChanged += TxtPhotoPathTextChanged;
         }
 
         private void SetUserInfo()
         {
-            if (_User == null)
+            if (_user == null)
                 return;
 
-            txtUserName.Text = _User.UserName;
-            dtpBirthDate.Value = _User.BirthDate;
-            txtPhoneNumber.Text = _User.PhoneNumber;
-            txtAddress.Text = _User.Address;
-            dtpStartingDate.Value = _User.StartingDate;
-            txtSalary.Text = _User.Salary.ToString("N");
-            txtLogInName.Text = _User.LogInName;
-            txtPassword.Text = _User.Password;
-            txtPhotoPath.Text = _User.PhotoPath;
-            if (_User.PhotoPath == null)
+            txtUserName.Text = _user.UserName;
+            dtpBirthDate.Value = _user.BirthDate;
+            txtPhoneNumber.Text = _user.PhoneNumber;
+            txtAddress.Text = _user.Address;
+            dtpStartingDate.Value = _user.StartingDate;
+            txtSalary.Text = _user.Salary.ToString("N");
+            txtLogInName.Text = _user.LogInName;
+            txtPassword.Text = _user.Password;
+            txtPhotoPath.Text = _user.PhotoPath;
+            if (_user.PhotoPath == null)
                 ptbUser.Image = Resources.NoImage;
             else
-                ptbUser.ImageLocation = _User.PhotoPath;
+                ptbUser.ImageLocation = _user.PhotoPath;
         }
 
-        private void ptbProduct_Click(object sender, EventArgs e)
+        private void PtbProductClick(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog
                                      {
-                                         Filter = "All Pictures|*.bmp;*.gif;*.jpg|Bitmaps|*.bmp|GIFs|*.gif|JPEGs|*.jpg",
+                                         Filter = Resources.ConstExtensionImage,
                                          Multiselect = false
                                      };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -130,7 +132,7 @@ namespace EzPos.GUIs.Forms
             openFileDialog.Dispose();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSaveClick(object sender, EventArgs e)
         {
             try
             {
@@ -160,8 +162,8 @@ namespace EzPos.GUIs.Forms
 
                     var userPermission = new UserPermission
                                              {
-                                                 PermissionID =
-                                                     ((Permission) clbPermission.Items[counter]).PermissionID
+                                                 PermissionId =
+                                                     ((Permission) clbPermission.Items[counter]).PermissionId
                                              };
                     permissionList.Add(userPermission);
                 }
@@ -180,40 +182,38 @@ namespace EzPos.GUIs.Forms
                     }
                 }
 
-                if (_User == null)
-                    _User = new User();
-                _User.UserName = txtUserName.Text;
-                _User.GenderID = int.Parse(cmbGender.SelectedValue.ToString());
-                _User.GenderStr = cmbGender.Text;
-                _User.MaritalStatusID = int.Parse(cmbMaritalStatus.SelectedValue.ToString());
-                _User.MaritalStatusStr = cmbMaritalStatus.Text;
-                _User.BirthDate = dtpBirthDate.Value;
-                _User.PhoneNumber = txtPhoneNumber.Text;
-                _User.Address = txtAddress.Text;
-                _User.PositionID = int.Parse(cmbPosition.SelectedValue.ToString());
-                _User.PositionStr = cmbPosition.Text;
-                _User.ContractID = int.Parse(cmbContractType.SelectedValue.ToString());
-                _User.ContractStr = cmbContractType.Text;
-                _User.StartingDate = dtpStartingDate.Value;
-                _User.Salary = float.Parse(txtSalary.Text);
-                _User.LogInName = txtLogInName.Text;
-                _User.Password = txtPassword.Text;
-                _User.PhotoPath = txtPhotoPath.Text.Length == 0 ? _User.PhotoPath : txtPhotoPath.Text;
+                if (_user == null)
+                    _user = new User();
+                _user.UserName = txtUserName.Text;
+                _user.GenderId = int.Parse(cmbGender.SelectedValue.ToString());
+                _user.GenderStr = cmbGender.Text;
+                _user.MaritalStatusId = int.Parse(cmbMaritalStatus.SelectedValue.ToString());
+                _user.MaritalStatusStr = cmbMaritalStatus.Text;
+                _user.BirthDate = dtpBirthDate.Value;
+                _user.PhoneNumber = txtPhoneNumber.Text;
+                _user.Address = txtAddress.Text;
+                _user.PositionId = int.Parse(cmbPosition.SelectedValue.ToString());
+                _user.PositionStr = cmbPosition.Text;
+                _user.ContractId = int.Parse(cmbContractType.SelectedValue.ToString());
+                _user.ContractStr = cmbContractType.Text;
+                _user.StartingDate = dtpStartingDate.Value;
+                _user.Salary = float.Parse(txtSalary.Text);
+                _user.LogInName = txtLogInName.Text;
+                _user.Password = txtPassword.Text;
+                _user.PhotoPath = txtPhotoPath.Text.Length == 0 ? _user.PhotoPath : txtPhotoPath.Text;
 
-                if (_UserService == null)
-                    _UserService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
+                if (_userService == null)
+                    _userService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
 
-                if (_User.UserID != 0)
-                    _UserService.UserManagement(_User, permissionList,
-                                                Resources.OperationRequestUpdate);
-                else
-                    _UserService.UserManagement(_User, permissionList,
-                                                Resources.OperationRequestInsert);
+                _userService.UserManagement(_user, permissionList,
+                                            _user.UserId != 0
+                                                ? Resources.OperationRequestUpdate
+                                                : Resources.OperationRequestInsert);
 
                 if (AppContext.User == null)
                     return;
 
-                if (_User.UserID == AppContext.User.UserID)
+                if (_user.UserId == AppContext.User.UserId)
                     AppContext.UserPermissionList = permissionList;
 
                 DialogResult = DialogResult.OK;
@@ -226,30 +226,30 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void clbFeature_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void ClbFeatureItemCheck(object sender, ItemCheckEventArgs e)
         {
             SetModifydStatus(true);
         }
 
-        private void clbPermission_Enter(object sender, EventArgs e)
+        private void ClbPermissionEnter(object sender, EventArgs e)
         {
-            clbPermission.ItemCheck += clbFeature_ItemCheck;
+            clbPermission.ItemCheck += ClbFeatureItemCheck;
         }
 
-        private void clbPermission_Leave(object sender, EventArgs e)
+        private void ClbPermissionLeave(object sender, EventArgs e)
         {
-            clbPermission.ItemCheck -= clbFeature_ItemCheck;
+            clbPermission.ItemCheck -= ClbFeatureItemCheck;
         }
 
-        private void txtSalary_Enter(object sender, EventArgs e)
+        private void TxtSalaryEnter(object sender, EventArgs e)
         {
             txtSalary.TextChanged += ModificationHandler;
         }
 
         private void UpdateControlContent()
         {
-            if (_UserService == null)
-                _UserService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
+            if (_userService == null)
+                _userService = ServiceFactory.GenerateServiceInstance().GenerateUserService();
 
             SafeCrossCallBackDelegate safeCrossCallBackDelegate = null;
             if (cmbGender.InvokeRequired)
@@ -259,49 +259,49 @@ namespace EzPos.GUIs.Forms
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                var searchCriteria = new List<string> {"ParameterTypeID IN (8, 10, 11, 12)"};
-                var objList = _CommonService.GetAppParameters(searchCriteria);
+                var searchCriteria = new List<string> {"ParameterTypeId IN (8, 10, 11, 12)"};
+                var objList = _commonService.GetAppParameters(searchCriteria);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbGender, objList, int.Parse(Resources.AppParamGender), true);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbMaritalStatus, objList, int.Parse(Resources.AppParamMaritalStatus), true);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbPosition, objList, int.Parse(Resources.AppParamPosition), true);
 
-                _CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbContractType, objList, int.Parse(Resources.AppParamContractType), true);
 
-                objList = _UserService.GetPermissions();
+                objList = _userService.GetPermissions();
                 clbPermission.DataSource = objList;
                 if (((IList) clbPermission.DataSource).Count != 0)
                 {
-                    clbPermission.DisplayMember = Permission.CONST_PERMISSION_LABEL;
-                    clbPermission.ValueMember = Permission.CONST_PERMISSION_ID;
+                    clbPermission.DisplayMember = Permission.ConstPermissionLabel;
+                    clbPermission.ValueMember = Permission.ConstPermissionId;
                 }
 
-                if (_User != null)
+                if (_user != null)
                 {
                     if (((IList) cmbGender.DataSource).Count != 0)
-                        cmbGender.SelectedValue = _User.GenderID;
+                        cmbGender.SelectedValue = _user.GenderId;
                     if (((IList) cmbMaritalStatus.DataSource).Count != 0)
-                        cmbMaritalStatus.SelectedValue = _User.MaritalStatusID;
+                        cmbMaritalStatus.SelectedValue = _user.MaritalStatusId;
                     if (((IList) cmbPosition.DataSource).Count != 0)
-                        cmbPosition.SelectedValue = _User.PositionID;
+                        cmbPosition.SelectedValue = _user.PositionId;
                     if (((IList) cmbContractType.DataSource).Count != 0)
-                        cmbContractType.SelectedValue = _User.ContractID;
+                        cmbContractType.SelectedValue = _user.ContractId;
 
-                    objList = _UserService.GetPermissionsByUser(_User.UserID);
+                    objList = _userService.GetPermissionsByUser(_user.UserId);
                     if (objList.Count != 0)
                     {
                         foreach (UserPermission usrPermission in objList)
                         {
                             for (int counter = 0; counter < clbPermission.Items.Count; counter++)
                             {
-                                if (usrPermission.PermissionID ==
-                                    ((Permission) clbPermission.Items[counter]).PermissionID)
+                                if (usrPermission.PermissionId ==
+                                    ((Permission) clbPermission.Items[counter]).PermissionId)
                                 {
                                     clbPermission.SetItemChecked(counter, true);
                                     break;
@@ -313,89 +313,89 @@ namespace EzPos.GUIs.Forms
             }
         }
 
-        private void txtUserName_Enter(object sender, EventArgs e)
+        private void TxtUserNameEnter(object sender, EventArgs e)
         {
             txtUserName.TextChanged += ModificationHandler;
         }
 
-        private void txtUserName_Leave(object sender, EventArgs e)
+        private void TxtUserNameLeave(object sender, EventArgs e)
         {
             txtUserName.TextChanged -= ModificationHandler;
         }
 
-        private void dtpBirthDate_Enter(object sender, EventArgs e)
+        private void DtpBirthDateEnter(object sender, EventArgs e)
         {
             dtpBirthDate.ValueChanged += ModificationHandler;
         }
 
-        private void dtpBirthDate_Leave(object sender, EventArgs e)
+        private void DtpBirthDateLeave(object sender, EventArgs e)
         {
             dtpBirthDate.ValueChanged -= ModificationHandler;
         }
 
-        private void txtPhoneNumber_Enter(object sender, EventArgs e)
+        private void TxtPhoneNumberEnter(object sender, EventArgs e)
         {
             txtPhoneNumber.TextChanged += ModificationHandler;
         }
 
-        private void txtPhoneNumber_Leave(object sender, EventArgs e)
+        private void TxtPhoneNumberLeave(object sender, EventArgs e)
         {
             txtPhoneNumber.TextChanged -= ModificationHandler;
         }
 
-        private void txtAddress_Enter(object sender, EventArgs e)
+        private void TxtAddressEnter(object sender, EventArgs e)
         {
             txtAddress.TextChanged += ModificationHandler;
         }
 
-        private void txtAddress_Leave(object sender, EventArgs e)
+        private void TxtAddressLeave(object sender, EventArgs e)
         {
             txtAddress.TextChanged -= ModificationHandler;
         }
 
-        private void cmbContractType_Enter(object sender, EventArgs e)
+        private void CmbContractTypeEnter(object sender, EventArgs e)
         {
             cmbContractType.SelectedIndexChanged += ModificationHandler;
         }
 
-        private void cmbContractType_Leave(object sender, EventArgs e)
+        private void CmbContractTypeLeave(object sender, EventArgs e)
         {
             cmbContractType.SelectedIndexChanged -= ModificationHandler;
         }
 
-        private void dtpStartingDate_Enter(object sender, EventArgs e)
+        private void DtpStartingDateEnter(object sender, EventArgs e)
         {
             dtpStartingDate.ValueChanged += ModificationHandler;
         }
 
-        private void dtpStartingDate_Leave(object sender, EventArgs e)
+        private void DtpStartingDateLeave(object sender, EventArgs e)
         {
             dtpStartingDate.ValueChanged -= ModificationHandler;
         }
 
-        private void txtLogInName_Enter(object sender, EventArgs e)
+        private void TxtLogInNameEnter(object sender, EventArgs e)
         {
             txtLogInName.TextChanged += ModificationHandler;
         }
 
-        private void txtLogInName_Leave(object sender, EventArgs e)
+        private void TxtLogInNameLeave(object sender, EventArgs e)
         {
             txtLogInName.TextChanged -= ModificationHandler;
         }
 
-        private void txtPassword_Enter(object sender, EventArgs e)
+        private void TxtPasswordEnter(object sender, EventArgs e)
         {
             txtPassword.TextChanged += ModificationHandler;
         }
 
-        private void txtPassword_Leave(object sender, EventArgs e)
+        private void TxtPasswordLeave(object sender, EventArgs e)
         {
             txtPassword.TextChanged -= ModificationHandler;
         }
 
         private void FrmUser_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((DialogResult == DialogResult.Cancel) && (_IsModified))
+            if ((DialogResult == DialogResult.Cancel) && (_isModified))
             {
                 const string briefMsg = "អំពីការបោះបង់";
                 var detailMsg = Resources.MsgOperationRequestCancel;
@@ -411,29 +411,29 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (_IsModified) 
+            if (_isModified) 
                 return;
 
             DialogResult = DialogResult.Cancel;
             return;
         }
 
-        private void btnSave_MouseEnter(object sender, EventArgs e)
+        private void BtnSaveMouseEnter(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_9;
         }
 
-        private void btnSave_MouseLeave(object sender, EventArgs e)
+        private void BtnSaveMouseLeave(object sender, EventArgs e)
         {
             btnSave.BackgroundImage = Resources.background_2;
         }
 
-        private void btnCancel_MouseEnter(object sender, EventArgs e)
+        private void BtnCancelMouseEnter(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_9;
         }
 
-        private void btnCancel_MouseLeave(object sender, EventArgs e)
+        private void BtnCancelMouseLeave(object sender, EventArgs e)
         {
             btnCancel.BackgroundImage = Resources.background_2;
         }

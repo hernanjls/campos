@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using EzPos.Model;
 using EzPos.Utility;
 using NHibernate.Expression;
 
-namespace EzPos.DataAccess
+namespace EzPos.DataAccess.Expense
 {
     /// <summary>
     /// Summary description for ExpenseDataAccess.
@@ -13,23 +12,23 @@ namespace EzPos.DataAccess
     {
         public virtual IList GetExpenses()
         {
-            var orderList = new Collection<Order> {Order.Desc(Expense.CONST_EXPENSE_ID)};
+            var orderList = new Collection<Order> {Order.Desc(Model.Expense.Expense.ConstExpenseId)};
 
             return SelectObjects(
-                typeof (Expense), orderList).List();
+                typeof (Model.Expense.Expense), orderList).List();
         }
 
-        public virtual void InsertExpense(Expense expense)
+        public virtual void InsertExpense(Model.Expense.Expense expense)
         {
             InsertObject(expense);
         }
 
-        public virtual void UpdateExpense(Expense expense)
+        public virtual void UpdateExpense(Model.Expense.Expense expense)
         {
             UpdateObject(expense);
         }
 
-        public virtual void DeleteExpense(Expense expense)
+        public virtual void DeleteExpense(Model.Expense.Expense expense)
         {
             DeleteObject(expense);
         }
@@ -55,11 +54,11 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Desc(Expense.CONST_EXPENSE_DATE),
-                    Order.Asc(Expense.CONST_EXPENSE_TYPE_STR)
+                    Order.Desc(Model.Expense.Expense.ConstExpenseDate),
+                    Order.Asc(Model.Expense.Expense.ConstExpenseTypeStr)
                 };
 
-            return SelectObjects(typeof (Expense), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.Expense.Expense), criterionList, orderList).List();
         }
 
         public virtual IList GetExpensesOrderByType(IList searchCriteria)
@@ -83,10 +82,10 @@ namespace EzPos.DataAccess
             var orderList = 
                 new Collection<Order>
                 {
-                    Order.Asc(Expense.CONST_EXPENSE_TYPE_STR)
+                    Order.Asc(Model.Expense.Expense.ConstExpenseTypeStr)
                 };            
 
-            return SelectObjects(typeof (Expense), criterionList, orderList).List();
+            return SelectObjects(typeof (Model.Expense.Expense), criterionList, orderList).List();
         }
     }
 }

@@ -6,9 +6,13 @@ using System.Threading;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Expense;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Expense;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Controls
 {

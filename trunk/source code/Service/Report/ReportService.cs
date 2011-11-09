@@ -3,8 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using EzPos.Model;
+using EzPos.Model.Common;
 using EzPos.Properties;
+using EzPos.Service.Expense;
 using EzPos.Service.Product;
 using EzPos.Service.SaleOrder;
 using EzPos.Utility;
@@ -92,7 +93,7 @@ namespace EzPos.Service.Report
 
             var sortedProductList =
                 (from product
-                    in productList.Cast<Model.Product>()
+                    in productList.Cast<Model.Product.Product>()
                 orderby product.MarkStr
                 select product).ToList();
 

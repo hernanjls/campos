@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
-	<class name="EzPos.Model.SaleOrder,EzPos" table="[TSaleOrders]">
-    <id name="SaleOrderId" column="SaleOrderID" unsaved-value="0" type="Int32" >
+	<class name="EzPos.Model.SaleOrder.SaleOrder,EzPos" table="[TSaleOrders]">
+    <id name="SaleOrderId" column="SaleOrderId" unsaved-value="0" type="Int32" >
       <generator class="identity" />
     </id>
     <property name="SaleOrderNumber" column="SaleOrderNumber" />
     <property name="SaleOrderDate" column="SaleOrderDate" type="DateTime" />
-    <property name="SaleOrderTypeID" column="SaleOrderTypeID" type="Int32" />    
-    <property name="CustomerID" column="CustomerID" type="Int32" />
-    <property name="CashierId" column="CashierID" type="Int32" />
-    <property name="DelivererID" column="DelivererID" type="Int32" />
+    <property name="SaleOrderTypeId" column="SaleOrderTypeId" type="Int32" />    
+    <property name="CustomerId" column="CustomerId" type="Int32" />
+    <property name="CashierId" column="CashierId" type="Int32" />
+    <property name="DelivererId" column="DelivererId" type="Int32" />
     <property name="Description" column="Description" />
-    <property name="PaymentTypeID" column="PaymentTypeID" type="Int32" />
-    <property name="CurrencyID" column="CurrencyID" type="Int32" />
+    <property name="PaymentTypeId" column="PaymentTypeId" type="Int32" />
+    <property name="CurrencyId" column="CurrencyId" type="Int32" />
     <property name="ExchangeRate" column="ExchangeRate" type="float" />    
     <property name="AmountSoldInt" column="AmountSoldInt" type="float" />
     <property name="AmountSoldRiel" column="AmountSoldRiel" type="float" />
@@ -21,11 +21,11 @@
     <property name="AmountReturnInt" column="AmountReturnInt" type="float" />
     <property name="AmountReturnRiel" column="AmountReturnRiel" type="float" />
     <property name="Discount" column="Discount" type="float" />
-    <property name="DiscountTypeID" column="DiscountTypeID" type="Int32" />
+    <property name="DiscountTypeId" column="DiscountTypeId" type="Int32" />
     <property name="CardNumber" column="CardNumber" />
     <property name="ReferenceNum" column="ReferenceNum" />    
     <property name="DepositAmount" column="DepositAmount" type="float" />    
 
-    <many-to-one name="FKCustomer" column="CustomerID" class="EzPos.Model.Customer,EzPos" insert="false" update="false" />
+    <many-to-one name="FkCustomer" column="CustomerId" class="EzPos.Model.Customer.Customer,EzPos" insert="false" update="false" />
   </class>
 </hibernate-mapping>

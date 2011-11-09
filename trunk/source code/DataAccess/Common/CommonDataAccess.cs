@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using EzPos.Model;
+using EzPos.Model.Common;
 using EzPos.Utility;
 using NHibernate.Expression;
 
-namespace EzPos.DataAccess
+namespace EzPos.DataAccess.Common
 {
     public class CommonDataAccess : BaseDataAccess
     {
@@ -29,10 +29,10 @@ namespace EzPos.DataAccess
             var criterionList = new Collection<ICriterion>
                                     {
                                         Expression.Sql(
-                                            "ParameterTypeID IN (SELECT ParameterTypeID FROM TAppParameterTypes WHERE IsActive = 1)")
+                                            "ParameterTypeId IN (SELECT ParameterTypeId FROM TAppParameterTypes WHERE IsActive = 1)")
                                     };
 
-            var orderList = new Collection<Order> {Order.Asc("ParameterTypeID"), Order.Asc("ParameterLabel")};
+            var orderList = new Collection<Order> {Order.Asc("ParameterTypeId"), Order.Asc("ParameterLabel")};
 
             return SelectObjects(typeof (AppParameter),
                                  criterionList,
@@ -56,9 +56,9 @@ namespace EzPos.DataAccess
                 }
             }
             criterionList.Add(
-                Expression.Sql("ParameterTypeID IN (SELECT ParameterTypeID FROM TAppParameterTypes WHERE IsActive = 1)"));
+                Expression.Sql("ParameterTypeId IN (SELECT ParameterTypeId FROM TAppParameterTypes WHERE IsActive = 1)"));
 
-            var orderList = new Collection<Order> {Order.Asc("ParameterTypeID"), Order.Asc("ParameterLabel")};
+            var orderList = new Collection<Order> {Order.Asc("ParameterTypeId"), Order.Asc("ParameterLabel")};
 
             return SelectObjects(typeof (AppParameter),
                                  criterionList,
@@ -67,9 +67,9 @@ namespace EzPos.DataAccess
 
         public virtual IList GetAppParametersByType(int parameterTypeId)
         {
-            var criterionList = new Collection<ICriterion> {Expression.Eq("ParameterTypeID", parameterTypeId)};
+            var criterionList = new Collection<ICriterion> {Expression.Eq("ParameterTypeId", parameterTypeId)};
 
-            var orderList = new Collection<Order> {Order.Asc("ParameterTypeID"), Order.Asc("ParameterLabel")};
+            var orderList = new Collection<Order> {Order.Asc("ParameterTypeId"), Order.Asc("ParameterLabel")};
 
             return SelectObjects(typeof (AppParameter), criterionList,
                                  orderList).List();
@@ -77,7 +77,7 @@ namespace EzPos.DataAccess
 
         public virtual IList GetAppParametersByTypeSortByValue(int parameterTypeId)
         {
-            var criterionList = new Collection<ICriterion> {Expression.Eq("ParameterTypeID", parameterTypeId)};
+            var criterionList = new Collection<ICriterion> {Expression.Eq("ParameterTypeId", parameterTypeId)};
 
             var orderList = new Collection<Order> {Order.Asc("ParameterValue")};
 
@@ -113,7 +113,7 @@ namespace EzPos.DataAccess
         //Exchange rate
         public virtual IList GetExchangeRate()
         {
-            var orderList = new Collection<Order> {Order.Desc("ExchangeRateID")};
+            var orderList = new Collection<Order> {Order.Desc("ExchangeRateId")};
 
             return SelectObjects(typeof (ExchangeRate), orderList).List();
         }
@@ -123,11 +123,11 @@ namespace EzPos.DataAccess
             InsertObject(exchangeRate);
         }
 
-        public virtual IList GetCounterByIP(string iPString)
+        public virtual IList GetCounterByIp(string iPString)
         {
-            var criterionList = new Collection<ICriterion> {Expression.Eq("CounterIP", iPString)};
+            var criterionList = new Collection<ICriterion> {Expression.Eq("CounterIp", iPString)};
 
-            var orderList = new Collection<Order> {Order.Asc(Counter.CONST_COUNTER_NAME)};
+            var orderList = new Collection<Order> {Order.Asc(Counter.ConstCounterName)};
 
             return SelectObjects(typeof (Counter), criterionList, orderList).List();
         }

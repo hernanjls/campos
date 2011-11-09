@@ -5,10 +5,10 @@
     <Setting Name="ezpos_eco_electricConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=MATRIX-PC;Initial Catalog=ezpos_eco_electric;Persist Security Info=True;User ID=sa;Password=matrix&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=MATRIX-PC;Initial Catalog=ezpos_eco_electric;Persist Security Info=True;User Id=sa;Password=matrix&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=MATRIX-PC;Initial Catalog=ezpos_eco_electric;Persist Security Info=True;User ID=sa;Password=matrix</Value>
+      <Value Profile="(Default)">Data Source=MATRIX-PC;Initial Catalog=ezpos_eco_electric;Persist Security Info=True;User Id=sa;Password=matrix</Value>
     </Setting>
   </Settings>
 </SettingsFile>

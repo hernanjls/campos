@@ -6,9 +6,13 @@ using System.Threading;
 using System.Windows.Forms;
 using EzPos.GUIs.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Supplier;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Supplier;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Controls
 {
@@ -55,7 +59,7 @@ namespace EzPos.GUIs.Controls
                 //cmbCustomer.CustomizedDataBinding(
                 //    objList,
                 //    Customer.CONST_CUSTOMER_NAME,
-                //    Customer.CONST_CUSTOMER_ID,
+                //    Customer.CONST_CUSTOMER_Id,
                 //    false);
 
                 //var customerList = new List<Customer>();
@@ -65,7 +69,7 @@ namespace EzPos.GUIs.Controls
                 //cmbCustomerHidden.CustomizedDataBinding(
                 //    customerList,
                 //    Customer.CONST_CUSTOMER_NAME,
-                //    Customer.CONST_CUSTOMER_ID,
+                //    Customer.CONST_CUSTOMER_Id,
                 //    false);
 
                 //btnSearch_Click(sender, e);
@@ -243,7 +247,7 @@ namespace EzPos.GUIs.Controls
             {
                 var searchCriteria = new List<string>
                                          {
-                                             "ParameterTypeID IN (" + Resources.AppParamCountry + ")"
+                                             "ParameterTypeId IN (" + Resources.AppParamCountry + ")"
                                          };
                 var objList = _CommonService.GetAppParameters(searchCriteria);
 

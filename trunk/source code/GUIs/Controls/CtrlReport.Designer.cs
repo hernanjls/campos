@@ -1,5 +1,6 @@
 ﻿
 using EzPos.Service;
+using EzPos.Service.Expense;
 using EzPos.Service.Product;
 using EzPos.Service.SaleOrder;
 
@@ -207,6 +208,7 @@ namespace EzPos.GUIs.Controls
             this.rdbIncomeStatement.TabIndex = 20;
             this.rdbIncomeStatement.Text = "ហិរញ្ញវត្ថុ";
             this.rdbIncomeStatement.UseVisualStyleBackColor = false;
+            this.rdbIncomeStatement.Visible = false;
             // 
             // chbShowQuantity
             // 
@@ -387,10 +389,10 @@ namespace EzPos.GUIs.Controls
             this.crvReport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.crvReport.Location = new System.Drawing.Point(0, 0);
             this.crvReport.Name = "crvReport";
-            this.crvReport.SelectionFormula = "";
+            this.crvReport.SelectionFormula = global::EzPos.Properties.Resources.ConstBarCodeTemplate6;
             this.crvReport.Size = new System.Drawing.Size(826, 596);
             this.crvReport.TabIndex = 0;
-            this.crvReport.ViewTimeSelectionFormula = "";
+            this.crvReport.ViewTimeSelectionFormula = global::EzPos.Properties.Resources.ConstBarCodeTemplate6;
             // 
             // wbsReport
             // 

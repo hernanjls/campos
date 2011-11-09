@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos.DataAccess">
-	<class name="EzPos.Model.Product,EzPos" table="[TProducts]">
-		<id name="ProductID" column="ProductID" unsaved-value="0" type="Int32" >
+	<class name="EzPos.Model.Product.Product,EzPos" table="[TProducts]">
+		<id name="ProductId" column="ProductId" unsaved-value="0" type="Int32" >
 			<generator class="identity" />
 		</id>
 
     <property name="ProductCode" column="ProductCode" />
     <property name="ProductName" column="ProductName" />
     <property name="Description" column="Description" />
-    <property name="CategoryID" column="CategoryID" type="Int32" />
+    <property name="CategoryId" column="CategoryId" type="Int32" />
     <property name="CategoryStr" column="CategoryStr" />
-    <property name="MarkID" column="MarkID" type="Int32"/>
+    <property name="MarkId" column="MarkId" type="Int32"/>
     <property name="MarkStr" column="MarkStr" />
-    <property name="SizeID" column="SizeID" type="Int32"/>
+    <property name="SizeId" column="SizeId" type="Int32"/>
     <property name="SizeStr" column="SizeStr" />
-    <property name="ColorID" column="ColorID" type="Int32"/>
+    <property name="ColorId" column="ColorId" type="Int32"/>
     <property name="ColorStr" column="ColorStr" />
-    <property name="SkinID" column="SkinID" type="Int32"/>
+    <property name="SkinId" column="SkinId" type="Int32"/>
     <property name="SkinStr" column="SkinStr" />
     <property name="PhotoPath" column="PhotoPath" />
     <property name="UnitPriceIn" column="UnitPriceIn" type="float"/>
@@ -27,14 +27,7 @@
     <property name="QtySold" column="QtySold" type="float" />
     <property name="LastUpdate" column="LastUpdate" type="DateTime" />
     <property name="ForeignCode" column="ForeignCode" />
+    <property name="QtyPromotion" column="QtyPromotion" type="float" />
+    <property name="QtyBonus" column="QtyBonus" type="float" />
   </class>
-</hibernate-mapping>
-		
-	
-		
-		
-		
-	
-		
-		
-		
+</hibernate-mapping>		

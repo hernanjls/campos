@@ -1,18 +1,18 @@
 using System;
 
-namespace EzPos.Model
+namespace EzPos.Model.SaleOrder
 {
     public class SaleOrderReport
     {
-        public const string CONST_SALE_ORDER_DATE = "SaleOrderDate";
-        public const string CONST_SALE_ORDER_NUMBER = "SaleOrderNumber";
-        public const string CONST_SALE_ORDER_PRODUCT_CATEGORY = "CategoryStr";
+        public const string ConstSaleOrderDate = "SaleOrderDate";
+        public const string ConstSaleOrderNumber = "SaleOrderNumber";
+        public const string ConstSaleOrderProductCategory = "CategoryStr";
 
         //private string _SaleOrderNumber;
 
-        public int ReportID { get; set; }
+        public int ReportId { get; set; }
 
-        public int SalesOrderId { get; set; }
+        public int SaleOrderId { get; set; }
 
         public string SaleOrderNumber
         {
@@ -51,13 +51,13 @@ namespace EzPos.Model
 
         public float SubTotal { get; set; }
 
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
-        public int SaleItemID { get; set; }
+        public int SaleItemId { get; set; }
 
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
-        public int DiscountTypeID { get; set; }
+        public int DiscountTypeId { get; set; }
 
         public string CardNumber { get; set; }
 
@@ -74,5 +74,7 @@ namespace EzPos.Model
         public string CategoryStr { get; set; }
 
         public float PurchaseUnitPrice { get; set; }
+    
+        public float QtyBonus { get; set; }
     }
 }

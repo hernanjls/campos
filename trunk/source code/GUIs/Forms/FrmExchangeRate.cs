@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
@@ -30,8 +31,8 @@ namespace EzPos.GUIs.Forms
                 var exchangeRate = new ExchangeRate();
                 exchangeRate.ExchangeDateTime = dtpExchangeDate.Value;
                 exchangeRate.ExchangeValue = float.Parse(txtExchangeRate.Text);
-                exchangeRate.FromCurrencyID = Int32.Parse(cbbFromCurrency.SelectedValue.ToString());
-                exchangeRate.ToCurrencyID = Int32.Parse(cbbToCurrency.SelectedValue.ToString());
+                exchangeRate.FromCurrencyId = Int32.Parse(cbbFromCurrency.SelectedValue.ToString());
+                exchangeRate.ToCurrencyId = Int32.Parse(cbbToCurrency.SelectedValue.ToString());
 
                 _CommonService.InsertExchangeRate(exchangeRate);
 

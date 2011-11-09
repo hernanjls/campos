@@ -1,14 +1,14 @@
 using System;
 
-namespace EzPos.Model
+namespace EzPos.Model.Common
 {
     public class ExchangeRate
     {
-        public int ExchangeRateID { get; set; }
+        public int ExchangeRateId { get; set; }
 
-        public int FromCurrencyID { get; set; }
+        public int FromCurrencyId { get; set; }
 
-        public int ToCurrencyID { get; set; }
+        public int ToCurrencyId { get; set; }
 
         public float ExchangeValue { get; set; }
 

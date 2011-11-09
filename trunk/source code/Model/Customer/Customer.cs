@@ -1,15 +1,15 @@
-namespace EzPos.Model
+namespace EzPos.Model.Customer
 {
     /// <summary>
     /// Summary description for Customer.
     /// </summary>
     public class Customer
     {
-        public const string CONST_CUSTOMER_ID = "CustomerID";
-        public const string CONST_CUSTOMER_NAME = "CustomerName";
-        public const string CONST_CUSTOMER_DISPLAY_NAME = "DisplayName";
+        public const string ConstCustomerId = "CustomerId";
+        public const string ConstCustomerName = "CustomerName";
+        public const string ConstCustomerDisplayName = "DisplayName";
 
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         public string CustomerCode { get; set; }
 
@@ -25,7 +25,7 @@ namespace EzPos.Model
 
         public string Website { get; set; }
 
-        public int GenderID { get; set; }
+        public int GenderId { get; set; }
 
         public string GenderStr { get; set; }
 
@@ -39,7 +39,7 @@ namespace EzPos.Model
 
         public string DiscountCardType { get; set; }
 
-        public DiscountCard FKDiscountCard { get; set; }
+        public DiscountCard FkDiscountCard { get; set; }
 
         public int DiscountRejected { get; set; }
 

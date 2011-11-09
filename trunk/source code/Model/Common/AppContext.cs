@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Globalization;
 
-namespace EzPos.Model
+namespace EzPos.Model.Common
 {
     public class AppContext
     {
-        public static User User { get; set; }
+        public static User.User User { get; set; }
 
         public static ExchangeRate ExchangeRate { get; set; }
 

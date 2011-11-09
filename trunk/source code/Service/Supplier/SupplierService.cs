@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using Castle.Services.Transaction;
-using EzPos.DataAccess;
-using EzPos.Model;
+using EzPos.DataAccess.Supplier;
 using EzPos.Properties;
 using EzPos.Utility;
 
-namespace EzPos.Service
+namespace EzPos.Service.Supplier
 {
     /// <summary>
     /// Summary description for SupplierService.
@@ -14,16 +13,16 @@ namespace EzPos.Service
     [Transactional]
     public class SupplierService
     {
-        private readonly SupplierDataAccess _SupplierDataAccess;
+        private readonly SupplierDataAccess _supplierDataAccess;
 
         public SupplierService(SupplierDataAccess supplierDataAccess)
         {
-            _SupplierDataAccess = supplierDataAccess;
+            _supplierDataAccess = supplierDataAccess;
         }
 
         public IList GetSuppliers()
         {
-            return _SupplierDataAccess.GetSuppliers();
+            return _supplierDataAccess.GetSuppliers();
         }
 
         public IList GetSuppliers(IList searchCriteria)
@@ -31,159 +30,61 @@ namespace EzPos.Service
             if (searchCriteria == null)
                 throw new ArgumentNullException("searchCriteria", "Search Criteria");
 
-            var SupplierList = _SupplierDataAccess.GetSuppliers(searchCriteria);
-            return SupplierList;
+            var supplierList = _supplierDataAccess.GetSuppliers(searchCriteria);
+            return supplierList;
         }
 
-        public virtual void SupplierManagement(Supplier Supplier, string requestCode)
+        public virtual void SupplierManagement(Model.Supplier.Supplier supplier, string requestCode)
         {
             if (requestCode == null)
                 throw new ArgumentException("Request code", "requestCode");
 
-            if (Supplier == null)
-                throw new ArgumentNullException("Supplier", "Supplier");
+            if (supplier == null)
+                throw new ArgumentNullException("supplier", "Supplier");
 
             if (requestCode == Resources.OperationRequestInsert)
-                InsertSupplier(Supplier);
+                InsertSupplier(supplier);
             else if (requestCode == Resources.OperationRequestDuplicate)
             {
-                Supplier.SupplierId = 0;
-                InsertSupplier(Supplier);
+                supplier.SupplierId = 0;
+                InsertSupplier(supplier);
             }
             else if (requestCode == Resources.OperationRequestUpdate)
-                UpdateSupplier(Supplier);
+                UpdateSupplier(supplier);
             else
-                DeleteSupplier(Supplier);
+                DeleteSupplier(supplier);
         }
 
-        private void DeleteSupplier(Supplier Supplier)
+        private void DeleteSupplier(Model.Supplier.Supplier supplier)
         {
-            if (Supplier == null)
-                throw new ArgumentNullException("Supplier", "Supplier");
+            if (supplier == null)
+                throw new ArgumentNullException("supplier", "Supplier");
 
-            //int SupplierID = Supplier.SupplierId;
-            _SupplierDataAccess.DeleteSupplier(Supplier);
-
-            //IList dCardList = _SupplierDataAccess.GetDiscountCardsBySupplier(SupplierID);
-            //if (dCardList.Count != 0)
-            //{
-            //    var discountCard = (DiscountCard) dCardList[0];
-            //    discountCard.SupplierId = 0;
-            //    _SupplierDataAccess.UpdateDiscountCard(discountCard);
-            //}
+            _supplierDataAccess.DeleteSupplier(supplier);
         }
 
-        //public virtual IList GetDiscountCardsBySupplier(int SupplierID)
-        //{
-        //    return _SupplierDataAccess.GetDiscountCardsBySupplier(SupplierID);
-        //}
-
-        private void InsertSupplier(Supplier Supplier)
+        private void InsertSupplier(Model.Supplier.Supplier supplier)
         {
-            if (Supplier == null)
-                throw new ArgumentNullException("Supplier", "Supplier");
+            if (supplier == null)
+                throw new ArgumentNullException("supplier", "Supplier");
 
             //Insert Supplier
-            _SupplierDataAccess.InsertSupplier(Supplier);
+            _supplierDataAccess.InsertSupplier(supplier);
 
             //Updating Supplier code
-            Supplier.SupplierCode =
+            supplier.SupplierCode =
                 StringHelper.Right("00" + DateTime.Now.Year, 2) + "-" +
                 StringHelper.Right("00" + DateTime.Now.Month, 2) + "-" +
-                Supplier.SupplierId;
-            UpdateSupplier(Supplier);
+                supplier.SupplierId;
+            UpdateSupplier(supplier);
         }
 
-        private void UpdateSupplier(Supplier Supplier)
+        private void UpdateSupplier(Model.Supplier.Supplier supplier)
         {
-            if (Supplier == null)
-                throw new ArgumentNullException("Supplier", "Supplier");
+            if (supplier == null)
+                throw new ArgumentNullException("supplier", "Supplier");
 
-            _SupplierDataAccess.UpdateSupplier(Supplier);
+            _supplierDataAccess.UpdateSupplier(supplier);
         }
-
-        ////Discount card
-        //public IList GetDiscountCards()
-        //{
-        //    return _SupplierDataAccess.GetDiscountCards();
-        //}
-
-        //public IList GetDiscountCards(IList searchCriteria)
-        //{
-        //    if (searchCriteria == null)
-        //        throw new ArgumentNullException("searchCriteria", "Search Criteria");
-
-        //    return _SupplierDataAccess.GetDiscountCards(searchCriteria);
-        //}
-
-        //public IList GetUsedDiscountCards()
-        //{
-        //    return _SupplierDataAccess.GetUsedDiscountCards();
-        //}
-
-        //public virtual void DiscountCardManagement(DiscountCard discountCard, string requestCode)
-        //{
-        //    if (requestCode == null)
-        //        throw new ArgumentException("Request code", "requestCode");
-
-        //    if (discountCard == null)
-        //        throw new ArgumentNullException("discountCard", "discountCard");
-
-        //    if (requestCode == Resources.OperationRequestInsert)
-        //        InsertDiscountCard(discountCard);
-        //    else if (requestCode == Resources.OperationRequestDuplicate)
-        //    {
-        //        discountCard.DiscountCardID = 0;
-        //        InsertDiscountCard(discountCard);
-        //    }
-        //    else if (requestCode == Resources.OperationRequestUpdate)
-        //        UpdateDiscountCard(discountCard);
-        //    else
-        //        DeleteDiscountCard(discountCard);
-        //}
-
-        //private void InsertDiscountCard(DiscountCard discountCard)
-        //{
-        //    if (discountCard == null)
-        //        throw new ArgumentNullException("discountCard", "DiscountCard");
-
-        //    //Insert Supplier
-        //    _SupplierDataAccess.InsertDiscountCard(discountCard);
-
-        //    //Updating Supplier code
-        //    discountCard.CardNumber =
-        //        StringHelper.Right("000000000" + discountCard.DiscountCardID, 9);
-        //    UpdateDiscountCard(discountCard);
-        //}
-
-        //private void UpdateDiscountCard(DiscountCard discountCard)
-        //{
-        //    if (discountCard == null)
-        //        throw new ArgumentNullException("discountCard", "DiscountCard");
-
-        //    IList objList = _SupplierDataAccess.GetDiscountCardsBySupplier(discountCard.SupplierID);
-        //    if (objList != null)
-        //    {
-        //        if (objList.Count != 0)
-        //        {
-        //            foreach (DiscountCard dCard in objList)
-        //            {
-        //                dCard.SupplierID = 0;
-        //                _SupplierDataAccess.UpdateDiscountCard(dCard);
-        //            }
-        //        }
-        //    }
-
-        //    if (discountCard.DiscountCardID != 0)
-        //        _SupplierDataAccess.UpdateDiscountCard(discountCard);
-        //}
-
-        //private void DeleteDiscountCard(DiscountCard discountCard)
-        //{
-        //    if (discountCard == null)
-        //        throw new ArgumentNullException("discountCard", "DiscountCard");
-
-        //    _SupplierDataAccess.DeleteDiscountCard(discountCard);
-        //}
     }
 }

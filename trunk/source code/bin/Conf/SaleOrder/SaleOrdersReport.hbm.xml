@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
-	<class name="EzPos.Model.SaleOrderReport,EzPos" table="[TSaleOrdersReport]">
-    <id name="ReportID" column="ReportID" unsaved-value="0" type="Int32" >
+	<class name="EzPos.Model.SaleOrder.SaleOrderReport,EzPos" table="[TSaleOrdersReport]">
+    <id name="ReportId" column="ReportId" unsaved-value="0" type="Int32" >
       <generator class="identity" />
     </id>
-    <property name="SalesOrderId" column="SalesOrderId" type="Int32" />
+    <property name="SaleOrderId" column="SaleOrderId" type="Int32" />
     <property name="SaleOrderNumber" column="SaleOrderNumber" />
     <property name="SaleOrderDate" column="SaleOrderDate" />
-    <property name="CustomerID" column="CustomerID" type="Int32" />
+    <property name="CustomerId" column="CustomerId" type="Int32" />
     <property name="CustomerName" column="CustomerName" />
     <property name="CashierName" column="CashierName" />
     <property name="ExchangeRate" column="ExchangeRate" type="float" />
@@ -17,12 +17,12 @@
     <property name="AmountReturnInt" column="AmountReturnInt" type="float" />    
     <property name="AmountReturnRiel" column="AmountReturnRiel" type="float" />
     <property name="TotalDiscount" column="TotalDiscount" type="float" />
-    <property name="SaleItemID" column="SaleItemID" type="Int32" />
-    <property name="ProductID" column="ProductID" type="Int32" />
+    <property name="SaleItemId" column="SaleItemId" type="Int32" />
+    <property name="ProductId" column="ProductId" type="Int32" />
     <property name="ProductName" column="ProductName" />
     <property name="UnitPriceIn" column="UnitPriceIn" type="float" />
     <property name="UnitPriceOut" column="UnitPriceOut" type="float" />
-    <property name="DiscountTypeID" column="DiscountTypeID" type="Int32" />
+    <property name="DiscountTypeId" column="DiscountTypeId" type="Int32" />
     <property name="Discount" column="Discount" type="float" />
     <property name="CardNumber" column="CardNumber" />    
     <property name="QtySold" column="QtySold" type="float" />
@@ -34,5 +34,6 @@
     <property name="ProductCode" column="ProductCode" />
     <property name="CategoryStr" column="CategoryStr" />
     <property name="PurchaseUnitPrice" column="PurchaseUnitPrice" type="float" />
+    <property name="QtyBonus" column="QtyBonus" type="float" />
   </class>
 </hibernate-mapping>

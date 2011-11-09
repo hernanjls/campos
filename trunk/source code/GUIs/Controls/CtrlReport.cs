@@ -3,7 +3,11 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Deposit;
+using EzPos.Model.Expense;
+using EzPos.Model.Product;
+using EzPos.Model.SaleOrder;
 using EzPos.Service;
 using EzPos.GUIs.Forms;
 using EzPos.Properties;
@@ -12,8 +16,11 @@ using EzPos.GUIs.DataSets;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using EzPos.Service.Common;
+using EzPos.Service.Deposit;
+using EzPos.Service.Expense;
 using EzPos.Service.Product;
 using EzPos.Service.SaleOrder;
+using EzPos.Service.User;
 using Microsoft.Office.Interop.Excel;
 using ExcelApplication = Microsoft.Office.Interop.Excel.Application;
 using System.Runtime.InteropServices;
@@ -81,7 +88,7 @@ namespace EzPos.GUIs.Controls
             var searchCriteria = 
                 new List<string>
                 {
-                    "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 0)",
+                    "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeId = 0)",
                     "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
                     dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     "', 103) AND CONVERT(DATETIME, '" +
@@ -139,7 +146,7 @@ namespace EzPos.GUIs.Controls
             var searchCriteria = 
                 new List<string>
                 {
-                    "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeID = 1)",
+                    "SaleOrderNumber IN (SELECT SaleOrderNumber FROM TSaleOrders WHERE SaleOrderTypeId = 1)",
                     "SaleOrderDate BETWEEN CONVERT(DATETIME, '" +
                     dtpStartDate.Value.ToString("dd/MM/yyyy", AppContext.CultureInfo) +
                     "', 103) AND CONVERT(DATETIME, '" +
@@ -280,7 +287,7 @@ namespace EzPos.GUIs.Controls
                             frmMessageBox.ShowDialog(this);
                             return;
                         }
-                    }                    
+                    }
                 }
 
                 crvReport.BringToFront();

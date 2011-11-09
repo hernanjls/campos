@@ -1,6 +1,7 @@
 ﻿using EzPos.GUIs.Components;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.Customer;
 
 namespace EzPos.GUIs.Forms
 {

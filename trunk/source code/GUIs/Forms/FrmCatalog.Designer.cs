@@ -72,6 +72,12 @@ namespace EzPos.GUIs.Forms
             this.tmsGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblPromotion = new System.Windows.Forms.Label();
+            this.txtQtyPromotion = new System.Windows.Forms.TextBox();
+            this.lblQtyPromotion = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblQtyBonus = new System.Windows.Forms.Label();
+            this.txtQtyBonus = new System.Windows.Forms.TextBox();
             this.pnlBody.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbProduct)).BeginInit();
             this.pnlHeader.SuspendLayout();
@@ -82,7 +88,7 @@ namespace EzPos.GUIs.Forms
             // lblCategory
             // 
             this.lblCategory.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCategory.Location = new System.Drawing.Point(28, 53);
+            this.lblCategory.Location = new System.Drawing.Point(25, 58);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(122, 38);
             this.lblCategory.TabIndex = 2;
@@ -92,7 +98,7 @@ namespace EzPos.GUIs.Forms
             // lblMark
             // 
             this.lblMark.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMark.Location = new System.Drawing.Point(28, 96);
+            this.lblMark.Location = new System.Drawing.Point(25, 101);
             this.lblMark.Name = "lblMark";
             this.lblMark.Size = new System.Drawing.Size(122, 28);
             this.lblMark.TabIndex = 4;
@@ -102,7 +108,7 @@ namespace EzPos.GUIs.Forms
             // lblColor
             // 
             this.lblColor.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColor.Location = new System.Drawing.Point(29, 134);
+            this.lblColor.Location = new System.Drawing.Point(26, 139);
             this.lblColor.Name = "lblColor";
             this.lblColor.Size = new System.Drawing.Size(122, 28);
             this.lblColor.TabIndex = 6;
@@ -112,7 +118,7 @@ namespace EzPos.GUIs.Forms
             // lblUPIn
             // 
             this.lblUPIn.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUPIn.Location = new System.Drawing.Point(28, 307);
+            this.lblUPIn.Location = new System.Drawing.Point(25, 312);
             this.lblUPIn.Name = "lblUPIn";
             this.lblUPIn.Size = new System.Drawing.Size(122, 32);
             this.lblUPIn.TabIndex = 14;
@@ -122,9 +128,9 @@ namespace EzPos.GUIs.Forms
             // txtUPIn
             // 
             this.txtUPIn.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUPIn.Location = new System.Drawing.Point(156, 304);
+            this.txtUPIn.Location = new System.Drawing.Point(153, 309);
             this.txtUPIn.Name = "txtUPIn";
-            this.txtUPIn.Size = new System.Drawing.Size(230, 36);
+            this.txtUPIn.Size = new System.Drawing.Size(266, 36);
             this.txtUPIn.TabIndex = 15;
             this.txtUPIn.Text = "0.00";
             this.txtUPIn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -134,7 +140,7 @@ namespace EzPos.GUIs.Forms
             // lblUPOut
             // 
             this.lblUPOut.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUPOut.Location = new System.Drawing.Point(28, 384);
+            this.lblUPOut.Location = new System.Drawing.Point(25, 389);
             this.lblUPOut.Name = "lblUPOut";
             this.lblUPOut.Size = new System.Drawing.Size(122, 31);
             this.lblUPOut.TabIndex = 20;
@@ -144,9 +150,9 @@ namespace EzPos.GUIs.Forms
             // txtUPOut
             // 
             this.txtUPOut.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUPOut.Location = new System.Drawing.Point(156, 380);
+            this.txtUPOut.Location = new System.Drawing.Point(153, 385);
             this.txtUPOut.Name = "txtUPOut";
-            this.txtUPOut.Size = new System.Drawing.Size(230, 36);
+            this.txtUPOut.Size = new System.Drawing.Size(266, 36);
             this.txtUPOut.TabIndex = 21;
             this.txtUPOut.Text = "0.00";
             this.txtUPOut.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -157,7 +163,7 @@ namespace EzPos.GUIs.Forms
             // lblExtraPercentage
             // 
             this.lblExtraPercentage.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExtraPercentage.Location = new System.Drawing.Point(29, 347);
+            this.lblExtraPercentage.Location = new System.Drawing.Point(26, 352);
             this.lblExtraPercentage.Name = "lblExtraPercentage";
             this.lblExtraPercentage.Size = new System.Drawing.Size(121, 28);
             this.lblExtraPercentage.TabIndex = 16;
@@ -167,9 +173,9 @@ namespace EzPos.GUIs.Forms
             // txtExtraPercentage
             // 
             this.txtExtraPercentage.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExtraPercentage.Location = new System.Drawing.Point(156, 342);
+            this.txtExtraPercentage.Location = new System.Drawing.Point(153, 347);
             this.txtExtraPercentage.Name = "txtExtraPercentage";
-            this.txtExtraPercentage.Size = new System.Drawing.Size(70, 36);
+            this.txtExtraPercentage.Size = new System.Drawing.Size(85, 36);
             this.txtExtraPercentage.TabIndex = 17;
             this.txtExtraPercentage.Text = "0";
             this.txtExtraPercentage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -180,7 +186,7 @@ namespace EzPos.GUIs.Forms
             // 
             this.lblQtyInStock.AutoSize = true;
             this.lblQtyInStock.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQtyInStock.Location = new System.Drawing.Point(76, 435);
+            this.lblQtyInStock.Location = new System.Drawing.Point(73, 440);
             this.lblQtyInStock.Name = "lblQtyInStock";
             this.lblQtyInStock.Size = new System.Drawing.Size(74, 30);
             this.lblQtyInStock.TabIndex = 24;
@@ -189,9 +195,9 @@ namespace EzPos.GUIs.Forms
             // txtQtyInStock
             // 
             this.txtQtyInStock.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtQtyInStock.Location = new System.Drawing.Point(156, 429);
+            this.txtQtyInStock.Location = new System.Drawing.Point(153, 434);
             this.txtQtyInStock.Name = "txtQtyInStock";
-            this.txtQtyInStock.Size = new System.Drawing.Size(230, 36);
+            this.txtQtyInStock.Size = new System.Drawing.Size(266, 36);
             this.txtQtyInStock.TabIndex = 25;
             this.txtQtyInStock.Text = "1";
             this.txtQtyInStock.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -201,7 +207,7 @@ namespace EzPos.GUIs.Forms
             // lblDiscount
             // 
             this.lblDiscount.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDiscount.Location = new System.Drawing.Point(232, 345);
+            this.lblDiscount.Location = new System.Drawing.Point(244, 350);
             this.lblDiscount.Name = "lblDiscount";
             this.lblDiscount.Size = new System.Drawing.Size(78, 33);
             this.lblDiscount.TabIndex = 18;
@@ -211,9 +217,9 @@ namespace EzPos.GUIs.Forms
             // txtDiscount
             // 
             this.txtDiscount.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDiscount.Location = new System.Drawing.Point(316, 342);
+            this.txtDiscount.Location = new System.Drawing.Point(330, 347);
             this.txtDiscount.Name = "txtDiscount";
-            this.txtDiscount.Size = new System.Drawing.Size(70, 36);
+            this.txtDiscount.Size = new System.Drawing.Size(89, 36);
             this.txtDiscount.TabIndex = 19;
             this.txtDiscount.Text = "0";
             this.txtDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -223,9 +229,9 @@ namespace EzPos.GUIs.Forms
             // grbLine_1
             // 
             this.grbLine_1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.grbLine_1.Location = new System.Drawing.Point(34, 297);
+            this.grbLine_1.Location = new System.Drawing.Point(31, 302);
             this.grbLine_1.Name = "grbLine_1";
-            this.grbLine_1.Size = new System.Drawing.Size(352, 2);
+            this.grbLine_1.Size = new System.Drawing.Size(388, 2);
             this.grbLine_1.TabIndex = 13;
             this.grbLine_1.TabStop = false;
             // 
@@ -234,6 +240,12 @@ namespace EzPos.GUIs.Forms
             this.pnlBody.BackColor = System.Drawing.Color.White;
             this.pnlBody.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pnlBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlBody.Controls.Add(this.txtQtyBonus);
+            this.pnlBody.Controls.Add(this.lblQtyBonus);
+            this.pnlBody.Controls.Add(this.lblPromotion);
+            this.pnlBody.Controls.Add(this.txtQtyPromotion);
+            this.pnlBody.Controls.Add(this.lblQtyPromotion);
+            this.pnlBody.Controls.Add(this.groupBox2);
             this.pnlBody.Controls.Add(this.txtDescription);
             this.pnlBody.Controls.Add(this.label1);
             this.pnlBody.Controls.Add(this.cmbProduct);
@@ -267,17 +279,17 @@ namespace EzPos.GUIs.Forms
             this.pnlBody.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlBody.Location = new System.Drawing.Point(0, 89);
             this.pnlBody.Name = "pnlBody";
-            this.pnlBody.Size = new System.Drawing.Size(757, 483);
+            this.pnlBody.Size = new System.Drawing.Size(831, 543);
             this.pnlBody.TabIndex = 1;
             // 
             // txtDescription
             // 
             this.txtDescription.BackColor = System.Drawing.SystemColors.Info;
             this.txtDescription.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescription.Location = new System.Drawing.Point(156, 205);
+            this.txtDescription.Location = new System.Drawing.Point(153, 210);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(230, 86);
+            this.txtDescription.Size = new System.Drawing.Size(266, 86);
             this.txtDescription.TabIndex = 11;
             this.txtDescription.Leave += new System.EventHandler(this.TxtDescriptionLeave);
             this.txtDescription.Enter += new System.EventHandler(this.TxtDescriptionEnter);
@@ -286,7 +298,7 @@ namespace EzPos.GUIs.Forms
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(76, 211);
+            this.label1.Location = new System.Drawing.Point(73, 216);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 30);
             this.label1.TabIndex = 10;
@@ -295,7 +307,7 @@ namespace EzPos.GUIs.Forms
             // cmbProduct
             // 
             this.cmbProduct.FormattingEnabled = true;
-            this.cmbProduct.Location = new System.Drawing.Point(397, 15);
+            this.cmbProduct.Location = new System.Drawing.Point(429, 20);
             this.cmbProduct.Name = "cmbProduct";
             this.cmbProduct.Size = new System.Drawing.Size(279, 30);
             this.cmbProduct.Sorted = true;
@@ -307,9 +319,9 @@ namespace EzPos.GUIs.Forms
             // 
             this.txtForeignCode.BackColor = System.Drawing.SystemColors.Info;
             this.txtForeignCode.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtForeignCode.Location = new System.Drawing.Point(156, 15);
+            this.txtForeignCode.Location = new System.Drawing.Point(153, 20);
             this.txtForeignCode.Name = "txtForeignCode";
-            this.txtForeignCode.Size = new System.Drawing.Size(230, 36);
+            this.txtForeignCode.Size = new System.Drawing.Size(266, 36);
             this.txtForeignCode.TabIndex = 1;
             this.txtForeignCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtForeignCode.Leave += new System.EventHandler(this.TxtProductCodeLeave);
@@ -319,7 +331,7 @@ namespace EzPos.GUIs.Forms
             // 
             this.lblProductCode.AutoSize = true;
             this.lblProductCode.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProductCode.Location = new System.Drawing.Point(76, 21);
+            this.lblProductCode.Location = new System.Drawing.Point(73, 26);
             this.lblProductCode.Name = "lblProductCode";
             this.lblProductCode.Size = new System.Drawing.Size(74, 30);
             this.lblProductCode.TabIndex = 0;
@@ -328,7 +340,7 @@ namespace EzPos.GUIs.Forms
             // lblSize
             // 
             this.lblSize.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSize.Location = new System.Drawing.Point(81, 172);
+            this.lblSize.Location = new System.Drawing.Point(78, 177);
             this.lblSize.Name = "lblSize";
             this.lblSize.Size = new System.Drawing.Size(70, 28);
             this.lblSize.TabIndex = 8;
@@ -340,9 +352,9 @@ namespace EzPos.GUIs.Forms
             this.cmbSize.BackColor = System.Drawing.SystemColors.Info;
             this.cmbSize.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbSize.FormattingEnabled = true;
-            this.cmbSize.Location = new System.Drawing.Point(156, 167);
+            this.cmbSize.Location = new System.Drawing.Point(153, 172);
             this.cmbSize.Name = "cmbSize";
-            this.cmbSize.Size = new System.Drawing.Size(230, 36);
+            this.cmbSize.Size = new System.Drawing.Size(266, 36);
             this.cmbSize.TabIndex = 9;
             this.cmbSize.Leave += new System.EventHandler(this.CmbSizeLeave);
             this.cmbSize.Enter += new System.EventHandler(this.CmbSizeEnter);
@@ -351,7 +363,7 @@ namespace EzPos.GUIs.Forms
             // 
             this.lblQty.AutoSize = true;
             this.lblQty.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQty.Location = new System.Drawing.Point(28, 407);
+            this.lblQty.Location = new System.Drawing.Point(25, 412);
             this.lblQty.Name = "lblQty";
             this.lblQty.Size = new System.Drawing.Size(77, 29);
             this.lblQty.TabIndex = 22;
@@ -361,7 +373,7 @@ namespace EzPos.GUIs.Forms
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(28, 281);
+            this.label3.Location = new System.Drawing.Point(25, 286);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 29);
             this.label3.TabIndex = 12;
@@ -371,9 +383,9 @@ namespace EzPos.GUIs.Forms
             // 
             this.ptbProduct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ptbProduct.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ptbProduct.Location = new System.Drawing.Point(397, 15);
+            this.ptbProduct.Location = new System.Drawing.Point(427, 20);
             this.ptbProduct.Name = "ptbProduct";
-            this.ptbProduct.Size = new System.Drawing.Size(330, 450);
+            this.ptbProduct.Size = new System.Drawing.Size(377, 501);
             this.ptbProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ptbProduct.TabIndex = 101;
             this.ptbProduct.TabStop = false;
@@ -382,7 +394,7 @@ namespace EzPos.GUIs.Forms
             // txtPhotoPath
             // 
             this.txtPhotoPath.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhotoPath.Location = new System.Drawing.Point(400, 199);
+            this.txtPhotoPath.Location = new System.Drawing.Point(427, 204);
             this.txtPhotoPath.Name = "txtPhotoPath";
             this.txtPhotoPath.Size = new System.Drawing.Size(230, 26);
             this.txtPhotoPath.TabIndex = 27;
@@ -393,9 +405,9 @@ namespace EzPos.GUIs.Forms
             this.cmbColor.BackColor = System.Drawing.SystemColors.Info;
             this.cmbColor.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbColor.FormattingEnabled = true;
-            this.cmbColor.Location = new System.Drawing.Point(156, 129);
+            this.cmbColor.Location = new System.Drawing.Point(153, 134);
             this.cmbColor.Name = "cmbColor";
-            this.cmbColor.Size = new System.Drawing.Size(230, 36);
+            this.cmbColor.Size = new System.Drawing.Size(266, 36);
             this.cmbColor.TabIndex = 7;
             this.cmbColor.Leave += new System.EventHandler(this.CmbColorLeave);
             this.cmbColor.Enter += new System.EventHandler(this.CmbColorEnter);
@@ -405,9 +417,9 @@ namespace EzPos.GUIs.Forms
             this.cmbMark.BackColor = System.Drawing.SystemColors.Info;
             this.cmbMark.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMark.FormattingEnabled = true;
-            this.cmbMark.Location = new System.Drawing.Point(156, 91);
+            this.cmbMark.Location = new System.Drawing.Point(153, 96);
             this.cmbMark.Name = "cmbMark";
-            this.cmbMark.Size = new System.Drawing.Size(230, 36);
+            this.cmbMark.Size = new System.Drawing.Size(266, 36);
             this.cmbMark.TabIndex = 5;
             this.cmbMark.Leave += new System.EventHandler(this.CmbMarkLeave);
             this.cmbMark.Enter += new System.EventHandler(this.CmbMarkEnter);
@@ -418,9 +430,9 @@ namespace EzPos.GUIs.Forms
             this.cmbCategory.DropDownWidth = 230;
             this.cmbCategory.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(156, 53);
+            this.cmbCategory.Location = new System.Drawing.Point(153, 58);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(230, 36);
+            this.cmbCategory.Size = new System.Drawing.Size(266, 36);
             this.cmbCategory.TabIndex = 3;
             this.cmbCategory.Leave += new System.EventHandler(this.CmbCategoryLeave);
             this.cmbCategory.Enter += new System.EventHandler(this.CmbCategoryEnter);
@@ -428,9 +440,9 @@ namespace EzPos.GUIs.Forms
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.groupBox1.Location = new System.Drawing.Point(104, 422);
+            this.groupBox1.Location = new System.Drawing.Point(101, 427);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(282, 2);
+            this.groupBox1.Size = new System.Drawing.Size(318, 2);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             // 
@@ -442,7 +454,7 @@ namespace EzPos.GUIs.Forms
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(757, 89);
+            this.pnlHeader.Size = new System.Drawing.Size(831, 89);
             this.pnlHeader.TabIndex = 103;
             // 
             // lblProductName
@@ -453,7 +465,7 @@ namespace EzPos.GUIs.Forms
             this.lblProductName.ForeColor = System.Drawing.Color.Yellow;
             this.lblProductName.Location = new System.Drawing.Point(0, 0);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(757, 89);
+            this.lblProductName.Size = new System.Drawing.Size(831, 89);
             this.lblProductName.TabIndex = 0;
             this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -465,9 +477,9 @@ namespace EzPos.GUIs.Forms
             this.pnlFooter.Controls.Add(this.btnCancel);
             this.pnlFooter.Controls.Add(this.btnSave);
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlFooter.Location = new System.Drawing.Point(0, 572);
+            this.pnlFooter.Location = new System.Drawing.Point(0, 632);
             this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(757, 48);
+            this.pnlFooter.Size = new System.Drawing.Size(831, 48);
             this.pnlFooter.TabIndex = 2;
             // 
             // btnAdjustment
@@ -569,13 +581,76 @@ namespace EzPos.GUIs.Forms
             this.tsmImport.Text = "នាំចូលមកពីឃ្លាំង";
             this.tsmImport.Click += new System.EventHandler(this.TsmImportClick);
             // 
+            // lblPromotion
+            // 
+            this.lblPromotion.AutoSize = true;
+            this.lblPromotion.Font = new System.Drawing.Font("Khmer OS System", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPromotion.Location = new System.Drawing.Point(25, 463);
+            this.lblPromotion.Name = "lblPromotion";
+            this.lblPromotion.Size = new System.Drawing.Size(117, 29);
+            this.lblPromotion.TabIndex = 102;
+            this.lblPromotion.Text = "កម្មវិធីពិសេស";
+            // 
+            // txtQtyPromotion
+            // 
+            this.txtQtyPromotion.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQtyPromotion.Location = new System.Drawing.Point(153, 485);
+            this.txtQtyPromotion.Name = "txtQtyPromotion";
+            this.txtQtyPromotion.Size = new System.Drawing.Size(110, 36);
+            this.txtQtyPromotion.TabIndex = 105;
+            this.txtQtyPromotion.Text = "0";
+            this.txtQtyPromotion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtQtyPromotion.Leave += new System.EventHandler(this.TxtQtyPromotionLeave);
+            this.txtQtyPromotion.Enter += new System.EventHandler(this.TxtQtyPromotionEnter);
+            // 
+            // lblQtyPromotion
+            // 
+            this.lblQtyPromotion.AutoSize = true;
+            this.lblQtyPromotion.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblQtyPromotion.Location = new System.Drawing.Point(73, 491);
+            this.lblQtyPromotion.Name = "lblQtyPromotion";
+            this.lblQtyPromotion.Size = new System.Drawing.Size(73, 30);
+            this.lblQtyPromotion.TabIndex = 104;
+            this.lblQtyPromotion.Text = "ទិញអស់";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.groupBox2.Location = new System.Drawing.Point(101, 478);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(318, 2);
+            this.groupBox2.TabIndex = 103;
+            this.groupBox2.TabStop = false;
+            // 
+            // lblQtyBonus
+            // 
+            this.lblQtyBonus.AutoSize = true;
+            this.lblQtyBonus.Font = new System.Drawing.Font("Khmer OS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblQtyBonus.Location = new System.Drawing.Point(269, 491);
+            this.lblQtyBonus.Name = "lblQtyBonus";
+            this.lblQtyBonus.Size = new System.Drawing.Size(44, 30);
+            this.lblQtyBonus.TabIndex = 106;
+            this.lblQtyBonus.Text = "ថែម";
+            // 
+            // txtQtyBonus
+            // 
+            this.txtQtyBonus.Font = new System.Drawing.Font("Candara", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQtyBonus.Location = new System.Drawing.Point(309, 485);
+            this.txtQtyBonus.Name = "txtQtyBonus";
+            this.txtQtyBonus.Size = new System.Drawing.Size(110, 36);
+            this.txtQtyBonus.TabIndex = 107;
+            this.txtQtyBonus.Text = "0";
+            this.txtQtyBonus.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtQtyBonus.Leave += new System.EventHandler(this.TxtQtyBonusLeave);
+            this.txtQtyBonus.Enter += new System.EventHandler(this.TxtQtyBonusEnter);
+            // 
             // FrmCatalog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(757, 620);
+            this.ClientSize = new System.Drawing.Size(831, 680);
             this.Controls.Add(this.pnlBody);
             this.Controls.Add(this.pnlFooter);
             this.Controls.Add(this.pnlHeader);
@@ -638,5 +713,11 @@ namespace EzPos.GUIs.Forms
         private System.Windows.Forms.TextBox txtPhotoPath;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtQtyBonus;
+        private System.Windows.Forms.Label lblQtyBonus;
+        private System.Windows.Forms.Label lblPromotion;
+        private System.Windows.Forms.TextBox txtQtyPromotion;
+        private System.Windows.Forms.Label lblQtyPromotion;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

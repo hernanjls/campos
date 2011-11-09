@@ -4,19 +4,23 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
-using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.Customer;
+using EzPos.Model.Deposit;
+using EzPos.Model.SaleOrder;
 using EzPos.Properties;
 using EzPos.Service;
 using EzPos.Service.Common;
+using EzPos.Service.User;
 
 namespace EzPos.GUIs.Forms
 {
     public partial class FrmSaleSearch : Form
     {
-        private CommonService CommonService;
-        private BindingList<SaleOrderReport> SaleOrderReportList;
-        private IList DepositReportList;
-        private string SoNumber = string.Empty;
+        private CommonService _commonService;
+        private BindingList<SaleOrderReport> _saleOrderReportList;
+        private IList _depositReportList;
+        private string _soNumber = string.Empty;
 
         public FrmSaleSearch()
         {
@@ -25,15 +29,15 @@ namespace EzPos.GUIs.Forms
 
         public string SearchSoNumber
         {
-            get { return SoNumber; }
+            get { return _soNumber; }
         }
 
         private void FrmSaleOrderSearch_Load(object sender, EventArgs e)
         {
             try
             {
-                if (CommonService == null)
-                    CommonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
+                if (_commonService == null)
+                    _commonService = ServiceFactory.GenerateServiceInstance().GenerateCommonService();
 
                 dtpStartDate.Value = DateTime.Now.AddMonths(-1);
                 InitializeSaleOrderReportList();
@@ -80,11 +84,11 @@ namespace EzPos.GUIs.Forms
 
                         if (cmbCustomer.SelectedItem != null)
                             searchCriteria.Add(
-                                "CustomerID = " + Int32.Parse(cmbCustomer.SelectedValue.ToString()));
+                                "CustomerId = " + Int32.Parse(cmbCustomer.SelectedValue.ToString()));
 
                         if (!String.IsNullOrEmpty(txtPhoneNumber.Text))
                             searchCriteria.Add(
-                                "CustomerID IN (SELECT CustomerID FROM TCustomers WHERE PhoneNumber LIKE '%" +
+                                "CustomerId IN (SELECT CustomerId FROM TCustomers WHERE PhoneNumber LIKE '%" +
                                 txtPhoneNumber.Text + "%')");
 
                         if (!String.IsNullOrEmpty(txtCardNumber.Text))
@@ -93,27 +97,27 @@ namespace EzPos.GUIs.Forms
 
                         if (cmbDiscountType.SelectedItem != null)
                             searchCriteria.Add(
-                                "DiscountTypeID = " +
+                                "DiscountTypeId = " +
                                 Int32.Parse(cmbDiscountType.SelectedValue.ToString()));
 
                         if (cmbCategory.SelectedItem != null)
                             searchCriteria.Add(
-                                "ProductID IN (SELECT ProductID FROM TProducts WHERE CategoryID =  " +
+                                "ProductId IN (SELECT ProductId FROM TProducts WHERE CategoryId =  " +
                                 Int32.Parse(cmbCategory.SelectedValue.ToString()) + ")");
 
                         if (cmbBrand.SelectedItem != null)
                             searchCriteria.Add(
-                                "ProductID IN (SELECT ProductID FROM TProducts WHERE MarkID =  " +
+                                "ProductId IN (SELECT ProductId FROM TProducts WHERE MarkId =  " +
                                 Int32.Parse(cmbBrand.SelectedValue.ToString()) + ")");
 
                         if (cmbColor.SelectedItem != null)
                             searchCriteria.Add(
-                                "ProductID IN (SELECT ProductID FROM TProducts WHERE ColorID =  " +
+                                "ProductId IN (SELECT ProductId FROM TProducts WHERE ColorId =  " +
                                 Int32.Parse(cmbColor.SelectedValue.ToString()) + ")");
 
                         if (!String.IsNullOrEmpty(txtProductCode.Text))
                             searchCriteria.Add(
-                                "ProductID IN (SELECT ProductID FROM TProducts WHERE (ProductCode LIKE '%" +
+                                "ProductId IN (SELECT ProductId FROM TProducts WHERE (ProductCode LIKE '%" +
                                 txtProductCode.Text + "%') OR (ForeignCode LIKE '%" + txtProductCode.Text + "%'))");
 
                         var saleOrderService =
@@ -123,7 +127,7 @@ namespace EzPos.GUIs.Forms
 
                         var searchInfo = String.Format(
                             "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
-                            SaleOrderReportList.Count);
+                            _saleOrderReportList.Count);
                         lblSearchInfo.Text = searchInfo;
                     }
                     else
@@ -150,7 +154,7 @@ namespace EzPos.GUIs.Forms
 
                         if (!String.IsNullOrEmpty(txtPhoneNumber.Text))
                             searchCriteria.Add(
-                                "a.CustomerId IN (SELECT CustomerID FROM TCustomers WHERE PhoneNumber LIKE '%" +
+                                "a.CustomerId IN (SELECT CustomerId FROM TCustomers WHERE PhoneNumber LIKE '%" +
                                 txtPhoneNumber.Text + "%')");
 
                         if (!String.IsNullOrEmpty(txtCardNumber.Text))
@@ -164,32 +168,32 @@ namespace EzPos.GUIs.Forms
 
                         if (cmbCategory.SelectedItem != null)
                             searchCriteria.Add(
-                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE CategoryID =  " +
+                                "e.ProductId IN (SELECT ProductId FROM TProducts WHERE CategoryId =  " +
                                 Int32.Parse(cmbCategory.SelectedValue.ToString()) + ")");
 
                         if (cmbBrand.SelectedItem != null)
                             searchCriteria.Add(
-                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE MarkID =  " +
+                                "e.ProductId IN (SELECT ProductId FROM TProducts WHERE MarkId =  " +
                                 Int32.Parse(cmbBrand.SelectedValue.ToString()) + ")");
 
                         if (cmbColor.SelectedItem != null)
                             searchCriteria.Add(
-                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE ColorID =  " +
+                                "e.ProductId IN (SELECT ProductId FROM TProducts WHERE ColorId =  " +
                                 Int32.Parse(cmbColor.SelectedValue.ToString()) + ")");
 
                         if (!String.IsNullOrEmpty(txtProductCode.Text))
                             searchCriteria.Add(
-                                "e.ProductID IN (SELECT ProductID FROM TProducts WHERE ProductCode LIKE '%" +
+                                "e.ProductId IN (SELECT ProductId FROM TProducts WHERE ProductCode LIKE '%" +
                                 txtProductCode.Text + "%')");
 
                         var depositService =
                             ServiceFactory.GenerateServiceInstance().GenerateDepositService();
-                        DepositReportList = depositService.GetDepositHistories(searchCriteria, true);
+                        _depositReportList = depositService.GetDepositHistories(searchCriteria, true);
                         IListToBindingList(
-                            depositService.GetSaleHistories(DepositReportList));
+                            depositService.GetSaleHistories(_depositReportList));
                         var searchInfo = String.Format(
                             "ការ​ស្វែងរក​របស់​អ្នក​ផ្ដល់​លទ្ឋផល​ចំនួន {0}",
-                            DepositReportList.Count);
+                            _depositReportList.Count);
                         lblSearchInfo.Text = searchInfo;
                     }
                     SetVisibleControls(false);
@@ -216,30 +220,30 @@ namespace EzPos.GUIs.Forms
                 Invoke(safeCrossCallBackDelegate);
             else
             {
-                var searchCriteria = new List<string> {"ParameterTypeID IN (1, 4, 3, 20)"};
+                var searchCriteria = new List<string> {"ParameterTypeId IN (1, 4, 3, 20)"};
 
                 var objList =
-                    CommonService.GetAppParameters(searchCriteria);
+                    _commonService.GetAppParameters(searchCriteria);
 
-                CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbDiscountType,
                     objList,
                     int.Parse(Resources.AppParamDiscountType, AppContext.CultureInfo),
                     false);
 
-                CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbCategory,
                     objList,
                     int.Parse(Resources.AppParamCategory, AppContext.CultureInfo),
                     false);
 
-                CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbBrand,
                     objList,
                     int.Parse(Resources.AppParamMark, AppContext.CultureInfo),
                     false);
 
-                CommonService.PopAppParamExtendedCombobox(
+                _commonService.PopAppParamExtendedCombobox(
                     ref cmbColor,
                     objList,
                     int.Parse(Resources.AppParamColor, AppContext.CultureInfo),
@@ -247,13 +251,13 @@ namespace EzPos.GUIs.Forms
 
                 searchCriteria.Clear();
                 searchCriteria.Add(
-                    "CustomerID IN (SELECT DISTINCT CustomerID FROM TSaleOrders WHERE CustomerID IS NOT NULL)");
+                    "CustomerId IN (SELECT DISTINCT CustomerId FROM TSaleOrders WHERE CustomerId IS NOT NULL)");
                 objList =
                     ServiceFactory.GenerateServiceInstance().GenerateCustomerService().GetCustomers(searchCriteria);
                 cmbCustomer.CustomizedDataBinding(
                     objList,
-                    Customer.CONST_CUSTOMER_NAME,
-                    Customer.CONST_CUSTOMER_ID,
+                    Customer.ConstCustomerName,
+                    Customer.ConstCustomerId,
                     false);
             }
         }
@@ -299,10 +303,10 @@ namespace EzPos.GUIs.Forms
         {
             try
             {
-                if (SaleOrderReportList == null)
-                    SaleOrderReportList = new BindingList<SaleOrderReport>();
+                if (_saleOrderReportList == null)
+                    _saleOrderReportList = new BindingList<SaleOrderReport>();
 
-                dgvSearchResult.DataSource = SaleOrderReportList;
+                dgvSearchResult.DataSource = _saleOrderReportList;
                 dgvSearchResult.Columns["SaleOrderNumber"].DisplayIndex = 0;
                 dgvSearchResult.Columns["SaleOrderDate"].DisplayIndex = 1;
                 dgvSearchResult.Columns["CustomerName"].DisplayIndex = 2;
@@ -326,9 +330,9 @@ namespace EzPos.GUIs.Forms
 
             try
             {
-                SaleOrderReportList.Clear();
+                _saleOrderReportList.Clear();
                 foreach (SaleOrderReport saleOrderReport in saleOrderReportList)
-                    SaleOrderReportList.Add(saleOrderReport);
+                    _saleOrderReportList.Add(saleOrderReport);
             }
             catch (Exception exception)
             {
@@ -346,10 +350,10 @@ namespace EzPos.GUIs.Forms
             if (e == null)
                 return;
 
-            if (SaleOrderReportList.Count == 0)
+            if (_saleOrderReportList.Count == 0)
                 return;
 
-            SoNumber = (SaleOrderReportList[e.RowIndex]).SaleOrderNumber;
+            _soNumber = (_saleOrderReportList[e.RowIndex]).SaleOrderNumber;
             DialogResult = DialogResult.OK;
         }
 
@@ -385,16 +389,16 @@ namespace EzPos.GUIs.Forms
                 }
             }
 
-            if (DepositReportList == null)
+            if (_depositReportList == null)
                 return;
 
-            if (DepositReportList.Count == 0)
+            if (_depositReportList.Count == 0)
                 return;
 
             if (dgvSearchResult.CurrentRow == null)
                 return;
 
-            var depositReport = DepositReportList[dgvSearchResult.CurrentRow.Index] as DepositReport;
+            var depositReport = _depositReportList[dgvSearchResult.CurrentRow.Index] as DepositReport;
             if(depositReport == null)
                 return;
 
@@ -424,7 +428,7 @@ namespace EzPos.GUIs.Forms
                 deposit.AmountSoldInt,
                 deposit.AmountPaidInt,
                 0,
-                deposit.FKCustomer,
+                deposit.FkCustomer,
                 deposit.DepositNumber,
                 deposit.Discount,
                 true);

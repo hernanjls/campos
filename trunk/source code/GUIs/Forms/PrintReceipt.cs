@@ -5,6 +5,8 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
 using EzPos.Model;
+using EzPos.Model.Common;
+using EzPos.Model.SaleOrder;
 using EzPos.Properties;
 using Microsoft.Office.Interop.Excel;
 using Font = System.Drawing.Font;
@@ -192,11 +194,11 @@ namespace EzPos.GUIs.Forms
 
             posY = 165;
             fontInUsed = new Font("Arial", 8, FontStyle.Regular);
-            foreach (var saleItem in _bindingListObj.Where(saleItem => saleItem.ProductID != 0))
+            foreach (var saleItem in _bindingListObj.Where(saleItem => saleItem.ProductId != 0))
             {
                 //Name
                 fontInUsed = new Font("Khmer OS Regular", 20, FontStyle.Bold);
-                textToPrint = saleItem.FKProduct.Description;
+                textToPrint = saleItem.FkProduct.Description;
                 if (string.IsNullOrEmpty(textToPrint))
                 {
                     textToPrint = saleItem.ProductName;
@@ -229,7 +231,7 @@ namespace EzPos.GUIs.Forms
                     190 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width,
                     posY);
                 //UnitPrice
-                textToPrint = Math.Round(saleItem.PublicUPOut, 2).ToString("N2", AppContext.CultureInfo);
+                textToPrint = Math.Round(saleItem.PublicUpOut, 2).ToString("N2", AppContext.CultureInfo);
                 e.Graphics.DrawString(
                     textToPrint,
                     fontInUsed,
@@ -237,7 +239,7 @@ namespace EzPos.GUIs.Forms
                     232 - e.Graphics.MeasureString(textToPrint, fontInUsed).Width,
                     posY);
                 //SubTotal
-                textToPrint = Math.Round((saleItem.QtySold * saleItem.PublicUPOut), 2).ToString("N2",
+                textToPrint = Math.Round((saleItem.QtySold * saleItem.PublicUpOut), 2).ToString("N2",
                                                                                               AppContext.CultureInfo);
                 e.Graphics.DrawString(
                     textToPrint,
@@ -385,10 +387,10 @@ namespace EzPos.GUIs.Forms
                 //Invoice item
                 rowIndex += 4;
                 float quantity;
-                foreach (var saleItem in _bindingListObj.Where(saleItem => saleItem != null).Where(saleItem => (saleItem.ProductID != 0) && (saleItem.FKProduct != null)))
+                foreach (var saleItem in _bindingListObj.Where(saleItem => saleItem != null).Where(saleItem => (saleItem.ProductId != 0) && (saleItem.FkProduct != null)))
                 {                 
                     //Product name
-                    var productName = saleItem.FKProduct.Description;
+                    var productName = saleItem.FkProduct.Description;
                     if (string.IsNullOrEmpty(productName))
                         productName = saleItem.ProductName;
 
@@ -403,7 +405,7 @@ namespace EzPos.GUIs.Forms
                     excelRange.Value2 = quantity.ToString("N0", AppContext.CultureInfo);
                     
                     //Unit price
-                    var unitPrice = saleItem.PublicUPOut;
+                    var unitPrice = saleItem.PublicUpOut;
                     excelRange = workSheet.get_Range("E" + rowIndex, "E" + rowIndex);
                     excelRange.Select();
                     excelRange.Value2 = Math.Round(unitPrice, 2).ToString("N2", AppContext.CultureInfo);

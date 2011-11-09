@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0" assembly="EzPos">
-	<class name="EzPos.Model.Deposit,EzPos" table="[TDeposits]">
+	<class name="EzPos.Model.Deposit.Deposit,EzPos" table="[TDeposits]">
     <id name="DepositId" column="DepositId" unsaved-value="0" type="Int32" >
       <generator class="identity" />
     </id>
@@ -26,7 +26,7 @@
     <property name="ReferenceNum" column="ReferenceNum" />    
     <property name="UpdateDate" column="UpdateDate" type="DateTime" />    
 
-    <many-to-one name="FKCustomer" column="CustomerId" class="EzPos.Model.Customer,EzPos" insert="false" update="false" />
-    <many-to-one name="FKCashier" column="CashierId" class="EzPos.Model.User,EzPos" insert="false" update="false" />
+    <many-to-one name="FkCustomer" column="CustomerId" class="EzPos.Model.Customer.Customer,EzPos" insert="false" update="false" />
+    <many-to-one name="FkCashier" column="CashierId" class="EzPos.Model.User.User,EzPos" insert="false" update="false" />
   </class>
 </hibernate-mapping>

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
-using EzPos.Model;
+using EzPos.Model.Customer;
 using EzPos.Utility;
 using NHibernate.Expression;
 
@@ -15,12 +15,12 @@ namespace EzPos.DataAccess.Customer
         {
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(Model.Customer.CONST_CUSTOMER_NAME),
-                                    Order.Desc(Model.Customer.CONST_CUSTOMER_ID)
+                                    Order.Asc(Model.Customer.Customer.ConstCustomerName),
+                                    Order.Desc(Model.Customer.Customer.ConstCustomerId)
                                 };
 
             return SelectObjects(
-                typeof (Model.Customer), orderList).List();
+                typeof (Model.Customer.Customer), orderList).List();
         }
 
         public virtual IList GetCustomers(IList searchCriteria)
@@ -43,35 +43,35 @@ namespace EzPos.DataAccess.Customer
 
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(Model.Customer.CONST_CUSTOMER_NAME),
-                                    Order.Desc(Model.Customer.CONST_CUSTOMER_ID)
+                                    Order.Asc(Model.Customer.Customer.ConstCustomerName),
+                                    Order.Desc(Model.Customer.Customer.ConstCustomerId)
                                 };
 
             return SelectObjects(
-                typeof (Model.Customer), criterionList, orderList).List();
+                typeof (Model.Customer.Customer), criterionList, orderList).List();
         }
 
-        public virtual void InsertCustomer(Model.Customer customer)
+        public virtual void InsertCustomer(Model.Customer.Customer customer)
         {
             InsertObject(customer);
         }
 
-        public virtual void UpdateCustomer(Model.Customer customer)
+        public virtual void UpdateCustomer(Model.Customer.Customer customer)
         {
             UpdateObject(customer);
         }
 
-        public virtual void DeleteCustomer(Model.Customer customer)
+        public virtual void DeleteCustomer(Model.Customer.Customer customer)
         {
             DeleteObject(customer);
         }
 
-        public virtual Model.SaleOrder GetASaleOrder(int customerId)
+        public virtual Model.SaleOrder.SaleOrder GetASaleOrder(int customerId)
         {
             var criterionList = new Collection<ICriterion> {Expression.Eq("CustomerId", customerId)};
 
-            return (Model.SaleOrder)SelectObjects(
-                                   typeof(Model.SaleOrder),
+            return (Model.SaleOrder.SaleOrder)SelectObjects(
+                                   typeof(Model.SaleOrder.SaleOrder),
                                    criterionList).UniqueResult();
         }
 
@@ -80,11 +80,11 @@ namespace EzPos.DataAccess.Customer
         {
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(DiscountCard.CONST_CUSTOMER_ID),
-                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                    Order.Asc(DiscountCard.ConstCustomerId),
+                                    Order.Asc(DiscountCard.ConstDiscountCardId)
                                 };
 
-            var criterionList = new Collection<ICriterion> {Expression.Eq("CustomerID", customerId)};
+            var criterionList = new Collection<ICriterion> {Expression.Eq("CustomerId", customerId)};
 
             return SelectObjects(
                 typeof (DiscountCard),
@@ -95,8 +95,8 @@ namespace EzPos.DataAccess.Customer
         {
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER),
-                                    Order.Desc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                    Order.Asc(DiscountCard.ConstDiscountCardNumber),
+                                    Order.Desc(DiscountCard.ConstDiscountCardId)
                                 };
 
             return SelectObjects(
@@ -122,8 +122,8 @@ namespace EzPos.DataAccess.Customer
 
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER),
-                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                    Order.Asc(DiscountCard.ConstDiscountCardNumber),
+                                    Order.Asc(DiscountCard.ConstDiscountCardId)
                                 };
 
             return SelectObjects(typeof (DiscountCard), criterionList, orderList).List();
@@ -133,11 +133,11 @@ namespace EzPos.DataAccess.Customer
         {
             var orderList = new Collection<Order>
                                 {
-                                    Order.Asc(DiscountCard.CONST_DISCOUNT_CARD_NUMBER),
-                                    Order.Desc(DiscountCard.CONST_DISCOUNT_CARD_ID)
+                                    Order.Asc(DiscountCard.ConstDiscountCardNumber),
+                                    Order.Desc(DiscountCard.ConstDiscountCardId)
                                 };
 
-            var criterionList = new Collection<ICriterion> {Expression.Gt("CustomerID", "0")};
+            var criterionList = new Collection<ICriterion> {Expression.Gt("CustomerId", "0")};
 
             return SelectObjects(
                 typeof (DiscountCard), criterionList, orderList).List();
