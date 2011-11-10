@@ -1,7 +1,8 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
-    <ReferencePath>C:\Program Files (x86)\Business Objects\Common\2.8\managed\C:\Program Files\Business Objects\Common\2.8\managed\C:\Program Files\Common Files\Business Objects\2.7\Managed\</ReferencePath>
+    <ReferencePath>C:\Program Files (x86)\Business Objects\Common\2.8\managed\C:\Program Files\Business Objects\Common\2.8\managed\C:\Program Files\SAP BusinessObjects\Crystal Reports 14.0\dotnet\</ReferencePath>
     <PublishUrlHistory>publish\|http://localhost/EZPOS/|http://localhost/BSPOS/</PublishUrlHistory>
     <InstallUrlHistory>
     </InstallUrlHistory>
@@ -13,6 +14,7 @@
     </BootstrapperUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>true</VerifyUploadedFiles>
+    <ErrorReportUrlHistory />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
